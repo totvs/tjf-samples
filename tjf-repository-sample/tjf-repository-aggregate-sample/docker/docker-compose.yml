@@ -1,0 +1,28 @@
+version: '3'
+
+volumes:
+
+  sample-pg-data: {}
+
+services:
+
+  sample-postgres:
+    image: sameersbn/postgresql:10-1
+    restart: always
+    environment:
+      DB_NAME: sample_account
+      DB_USER: dev-sample
+      DB_PASS: dev-sample
+      PG_PASSWORD: totvs@123
+    ports:
+      - 5432:5432
+    volumes:
+      - sample-pg-data:/var/lib/postgresql
+
+  sample-pg-admin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: dev-sample@totvs.com.br
+      PGADMIN_DEFAULT_PASSWORD: dev-sample
+    ports:
+      - 8080:80
