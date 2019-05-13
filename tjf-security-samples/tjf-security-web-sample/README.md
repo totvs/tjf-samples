@@ -196,7 +196,7 @@ public class MachineController {
 
 Esse é o fluxo para realizar uma *request* usando o `tjf-security-web` que passará por todas as etapas.
 
-![Diagrama de Sequência](resources/diagrama_sequencia.PNG)
+![Diagrama de Sequência](resources/diagrama_sequencia.png)
 
 ## Vamos testar?
 
