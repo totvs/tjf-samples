@@ -1,0 +1,9 @@
+security:
+  access:
+    api:
+      permissions-uri: <O URI do Authorization Service para validação da permission.>
+  oauth2:
+    resource:
+      id: 'authorization_api'
+      jwk:
+        key-set-uri: <O URI do Authorization Service para obter chaves de verificação para validação do token JWT.> 
