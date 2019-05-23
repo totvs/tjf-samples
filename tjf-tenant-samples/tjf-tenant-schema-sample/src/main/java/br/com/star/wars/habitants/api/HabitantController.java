@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.star.wars.habitants.dto.HabitantDto;
 import br.com.star.wars.habitants.model.HabitantModel;
-import br.com.star.wars.habitants.model.HabitantModelId;
 import br.com.star.wars.habitants.model.HabitantModelRepository;
 
 @RestController
@@ -30,7 +29,7 @@ public class HabitantController {
 		for (HabitantDto dto : dtos) {
 			// Efetua a conversão do objeto recebido para o objeto de modelo.
 			HabitantModel habitant = new HabitantModel();
-			habitant.setId(new HabitantModelId(dto.getId()));
+			habitant.setId(dto.getId());
 			habitant.setName(dto.getName());
 			habitant.setGender(dto.getGender());
 

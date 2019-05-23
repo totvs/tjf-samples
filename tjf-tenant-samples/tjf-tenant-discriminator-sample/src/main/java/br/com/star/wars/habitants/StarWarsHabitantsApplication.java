@@ -1,4 +1,4 @@
-package br.com.star.wars;
+package br.com.star.wars.habitants;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

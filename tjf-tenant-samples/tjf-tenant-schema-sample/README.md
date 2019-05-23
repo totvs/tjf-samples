@@ -1,10 +1,11 @@
-# Tenant Discriminator Sample
+# Tenant Schema Sample
 
-_Sample_ de utilização da biblioteca [__Tenant Discriminator__][tjf-tenant-discriminator] do [__TOTVS Java Framework__][tjf].
+_Sample_ de utilização da biblioteca [__Tenant Schema__][tjf-tenant-schema] do [__TOTVS Java Framework__][tjf].
+
 
 ## Contexto
 
-Para exemplificar o uso da biblioteca [__Tenant Discriminator__][tjf-tenant-discriminator], criaremos uma _API REST_ que possibilite a manutenção e leitura dos habitantes do universo __Star Wars__ de forma que estes sejam criados dentro de seus respectivos planetas, que servirão como nossos _tenants_.
+Para exemplificar o uso da biblioteca [__Tenant Schema__][tjf-tenant-schema], criaremos uma _API REST_ que possibilite a manutenção e leitura dos habitantes do universo __Star Wars__ de forma que estes sejam criados dentro de seus respectivos planetas, que servirão como nossos _tenants_.
 
 Os registros destes habitantes serão armazenados em banco de dados e cada _schema_ criado no banco de dados representará o planeta de cada habitante.
 
@@ -34,7 +35,7 @@ Após gerado, precisamos substituir no arquivo `pom.xml` o _parent_ do projeto p
 </parent>
 ```
 
-Incluiremos também a dependência para utilização da biblioteca [__Tenant Discriminator__][tjf-tenant-discriminator] e as configurações do repositório __Maven__ com a distribuição do [__TOTVS Java Framework__][tjf]:
+Incluiremos também a dependência para utilização da biblioteca [__Tenant Schema__][tjf-tenant-schema] e as configurações do repositório __Maven__ com a distribuição do [__TOTVS Java Framework__][tjf]:
 
 _Dependências_
 
@@ -45,7 +46,7 @@ _Dependências_
   <!-- TJF -->
   <dependency>
     <groupId>com.totvs.tjf</groupId>
-    <artifactId>tjf-tenant-discriminator</artifactId>
+    <artifactId>tjf-tenant-schema</artifactId>
   </dependency>
 
 </dependencies>
@@ -87,37 +88,50 @@ spring:
   # Configurações banco de dados
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:starwarsdb
+    url: jdbc:h2:file:C:/tmp/starwarsdb
     username: sa
 
   # Configurações JPA
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
-    properties:
-      hibernate:
-        session_factory:
-          statement_inspector: com.totvs.tjf.tenant.discriminator.SQLInspector
 ```
 
 Nas configurações acima, definimos qual _driver_ será utilizado para conexão com o banco de dados, o nome do banco (`starwarsdb`) e usuário de acesso (`sa`).
-
-> A propriedade `spring.jpa.properties.hibernate.session_factory.statement_inspector` com o valor `com.totvs.tjf.tenant.discriminator.SQLInspector` é necessária para que a biblioteca [__Tenant Discriminator__][tjf-tenant-discriminator] possa interceptar as consultas no banco de dados e incluir como filtro o valor do _tenant_ atual do contexto.
 
 Precisamos também dos _scripts_ de criação dos _schemas_ e tabelas no banco de dados. Estes _scripts_ devem ficar na pasta `src/main/resources/db/migration` com o nome `V1.0__initialize.sql` para que seja feita a execução automática pelo [__Flyway__][flyway]:
 
 _V1.0__initialize.sql_
 
 ```sql
+-- TATOOINE
+CREATE SCHEMA _TATOOINE;
+SET SCHEMA _TATOOINE;
+
 CREATE TABLE habitant (
-  tenant_id VARCHAR(36) NOT NULL,
   id VARCHAR(36) NOT NULL,
   name VARCHAR(255) NOT NULL,
   gender VARCHAR(06) NOT NULL,
-  PRIMARY KEY (tenant_id, id));
+  PRIMARY KEY (id));
 
-CREATE VIEW habitant_TATOOINE AS SELECT * FROM habitant WHERE tenant_id = 'Tatooine';
-CREATE VIEW habitant_ALDERAAN AS SELECT * FROM habitant WHERE tenant_id = 'Alderaan';
-CREATE VIEW habitant_BESPIN   AS SELECT * FROM habitant WHERE tenant_id = 'Bespin'  ;
+-- ALDERAAN
+CREATE SCHEMA _ALDERAAN;
+SET SCHEMA _ALDERAAN;
+
+CREATE TABLE habitant (
+  id VARCHAR(36) NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  gender VARCHAR(06) NOT NULL,
+  PRIMARY KEY (id));
+
+-- BESPIN
+CREATE SCHEMA _BESPIN;
+SET SCHEMA _BESPIN;
+
+CREATE TABLE habitant (
+  id VARCHAR(36) NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  gender VARCHAR(06) NOT NULL,
+  PRIMARY KEY (id));
 ```
 
 
@@ -137,8 +151,8 @@ _HabitantModel.java_
 @Table(name = "habitant")
 public class HabitantModel {
 
-  @EmbeddedId
-  private HabitantModelId id;
+  @Id
+  private String id;
 
   @NotNull
   private String name;
@@ -146,11 +160,11 @@ public class HabitantModel {
   @NotNull
   private String gender;
 
-  public HabitantModelId getId() {
+  public String getId() {
     return this.id;
   }
 
-  public void setId(HabitantModelId id) {
+  public void setId(String id) {
     this.id = id;
   }
 
@@ -173,39 +187,7 @@ public class HabitantModel {
 }
 ```
 
-Observando a entidade desenvolvida acima, cada habitante terá sua identificação, nome e gênero. A informação de identificação, diferente dos demais atributos, não possui um tipo primitivo, mas sim uma instância da classe `HabitantModelId`.
-
-Isto porque de acordo com a documentação da biblioteca [__Tenant Discriminator__][tjf-tenant-discriminator], a informação do _tenant_ deve ser representada por uma coluna chamada __tenant_id__ e a mesma deve constar como chave primária da tabela, ou seja, a tabela `habitant` precisa  de uma chave primária composta por duas colunas: __tenant_id__ e __id__. Sendo __tenant_id__ o _tenant_ do registro e identificação do planeta e __id__ a identificação do habitante.
-
-Criaremos então a classe `HabitantModelId` de representação desta chave primária. Ela deve estender a classe [`TenantId`][tenantid] para que a criação da coluna __tenant_id__ e a definição de seu valor seja realizada corretamente:
-
-_HabitantModelId.java_
-
-```java
-@Embeddable
-public class HabitantModelId extends TenantId {
-
-  private static final long serialVersionUID = 4010942799108332905L;
-
-  @NotNull
-  private String id;
-
-  public HabitantModelId() {}
-
-  public HabitantModelId(String id) {
-    this.setId(id);
-  }
-
-  public String getId() {
-    return this.id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
-  }
-
-}
-```
+Observando a entidade desenvolvida acima, cada habitante terá sua identificação, nome e gênero.
 
 
 ### Repository
@@ -217,7 +199,7 @@ _HabitantModelRepository.java_
 ```java
 package br.com.star.wars.habitants.model;
 
-public interface HabitantModelRepository extends JpaRepository<HabitantModel, HabitantModelId> {}
+public interface HabitantModelRepository extends JpaRepository<HabitantModel, String> {}
 ```
 
 
@@ -289,7 +271,7 @@ public class HabitantController {
     for (HabitantDto dto : dtos) {
       // Efetua a conversão do objeto recebido para o objeto de modelo.
       HabitantModel habitant = new HabitantModel();
-      habitant.setId(new HabitantModelId(dto.getId()));
+      habitant.setId(dto.getId());
       habitant.setName(dto.getName());
       habitant.setGender(dto.getGender());
 
@@ -467,15 +449,13 @@ X-Planet: Bespin
 
 # Que a força esteja com você!
 
-Com isso terminamos nosso _sample_, fique a vontade para enriquecê-lo utilizando outros recursos propostos pela biblioteca [__Tenant Discriminator__][tjf-tenant-discriminator] e enviar sugestões e melhorias para o [__TOTVS Java Framework__][tjf].
+Com isso terminamos nosso _sample_, fique a vontade para enriquecê-lo utilizando outros recursos propostos pela biblioteca [__Tenant Schema__][tjf-tenant-schema] e enviar sugestões e melhorias para o [__TOTVS Java Framework__][tjf].
 
-[tjf-tenant-discriminator]: https://tjf.totvs.com.br/framework/tjf-tenant-discriminator
+[tjf-tenant-schema]: https://tjf.totvs.com.br/framework/tjf-tenant-schema
 [tjf]: https://tjf.totvs.com.br
 [h2]: https://www.h2database.com
 [spring]: https://spring.io
 [spring-initializr]: https://start.spring.io
 [tjf-boot-starter]: https://tjf.totvs.com.br/framework/tjf-boot-starter
-[hibernate]: https://hibernate.org
-[tenantid]: https://tjf.totvs.com.br/framework/tjf-tenant-discriminator#tenantid
 [flyway]: https://flywaydb.org
 [dto]: https://pt.stackoverflow.com/questions/31362/o-que-é-um-dto

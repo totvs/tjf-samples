@@ -1,4 +1,4 @@
-package br.com.star.wars;
+package br.com.star.wars.habitants;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,7 +13,7 @@ public class StarWarsHabitantsAuthentication {
 		// 2 - Código do tenant, exemplo: 92e8a7dc-61d8-4045-9d80-222c774ad790
 		// 3 - Código do tenant que será salvo no banco de dados, exemplo: 92e8a7dc
 		SecurityPrincipal principal = new SecurityPrincipal("admin", tenant, tenant);
-		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(principal, "");
+		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(principal, null);
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 	}
 

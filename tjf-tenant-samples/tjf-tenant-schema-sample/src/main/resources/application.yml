@@ -1,5 +1,5 @@
 spring:
-  
+
   flyway:
     enabled: true
 
@@ -18,7 +18,3 @@ spring:
   # Configurações JPA
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
-    properties:
-      hibernate:
-        session_factory:
-          statement_inspector: com.totvs.tjf.tenant.discriminator.SQLInspector

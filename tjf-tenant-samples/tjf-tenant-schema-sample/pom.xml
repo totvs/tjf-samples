@@ -10,11 +10,11 @@
 		<version>0.2.0-RELEASE</version>
 	</parent>
 
-	<groupId>br.com.star.wars.discriminator</groupId>
-	<artifactId>sw-habitants-discriminator</artifactId>
+	<groupId>br.com.star.wars.habitants</groupId>
+	<artifactId>sw-habitants-schema</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Star Wars Habitants (Discriminator)</name>
-	<description>Serviço de manutenção e consulta dos habitantes do universo Star Wars utilizando a biblioteca TJF Tenant Discriminator</description>
+	<name>Star Wars Habitants (Schema)</name>
+	<description>Serviço de manutenção e consulta dos habitantes do universo Star Wars utilizando a biblioteca TJF Tenant Schema</description>
 
 	<properties>
 		<java.version>11</java.version>
@@ -51,7 +51,7 @@
 		<!-- TJF -->
 		<dependency>
 			<groupId>com.totvs.tjf</groupId>
-			<artifactId>tjf-tenant-discriminator</artifactId>
+			<artifactId>tjf-tenant-schema</artifactId>
 		</dependency>
 	</dependencies>
 
