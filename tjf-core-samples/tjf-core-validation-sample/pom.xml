@@ -9,11 +9,17 @@
 	<name>core-validation</name>
 	<description>Demo project for Spring Boot</description>
 
+	<properties>
+		<java.version>11</java.version>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>com.totvs.tjf</groupId>
 			<artifactId>tjf-core-validation</artifactId>
-			<version>0.2.0-SNAPSHOT</version>
+			<version>0.2.0-RELEASE</version>
 		</dependency>
 
 		<dependency>
@@ -34,12 +40,19 @@
 			<artifactId>springfox-swagger2</artifactId>
 			<version>2.9.2</version>
 		</dependency>
-		
-		<dependency>
-           <groupId>io.springfox</groupId>
-           <artifactId>springfox-bean-validators</artifactId>
-           <version>2.9.2</version>
-       </dependency>
 
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-bean-validators</artifactId>
+			<version>2.9.2</version>
+		</dependency>
 	</dependencies>
+
+	<repositories>
+		<repository>
+			<id>central-release</id>
+			<name>TOTVS Java Framework: Release</name>
+			<url>http://maven.engpro.totvs.com.br/artifactory/libs-release</url>
+		</repository>
+	</repositories>
 </project>

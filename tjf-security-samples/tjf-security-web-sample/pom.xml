@@ -11,10 +11,11 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>security-web</name>
 	<description>Sample Security Web</description>
-	
+
 	<properties>
-	   <maven.compiler.source>11</maven.compiler.source>
-	   <maven.compiler.target>11</maven.compiler.target>
+		<java.version>11</java.version>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
 	</properties>
 
 	<dependencies>
@@ -33,8 +34,8 @@
 
 	<repositories>
 		<repository>
-			<id>central-snapshot</id>
-			<name>TOTVS Java Framework: Snapshots</name>
+			<id>central-release</id>
+			<name>TOTVS Java Framework: Release</name>
 			<url>http://maven.engpro.totvs.com.br/artifactory/libs-release</url>
 		</repository>
 	</repositories>
