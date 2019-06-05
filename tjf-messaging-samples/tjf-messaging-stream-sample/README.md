@@ -254,7 +254,8 @@ public class StarShipService {
 
 # Vamos testar
 
-No nosso exemplo você vai precisar estar com o `RabbitMQ` já configurado e em execução. Execute o dois projeto.
+No nosso exemplo você vai precisar estar com o `RabbitMQ` já configurado e em execução. 
+Execute o nossos dois projetos.
 
 Agora acesse a URL pelo navegador [http://localhost:8080/starship?name=Millenium%20Falcon](http://localhost:8080/starship?name=Millenium%20Falcon), nossa API rest criada irá publicar para a mensageria uma mensagem e nosso projeto deve recer a mensagem em mostrar no log:
 
