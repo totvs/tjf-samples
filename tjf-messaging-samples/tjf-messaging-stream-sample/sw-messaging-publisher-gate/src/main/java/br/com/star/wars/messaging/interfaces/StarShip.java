@@ -1,9 +1,12 @@
-package com.totvs.tjf.messaging.interfaces;
+package br.com.star.wars.messaging.interfaces;
 
 public class StarShip {
 	
 	private String name;
 	
+	public StarShip(String name) {
+		this.name = name;
+	}
 	public String getName() {
 		return name;
 	}

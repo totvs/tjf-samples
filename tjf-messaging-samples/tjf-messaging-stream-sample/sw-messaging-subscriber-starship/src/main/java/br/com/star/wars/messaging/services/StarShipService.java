@@ -1,8 +1,8 @@
-package com.totvs.tjf.messaging.services;
+package br.com.star.wars.messaging.services;
 
 import java.util.HashMap;
 
-import com.totvs.tjf.messaging.interfaces.StarShip;
+import br.com.star.wars.messaging.model.StarShip;
 
 public class StarShipService {
 

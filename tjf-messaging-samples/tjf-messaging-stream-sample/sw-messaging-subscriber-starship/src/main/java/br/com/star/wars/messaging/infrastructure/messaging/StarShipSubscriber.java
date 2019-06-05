@@ -1,10 +1,10 @@
-package com.totvs.tjf.messaging.infrastructure.messaging;
+package br.com.star.wars.messaging.infrastructure.messaging;
 
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
 
-import com.totvs.tjf.messaging.interfaces.StarShip;
-import com.totvs.tjf.messaging.services.StarShipService;
+import br.com.star.wars.messaging.model.StarShip;
+import br.com.star.wars.messaging.services.StarShipService;
 
 @EnableBinding(StarShipExchange.class)
 public class StarShipSubscriber {

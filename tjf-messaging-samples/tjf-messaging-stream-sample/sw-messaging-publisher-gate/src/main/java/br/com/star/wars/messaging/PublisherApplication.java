@@ -1,10 +1,10 @@
-package com.totvs.tjf.messaging;
+package br.com.star.wars.messaging;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import com.totvs.tjf.messaging.infrastructure.messaging.StarShipPublisher;
+import br.com.star.wars.messaging.infrastructure.messaging.StarShipPublisher;
 
 @SpringBootApplication
 public class PublisherApplication {

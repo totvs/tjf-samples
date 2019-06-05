@@ -6,6 +6,8 @@ spring:
         starship-input:
           destination: starship-input
           group: requests
+        starship-output:
+          destination: starship-input
       binders:
         rabbit1:
           type: rabbit
