@@ -1,0 +1,17 @@
+spring:
+  cloud:
+    stream:
+      defaultBinder: rabbit1
+      bindings:
+        starship-input:
+          destination: starship-input
+          group: requests
+        starship-output:
+          destination: starship-input
+      binders:
+        rabbit1:
+          type: rabbit
+          environment:
+            spring:
+              rabbit:
+                host: localhost
