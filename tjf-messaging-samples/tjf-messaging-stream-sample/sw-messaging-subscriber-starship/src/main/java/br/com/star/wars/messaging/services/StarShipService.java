@@ -25,7 +25,8 @@ public class StarShipService {
 		
 		int rank = starShips.getOrDefault(starShip.getName().toLowerCase(), 0);
 		
-		System.out.println("\nArrived starship name: " + starShip.getName());
+		System.out.println("\nArrived starship Tenant: " + starShip.getTenantId());
+		System.out.println("Starship name: " + starShip.getName());
 		System.out.println("Starship ranking: " + (rank == 0 ? "Unknown" : rank));
 	}
 }
