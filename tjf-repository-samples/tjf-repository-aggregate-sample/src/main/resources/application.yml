@@ -14,11 +14,14 @@ spring:
       naming:
         implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
         physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+      ddl-auto: create-drop
     properties:      
       hibernate:
         jdbc:
           lob:
             non_contextual_creation: true # https://github.com/spring-projects/spring-boot/issues/12007
+        show_sql: true
+        format_sql: true
     
 server:
   port: 8180
