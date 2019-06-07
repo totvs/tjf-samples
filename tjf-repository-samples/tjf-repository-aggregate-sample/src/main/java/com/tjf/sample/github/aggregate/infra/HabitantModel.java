@@ -18,7 +18,7 @@ public class HabitantModel {
 	private String gender;
 
 	public String getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setId(String id) {
@@ -26,7 +26,7 @@ public class HabitantModel {
 	}
 
 	public String getName() {
-		return this.name;
+		return name;
 	}
 
 	public void setName(String name) {
@@ -34,54 +34,11 @@ public class HabitantModel {
 	}
 
 	public String getGender() {
-		return this.gender;
+		return gender;
 	}
 
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	
-    public HabitantModel(Builder builder) {
-        this.id = builder.id;
-        this.name = builder.name;
-        this.gender = builder.gender;
-    }
-    
-    @SuppressWarnings("unused")
-    private HabitantModel() {
-        this.id = null;
-        this.name = null;
-        this.gender = null;
-    }
-    
-    public static class Builder {
-
-        private String id;
-
-        private String name;
-        
-        private String gender;
-
-        public Builder id(String id) {
-            this.id = id;
-            return this;
-        }
-
-        public Builder name(String name) {
-            this.name = name;
-            return this;
-        }
-        
-        public Builder gender(String gender) {
-            this.gender = gender;
-            return this;
-        }
-
-
-        public HabitantModel build() {
-            return new HabitantModel(this);
-        }
-
-    }
 
 }

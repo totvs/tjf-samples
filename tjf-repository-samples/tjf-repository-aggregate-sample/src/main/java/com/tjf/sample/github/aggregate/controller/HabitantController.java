@@ -9,21 +9,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tjf.sample.github.aggregate.infra.Habitant;
-import com.tjf.sample.github.aggregate.infra.HabitantRepository;
+import com.tjf.sample.github.aggregate.infra.HabitantModel;
+import com.tjf.sample.github.aggregate.infra.HabitantModelRepository;
 
 @RestController
 @RequestMapping(path = "/api/v1/habitants", produces = MediaType.APPLICATION_JSON_VALUE)
 public class HabitantController {
 	
 	@Autowired
-	private HabitantRepository repository;
+	private HabitantModelRepository repository;
 				
 	@PostMapping
 	@Transactional
-	public void postAccount(@RequestBody Habitant dtos) {
+	public void postAccount(@RequestBody HabitantModel habitant) {
 
-		repository.store(dtos);
+		repository.insert(habitant);
 				
 	}
 
