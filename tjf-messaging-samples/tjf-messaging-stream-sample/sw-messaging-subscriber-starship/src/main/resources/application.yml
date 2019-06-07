@@ -15,3 +15,5 @@ spring:
             spring:
               rabbit:
                 host: localhost
+server:
+  port: 8180

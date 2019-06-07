@@ -2,6 +2,8 @@ package br.com.star.wars.messaging.services;
 
 import java.util.HashMap;
 
+import com.totvs.tjf.core.common.security.SecurityDetails;
+
 import br.com.star.wars.messaging.model.StarShip;
 
 public class StarShipService {
@@ -25,7 +27,7 @@ public class StarShipService {
 		
 		int rank = starShips.getOrDefault(starShip.getName().toLowerCase(), 0);
 		
-		System.out.println("\nArrived starship Tenant: " + starShip.getTenantId());
+		System.out.println("\nCurrent Tenant: " + SecurityDetails.getTenant());
 		System.out.println("Starship name: " + starShip.getName());
 		System.out.println("Starship ranking: " + (rank == 0 ? "Unknown" : rank));
 	}

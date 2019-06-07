@@ -11,6 +11,9 @@ public class StarShip implements Tenantable {
 		this.name = name;
 	}
 
+	public StarShip() {
+	}
+
 	public String getName() {
 		return name;
 	}

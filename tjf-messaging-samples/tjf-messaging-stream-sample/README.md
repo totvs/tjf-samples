@@ -4,20 +4,20 @@ _Sample_ de utilização da biblioteca [__Messaging Stream__][tjf-messaging-stre
 
 ## Contexto
 
-Para exemplificar o uso da biblioteca [__Messaging Stream__][tjf-messaging-stream], criaremos duas aplicações, uma será responsável por publicar a mensagem na mensageria e a outra por receber a mensagem.
+Para exemplificar o uso da biblioteca [__Messaging Stream__][tjf-messaging-stream], criaremos duas aplicações, uma será responsável por publicar a mensagem na mensageria, o Publisher, e a outra por receber a mensagem da mensageria, o Subscriber.
 
 
 # Começando
 
-Iniciaremos o desenvolvimento criando um novo projeto [Spring][spring] que será o nosso publicador das mensagens, utilizando o serviço [Spring Initializr][spring-initializr]. Adicione nas dependências o módulo __Spring Web Starter__.
+Iniciaremos o desenvolvimento criando um novo projeto [Spring][spring] que será o nosso publicador das mensagens, utilizando o serviço [Spring Initializr][spring-initializr].
 
 Após informados os dados e incluídas as dependências necessárias, podemos iniciar a geração do projeto.
 
-Agora criaremos um novo projeto também pelo [Spring Initializr][spring-initializr], mas agora sem dependências, esse será o nosso receptor das mensagens.
+Agora criaremos um novo projeto também pelo [Spring Initializr][spring-initializr], esse será o nosso receptor das mensagens.
 
 ## Configurações
 
-Após gerado os projetos, precisamos substituir no arquivo `pom.xml` o _parent_ do projeto pela biblioteca [__TJF Boot Starter__][tjf-boot-starter]:
+Após gerado os dois projetos, precisamos substituir no arquivo `pom.xml` de ambos o _parent_ do projeto pela biblioteca [__TJF Boot Starter__][tjf-boot-starter]:
 
 ```xml
 <parent>
@@ -26,6 +26,7 @@ Após gerado os projetos, precisamos substituir no arquivo `pom.xml` o _parent_ 
   <version>0.2.0-RELEASE</version>
 </parent>
 ```
+Ela define algumas configuração para os projetos que utilizar os módulos do [__TOTVS Java Framework__][tjf].
 
 Incluiremos também a dependência para utilização da biblioteca [__Messaging Stream__][tjf-messaging-stream] e as configurações do repositório __Maven__ com a distribuição do [__TOTVS Java Framework__][tjf]:
 
@@ -58,13 +59,13 @@ _Repositórios_
 </repositories>
 ```
 
-Por fim, precisamos renomear o arquivo `application.properties`, da pasta `src/main/resources`, para `application.yml`.
+Por fim, precisamos renomear o arquivo `application.properties`, da pasta `src/main/resources`, para `application.yml`, o qual editaremos mais a frente.
 
 
 ### Mecanismos de mensageria
 
-No nosso exemplo usaremos o [RabbitMQ](https://hub.docker.com/_/rabbitmq/) como mecanismos de mensageria, existem outros compatíveis conforme documentação do [__Messaging Stream__][tjf-messaging-stream]. 
-As configurações do Rabbit devem ser incluídas no arquivo `application.yml` para ambos os projetos:
+No nosso exemplo usaremos a imagem do [RabbitMQ](https://hub.docker.com/_/rabbitmq/) como mecanismos de mensageria, existem outros compatíveis conforme documentação do [__Messaging Stream__][tjf-messaging-stream]. 
+As configurações do Rabbit devem ser incluídas no arquivo `application.yml` para ambos os projetos mudando apenas o server port em cada um deles:
 
 ```yaml
 spring:
@@ -84,27 +85,50 @@ spring:
             spring:
               rabbit:
                 host: localhost
+server:
+  port: <8080 no Publisher | 8180 no Subscriber>
+
 ```
 
 ### Entidades
 
-Para iniciar, criaremos o pacote `br.com.star.wars.messaging.model`, para guardar a classe do nosso modelo de dados, e dentro dele criaremos a classe que representa a `starship`:
+Para iniciar, criaremos o pacote `br.com.star.wars.messaging.model`, para guardar a classe do nosso modelo de dados, e dentro dele criaremos a classe que representa a `starship`, como usaremos como exemplo multi tenant implementaremos em nossa classe a interface `com.totvs.tjf.messaging.Tenantable`:
 
 _StarShip.java_
 
 ```java
-public class StarShip {
-	
+public class StarShip implements Tenantable {
+
 	private String name;
-	
+	private String tenantId;
+
+	public StarShip(String name) {
+		this.name = name;
+	}
+
+	public StarShip() {
+	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String toString() {
 		return this.name;
+	}
+
+	@Override
+	public String getTenantId() {
+		return this.tenantId;
+	}
+
+	@Override
+	public void setTenantId(String tenantId) {
+		this.tenantId = tenantId;
 	}
 }
 ```
@@ -113,9 +137,9 @@ public class StarShip {
 
 ## Controller
 
-Iremos criar uma _API REST_ no nosso projeto de publicação para receber os dados que usaremos nas mensagens do nosso exemplo.
+Iremos criar uma _API REST_ no nosso projeto de publicação, apenas para receber os dados que usaremos e transformar na mensagens do nosso exemplo.
 
-Criaremos o pacote `br.com.star.wars.messaging.controller` para guardar a classe que irá receber os dados via rest e irá chamar o método para publicar nossa mensagem.
+Criaremos o pacote `br.com.star.wars.messaging.controller` para guardar a classe que irá receber os dados via rest e irá criar e chamar o método para publicar nossa mensagem, para demostrarmos o multi tenant criaremos o metodo setTenant, ele irá alterar o tenant atual para que as mensagem enviadas passem a ser do tenant enviado via rest.   
 
 _StarShipController.java_
 
@@ -131,16 +155,25 @@ public class StarShipController {
 	}
 	
 	@GetMapping
-    String getIdByValue(@RequestParam("name") String name) {
+    String starShip(@RequestParam("name") String name, @RequestParam("tenant") String tenant) {
         
-		System.out.println("Starship name is " + name);
+		System.out.println("\nStarship name: " + name);
         
+		this.setTenant(tenant);
+        System.out.println("Current tenant: " + SecurityDetails.getTenant() + "\n");
+
         StarShip starShip = new StarShip(name);        
+    	samplePublisher.publish(starShip);
         
-        samplePublisher.publish(starShip);
-        
-        return "The identification of the starship " + name + " was sent!";
+        return "The identification of the starship " + name + " of tenant " + tenant + " was sent!";
     }
+	
+	private void setTenant(String tenant) {
+		
+		SecurityPrincipal principal = new SecurityPrincipal("", tenant, tenant.split("-")[0]);
+	    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(principal, "N/A", null);
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+	}
 }
 ```
 
@@ -192,6 +225,7 @@ public class StarShipPublisher {
 		this.exchange = exchange;
 	}
 
+	@StreamPublisher
 	public void publish(StarShip starShip) {
 		exchange.output().send(MessageBuilder.withPayload(starShip).setHeader("command", "arrivedStarShip").build());
 	}
@@ -246,7 +280,8 @@ public class StarShipService {
 		
 		int rank = starShips.getOrDefault(starShip.getName().toLowerCase(), 0);
 		
-		System.out.println("\nArrived starship name: " + starShip.getName());
+		System.out.println("\nCurrent Tenant: " + SecurityDetails.getTenant());
+		System.out.println("Starship name: " + starShip.getName());
 		System.out.println("Starship ranking: " + (rank == 0 ? "Unknown" : rank));
 	}
 }
@@ -257,10 +292,11 @@ public class StarShipService {
 No nosso exemplo você vai precisar estar com o `RabbitMQ` já configurado e em execução. 
 Execute o nossos dois projetos.
 
-Agora acesse a URL pelo navegador [http://localhost:8080/starship?name=Millenium%20Falcon](http://localhost:8080/starship?name=Millenium%20Falcon), nossa API rest criada irá publicar para a mensageria uma mensagem e nosso projeto deve recer a mensagem em mostrar no log:
+Agora acesse a URL pelo navegador [http://localhost:8080/starship?name=Millenium%20Falcon&tenant=Alderaan](http://localhost:8080/starship?name=Millenium%20Falcon&tenant=Alderaan), nossa API rest criada irá publicar para a mensageria uma mensagem e nosso outro projeto deve receber a mensagem e mostrar no log, perceba que o tenant também foi carregado com sucesso:
 
 ```
-Arrived starship name: Millenium Falcon
+Current Tenant: Alderaan
+Starship name: Millenium Falcon
 Starship ranking: 1
 ```
 

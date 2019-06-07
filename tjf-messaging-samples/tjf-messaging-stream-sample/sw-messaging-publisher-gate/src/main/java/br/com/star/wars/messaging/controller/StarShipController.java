@@ -29,7 +29,7 @@ public class StarShipController {
 		System.out.println("\nStarship name: " + name);
         
 		this.setTenant(tenant);
-        System.out.println("Current tenant: " + SecurityDetails.getTenant());
+        System.out.println("Current tenant: " + SecurityDetails.getTenant() + "\n");
 
         StarShip starShip = new StarShip(name);        
     	samplePublisher.publish(starShip);
