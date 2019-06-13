@@ -28,7 +28,7 @@ Além da dependência do [Spring][spring], para utilização do módulo __API Co
 <dependency>
   <groupId>com.totvs.tjf</groupId>
   <artifactId>tjf-api-core</artifactId>
-  <version>0.2.0-SNAPSHOT</version>
+  <version>0.2.0-RELEASE</version>
 </dependency>
 ```
 
@@ -332,12 +332,12 @@ Com isso terminamos nosso exemplo, fique a vontade para incrementar o exemplo ut
 
 > O conteúdo deste exemplo está em nosso repositório no [GitHub][github].
 
-[tjf-api-context]: https://tjf.totvs.com.br/framework/tjf-api-context
+[tjf-api-context]: https://tjf.totvs.com.br/wikiV020/tjf-api-context
 [guia-api-totvs]: http://tdn.totvs.com/x/nDUxE
 [spring]: https://spring.io
 [spring-initializr]: https://start.spring.io
 [@RestController]: https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/RestController.html
-[apiguideline]: https://tjf.totvs.com.br/framework/tjf-api-context#apiguideline
-[apicollectionresponse]: https://tjf.totvs.com.br/framework/tjf-api-context#apicollectionresponse
-[apisortrequest]: https://tjf.totvs.com.br/framework/tjf-api-context#apisortrequest
+[apiguideline]: https://tjf.totvs.com.br/wikiV020/tjf-api-context#estereotipos
+[apicollectionresponse]: https://tjf.totvs.com.br/wikiV020/tjf-api-context#objetos-de-transferencia
+[apisortrequest]: https://tjf.totvs.com.br/wikiV020/tjf-api-context#objetos-de-transferencia
 [github]: https://github.com/totvs/tjf-api-context-sample

@@ -64,7 +64,7 @@ Por fim, precisamos renomear o arquivo `application.properties`, da pasta `src/m
 
 ### Mecanismos de mensageria
 
-No nosso exemplo usaremos a imagem do [RabbitMQ](https://hub.docker.com/_/rabbitmq/) como mecanismos de mensageria, existem outros compatíveis conforme documentação do [__Messaging Stream__][tjf-messaging-stream]. 
+No nosso exemplo usaremos a imagem do [RabbitMQ](https://hub.docker.com/_/rabbitmq/) como mecanismos de mensageria, existem outros compatíveis conforme documentação do [__Messaging Stream__][tjf-messaging-stream].
 As configurações do Rabbit devem ser incluídas no arquivo `application.yml` para ambos os projetos mudando apenas o server port em cada um deles:
 
 ```yaml
@@ -139,7 +139,7 @@ public class StarShip implements Tenantable {
 
 Iremos criar uma _API REST_ no nosso projeto de publicação, apenas para receber os dados que usaremos e transformar na mensagens do nosso exemplo.
 
-Criaremos o pacote `br.com.star.wars.messaging.controller` para guardar a classe que irá receber os dados via rest e irá criar e chamar o método para publicar nossa mensagem, para demostrarmos o multi tenant criaremos o metodo setTenant, ele irá alterar o tenant atual para que as mensagem enviadas passem a ser do tenant enviado via rest.   
+Criaremos o pacote `br.com.star.wars.messaging.controller` para guardar a classe que irá receber os dados via rest e irá criar e chamar o método para publicar nossa mensagem, para demostrarmos o multi tenant criaremos o metodo setTenant, ele irá alterar o tenant atual para que as mensagem enviadas passem a ser do tenant enviado via rest.
 
 _StarShipController.java_
 
@@ -147,29 +147,29 @@ _StarShipController.java_
 @RestController
 @RequestMapping(path = "/starship")
 public class StarShipController {
-	
+
 	private StarShipPublisher samplePublisher;
-	
+
 	public StarShipController(StarShipPublisher samplePublisher) {
 		this.samplePublisher = samplePublisher;
 	}
-	
+
 	@GetMapping
     String starShip(@RequestParam("name") String name, @RequestParam("tenant") String tenant) {
-        
+
 		System.out.println("\nStarship name: " + name);
-        
+
 		this.setTenant(tenant);
         System.out.println("Current tenant: " + SecurityDetails.getTenant() + "\n");
 
-        StarShip starShip = new StarShip(name);        
+        StarShip starShip = new StarShip(name);
     	samplePublisher.publish(starShip);
-        
+
         return "The identification of the starship " + name + " of tenant " + tenant + " was sent!";
     }
-	
+
 	private void setTenant(String tenant) {
-		
+
 		SecurityPrincipal principal = new SecurityPrincipal("", tenant, tenant.split("-")[0]);
 	    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(principal, "N/A", null);
 		SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -262,7 +262,7 @@ _StarShipService.java_
 public class StarShipService {
 
 	private final HashMap<String, Integer> starShips = new HashMap<String, Integer>();
-	
+
 	public StarShipService() {
 		starShips.put("millenium falcon", 1);
 		starShips.put("star destroyer", 2);
@@ -275,11 +275,11 @@ public class StarShipService {
 		starShips.put("speeder bike", 9);
 		starShips.put("x-wing", 10);
 	}
-	
+
 	public void arrived(StarShip starShip) {
-		
+
 		int rank = starShips.getOrDefault(starShip.getName().toLowerCase(), 0);
-		
+
 		System.out.println("\nCurrent Tenant: " + SecurityDetails.getTenant());
 		System.out.println("Starship name: " + starShip.getName());
 		System.out.println("Starship ranking: " + (rank == 0 ? "Unknown" : rank));
@@ -289,7 +289,7 @@ public class StarShipService {
 
 # Vamos testar
 
-No nosso exemplo você vai precisar estar com o `RabbitMQ` já configurado e em execução. 
+No nosso exemplo você vai precisar estar com o `RabbitMQ` já configurado e em execução.
 Execute o nossos dois projetos.
 
 Agora acesse a URL pelo navegador [http://localhost:8080/starship?name=Millenium%20Falcon&tenant=Alderaan](http://localhost:8080/starship?name=Millenium%20Falcon&tenant=Alderaan), nossa API rest criada irá publicar para a mensageria uma mensagem e nosso outro projeto deve receber a mensagem e mostrar no log, perceba que o tenant também foi carregado com sucesso:
@@ -309,4 +309,4 @@ Com isso terminamos nosso _sample_, fique a vontade para enriquecê-lo utilizand
 [tjf]: https://tjf.totvs.com.br
 [spring]: https://spring.io
 [spring-initializr]: https://start.spring.io
-[tjf-boot-starter]: https://tjf.totvs.com.br/framework/tjf-boot-starter
+[tjf-boot-starter]: https://tjf.totvs.com.br/wikiV020/tjf-boot-starter
