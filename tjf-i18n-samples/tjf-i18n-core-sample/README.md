@@ -127,7 +127,7 @@ Onde no final teremos a seguinte estrutura:
 
 ![Estrutura dos pacotes Java](resources/estrutura_pacotes.png)
 
-**Importante**:  *Em nosso **SpringApplication** não iremos fazer alterações.*
+>:heavy_exclamation_mark: Em nosso **SpringApplication** não iremos fazer alterações.
 
 Iniciaremos pelo pacote de **domain**. Este pacote é responsável por conter as classes de domínio que serão criadas no projeto. No nosso exemplo, iremos criar apenas uma classe.
 
@@ -306,7 +306,7 @@ Para realizarmos o teste do nosso exemplo, execute a classe de aplicação. E te
 
 ![Console](resources/console.png)
 
-> :heavy_exclamation_mark: Veja que tem um log de debug no tjf-i18n, ele mostra a chave e o _locale_ usados para a internacionalização. Por exemplo, para o _locale_ 'en_US' o arquivo que será usado é o messages_**en_US**.properties.
+>:heavy_exclamation_mark: Veja que tem um log de debug no tjf-i18n, ele mostra a chave e o _locale_ usados para a internacionalização. Por exemplo, para o _locale_ 'en_US' o arquivo que será usado é o messages_**en_US**.properties.
 
 ## Isso é tudo pessoal!
 Com isso terminamos nosso exemplo, fique a vontade para incrementar o exemplo e utilizar todos recursos proposto pelo componente **i18n Core** caso necessário utilize nossa [documentação](https://tjf.totvs.com.br/wiki/tjf-i18n-core). Este exemplo está em nosso repositório no [GitHub](https://github.com/totvs/tjf-samples/tree/master/tjf-i18n-samples/tjf-i18n-core-sample).
