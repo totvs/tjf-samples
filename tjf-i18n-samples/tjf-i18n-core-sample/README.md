@@ -37,9 +37,9 @@ Antes de iniciar o desenvolvimento vamos criar a estrutura de mensagens.
 Para isso na pasta de **resources** do seu projeto crie uma pasta com o nome **i18n**. Após criar a estrutura de pastas, devemos criar os arquivos de mensagens abaixo da pasta messages, com os respectivos nome:
 
 -  `messages.properties`: Este será o arquivo padrão de mensagens, para caso a tradução não for encontrada em outros arquivos.
--  `messages_pt_br.properties`: Mensagens em português.
--  `messages_en_us.properties`: Mensagens em inglês.
--  `messages_es_es.properties`: Mensagens em espanhol.
+-  `messages_pt_BR.properties`: Mensagens em português.
+-  `messages_en_US.properties`: Mensagens em inglês.
+-  `messages_es_ES.properties`: Mensagens em espanhol.
 
 ![Estrutura dos arquivos de mensagens](resources/estrutura_mensagens.png)
 
@@ -260,18 +260,28 @@ Esta classe é responsável pela chamada dos serviços e permitir ou não o pous
 package com.tjf.sample.github.i18ncore.application;
 
 import java.util.Locale;
+
+import org.slf4j.LoggerFactory;
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
+import ch.qos.logback.classic.LoggerContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @Component
 public class MainGate implements CommandLineRunner {
-
+	
 	@Autowired
 	AuthorizedGate authorizedGate;
 
 	@Override
 	public void run(String... args) throws Exception {
+		
+		enableI18nDebugLog();
+		
+		Locale.setDefault(new Locale("pt", "br"));
 		System.out.println(authorizedGate.authorizedShipLanding("Falcon.json"));
 		Locale.setDefault(new Locale("en", "us"));
 		System.out.println(authorizedGate.authorizedShipLanding("Xwing.json"));
@@ -279,7 +289,14 @@ public class MainGate implements CommandLineRunner {
 		System.out.println(authorizedGate.authorizedShipLanding("Ywing.json"));
 	}
 
+	public void enableI18nDebugLog() {
+		
+		LoggerContext loggerContext = (LoggerContext)LoggerFactory.getILoggerFactory();
+		Logger rootLogger = loggerContext.getLogger("com.totvs.tjf.i18n");
+		rootLogger.setLevel(Level.DEBUG);
+	}
 }
+
 ```
 Esta classe da inicio ao nosso processo por implementar o componente **CommandLineRuner**.
 
@@ -289,7 +306,8 @@ Para realizarmos o teste do nosso exemplo, execute a classe de aplicação. E te
 
 ![Console](resources/console.png)
 
+> :heavy_exclamation_mark: Veja que tem um log de debug no tjf-i18n, ele mostra a chave e o _locale_ usados para a internacionalização. Por exemplo, para o _locale_ 'en_US' o arquivo que será usado é o messages_**en_US**.properties.
 
 ## Isso é tudo pessoal!
-Com isso terminamos nosso exemplo, fique a vontade para incrementar o exemplo e utilizar todos recursos proposto pelo componente **i18n Core** caso necessário utilize nossa [documentação](framework/tjf-i18n-core). Este exemplo está em nosso repositório no [GitHub](https://github.com/totvs/tjf-i18n-sample).
+Com isso terminamos nosso exemplo, fique a vontade para incrementar o exemplo e utilizar todos recursos proposto pelo componente **i18n Core** caso necessário utilize nossa [documentação](https://tjf.totvs.com.br/wiki/tjf-i18n-core). Este exemplo está em nosso repositório no [GitHub](https://github.com/totvs/tjf-samples/tree/master/tjf-i18n-samples/tjf-i18n-core-sample).
 E fique a vontade para mandar sugestões e melhorias para o projeto TJF

@@ -30,7 +30,7 @@
 		<dependency>
 			<groupId>com.totvs.tjf</groupId>
 			<artifactId>tjf-i18n-core</artifactId>
-			<version>0.2.0-RELEASE</version>
+			<version>1.2.0-RELEASE</version>
 		</dependency>
 
 		<!-- JACKSON -->
