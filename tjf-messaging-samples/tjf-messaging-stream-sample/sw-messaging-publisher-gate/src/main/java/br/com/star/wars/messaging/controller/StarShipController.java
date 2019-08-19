@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.totvs.tjf.core.common.security.SecurityDetails;
 import com.totvs.tjf.core.common.security.SecurityPrincipal;
+import com.totvs.tjf.core.message.TOTVSMessage;
 
 import br.com.star.wars.messaging.infrastructure.messaging.StarShipPublisher;
 import br.com.star.wars.messaging.model.StarShip;
@@ -32,7 +33,7 @@ public class StarShipController {
         System.out.println("Current tenant: " + SecurityDetails.getTenant() + "\n");
 
         StarShip starShip = new StarShip(name);        
-    	samplePublisher.publish(starShip);
+        samplePublisher.publish(new TOTVSMessage<StarShip>(starShip));
         
         return "The identification of the starship " + name + " of tenant " + tenant + " was sent!";
     }

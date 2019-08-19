@@ -3,6 +3,7 @@ package br.com.star.wars.messaging.infrastructure.messaging;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.messaging.support.MessageBuilder;
 
+import com.totvs.tjf.core.message.TOTVSMessage;
 import com.totvs.tjf.messaging.StreamPublisher;
 
 import br.com.star.wars.messaging.model.StarShip;
@@ -17,7 +18,7 @@ public class StarShipPublisher {
 	}
 
 	@StreamPublisher
-	public void publish(StarShip starShip) {
+	public void publish(TOTVSMessage<StarShip> starShip) {
 		exchange.output().send(MessageBuilder.withPayload(starShip).setHeader("command", "arrivedStarShip").build());
 	}
 }

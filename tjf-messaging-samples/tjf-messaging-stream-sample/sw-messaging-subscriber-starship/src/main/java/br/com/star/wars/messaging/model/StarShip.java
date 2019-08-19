@@ -1,11 +1,8 @@
 package br.com.star.wars.messaging.model;
 
-import com.totvs.tjf.messaging.Tenantable;
-
-public class StarShip implements Tenantable {
+public class StarShip {
 
 	private String name;
-	private String tenantId;
 
 	public StarShip(String name) {
 		this.name = name;
@@ -24,15 +21,5 @@ public class StarShip implements Tenantable {
 
 	public String toString() {
 		return this.name;
-	}
-
-	@Override
-	public String getTenantId() {
-		return this.tenantId;
-	}
-
-	@Override
-	public void setTenantId(String tenantId) {
-		this.tenantId = tenantId;
 	}
 }

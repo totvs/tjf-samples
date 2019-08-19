@@ -3,6 +3,8 @@ package br.com.star.wars.messaging.infrastructure.messaging;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
 
+import com.totvs.tjf.core.message.TOTVSMessage;
+
 import br.com.star.wars.messaging.model.StarShip;
 import br.com.star.wars.messaging.services.StarShipService;
 
@@ -16,7 +18,7 @@ public class StarShipSubscriber {
 	}
 
 	@StreamListener(target = StarShipExchange.INPUT, condition = "headers['command']=='arrivedStarShip'")
-	public void subscribe(StarShip starShip) {
-		starShipService.arrived(starShip);
+	public void subscribe(TOTVSMessage<StarShip> starShip) {
+		starShipService.arrived(starShip.getContent());
 	}
 }
