@@ -17,7 +17,7 @@ public class StarShipSubscriber {
 		this.starShipService = starShipService;
 	}
 
-	@StreamListener(target = StarShipExchange.INPUT, condition = "headers['command']=='arrivedStarShip'")
+	@StreamListener(target = StarShipExchange.INPUT, condition = "headers['type']=='arrivedStarShip'")
 	public void subscribe(TOTVSMessage<StarShip> starShip) {
 		starShipService.arrived(starShip.getContent());
 	}

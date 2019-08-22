@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>com.totvs.tjf</groupId>
 		<artifactId>tjf-boot-starter</artifactId>
-		<version>1.3.0-RELEASE</version>
+		<version>1.3.1-SNAPSHOT</version>
 	</parent>
 
 	<groupId>br.com.star.wars</groupId>
@@ -29,6 +29,11 @@
 			<id>central-release</id>
 			<name>TOTVS Java Framework: Release</name>
 			<url>http://maven.engpro.totvs.com.br/artifactory/libs-release</url>
+		</repository>
+		<repository>
+			<id>central-snapshot</id>
+			<name>TOTVS Java Framework: Snapshots</name>
+			<url>http://maven.engpro.totvs.com.br/artifactory/libs-snapshot</url>
 		</repository>
 	</repositories>
 </project>

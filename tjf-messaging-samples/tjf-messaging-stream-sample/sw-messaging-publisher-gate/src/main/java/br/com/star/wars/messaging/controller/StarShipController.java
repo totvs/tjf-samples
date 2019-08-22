@@ -33,7 +33,7 @@ public class StarShipController {
         System.out.println("Current tenant: " + SecurityDetails.getTenant() + "\n");
 
         StarShip starShip = new StarShip(name);        
-        samplePublisher.publish(new TOTVSMessage<StarShip>(starShip));
+        samplePublisher.publish(starShip);
         
         return "The identification of the starship " + name + " of tenant " + tenant + " was sent!";
     }
