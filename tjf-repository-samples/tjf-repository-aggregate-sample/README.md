@@ -1,257 +1,349 @@
+# TJF Repository Aggregate
 
-# Exemplo de uso do componente Repository Aggregate
+*Sample* de utilização da biblioteca **TJF Repository Aggregate** do **TOTVS Java Framework**.
 
 ## Contexto
 
-Para explicação do componente **TJF Repository Aggregate** vamos utilizar um exemplo simples com uma classe de Contas (account) de um banco.
+Para exemplificar o uso da biblioteca [TJF Repository Aggregate](https://tjf.totvs.com.br/wiki/tjf-repository-aggregate), criaremos algumas *APIs REST* que possibilite a criação de uma árvore geneológica dos personagens do universo **Star Wars**.
 
-## Começando com o TJF Repository Aggregate
+Os registros de cada personagem e das árvores geneológicas serão armazenadas em banco de dados em entidades que possuem as informações dos registros agragados no formato `JSON` - removendo assim o *boilerplate* de "de-para" entre a camada de domínio e a camada de infra.
 
-Para criação deste exemplo, vamos iniciar a explicação a partir de um projeto Spring já criado, caso você não possua um projeto criado basta acessar o [Spring initializr](https:/start.spring.io) e criar o projeto.
+Vamos criar estas entidades de forma que o registro final de uma árvore geneológica fique com a seguinte estrutura:
 
-Para fácil entendimento do componente **TJF Repository Aggregate** vamos seguir a sequencia a baixo para criação do exemplo.
-
-### Dependências
-
-Para utilização do componente será necessário inserir a seguinte dependência em seu arquivo pom.xml.
-
-```
-<dependency>
-	<groupId>com.totvs.tjf</groupId>
-	<artifactId>tjf-repository-aggregate</artifactId>
-	<version>{{version}}</version> <!-- Utilize a versão desejada -->
-</dependency>
-```
-
-Como iremos criar um micro serviço REST, para facilitar a criação do Model, vamos utilizar o Lombok como dependência.
-
-```
-<dependency>
-	<groupId>org.projectlombok</groupId>
-	<artifactId>lombok</artifactId>
-	<version>1.18.8</version>
-	<scope>provided</scope>
-</dependency>
+```json
+{
+  "id": "412955e5-c530-44d1-89be-87f6c33f370a",
+  "name": "Leia Organa",
+  "gender": "female",
+  "relatives": [{
+    "id": "d433b940-5082-4c67-a59c-7cd8f9163d60",
+    "name": "Ben Solo",
+    "gender": "male",
+    "relationship": "son"
+  }]
+}
 ```
 
-Mais informações sobre o Lombok: [https://projectlombok.org/](https://projectlombok.org/)
+> Como engine de banco de dados utilizaremos o [PostgreSQL](https://www.postgresql.org).
 
-Como precisaremos de um banco PostgreSQL, também o teremos como dependência:
+## Começando
 
-```
-<dependency>
-	<groupId>org.postgresql</groupId>
-	<artifactId>postgresql</artifactId>
-	<version>42.2.5</version>
-</dependency>
-```
-Além das dependências do Spring Boot que já deverão vir com o Spring initializr:
+Iniciaremos o desenvolvimento criando um novo projeto [Spring](https://spring.io) utilizando o serviço [Spring Initializr](https://start.spring.io). O projeto deve possuir as configurações conforme abaixo:
 
-```
-<dependency>
-	<groupId>org.springframework.boot</groupId>
-	<artifactId>spring-boot-starter-web</artifactId>
-	<version>2.1.3.RELEASE</version>
-</dependency>
+![Spring Initializr](resources/spring-initializr.png)
 
-<dependency>
-	<groupId>org.springframework.boot</groupId>
-	<artifactId>spring-boot-starter-data-jpa</artifactId>
-	<version>2.1.3.RELEASE</version>
-</dependency>
+Precisamos adicionar como dependência os módulos **Spring Web Starter** e **PostgreSQL Driver**. Após informados os dados acima e incluídas as dependências necessárias, podemos efetuar a geração do projeto.
+
+## Configurações
+
+Após gerado, precisamos substituir no arquivo `pom.xml` o *parent* do projeto pela biblioteca [TJF Boot Starter](https://tjf.totvs.com.br/wiki/tjf-boot-starter):
+
+```xml
+<parent>
+  <groupId>com.totvs.tjf</groupId>
+  <artifactId>tjf-boot-starter</artifactId>
+  <version>1.4.0-RELEASE</version>
+</parent>
 ```
 
-### Criando o código fonte
-Agora, com as dependências já definidas, podemos criar nossos códigos fontes. Para começar, vamos criar os pacotes do projeto, utilizando os seguintes nomes:
-* com.tjf.sample.github.aggregate
-* com.tjf.sample.github.validation.controller
-* com.tjf.sample.github.validation.model
-* com.tjf.sample.github.validation.repository
+Incluiremos também a dependência para utilização da biblioteca **Repository Aggregate** e as configurações do repositório **Maven** com a distribuição do **TOTVS Java Framework**:
 
-Que no final ficará assim:
+**Dependências**
 
-![Estrutura dos pacotes Java](resources/estrutura_pacotes.png)
+```xml
+<dependencies>
+  ...
 
-**Importante**: *Em nosso **SpringApplication** não iremos fazer alterações,* se houver interesse, o nome poderá ser alterado para AggregateApplication.
+  <!-- TJF -->
+  <dependency>
+    <groupId>com.totvs.tjf</groupId>
+    <artifactId>tjf-repository-aggregate</artifactId>
+  </dependency>
 
-Bom, vamos lá! Começaremos pelo pacote Model, onde ficará nosso modelo do dominio de nossa aplicação. Vamos criar apenas uma classe.
+</dependencies>
+```
 
-*AccountModel.java*
+**Repositórios**
+
+```xml
+<repositories>
+
+  <repository>
+    <id>tjf-release</id>
+    <name>TOTVS Java Framework: Releases</name>
+    <url>http://maven.engpro.totvs.com.br/artifactory/libs-release/</url>
+  </repository>
+
+</repositories>
+```
+
+Por fim, precisamos renomear o arquivo `application.properties`, da pasta `src/main/resources`, para `application.yml`.
+
+### Banco de dados
+
+As configurações do banco de dados devem ser incluídas no arquivo `application.yml`:
+
+```yml
+spring:
+
+  # Configurações banco de dados
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/starwars-familytree
+    username: postgres
+    password: ********
+
+  # Configurações JPA
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+
+```
+
+Nas configurações acima, definimos qual *driver* será utilizado para conexão com o banco de dados, o nome do banco (`starwars-familytree`), usuário (`postgres`) e senha de acesso.
+
+Precisamos também do *script* de criação da tabela no banco de dados. Este *script* deve ficar na pasta `src/main/resources/db/migration` com o nome `V1.0__initialize.sql` para que seja feita a execução automática pelo [Flyway](https://flywaydb.org).
+
+**V1.0__initialize.sql**
+
+```sql
+CREATE TABLE person (
+	id VARCHAR(36) NOT NULL,
+	data JSONB NOT NULL,
+	PRIMARY KEY(id)
+);
+
+CREATE TABLE familytree (
+	id VARCHAR(36) NOT NULL,
+	data JSONB NOT NULL,
+	PRIMARY KEY(id)
+);
+```
+
+> As entidades apenas duas colunas, pois todas as informações de cada registro serão armazenadas na coluna `data` no formato `JSON`.
+
+### Utilitários
+
+Antes de iniciar a criação das classes de modelos de dados, criaremos alguns utilitários que irão nos auxiliar no desenvolvimento.
+
+Para isto, vamos criar o pacote `br.com.starwars.familytree.enums` e criar dentro deste pacote dois `enums`: um para representar o gênero de cada personagem e o outro para representar o relacionamento entre um personagem e outro.
+
+**Gender.java**
 
 ```java
-package com.tjf.sample.github.aggregate.model;
+package br.com.starwars.familytree.enums;
 
-import java.io.Serializable;
+public enum Gender {
+
+	MALE("male"), FEMALE("female"), OTHER("other");
+
+	private final String gender;
+
+	private Gender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+}
+```
+
+**Relationship.java**
+
+```java
+package br.com.starwars.familytree.enums;
+
+public enum Relationship {
+
+	GRANDFATHER("grandfather"), GRANDMOTHER("grandmother"), FATHER("parent"), MOTHER("mother"), GODFATHER("godfather"),
+	HUSBAND("husband"), WIFE("wife"), SON("son"), DAUGHTER("daughter"), GRANDSON("grandson"),
+	GRANDDAUGHTER("granddaughter");
+
+	private final String relationship;
+
+	private Relationship(String relationship) {
+		this.relationship = relationship;
+	}
+
+	public String getRelationship() {
+		return relationship;
+	}
+
+}
+```
+
+### Modelos de dados
+
+Agora precisamos criar as classes que representam cada uma das entidades do nosso banco de dados.
+
+As classes destas entidades devem ser anotadas com `@Aggregate` e devem possuir os atributos que a coluna `data` possui (representados pelos atributos da classe).
+
+#### Entidades
+
+Para iniciar, criaremos o pacote `br.com.starwars.familytree.model` e dentro deste pacote criaremos as classes de modelo de dados das tabelas `person` e `familytree` além de outras classes que irão nos auxiliar no desenvolvimento.
+
+**Human.java**
+
+```java
+package br.com.starwars.familytree.model;
+
+import br.com.starwars.familytree.enums.Gender;
+
+public abstract class Human {
+
+	private final String name;
+	private final Gender gender;
+
+	public Human(String name, Gender gender) {
+		this.name = name;
+		this.gender = gender;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public Gender getGender() {
+		return gender;
+	}
+
+}
+```
+
+**Person.java**
+
+```java
+package br.com.starwars.familytree.model;
 
 import com.totvs.tjf.core.stereotype.Aggregate;
 import com.totvs.tjf.core.stereotype.AggregateIdentifier;
 
-import lombok.Getter;
+import br.com.starwars.familytree.enums.Gender;
 
-@Getter
 @Aggregate
-public class AccountModel implements Serializable {
-
-	private static final long serialVersionUID = 3181541174652364912L;
+public class Person extends Human {
 
 	@AggregateIdentifier
-	private Integer accountId;
+	private final String id;
 
-	private String name;
-
-	private String address;
-
-	private Double balance;
-
-}
-```
-**Importante**: Não podemos esquecer de definir um campo com a *annotation @AggregateIdentifier*, conforme descrito na documentação do tjf-repository-aggregate.
-
-Agora vamos criar o Controller da nossa API:
-
-*AccountController.java*
-
-```java
-package com.tjf.sample.github.aggregate.controller;
-
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.tjf.sample.github.aggregate.model.AccountModel;
-import com.tjf.sample.github.aggregate.repository.AccountRepository;
-
-@RestController
-@RequestMapping(path = "/api/v1/sample", produces = { APPLICATION_JSON_VALUE })
-public class AccountController {
-
-	@Autowired
-	private AccountRepository repository;
-
-	@PostMapping("account")
-	@Transactional
-	public void postAccount(@RequestBody AccountModel account) {
-
-		this.repository.insert(account);
+	public Person(String id, String name, Gender gender) {
+		super(name, gender);
+		this.id = id;
 	}
+
+	public String getId() {
+		return id;
+	}
+
 }
 ```
 
-Por fim, vamos criar nosso repository:
-
-*AccountRepository.java*
+**Relative.java**
 
 ```java
-package com.tjf.sample.github.aggregate.repository;
+package br.com.starwars.familytree.model;
+
+import br.com.starwars.familytree.enums.Gender;
+import br.com.starwars.familytree.enums.Relationship;
+
+public class Relative extends Person {
+
+	private final Relationship relationship;
+
+	public Relative(String id, String name, Gender gender, Relationship relationship) {
+		super(id, name, gender);
+		this.relationship = relationship;
+	}
+
+	public Relationship getRelationship() {
+		return relationship;
+	}
+
+}
+```
+
+**FamilyTree.java**
+
+```java
+package br.com.starwars.familytree.model;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.totvs.tjf.core.stereotype.Aggregate;
+
+import br.com.starwars.familytree.enums.Gender;
+
+@Aggregate
+public class FamilyTree extends Person {
+
+	private List<Relative> relatives = new ArrayList<>();
+
+	public FamilyTree(String id, String name, Gender gender) {
+		super(id, name, gender);
+	}
+
+	public FamilyTree(String id, String name, Gender gender, List<Relative> relatives) {
+		super(id, name, gender);
+		this.relatives = relatives;
+	}
+
+	public void addRelative(Relative relative) {
+		this.relatives.add(relative);
+	}
+
+}
+```
+
+#### Repositories
+
+Após criadas as classes das entidades, criaremos os **repository** - responsáveis pela criação e leitura dos registros das tabelas `person` e `familytree` no banco de dados - dentro do pacote `br.com.starwars.familytree.repository`.
+
+**PersonRepository.java**
+
+```java
+package br.com.starwars.familytree.repository;
 
 import javax.persistence.EntityManager;
 
 import org.springframework.stereotype.Repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tjf.sample.github.aggregate.model.AccountModel;
 import com.totvs.tjf.repository.aggregate.CrudAggregateRepository;
 
+import br.com.starwars.familytree.model.Person;
+
 @Repository
-public class AccountRepository extends CrudAggregateRepository<AccountModel, String> {
+public class PersonRepository extends CrudAggregateRepository<Person, String> {
 
-    public AccountRepository(EntityManager em, ObjectMapper mapper) {
-        super(em, mapper);
-    }
+	public PersonRepository(EntityManager em, ObjectMapper mapper) {
+		super(em, mapper);
+	}
 
-    @Override
-    protected String getTableName() {
-        return "sample_account";
-    }
 }
 ```
 
-### Vamos testar?
+**FamilyTreeRepository.java**
 
-Bom, já terminamos nosso *sample* e agora podemos brincar um pouco com o que foi implementado. Para testar, precisaremos de um banco PostgreSQL devidamente configurado. Para isso, temos um arquivo *docker compose* (pasta docker no sample):
+```java
+package br.com.starwars.familytree.repository;
 
-```
-version: '3'
+import javax.persistence.EntityManager;
 
-volumes:
+import org.springframework.stereotype.Repository;
 
-  sample-pg-data: {}
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.totvs.tjf.repository.aggregate.CrudAggregateRepository;
 
-services:
+import br.com.starwars.familytree.model.FamilyTree;
 
-  sample-postgres:
-    image: sameersbn/postgresql:10-1
-    restart: always
-    environment:
-      DB_NAME: sample_account
-      DB_USER: dev-sample
-      DB_PASS: dev-sample
-      PG_PASSWORD: totvs@123
-    ports:
-      - 5432:5432
-    volumes:
-      - sample-pg-data:/var/lib/postgresql
+@Repository
+public class FamilyTreeRepository extends CrudAggregateRepository<FamilyTree, String> {
 
-  sample-pg-admin:
-    image: dpage/pgadmin4
-    environment:
-      PGADMIN_DEFAULT_EMAIL: dev-sample@totvs.com.br
-      PGADMIN_DEFAULT_PASSWORD: dev-sample
-    ports:
-      - 8080:80
-```
+	public FamilyTreeRepository(EntityManager em, ObjectMapper mapper) {
+		super(em, mapper);
+	}
 
-A seguir, precisamos configurar nosso Application.yml (src/main/resources):
-
-```
-spring:
-
-  datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/sample_account
-    username: dev-sample
-    password: dev-sample
-
-  jpa:
-    open-in-view: false
-    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
-    hibernate:
-      naming:
-        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
-        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
-    properties:
-      hibernate:
-        jdbc:
-          lob:
-            non_contextual_creation: true # https://github.com/spring-projects/spring-boot/issues/12007
-
-server:
-  port: 8180
-```
-
-
-Agora vamos testar! Após subir a aplicação, vamos enviar um POST para o endpoint *http://localhost:8080/api/v1/sample/account* com o conteúdo abaixo no body.
-
-```json
-{
-	"accountId":10,
-	"name":"Sample",
-	"address":"ProjetoTestes",
-	"balance":400.0
 }
 ```
-
-Vamos conferir na URL *http://localhost:8080/browser/* e executar um *select* na nossa tabela *sample_account* e esse será o resultado:
-
-![Registros do banco de dados](resources/registro_banco.png)
-
-
-## Finalizando
-
-Pronto! Agora já poderemos implementar as funcionalidades do módulo **TJF Repository Aggregate** nos nossos projetos. Lembrando que as informações técnicas se encontram no próprio README.md do módulo.
-Este exemplo está em nosso repositório no [GitHub](https://github.com/totvs/tjf-repository-aggregate-sample).
