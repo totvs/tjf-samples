@@ -9,10 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.totvs.tjf.core.common.security.SecurityDetails;
 import com.totvs.tjf.core.common.security.SecurityPrincipal;
-import com.totvs.tjf.core.message.TOTVSMessage;
 
+import br.com.star.wars.messaging.events.StarShipArrivedEvent;
 import br.com.star.wars.messaging.infrastructure.messaging.StarShipPublisher;
-import br.com.star.wars.messaging.model.StarShip;
 
 @RestController
 @RequestMapping(path = "/starship")
@@ -20,24 +19,36 @@ public class StarShipController {
 	
 	private StarShipPublisher samplePublisher;
 	
-	public StarShipController(StarShipPublisher samplePublisher) {
-		this.samplePublisher = samplePublisher;
-	}
-	
-	@GetMapping
-    String starShip(@RequestParam("name") String name, @RequestParam("tenant") String tenant) {
-        
-		System.out.println("\nStarship name: " + name);
+	@GetMapping("/Arrived")
+    String starShipArrived(@RequestParam("name") String name, @RequestParam("tenant") String tenant) {
         
 		this.setTenant(tenant);
+        
+		System.out.println("\nStarship name: " + name);
         System.out.println("Current tenant: " + SecurityDetails.getTenant() + "\n");
 
-        StarShip starShip = new StarShip(name);        
-        samplePublisher.publish(starShip);
+        StarShipArrivedEvent starShip = new StarShipArrivedEvent(name);        
+        samplePublisher.publish(starShip, StarShipArrivedEvent.NAME);
         
-        return "The identification of the starship " + name + " of tenant " + tenant + " was sent!";
+        return "The identification of the arrived starship " + name + " of tenant " + tenant + " was sent!";
     }
+/*
+	GenericMessage<T>
 	
+	@GetMapping("/Left")
+    String starShipLeft(@RequestParam("name") String name, @RequestParam("tenant") String tenant) {
+        
+		this.setTenant(tenant);
+        
+		System.out.println("\nStarship name: " + name);
+        System.out.println("Current tenant: " + SecurityDetails.getTenant() + "\n");
+
+        StarShip starShip = new StarShipArrivedEvent(name);        
+        samplePublisher.publish(starShip, StarShipArrivedEvent.NAME);
+        
+        return "The identification of the left starship " + name + " of tenant " + tenant + " was sent!";
+    }
+*/	
 	private void setTenant(String tenant) {
 		
 		SecurityPrincipal principal = new SecurityPrincipal("", tenant, tenant.split("-")[0]);
