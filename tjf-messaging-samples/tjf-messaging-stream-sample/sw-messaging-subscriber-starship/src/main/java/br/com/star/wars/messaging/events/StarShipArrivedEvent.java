@@ -7,6 +7,9 @@ public class StarShipArrivedEvent {
  
 	private String name;
 
+	public StarShipArrivedEvent() {		
+	}
+	
 	public StarShipArrivedEvent(String name) {
 		this.name = name;
 	}

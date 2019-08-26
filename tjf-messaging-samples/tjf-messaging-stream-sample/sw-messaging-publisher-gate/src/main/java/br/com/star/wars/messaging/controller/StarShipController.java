@@ -11,6 +11,7 @@ import com.totvs.tjf.core.common.security.SecurityDetails;
 import com.totvs.tjf.core.common.security.SecurityPrincipal;
 
 import br.com.star.wars.messaging.events.StarShipArrivedEvent;
+import br.com.star.wars.messaging.events.StarShipLeftEvent;
 import br.com.star.wars.messaging.infrastructure.messaging.StarShipPublisher;
 
 @RestController
@@ -19,38 +20,39 @@ public class StarShipController {
 	
 	private StarShipPublisher samplePublisher;
 	
-	@GetMapping("/Arrived")
+	public StarShipController(StarShipPublisher samplePublisher) {
+		this.samplePublisher = samplePublisher;
+	}
+	
+	@GetMapping("/arrived")
     String starShipArrived(@RequestParam("name") String name, @RequestParam("tenant") String tenant) {
         
 		this.setTenant(tenant);
         
-		System.out.println("\nStarship name: " + name);
+		System.out.println("\nStarship arrived name: " + name);
         System.out.println("Current tenant: " + SecurityDetails.getTenant() + "\n");
 
-        StarShipArrivedEvent starShip = new StarShipArrivedEvent(name);        
-        samplePublisher.publish(starShip, StarShipArrivedEvent.NAME);
+        StarShipArrivedEvent starShipEvent = new StarShipArrivedEvent(name);        
+        samplePublisher.publish(starShipEvent, StarShipArrivedEvent.NAME);
         
         return "The identification of the arrived starship " + name + " of tenant " + tenant + " was sent!";
     }
-/*
-	GenericMessage<T>
 	
-	@GetMapping("/Left")
+	@GetMapping("/left")
     String starShipLeft(@RequestParam("name") String name, @RequestParam("tenant") String tenant) {
         
 		this.setTenant(tenant);
         
-		System.out.println("\nStarship name: " + name);
+		System.out.println("\nStarship left name: " + name);
         System.out.println("Current tenant: " + SecurityDetails.getTenant() + "\n");
 
-        StarShip starShip = new StarShipArrivedEvent(name);        
-        samplePublisher.publish(starShip, StarShipArrivedEvent.NAME);
+        StarShipLeftEvent starShipEvent = new StarShipLeftEvent(name);        
+        samplePublisher.publish(starShipEvent, StarShipLeftEvent.NAME);
         
         return "The identification of the left starship " + name + " of tenant " + tenant + " was sent!";
     }
-*/	
+	
 	private void setTenant(String tenant) {
-		
 		SecurityPrincipal principal = new SecurityPrincipal("", tenant, tenant.split("-")[0]);
 	    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(principal, "N/A", null);
 		SecurityContextHolder.getContext().setAuthentication(authentication);
