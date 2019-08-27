@@ -99,9 +99,9 @@ spring:
 
   # Configurações JPA
   jpa:
-	  database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
     properties:
-	    hibernate:
+      hibernate:
         jdbc:
           lob:
             non_contextual_creation: true
@@ -117,15 +117,15 @@ Precisamos também do *script* de criação da tabela no banco de dados. Este *s
 
 ```sql
 CREATE TABLE person (
-	id VARCHAR(36) NOT NULL,
-	data JSONB NOT NULL,
-	PRIMARY KEY(id)
+  id VARCHAR(36) NOT NULL,
+  data JSONB NOT NULL,
+  PRIMARY KEY(id)
 );
 
 CREATE TABLE familytree (
-	id VARCHAR(36) NOT NULL,
-	data JSONB NOT NULL,
-	PRIMARY KEY(id)
+  id VARCHAR(36) NOT NULL,
+  data JSONB NOT NULL,
+  PRIMARY KEY(id)
 );
 ```
 
@@ -152,8 +152,8 @@ package br.com.starwars.familytree.model;
 @AllArgsConstructor
 public abstract class Human {
 
-	private String name;
-	private String gender;
+  private String name;
+  private String gender;
 
 }
 ```
@@ -170,8 +170,8 @@ package br.com.starwars.familytree.model;
 @AllArgsConstructor
 public class Person extends Human {
 
-	@AggregateIdentifier
-	private String id;
+  @AggregateIdentifier
+  private String id;
 
 }
 ```
@@ -187,14 +187,14 @@ package br.com.starwars.familytree.model;
 @AllArgsConstructor
 public class Relative extends Person {
 
-	private String relationship;
+  private String relationship;
 
-	public Relative(String id, String name, String gender, String relationship) {
-		setId(id);
-		setName(name);
-		setGender(gender);
-		setRelationship(relationship);
-	}
+  public Relative(String id, String name, String gender, String relationship) {
+    setId(id);
+    setName(name);
+    setGender(gender);
+    setRelationship(relationship);
+  }
 
 }
 ```
@@ -210,24 +210,24 @@ package br.com.starwars.familytree.model;
 @AllArgsConstructor
 public class FamilyTree {
 
-	@AggregateIdentifier
-	private String id;
-	private Person person;
-	private List<Relative> relatives;
+  @AggregateIdentifier
+  private String id;
+  private Person person;
+  private List<Relative> relatives;
 
-	public FamilyTree(Person person) {
-		this(person, new ArrayList<Relative>());
-	}
+  public FamilyTree(Person person) {
+    this(person, new ArrayList<Relative>());
+  }
 
-	public FamilyTree(Person person, List<Relative> relatives) {
-		this.id = UUID.randomUUID().toString();
-		this.person = person;
-		this.relatives = relatives;
-	}
+  public FamilyTree(Person person, List<Relative> relatives) {
+    this.id = UUID.randomUUID().toString();
+    this.person = person;
+    this.relatives = relatives;
+  }
 
-	public void addRelative(Relative relative) {
-		this.relatives.add(relative);
-	}
+  public void addRelative(Relative relative) {
+    this.relatives.add(relative);
+  }
 
 }
 ```
@@ -244,9 +244,9 @@ package br.com.starwars.familytree.repository;
 @Repository
 public class PersonRepository extends CrudAggregateRepository<Person, String> {
 
-	public PersonRepository(EntityManager em, ObjectMapper mapper) {
-		super(em, mapper);
-	}
+  public PersonRepository(EntityManager em, ObjectMapper mapper) {
+    super(em, mapper);
+  }
 
 }
 ```
@@ -259,9 +259,9 @@ package br.com.starwars.familytree.repository;
 @Repository
 public class FamilyTreeRepository extends CrudAggregateRepository<FamilyTree, String> {
 
-	public FamilyTreeRepository(EntityManager em, ObjectMapper mapper) {
-		super(em, mapper);
-	}
+  public FamilyTreeRepository(EntityManager em, ObjectMapper mapper) {
+    super(em, mapper);
+  }
 
 }
 ```
@@ -277,17 +277,17 @@ package br.com.starwars.familytree.api;
 
 @RestController
 @RequestMapping(path = "api/v1/person",
-	produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+  produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 public class PersonController {
 
-	@Autowired
-	private PersonRepository repository;
+  @Autowired
+  private PersonRepository repository;
 
-	@PostMapping
-	public void insert(@RequestBody Person person) {
-		repository.insert(person);
-	}
-	
+  @PostMapping
+  public void insert(@RequestBody Person person) {
+    repository.insert(person);
+  }
+  
 }
 ```
 
@@ -298,43 +298,43 @@ package br.com.starwars.familytree.api;
 
 @RestController
 @RequestMapping(path = "api/v1/familytree",
-	produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+  produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 public class FamilyTreeController {
 
-	@Autowired
-	private PersonRepository personRepository;
+  @Autowired
+  private PersonRepository personRepository;
 
-	@Autowired
-	private FamilyTreeRepository treeRepository;
+  @Autowired
+  private FamilyTreeRepository treeRepository;
 
-	@PostMapping("person/{personId}/relative/{relativeId}/{relationship}")
-	public void addPerson(@PathVariable String personId, @PathVariable String relativeId,
-			@PathVariable String relationship) {
+  @PostMapping("person/{personId}/relative/{relativeId}/{relationship}")
+  public void addPerson(@PathVariable String personId, @PathVariable String relativeId,
+      @PathVariable String relationship) {
 
-		FamilyTree fm = treeRepository
-				.findOne("data->'person' @> ?", new SqlParameterValue(Types.OTHER, "{\"id\":\"" + personId + "\"}"))
-				.orElse(null);
+    FamilyTree fm = treeRepository
+        .findOne("data->'person' @> ?", new SqlParameterValue(Types.OTHER, "{\"id\":\"" + personId + "\"}"))
+        .orElse(null);
 
-		if (fm == null) {
-			Person person = personRepository.get(personId).orElseThrow();
-			fm = new FamilyTree(person);
-			treeRepository.insert(fm);
-		}
+    if (fm == null) {
+      Person person = personRepository.get(personId).orElseThrow();
+      fm = new FamilyTree(person);
+      treeRepository.insert(fm);
+    }
 
-		Person relativePerson = personRepository.get(relativeId).orElseThrow();
-		Relative relative = new Relative(relativePerson.getId(), relativePerson.getName(), relativePerson.getGender(),
-				relationship);
-		fm.addRelative(relative);
+    Person relativePerson = personRepository.get(relativeId).orElseThrow();
+    Relative relative = new Relative(relativePerson.getId(), relativePerson.getName(), relativePerson.getGender(),
+        relationship);
+    fm.addRelative(relative);
 
-		treeRepository.update(fm);
-	}
+    treeRepository.update(fm);
+  }
 
-	@GetMapping("person/{personId}")
-	public FamilyTree getPersonFamilyTree(@PathVariable String personId) {
-		return treeRepository
-				.findOne("data->'person' @> ?", new SqlParameterValue(Types.OTHER, "{\"id\":\"" + personId + "\"}"))
-				.orElse(null);
-	}
+  @GetMapping("person/{personId}")
+  public FamilyTree getPersonFamilyTree(@PathVariable String personId) {
+    return treeRepository
+        .findOne("data->'person' @> ?", new SqlParameterValue(Types.OTHER, "{\"id\":\"" + personId + "\"}"))
+        .orElse(null);
+  }
 
 }
 ```
@@ -398,9 +398,9 @@ Host: localhost:8080
 Content-Type: application/json
 
 {
-	"id": "1d069927-2c3d-4ebd-8678-0ca5d76bae9a",
-	"name": "Anakin Skywalker",
-	"gender": "male"
+  "id": "1d069927-2c3d-4ebd-8678-0ca5d76bae9a",
+  "name": "Anakin Skywalker",
+  "gender": "male"
 }
 ```
 
@@ -412,9 +412,9 @@ Host: localhost:8080
 Content-Type: application/json
 
 {
-	"id": "b7325afa-8302-4332-8f8a-ddaa063888e2",
-	"name": "Padmé Amidala",
-	"gender": "female"
+  "id": "b7325afa-8302-4332-8f8a-ddaa063888e2",
+  "name": "Padmé Amidala",
+  "gender": "female"
 }
 ```
 
@@ -426,9 +426,9 @@ Host: localhost:8080
 Content-Type: application/json
 
 {
-	"id": "82f0a882-a87c-4ad6-881b-8ee30cb3dbe9",
-	"name": "Luke Skywalker",
-	"gender": "male"
+  "id": "82f0a882-a87c-4ad6-881b-8ee30cb3dbe9",
+  "name": "Luke Skywalker",
+  "gender": "male"
 }
 ```
 
@@ -440,9 +440,9 @@ Host: localhost:8080
 Content-Type: application/json
 
 {
-	"id": "f64e3a46-7624-4764-991a-f12b536d841f",
-	"name": "Leia Organa",
-	"gender": "female"
+  "id": "f64e3a46-7624-4764-991a-f12b536d841f",
+  "name": "Leia Organa",
+  "gender": "female"
 }
 ```
 
@@ -454,9 +454,9 @@ Host: localhost:8080
 Content-Type: application/json
 
 {
-	"id": "bf10bd9d-31fb-44bc-98f5-0e53615ab1bb",
-	"name": "Han Solo",
-	"gender": "male"
+  "id": "bf10bd9d-31fb-44bc-98f5-0e53615ab1bb",
+  "name": "Han Solo",
+  "gender": "male"
 }
 ```
 
@@ -468,9 +468,9 @@ Host: localhost:8080
 Content-Type: application/json
 
 {
-	"id": "320c7cb0-ef2e-4d00-9477-1bb50b16d725",
-	"name": "Ben Solo",
-	"gender": "male"
+  "id": "320c7cb0-ef2e-4d00-9477-1bb50b16d725",
+  "name": "Ben Solo",
+  "gender": "male"
 }
 ```
 
