@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>com.totvs.tjf</groupId>
 		<artifactId>tjf-boot-starter</artifactId>
-		<version>0.2.0-RELEASE</version>
+		<version>1.3.0-RELEASE</version>
 	</parent>
 
 	<groupId>br.com.star.wars.habitants</groupId>
@@ -15,10 +15,6 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Star Wars Habitants (Schema)</name>
 	<description>Serviço de manutenção e consulta dos habitantes do universo Star Wars utilizando a biblioteca TJF Tenant Schema</description>
-
-	<properties>
-		<java.version>11</java.version>
-	</properties>
 
 	<dependencies>
 		<dependency>
@@ -71,5 +67,4 @@
 			<url>http://maven.engpro.totvs.com.br/artifactory/libs-release/</url>
 		</repository>
 	</repositories>
-
 </project>

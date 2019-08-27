@@ -311,5 +311,5 @@ Com isso terminamos nosso _sample_, fique a vontade para enriquecê-lo utilizand
 [hibernate]: https://hibernate.org
 [spring]: https://spring.io
 [@EnableJpaRepositories]: https://docs.spring.io/spring-data/data-jpa/docs/current/api/org/springframework/data/jpa/repository/config/EnableJpaRepositories.html
-[tjf-api-context]: https://tjf.totvs.com.br/framework/tjf-api-context
+[tjf-api-context]: https://tjf.totvs.com.br/wikiV020/tjf-api-context
 [github]: https://github.com/totvs/tjf-api-jpa-sample

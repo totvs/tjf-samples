@@ -469,13 +469,13 @@ X-Planet: Bespin
 
 Com isso terminamos nosso _sample_, fique a vontade para enriquecê-lo utilizando outros recursos propostos pela biblioteca [__Tenant Discriminator__][tjf-tenant-discriminator] e enviar sugestões e melhorias para o [__TOTVS Java Framework__][tjf].
 
-[tjf-tenant-discriminator]: https://tjf.totvs.com.br/framework/tjf-tenant-discriminator
+[tjf-tenant-discriminator]: https://tjf.totvs.com.br/wikiV020/tjf-tenant-discriminator
 [tjf]: https://tjf.totvs.com.br
 [h2]: https://www.h2database.com
 [spring]: https://spring.io
 [spring-initializr]: https://start.spring.io
-[tjf-boot-starter]: https://tjf.totvs.com.br/framework/tjf-boot-starter
+[tjf-boot-starter]: https://tjf.totvs.com.br/wikiV020/tjf-boot-starter
 [hibernate]: https://hibernate.org
-[tenantid]: https://tjf.totvs.com.br/framework/tjf-tenant-discriminator#tenantid
+[tenantid]: https://tjf.totvs.com.br/wikiV020/tjf-tenant-discriminator#entidades-multitenancy
 [flyway]: https://flywaydb.org
 [dto]: https://pt.stackoverflow.com/questions/31362/o-que-é-um-dto

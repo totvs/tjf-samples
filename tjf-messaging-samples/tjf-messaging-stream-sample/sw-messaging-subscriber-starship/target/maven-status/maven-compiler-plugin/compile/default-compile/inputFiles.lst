@@ -1,0 +1,5 @@
+/home/marcos/git/tjf-samples/tjf-messaging-samples/tjf-messaging-stream-sample/sw-messaging-subscriber-starship/src/main/java/br/com/star/wars/messaging/infrastructure/messaging/StarShipSubscriber.java
+/home/marcos/git/tjf-samples/tjf-messaging-samples/tjf-messaging-stream-sample/sw-messaging-subscriber-starship/src/main/java/br/com/star/wars/messaging/model/StarShip.java
+/home/marcos/git/tjf-samples/tjf-messaging-samples/tjf-messaging-stream-sample/sw-messaging-subscriber-starship/src/main/java/br/com/star/wars/messaging/SubscriberApplication.java
+/home/marcos/git/tjf-samples/tjf-messaging-samples/tjf-messaging-stream-sample/sw-messaging-subscriber-starship/src/main/java/br/com/star/wars/messaging/services/StarShipService.java
+/home/marcos/git/tjf-samples/tjf-messaging-samples/tjf-messaging-stream-sample/sw-messaging-subscriber-starship/src/main/java/br/com/star/wars/messaging/infrastructure/messaging/StarShipExchange.java

@@ -1,0 +1,29 @@
+spring:
+  cloud:
+    stream:
+      defaultBinder: rabbit1
+      bindings:
+        starship-input:
+          destination: starship-input
+          group: requests
+        starship-output:
+          destination: starship-input
+      binders:
+        rabbit1:
+          type: rabbit
+          environment:
+            spring:
+              rabbit:
+                host: localhost
+                
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/sw-messaging
+    username: jedi
+    password: jedi@123
+                
+  flyway:
+    schemas: _ALDERAAN
+    
+server:
+  port: 8180

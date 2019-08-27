@@ -1,0 +1,19 @@
+spring:
+
+  # Configurações banco de dados
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/swfamilytree
+    username: postgres
+    password: postgres
+
+  # Configurações JPA
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+        show_sql: true
+        format_sql: true
