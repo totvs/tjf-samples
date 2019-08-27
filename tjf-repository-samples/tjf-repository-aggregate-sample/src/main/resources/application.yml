@@ -1,27 +1,19 @@
-        
 spring:
-  
+
+  # Configurações banco de dados
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/sample_account
-    username: dev-sample
-    password: dev-sample
+    url: jdbc:postgresql://localhost:5432/swfamilytree
+    username: postgres
+    password: postgres
 
+  # Configurações JPA
   jpa:
-    open-in-view: false
     database-platform: org.hibernate.dialect.PostgreSQL95Dialect
-    hibernate:
-      naming:
-        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
-        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
-      ddl-auto: create-drop
-    properties:      
+    properties:
       hibernate:
         jdbc:
           lob:
-            non_contextual_creation: true # https://github.com/spring-projects/spring-boot/issues/12007
+            non_contextual_creation: true
         show_sql: true
         format_sql: true
-    
-server:
-  port: 8180
