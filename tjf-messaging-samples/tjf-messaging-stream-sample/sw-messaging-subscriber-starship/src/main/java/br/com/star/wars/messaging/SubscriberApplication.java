@@ -12,9 +12,4 @@ public class SubscriberApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SubscriberApplication.class, args);
 	}
-	
-	@Bean
-	StarShipService starShipService() {
-		return new StarShipService();
-	}
 }

@@ -2,11 +2,18 @@ package br.com.star.wars.messaging.services;
 
 import java.util.HashMap;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.totvs.tjf.core.common.security.SecurityDetails;
 
 import br.com.star.wars.messaging.model.StarShip;
 
+@Component
 public class StarShipService {
+	
+	@Autowired
+	StarShipRepository starShipRepository;
 
 	private final HashMap<String, String> starShips = new HashMap<>();
 	private final HashMap<String, Integer> counter = new HashMap<>();
