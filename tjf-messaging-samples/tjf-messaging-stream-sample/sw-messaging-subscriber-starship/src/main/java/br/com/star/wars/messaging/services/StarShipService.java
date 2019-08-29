@@ -2,7 +2,6 @@ package br.com.star.wars.messaging.services;
 
 import java.util.HashMap;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.totvs.tjf.core.common.security.SecurityDetails;
@@ -11,13 +10,10 @@ import br.com.star.wars.messaging.model.StarShip;
 
 @Component
 public class StarShipService {
-	
-	@Autowired
-	StarShipRepository starShipRepository;
 
 	private final HashMap<String, String> starShips = new HashMap<>();
 	private final HashMap<String, Integer> counter = new HashMap<>();
-	
+
 	public StarShipService() {
 		starShips.put("millenium falcon", "1");
 		starShips.put("star destroyer", "2");
@@ -30,42 +26,42 @@ public class StarShipService {
 		starShips.put("speeder bike", "9");
 		starShips.put("x-wing", "10");
 	}
-	
+
 	public void arrived(StarShip starShip) {
-		
+
 		String rank = starShips.getOrDefault(starShip.getName(), "Unknown starship!");
-				
+
 		System.out.println("\nStarShip arrived!\n");
 		System.out.println("Current tenant: " + SecurityDetails.getTenant());
 		System.out.println("Starship name: " + starShip.getName());
 		System.out.println("Starship ranking: " + rank);
 		System.out.println("Counter by tenant: " + arrivedCount());
 	}
-	
+
 	public void left(StarShip starShip) {
-		
+
 		String rank = starShips.getOrDefault(starShip.getName(), "Unknown starship!");
-		
+
 		System.out.println("\nStarShip left!\n");
 		System.out.println("Current tenant: " + SecurityDetails.getTenant());
 		System.out.println("Starship name: " + starShip.getName());
 		System.out.println("Starship ranking: " + rank);
 		System.out.println("Counter by tenant: " + leftCount());
 	}
-	
+
 	private int arrivedCount() {
-		
+
 		String tenant = SecurityDetails.getTenant();
 		counter.put(tenant, counter.getOrDefault(tenant, 0) + 1);
-		
-		return counter.get(tenant); 
+
+		return counter.get(tenant);
 	}
-	
+
 	private int leftCount() {
-		
+
 		String tenant = SecurityDetails.getTenant();
 		counter.put(tenant, counter.getOrDefault(tenant, 0) - 1);
-		
-		return counter.get(tenant); 
+
+		return counter.get(tenant);
 	}
 }
