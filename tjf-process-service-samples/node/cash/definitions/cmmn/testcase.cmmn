@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:flowable="http://flowable.org/cmmn" xmlns:cmmndi="http://www.omg.org/spec/CMMN/20151109/CMMNDI" xmlns:dc="http://www.omg.org/spec/CMMN/20151109/DC" xmlns:di="http://www.omg.org/spec/CMMN/20151109/DI" targetNamespace="http://www.flowable.org/casedef">
+  <case id="RequestCheckCase" name="Test" flowable:initiatorVariableName="initiator">
+    <documentation>Teste de CMMN</documentation>
+    <casePlanModel id="container" flowable:includeInStageOverview="false">
+      
+      <planItem id="planItem1" name="TRUE" definitionRef="CaseTrueCommand">
+      </planItem>
+      
+      <planItem id="planItem2" name="FALSE" definitionRef="CaseFalseCommand">
+      </planItem>
+      
+      <task id="CaseTrueCommand" name="TRUE">
+        <extensionElements>
+          <flowable:planItemLifecycleListener sourceState="available" targetState="active" delegateExpression="${processWorker}"></flowable:planItemLifecycleListener>
+        </extensionElements>
+      </task>
+      
+      <humanTask id="CaseFalseCommand" name="FALSE" flowable:candidateGroups="manager">
+        <extensionElements>
+          <flowable:taskListener event="create" delegateExpression="${processWorker}"></flowable:taskListener>
+        </extensionElements>
+      </humanTask>      
+      
+    </casePlanModel>
+  </case>
+</definitions>
