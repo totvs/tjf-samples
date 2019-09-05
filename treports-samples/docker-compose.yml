@@ -1,4 +1,5 @@
-# How To TReports - Instalação via Docker - https://youtu.be/Al9NoY58DJs
+# How To TReports - Instalação via Docker: https://youtu.be/Al9NoY58DJs
+# TReports - Provedor de API: https://www.facebook.com/totvsdevelopers/videos/2355074714610562/?q=treports&epa=SEARCH_BOX
 version: '3.6'
 
 networks:
@@ -12,10 +13,10 @@ services:
       context: .
     environment:
       DOCKER_DBPROVIDER: "SqlServer"
-      DOCKER_CONNECTIONSTRING: "Server=db;database=TRFDb_Docker;User=sa/Password=012345678@totvs.com.br"
+      DOCKER_CONNECTIONSTRING: "Server=db;database=TRFDb_Docker;User=sa;Password=012345678@totvs123"
       DOCKER_JOB_DELAYTIME: "1"
       DOCKER_JOB_LOOPINTERATIONS: "10"
-      DOCKER_LICENSE_SERVERIP: "10.31.0.241"
+      DOCKER_LICENSE_SERVERIP: "10.80.128.51"
       DOCKER_LICENSE_SERVERPORT: "5555"
       DOCKER_HANGFIRE_USEHANGFIRE: "true"
       DOCKER_CLIENTSECRET: "totvs@123"
@@ -35,7 +36,7 @@ services:
     environment:
       DefaultSchema: "dbo"
       DefaultConnectionString: "SqlServer"
-      ConnectionString__SqlServer: "Data Source=db;User Id=sa;Password=012345678@totvs123"
+      ConnectionStrings__SqlServer: "Data Source=db;User Id=sa;Password=012345678@totvs123"
       RunMigrator: "T"
       Clients__0__ClientId: "rac_oidc"
       Clients__0__ClientName: "Client OIDC padrão do RAC"
@@ -62,10 +63,10 @@ services:
       Clients__1__GrantTypes__0: "Hybrid"
       Clients__1__GrantTypes__1: "ClientCredentials"
       Clients__1__ExpirationTimeInMinutes: "20"
-      Clients__1__RedirectUrls__0: "http?://localhost:7017/totvs.rac/auth-callback"
-      Clients__1__RedirectUrls__1: "http?://localhost:7017/totvs.rac/assets/silent-renew.html"
-      Clients__1__RedirectUrls__2: "http?://*.localhost:7017/totvs.rac/auth-callback"
-      Clients__1__RedirectUrls__3: "http?://*.localhost:7017/totvs.rac/assets/silent-renew.html"
+      Clients__1__RedirectUrls__0: "http?://localhost:7017/auth-callback"
+      Clients__1__RedirectUrls__1: "http?://localhost:7017/assets/silent-renew.html"
+      Clients__1__RedirectUrls__2: "http?://*.localhost:7017/auth-callback"
+      Clients__1__RedirectUrls__3: "http?://*.localhost:7017/assets/silent-renew.html"
       Clients__1__LogoutUrls__0: "http?://localhost:7017"
       Clients__1__LogoutUrls__1: "http?://*.localhost:7017"
       Clients__1__Secrets__0__Description: "Senha Padrão (totvs@123)"
@@ -81,11 +82,13 @@ services:
      - "5009:80"
     networks:
      - docker-network-trep
+    depends_on:
+     - db
 
   db:
     image: mcr.microsoft.com/mssql/server:2017-CU11-ubuntu
     environment:
-      SA_PASSWORK: "012345678@totvs123"
+      SA_PASSWORD: "012345678@totvs123"
       ACCEPT_EULA: "Y"
     ports:
      - "14336:1433"
