@@ -22,9 +22,6 @@ public class CostCentersController {
 	@GetMapping
 	public ApiCollectionResponse<CostCenter> getCostCenters(ApiFieldRequest fieldRequest, ApiPageRequest pageRequest,
 			ApiSortRequest sortRequest) {
-
-		System.out.println("TREPORT - Cost");
-
 		return costCenterRepository.findAllProjected(fieldRequest, pageRequest, sortRequest);
 	}
 }

@@ -11,7 +11,7 @@ public class CostCenter {
 	@Id
 	String code;
 	String companyId;
-	Situation registerSituation;
+	String registerSituation;
 	String name;
 	String shortCode;
 	boolean sped;
@@ -19,11 +19,11 @@ public class CostCenter {
 	public CostCenter() {
 	}
 
-	public CostCenter(String companyId, String code, Situation registerSituation, String name, String shortCode,
+	public CostCenter(String companyId, String code, Situation situation, String name, String shortCode,
 			boolean sped) {
 		this.companyId = companyId;
 		this.code = code;
-		this.registerSituation = registerSituation;
+		this.registerSituation = situation.value;
 		this.name = name;
 		this.shortCode = shortCode;
 		this.sped = sped;
@@ -40,7 +40,7 @@ public class CostCenter {
 	}
 
 	@JsonProperty("RegisterSituation")
-	public Situation getRegisterSituation() {
+	public String getRegisterSituation() {
 		return registerSituation;
 	}
 
@@ -62,10 +62,10 @@ public class CostCenter {
 	public enum Situation {
 		ACTIVE("active"), INACTIVE("Inactive");
 
-		public String situation;
+		public String value;
 
-		Situation(String situation) {
-			this.situation = situation;
+		Situation(String value) {
+			this.value = value;
 		}
 	}
 }
