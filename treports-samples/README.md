@@ -6,10 +6,9 @@ _Sample_ da utilização do [__TReports__][treports] com aplicações contruidas
 
 Uma das maneiras de integrar o [TReports][treports] à aplicação é fazendo acesso às API, para isso as API devem estar cadastradas no [API reference TOTVS][api].
 
-> **Observação:** mais informação de como construir as API e como disponibiliza-las pode ser encontrada na [página do TTalk no TDN][ttalk].
+> **Observação:** mais informações de como construir as API e como disponibiliza-las no portal pode ser encontrada na [página do TTalk no TDN][ttalk].
 
 # Começando
-
 
 
 
@@ -118,7 +117,9 @@ Para subir o ambiente do TReports use o comando abaixo:
 $ docker-compose up -d -f docker-compose.yml
 ```
 
-Pricisamos configurar o RAC antes de continuar, acesse o RAC pela URL http://localhost:5009/, tenant `treports` usuário `admin` e senha `totvs@123`. Crie um novo perfil e de permissão às ao TReports, depois altere o usuário e acrecente o perfil que foi criado.
+> **Observação:** Caso queira mais informações e dicas de como sumir no docker o TReports e os serviços que ele nescessita, você pode encontrar no [canal de How To da TOTVS][howtotreportsdocker] no Youtube.
+
+Pricisamos configurar o RAC antes de continuar, acesse o RAC pela URL http://localhost:5009/, tenant `treports` usuário `admin` e senha `totvs@123`. Crie um novo perfil e de permissão a ele nas features do TReports, depois altere o usuário e acrecente a ele o perfil que foi criamos.
 
 No nosso exemplo iremos utilizar algumas definições de API prontas de outras aplicações.
 
@@ -127,3 +128,4 @@ No nosso exemplo iremos utilizar algumas definições de API prontas de outras a
 [api]: https://api.totvs.com.br
 [ttalk]: https://tdn.totvs.com/display/framework/T-TALK
 [docker]: http://docker.com
+[howtotreportsdocker]: https://www.youtube.com/watch?v=Al9NoY58DJs&feature=youtu.be
