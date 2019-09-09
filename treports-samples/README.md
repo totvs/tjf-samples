@@ -10,7 +10,82 @@ Uma das maneiras de integrar o [TReports][treports] à aplicação é fazendo ac
 
 # Começando
 
+No nosso exemplo usaremos a definição de uma API simples que já foi disponibilizada no portal, usaremos a API [Centro de Custo - 1.000][apicostcenter]. No pacote `com.tjf.samples.treports.model` crie a classe _CostCenter_ que irá representar nosso modelo:
 
+_CostCenter.java_
+
+```java
+package com.tjf.samples.treports.model;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@Entity
+public class CostCenter {
+
+	@Id
+	String code;
+	String companyId;
+	String registerSituation;
+	String name;
+	String shortCode;
+	boolean sped;
+
+	public CostCenter() {
+	}
+
+	public CostCenter(String companyId, String code, Situation situation, String name, String shortCode, boolean sped) {
+		this.companyId = companyId;
+		this.code = code;
+		this.registerSituation = situation.value;
+		this.name = name;
+		this.shortCode = shortCode;
+		this.sped = sped;
+	}
+
+	@JsonProperty("CompanyId")
+	public String getCompanyId() {
+		return companyId;
+	}
+
+	@JsonProperty("Code")
+	public String getCode() {
+		return code;
+	}
+
+	@JsonProperty("RegisterSituation")
+	public String getRegisterSituation() {
+		return registerSituation;
+	}
+
+	@JsonProperty("Name")
+	public String getName() {
+		return name;
+	}
+
+	@JsonProperty("ShortCode")
+	public String getShortCode() {
+		return shortCode;
+	}
+
+	@JsonProperty("SPED")
+	public boolean isSped() {
+		return sped;
+	}
+
+	public enum Situation {
+		ACTIVE("active"), INACTIVE("Inactive");
+
+		public String value;
+
+		Situation(String value) {
+			this.value = value;
+		}
+	}
+}
+```
 
 Usaremos o [Docker][docker] para rodar o TReports, segue abaixo o docker-compose.yml com as definições necessárias para rodar as imagens do RAC, do TReports e do banco de dados que precisáremos para execução da nossa instancia do TReports.
 
@@ -128,4 +203,5 @@ No nosso exemplo iremos utilizar algumas definições de API prontas de outras a
 [api]: https://api.totvs.com.br
 [ttalk]: https://tdn.totvs.com/display/framework/T-TALK
 [docker]: http://docker.com
-[howtotreportsdocker]: https://www.youtube.com/watch?v=Al9NoY58DJs&feature=youtu.be
+[howtotreportsdocker]: https://www.youtube.com/watch?v=Al9NoY58DJs
+[apicostcenter]: https://api.totvs.com.br/apidetails/CostCenter_v1_000.json

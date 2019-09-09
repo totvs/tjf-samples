@@ -72,11 +72,33 @@ services:
       Clients__1__Secrets__0__Description: "Senha Padrão (totvs@123)"
       Clients__1__Secrets__0__Value: "totvs@123"
 
+      Clients__2__ClientId: "js_oidc_tjf"
+      Clients__2__ClientName: "js_oidc_tjf"
+      Clients__2__ProductName: "TJF"
+      Clients__2__GrantTypes__0: "Hybrid"
+      Clients__2__GrantTypes__1: "ClientCredentials"
+      Clients__2__ExpirationTimeInMinutes: "20"
+      Clients__2__RedirectUrls__0: "http?://localhost:8880/auth-callback"
+      Clients__2__RedirectUrls__1: "http?://localhost:8880/assets/silent-renew.html"
+      Clients__2__RedirectUrls__2: "http?://*.localhost:8880/auth-callback"
+      Clients__2__RedirectUrls__3: "http?://*.localhost:8880/assets/silent-renew.html"
+      Clients__2__LogoutUrls__0: "http?://localhost:8880"
+      Clients__2__LogoutUrls__1: "http?://*.localhost:8880"
+      Clients__2__Secrets__0__Description: "Senha Padrão (totvs@123)"
+      Clients__2__Secrets__0__Value: "totvs@123"
+
       Tenants__0__TenantName: "treports"
       Tenants__0__Name: "TReports"
       Tenants__0__CNPJ: "13030973000115"
       Tenants__0__Products__0__ProductName: "TOTVS RAC"
       Tenants__0__Products__1__ProductName: "TReports"
+
+      Tenants__1__TenantName: "tjf"
+      Tenants__1__Name: "TOTVS Java Framework"
+      Tenants__1__CNPJ: "13030973000115"
+      Tenants__1__Products__0__ProductName: "TOTVS RAC"
+      Tenants__1__Products__1__ProductName: "TJF"
+      
       HostUrl: "http://*.localhost:5009/totvs.rac"
     ports:
      - "5009:80"
