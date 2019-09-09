@@ -1,6 +1,7 @@
 # TReports Sample
 
-_Sample_ da utilização do [__TReports__][treports] com aplicações contruidas usando o [__TOTVS Java Framework__][tjf].
+_Sample_ da utilização do [__TReports__][treports] com aplicação contruidas usando o [__TOTVS Java Framework__][tjf]
+e com segurança usando o RAC para autenticação.
 
 ## Contexto
 
@@ -10,18 +11,126 @@ Uma das maneiras de integrar o [TReports][treports] à aplicação é fazendo ac
 
 # Começando
 
-No nosso exemplo usaremos a definição de uma API simples que já foi disponibilizada no portal, usaremos a API [Centro de Custo - 1.000][apicostcenter]. No pacote `com.tjf.samples.treports.model` crie a classe _CostCenter_ que irá representar nosso modelo:
+Crie um novo maven project, no pom.xml do projeto acresente o parent tjf-boot-starter e o nosso repositório:
+
+```xml
+	<parent>
+		<groupId>com.totvs.tjf</groupId>
+		<artifactId>tjf-boot-starter</artifactId>
+		<version>1.4.0-RELEASE</version>
+	</parent>
+
+  <repositories>
+		<repository>
+			<id>central-release</id>
+			<name>TOTVS Java Framework: Release</name>
+			<url>http://maven.engpro.totvs.com.br/artifactory/libs-release</url>
+		</repository>
+	</repositories>
+```
+
+Ainda no pom.xml acresente as pedencias que iremos precisar:
+* spring-boot-starter-web: Para fazermos requisições rest para a nossa aplicação.
+* tjf-api-core: Módulo do TJF que torna nassas API no padrão de API da TOTVS.
+* tjf-api-jpa: Módulo do TJF com métodos de consulta a banco de dados e que em conjunto com o 
+tjf-api-core já retorna os dados no padrão de API da TOTVS.
+* tjf-security-web: Módulo do TJF que implementa segurança em nossa aplicação e integra ela a serviços de autenticação, que no nosso caso será o RAC.
+* h2: Um banco de dados em memória que usaremos para fazer a persistencia e leitura dos dados.
+
+```xml
+	<dependencies>
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<!-- TJF -->
+		<dependency>
+			<groupId>com.totvs.tjf</groupId>
+			<artifactId>tjf-api-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.totvs.tjf</groupId>
+			<artifactId>tjf-api-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.totvs.tjf</groupId>
+			<artifactId>tjf-security-web</artifactId>
+		</dependency>
+		
+		<!-- Database -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+	</dependencies>
+```
+
+## Propriedades
+
+Na pasta resources do projeto crie o arquivo application.yml, com as seguintes propriedades:
+
+```yml
+spring:
+  datasource:
+    url: jdbc:h2:file:~/h2db
+    driverClassName: org.h2.Driver
+    username: sa
+    password: 
+    initialization-mode: always
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create
+
+server:
+  port: 8880
+  
+security:
+  oauth2:
+    resource:
+      id: authorization_api
+      jwk:
+        key-set-uri: http://localhost:5009/totvs.rac/.well-known/openid-configuration/jwks
+```
+
+Ainda na pasta, crie o arquivo data.sql, ele será automaticamente executado para carregar os registros no nosso banco de dados na inicialização da aplicação.
+
+```sql
+insert into COST_CENTER values ('1', '1', 'one', 'active', 'o', true);
+insert into COST_CENTER values ('2', '2', 'two', 'inactive', 't', false);
+insert into COST_CENTER values ('3', '3', 'three', 'active', 'th', true);
+insert into COST_CENTER values ('4', '1', 'four', 'inactive', 'f', false);
+insert into COST_CENTER values ('5', '2', 'five', 'active', 'fi', true);
+insert into COST_CENTER values ('6', '3', 'six', 'inactive', 's', false);
+```
+
+## Main
+
+No pacote `com.tjf.samples.treports` crie a clase TreportsApplication, que será nossa classe main.
+
+```java
+@SpringBootApplication
+@EnableJpaRepositories(repositoryBaseClass = ApiJpaRepositoryImpl.class)
+public class TreportsApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(TreportsApplication.class, args);
+	}
+}
+```
+
+## Modelo
+
+No nosso exemplo usaremos a definição de uma API simples que já foi disponibilizada no [portal de api][api], usaremos a API [Centro de Custo - 1.000][apicostcenter]. 
+
+No pacote `com.tjf.samples.treports.model` crie a classe _CostCenter_ que irá representar nosso modelo do Centro de Custo:
 
 _CostCenter.java_
 
 ```java
-package com.tjf.samples.treports.model;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 @Entity
 public class CostCenter {
 
@@ -87,10 +196,39 @@ public class CostCenter {
 }
 ```
 
-Usaremos o [Docker][docker] para rodar o TReports, segue abaixo o docker-compose.yml com as definições necessárias para rodar as imagens do RAC, do TReports e do banco de dados que precisáremos para execução da nossa instancia do TReports.
+Crie também no mesmo pacote o _repository_ que irá fazer as consultas à entidade CostCenter.
+
+```java
+public interface CostCenterRepository extends JpaRepository<CostCenter, String>, ApiJpaRepository<CostCenter>{}
+```
+
+## API
+
+Crie a classe CostCentersController no pacote `com.tjf.samples.treports.controller`, nela teremos o endpoint `/api/ctb/v1/costcenters`, conforme está definido na API [Centro de Custo - 1.000][apicostcenter].
+
+_CostCentersController.java_
+```java
+@RestController
+@RequestMapping(path = "/api/ctb/v1/costcenters", produces = "application/json")
+public class CostCentersController {
+
+	@Autowired
+	CostCenterRepository costCenterRepository;
+
+	@GetMapping
+	public ApiCollectionResponse<CostCenter> getCostCenters(ApiFieldRequest fieldRequest, ApiPageRequest pageRequest,
+			ApiSortRequest sortRequest) {
+		return costCenterRepository.findAllProjected(fieldRequest, pageRequest, sortRequest);
+	}
+}
+```
+
+# Ambiente
+
+Usaremos o [Docker][docker] para rodar o TReports, segue abaixo o docker-compose.yml com as definições necessárias para rodar as imagens do RAC, já configurado para o TReports e para nossa aplicação, do TReports e do banco de dados que precisáremos para execução da nossa instancia do TReports e do RAC.
 
 ```yml
-version: '3.6'
+version: `3.6`
 
 networks:
   docker-network-trep:
@@ -162,11 +300,33 @@ services:
       Clients__1__Secrets__0__Description: "Senha Padrão (totvs@123)"
       Clients__1__Secrets__0__Value: "totvs@123"
 
+      Clients__2__ClientId: "js_oidc_tjf"
+      Clients__2__ClientName: "js_oidc_tjf"
+      Clients__2__ProductName: "TJF"
+      Clients__2__GrantTypes__0: "Hybrid"
+      Clients__2__GrantTypes__1: "ClientCredentials"
+      Clients__2__ExpirationTimeInMinutes: "20"
+      Clients__2__RedirectUrls__0: "http?://localhost:8880/auth-callback"
+      Clients__2__RedirectUrls__1: "http?://localhost:8880/assets/silent-renew.html"
+      Clients__2__RedirectUrls__2: "http?://*.localhost:8880/auth-callback"
+      Clients__2__RedirectUrls__3: "http?://*.localhost:8880/assets/silent-renew.html"
+      Clients__2__LogoutUrls__0: "http?://localhost:8880"
+      Clients__2__LogoutUrls__1: "http?://*.localhost:8880"
+      Clients__2__Secrets__0__Description: "Senha Padrão (totvs@123)"
+      Clients__2__Secrets__0__Value: "totvs@123"
+
       Tenants__0__TenantName: "treports"
       Tenants__0__Name: "TReports"
       Tenants__0__CNPJ: "13030973000115"
       Tenants__0__Products__0__ProductName: "TOTVS RAC"
       Tenants__0__Products__1__ProductName: "TReports"
+
+      Tenants__1__TenantName: "tjf"
+      Tenants__1__Name: "TOTVS Java Framework"
+      Tenants__1__CNPJ: "13030973000115"
+      Tenants__1__Products__0__ProductName: "TOTVS RAC"
+      Tenants__1__Products__1__ProductName: "TJF"
+      
       HostUrl: "http://*.localhost:5009/totvs.rac"
     ports:
      - "5009:80"
@@ -188,15 +348,33 @@ services:
 
 Para subir o ambiente do TReports use o comando abaixo:
 
-```shell
-$ docker-compose up -d -f docker-compose.yml
+```sh
+$ docker-compose up -d -f 'docker-compose.yml'
 ```
 
-> **Observação:** Caso queira mais informações e dicas de como sumir no docker o TReports e os serviços que ele nescessita, você pode encontrar no [canal de How To da TOTVS][howtotreportsdocker] no Youtube.
+> **Observação:** Caso queira mais informações e dicas de como sumir no docker o TReports e os serviços que ele nescessita, você pode encontrar no vídeo [How To TReports - Instalação via Docker][howtotreportsdocker] no canal [How To - TReports][howtotreports] no Youtube.
 
-Pricisamos configurar o RAC antes de continuar, acesse o RAC pela URL http://localhost:5009/, tenant `treports` usuário `admin` e senha `totvs@123`. Crie um novo perfil e de permissão a ele nas features do TReports, depois altere o usuário e acrecente a ele o perfil que foi criamos.
+# Configuração 
 
-No nosso exemplo iremos utilizar algumas definições de API prontas de outras aplicações.
+Pricisamos configurar o RAC antes de continuar, acesse o RAC pela URL http://localhost:5009/, tenant `treports` usuário `admin` e senha `totvs@123`. Crie um novo perfil e de permissão a ele nas features do TReports, depois altere o usuário e acrecente a ele o perfil que criamos.
+
+Agora acesse o TReports pela URL http://localhost:7017/, usuário `admin` e senha `totvs@123`. Crie um novo provedor de acesso com nome `TJF`, tipo do provedor `Api padrão Totvs`, fonte de dados `Api Git`, protocolo `http`, host `172.20.0.1` **¹**, porta `8880`, tipo de autenticação `OpenID`, Client ID	 `js_oidc_tjf`, Client Secret `totvs@123`, Access Token URL `http://rac/totvs.rac/connect/token` e Scope `authorization_api`.
+
+> **¹ Observação:** O ip do host no container do TReports pode mudar dependendo do seu docker, geralmente é `192.168.0.1` ou `172.20.0.1`, mas você pode rodar esse comando para identificar o ip: 
+
+```sh
+sudo docker inspect -f '{{range .NetworkSettings.Networks}}{{.Gateway}}{{end}}' treports-samples_treports_1
+```
+
+## Relatório
+
+Em relatórios no TReports importe o arquivo RelCostCenters.trep, informe o provedor que criamos.
+
+> **Observação:** Para mais detalhes de como desenvolver o relatório e de como criar o provedor de dados, sugiro o vídeo [TReports - Provedor de API][treportsprovedorapi] da nossa comunidade [Totvs Developers][totvsdevelopers] no Facebook, ele demostra a criação de um relatório com base em um provedor API, ou no canal [How To - TReports][howtotreports] no Youtube.
+
+# Vamos testar!
+
+Para testar execute nossa aplicação de exemplo, após ele concluir a inicialização vá no relatório RelCostCenters que importamos e nas opções clique em `Gerar`, ele irá automaticamente realizar a autenticação com o RAC e com nossa aplicação e irá gerar o relatório com os dados retornados por nossa API.
 
 [tjf]: https://tjf.totvs.com.br
 [treports]: https://treports.totvs.com.br
@@ -205,3 +383,6 @@ No nosso exemplo iremos utilizar algumas definições de API prontas de outras a
 [docker]: http://docker.com
 [howtotreportsdocker]: https://www.youtube.com/watch?v=Al9NoY58DJs
 [apicostcenter]: https://api.totvs.com.br/apidetails/CostCenter_v1_000.json
+[treportsprovedorapi]: https://www.facebook.com/totvsdevelopers/videos/2355074714610562/?q=treports&epa=SEARCH_BOX
+[totvsdevelopers]: https://www.facebook.com/totvsdevelopers
+[howtotreports]: https://www.youtube.com/playlist?list=PLXa8l0dq5zRntVbTY2aORvbk2Bp1LdNnj
