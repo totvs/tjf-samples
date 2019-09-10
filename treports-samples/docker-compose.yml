@@ -1,5 +1,6 @@
 # How To TReports - Instalação via Docker: https://youtu.be/Al9NoY58DJs
 # TReports - Provedor de API: https://www.facebook.com/totvsdevelopers/videos/2355074714610562/?q=treports&epa=SEARCH_BOX
+# RAC - http://localhost:5009/totvs.rac/.well-known/openid-configuration
 version: '3.6'
 
 networks:

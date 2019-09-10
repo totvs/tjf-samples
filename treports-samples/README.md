@@ -5,13 +5,13 @@ e com segurança usando o RAC para autenticação.
 
 ## Contexto
 
-Uma das maneiras de integrar o [TReports][treports] à aplicação é fazendo acesso às API, para isso as API devem estar cadastradas no [API reference TOTVS][api].
+Uma das maneiras de integrar o [TReports][treports] à aplicação é fazendo acesso às API, para isso as API devem estar cadastradas no portal [API reference TOTVS][api].
 
-> **Observação:** mais informações de como construir as API e como disponibiliza-las no portal pode ser encontrada na [página do TTalk no TDN][ttalk].
+> **Observação:** mais informações de como construir as API e como disponibiliza-las no portal podem ser encontradas na página [TTalk no TDN][ttalk].
 
 # Começando
 
-Crie um novo maven project, no pom.xml do projeto acresente o parent tjf-boot-starter e o nosso repositório:
+Crie um novo maven project, no pom.xml do projeto acresente o parent tjf-boot-starter e o nosso repositório de pacotes:
 
 ```xml
 	<parent>
@@ -31,10 +31,9 @@ Crie um novo maven project, no pom.xml do projeto acresente o parent tjf-boot-st
 
 Ainda no pom.xml acresente as pedencias que iremos precisar:
 * spring-boot-starter-web: Para fazermos requisições rest para a nossa aplicação.
-* tjf-api-core: Módulo do TJF que torna nassas API no padrão de API da TOTVS.
-* tjf-api-jpa: Módulo do TJF com métodos de consulta a banco de dados e que em conjunto com o 
-tjf-api-core já retorna os dados no padrão de API da TOTVS.
-* tjf-security-web: Módulo do TJF que implementa segurança em nossa aplicação e integra ela a serviços de autenticação, que no nosso caso será o RAC.
+* tjf-api-core: Módulo do TJF que torna nossas API no padrão de API da TOTVS.
+* tjf-api-jpa: Módulo do TJF com métodos de consulta a banco de dados e que em conjunto com o tjf-api-core já retorna os dados no padrão de API da TOTVS.
+* tjf-security-web: Módulo do TJF que implementa segurança em nossa aplicação e a integra a um serviço de autenticação, no nosso exemplo será o RAC.
 * h2: Um banco de dados em memória que usaremos para fazer a persistencia e leitura dos dados.
 
 ```xml
@@ -96,7 +95,7 @@ security:
         key-set-uri: http://localhost:5009/totvs.rac/.well-known/openid-configuration/jwks
 ```
 
-Ainda na pasta, crie o arquivo data.sql, ele será automaticamente executado para carregar os registros no nosso banco de dados na inicialização da aplicação.
+Ainda na pasta, crie o arquivo data.sql, ele será automaticamente executado para popular nosso banco de dados na inicialização da aplicação.
 
 ```sql
 insert into COST_CENTER values ('1', '1', 'one', 'active', 'o', true);
@@ -126,7 +125,7 @@ public class TreportsApplication {
 
 No nosso exemplo usaremos a definição de uma API simples que já foi disponibilizada no [portal de api][api], usaremos a API [Centro de Custo - 1.000][apicostcenter]. 
 
-No pacote `com.tjf.samples.treports.model` crie a classe _CostCenter_ que irá representar nosso modelo do Centro de Custo:
+No pacote `com.tjf.samples.treports.model` crie a classe _CostCenter_ que irá representar nosso modelo `Centro de Custo`:
 
 _CostCenter.java_
 
@@ -198,6 +197,7 @@ public class CostCenter {
 
 Crie também no mesmo pacote o _repository_ que irá fazer as consultas à entidade CostCenter.
 
+_CostCenterRepository.java_
 ```java
 public interface CostCenterRepository extends JpaRepository<CostCenter, String>, ApiJpaRepository<CostCenter>{}
 ```
@@ -358,9 +358,9 @@ $ docker-compose up -d -f 'docker-compose.yml'
 
 Pricisamos configurar o RAC antes de continuar, acesse o RAC pela URL http://localhost:5009/, tenant `treports` usuário `admin` e senha `totvs@123`. Crie um novo perfil e de permissão a ele nas features do TReports, depois altere o usuário e acrecente a ele o perfil que criamos.
 
-Agora acesse o TReports pela URL http://localhost:7017/, usuário `admin` e senha `totvs@123`. Crie um novo provedor de acesso com nome `TJF`, tipo do provedor `Api padrão Totvs`, fonte de dados `Api Git`, protocolo `http`, host `172.20.0.1` **¹**, porta `8880`, tipo de autenticação `OpenID`, Client ID	 `js_oidc_tjf`, Client Secret `totvs@123`, Access Token URL `http://rac/totvs.rac/connect/token` e Scope `authorization_api`.
+Agora acesse o TReports pela URL http://localhost:7017/, usuário `admin` e senha `totvs@123`. Crie um novo provedor de dados com nome `TJF`, tipo do provedor `Api padrão Totvs`, fonte de dados `Api Git`, protocolo `http`, host `172.20.0.1` **¹**, porta `8880`, tipo de autenticação `OpenID`, Client ID	 `js_oidc_tjf`, Client Secret `totvs@123`, Access Token URL `http://rac/totvs.rac/connect/token` e Scope `authorization_api`.
 
-> **¹ Observação:** O ip do host no container do TReports pode mudar dependendo do seu docker, geralmente é `192.168.0.1` ou `172.20.0.1`, mas você pode rodar esse comando para identificar o ip: 
+> **¹ Observação:** O ip do host no container do TReports pode variar dependendo do seu docker, geralmente é `192.168.0.1` ou `172.20.0.1`, mas você pode rodar esse comando para identificar o ip: 
 
 ```sh
 sudo docker inspect -f '{{range .NetworkSettings.Networks}}{{.Gateway}}{{end}}' treports-samples_treports_1
@@ -368,9 +368,9 @@ sudo docker inspect -f '{{range .NetworkSettings.Networks}}{{.Gateway}}{{end}}' 
 
 ## Relatório
 
-Em relatórios no TReports importe o arquivo RelCostCenters.trep, informe o provedor que criamos.
+Abra relatórios no menu do TReports, importe o arquivo RelCostCenters.trep, informe como provedor o que criamos.
 
-> **Observação:** Para mais detalhes de como desenvolver o relatório e de como criar o provedor de dados, sugiro o vídeo [TReports - Provedor de API][treportsprovedorapi] da nossa comunidade [Totvs Developers][totvsdevelopers] no Facebook, ele demostra a criação de um relatório com base em um provedor API, ou no canal [How To - TReports][howtotreports] no Youtube.
+> **Observação:** Para mais detalhes de como desenvolver o relatório e de como criar o provedor de dados, sugiro o vídeo [TReports - Provedor de API][treportsprovedorapi] da nossa comunidade [Totvs Developers][totvsdevelopers] no Facebook, ele demostra a criação de um relatório com base em um provedor API. Você pode encontrar mais material também nosso canal [How To - TReports][howtotreports] no Youtube.
 
 # Vamos testar!
 
