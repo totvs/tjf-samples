@@ -19,15 +19,21 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
+
+
 		<!-- TJF -->
 		<dependency>
 			<groupId>com.totvs.tjf</groupId>
 			<artifactId>tjf-security-web</artifactId>
 		</dependency>
+
+
+
 		<dependency>
 			<groupId>com.totvs.tjf</groupId>
 			<artifactId>tjf-api-core</artifactId>
 		</dependency>
+		
 		<dependency>
 			<groupId>com.totvs.tjf</groupId>
 			<artifactId>tjf-api-jpa</artifactId>
