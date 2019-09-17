@@ -18,7 +18,7 @@ Teremos como resultado violações tratadas com o seguinte formato.
     "details": [
         {
             "code": "Starship.description.Size",
-            "message": "A descrição da nave deve ser menor que 1 ou maior que 15",
+            "message": "A descrição da nave não deve ser menor que 1 ou maior que 15",
             "detailedMessage": "description: A sucata mais veloz da galáxia"
         }
     ]
@@ -183,7 +183,7 @@ public class StarshipController {
 
 A mágica acontece dentro do método `createStarship` que possui a validação dos objetos que dispara nossa exceção criada anteriormente.
 
-Agora antes de testarmos, precisamos criar as mensagens de validação e exceção das classes `Starship` e  `StarshipCreateConstraintException`. Para isso crie a seguinte estrutura de mensagens, conforme a documentação do modulo [tjf-api-core](https://tjf.totvs.com.br/wiki/tjf-api-core).
+Agora antes de testarmos, precisamos criar as mensagens de validação e exceção das classes `Starship` e  `StarshipCreateConstraintException`. Para isso crie a seguinte estrutura de mensagens, conforme a documentação do modulo [tjf-api-core](https://tjf.totvs.com.br/wiki/tjf-api-core). Lembre-se que conforme a documentação do modulo [tjf-i18n-core](https://tjf.totvs.com.br/wiki/v1.5.0/tjf-i18n-core) as mensagens deve seguir o padrão de caracteres *unicode*.
 
 ![Estrutura de Mensagens](Resources/messages.png)
 
@@ -199,7 +199,7 @@ E para finalizar criaremos as mensagens de validação, para isso acesse o arqui
 ```properties
 Starship.name.NotBlank = O nome da nave n\u00e3o pode ser nulo
 Starship.description.NotBlank = A descri\u00e7\u00e3o da nave n\u00e3o pode ser nula
-Starship.description.Size = A descri\u00e7\u00e3o da nave deve ser menor que {min} ou maior que {max}
+Starship.description.Size = A descri\u00e7\u00e3o da nave n\u00e3o deve ser menor que {min} ou maior que {max}
 Startshp.crew.Max = O n\u00famero de passageiros n\u00e3o deve ser superior a {value}
 ```
 
@@ -251,14 +251,14 @@ E teremos nosso retorno de erro.
     "details": [
         {
             "code": "Starship.description.Size",
-            "message": "A descrição da nave deve ser menor que 1 ou maior que 15",
+            "message": "A descrição da nave não deve ser menor que 1 ou maior que 15",
             "detailedMessage": "description: A sucata mais veloz da galáxia"
         }
     ]
 }
 ```
 
-Observe que neste existe a mensagem da exceção e a mensagem de validação.
+Observe que neste retorno existe a mensagem de exceção e a mensagem de validação.
 
 ## Isso é tudo pessoal!
 
