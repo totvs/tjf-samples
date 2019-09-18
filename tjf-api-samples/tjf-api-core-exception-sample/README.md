@@ -136,7 +136,7 @@ Observe que na anotação `@ApiBadRequest` foi inserido um valor, que será resp
 
 Nesta etapa já temos tudo o que precisamos para validar um objeto e lançar uma exceção customizada, agora para deixarmos o exemplo mais dinâmico, criaremos um controller para criação de uma nave. Para isso dentro do pacote `br.com.star.wars.controller` crie a classe `StarshipController`, ela será a responsável para criação do objeto `Starship`.
 
-> Dica Importante: Visando agilizar o desenvolvimento Java, o TJF disponibilizou templates prontos, caso tenha interesse acesse a documentação [tjf-templates](https://github.com/totvs/tjf-templates).
+> Dica Importante: Visando agilizar o desenvolvimento Java, o TJF disponibilizou templates prontos, caso tenha interesse acesse a documentação [tjf-templates](https://tjf.totvs.com.br/docs/tjf-templates).
 
 No nosso controller teremos o seguinte código:
 
