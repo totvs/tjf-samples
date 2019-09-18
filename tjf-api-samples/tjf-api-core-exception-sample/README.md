@@ -6,7 +6,7 @@ Exemplo para criação de validações e exceções utilizando o modulo **tjf-ap
 
 Para exemplificar a criação de validações e exceções utilizando o **TJF**, faremos a criação de uma nave, que possuirá validações para sua construção.
 
-:exclamation: ** ALERTA DE SPOILER** :exclamation:
+:exclamation: **ALERTA DE SPOILER** :exclamation:
 
 Teremos como resultado violações tratadas com o seguinte formato.
 
