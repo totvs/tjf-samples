@@ -209,7 +209,7 @@ Feito essa requisição teremos o seguinte resultado:
 Mas não é esse resultado que queremos ver, vamos filtrar esse retorno para trazer somente o que queremos, para isso execute a seguinte chamada.
 
 ```http
-GET /api/v1/jedi/find?fields=name&fields=gender HTTP/1.1
+GET /api/v1/jedi/find?fields=name,gender HTTP/1.1
 Host: localhost:8080
 ```
 
