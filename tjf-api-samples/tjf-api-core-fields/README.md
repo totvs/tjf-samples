@@ -6,7 +6,7 @@ Exemplo para utilização dos *fields* com o modulo **tjf-api-core**.
 
 Para exemplificar o uso de fields utilizando o **TJF**, faremos um exemplo de busca de Jedis, onde filtraremos as informações que queremos.
 
-:exclamation: ** ALERTA DE SPOILER** :exclamation:
+:exclamation: **ALERTA DE SPOILER** :exclamation:
 
 Após a implementação, teremos como resultado uma estrutura similar a essa:
 
