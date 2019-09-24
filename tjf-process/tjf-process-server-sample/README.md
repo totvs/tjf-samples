@@ -1,6 +1,6 @@
 # TJF Process Server Sample
 
-_Sample_ de utilização do componente [__TJF Process Server__][tjf-process-server] do [__TOTVS Java Framework__][tjf].
+_Sample_ de utilização do componente [__TJF Process Server__][tjf-process-server-core] do [__TOTVS Java Framework__][tjf].
 
 # Códigos da aplicação
 
@@ -93,9 +93,9 @@ Se tudo correr bem você verá uma sequencia de mensagens que representam as ati
 
 # Que a força esteja com você!
 
-Com isso terminamos nosso _sample_, fique a vontade para enriquecê-lo utilizando outros recursos propostos pela biblioteca [__TJF Process Server__][tjf-process-server] e enviar sugestões e melhorias para o [__TOTVS Java Framework__][tjf].
+Com isso terminamos nosso _sample_, fique a vontade para enriquecê-lo utilizando outros recursos propostos pela biblioteca [__TJF Process Server__][tjf-process-server-core] e enviar sugestões e melhorias para o [__TOTVS Java Framework__][tjf].
 
 [tjf]: https://tjf.totvs.com.br
-[tjf-process-server]: https://tjf.totvs.com.br/wiki/tjf-process-server
+[tjf-process-server-core]: https://tjf.totvs.com.br/wiki/tjf-process-server
 [tjf-process-domain-java-sample]: https://github.com/totvs/tjf-samples/tree/master/tjf-process/tjf-process-domain-java-sample
 [tjf-process-domain-node-sample]: https://github.com/totvs/tjf-samples/tree/master/tjf-process/tjf-process-domain-node-sample

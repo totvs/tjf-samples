@@ -1,6 +1,6 @@
 # TJF Process Samples
 
-_Samples_ de utilização dos componentes [__TJF Process Core__][tjf-process-core], [__TJF Process Server__][tjf-process-server] e [__TJF Process Service__][tjf-process-service] do [__TOTVS Java Framework__][tjf].
+_Samples_ de utilização dos componentes [__TJF Process Core__][tjf-process-core], [__TJF Process Server__][tjf-process-server-core] e [__TJF Process Service__][tjf-process-service] do [__TOTVS Java Framework__][tjf].
 
 # Contexto
 
@@ -43,7 +43,7 @@ Já os eventos da primeira trilogia (episódios 4, 5 e 6) são coordenados no or
 
 Certifique-se que o [__Docker__][docker] e o [__Docker Compose__][docker-compose] estejam corretamente instalados na sua máquina. E caso seja utilizado o exemplo com JavaScript também o [__Node__][node].
 
-Utilizaremos estas ferramentas para montar um ambiente local com todos os componentes de infra-estrutura necessários, que de acordo com o exemplo, além do [__RabbitMQ__][rabbit], pode incluir o [__PostgreSQL__][postgres] e o [__TJF Process Service__][tjf-process-service].
+Utilizaremos estas ferramentas para montar um ambiente local com todos os componentes de infraestrutura necessários, que de acordo com o exemplo, além do [__RabbitMQ__][rabbit], pode incluir o [__PostgreSQL__][postgres] e o [__TJF Process Service__][tjf-process-service].
 
 # Exemplos
 
@@ -53,7 +53,7 @@ Os exemplos são:
 
 [__tjf-process-domain-node-sample__][tjf-process-domain-node-sample]: Aplicação escrita em Javascript que responde aos comandos do orquestrador.
 
-[__tjf-process-server-sample__][tjf-process-server-sample]: Aplicação escrita em Java e com o [__TJF Process Server__][tjf-process-server] que orquestra os processos e modelos de nosso exemplo.
+[__tjf-process-server-sample__][tjf-process-server-sample]: Aplicação escrita em Java e com o [__TJF Process Server__][tjf-process-server-core] que orquestra os processos e modelos de nosso exemplo.
 
 [__tjf-process-service-sample__][tjf-process-service-sample]: Aplicação que utiliza o [__TJF Process Service__][tjf-process-service] para orquestrar os processos e modelos de nosso exemplo.
 
@@ -65,7 +65,7 @@ Fique a vontade para explorar os outros recursos propostos pelas bibliotecas de 
 
 [tjf]: https://tjf.totvs.com.br
 [tjf-process-core]: https://tjf.totvs.com.br/wiki/tjf-process-core
-[tjf-process-server]: https://tjf.totvs.com.br/wiki/tjf-process-server
+[tjf-process-server-core]: https://tjf.totvs.com.br/wiki/tjf-process-server-core
 [tjf-process-service]: https://tjf.totvs.com.br/wiki/tjf-process-service
 [tjf-process-domain-java-sample]: https://github.com/totvs/tjf-samples/tree/master/tjf-process/tjf-process-domain-java-sample
 [tjf-process-domain-node-sample]: https://github.com/totvs/tjf-samples/tree/master/tjf-process/tjf-process-domain-node-sample
