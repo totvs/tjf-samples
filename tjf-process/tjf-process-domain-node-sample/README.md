@@ -78,5 +78,5 @@ Com isso terminamos nosso _sample_, fique a vontade para enriquecê-lo utilizand
 
 [tjf]: https://tjf.totvs.com.br
 [tjf-process-core]: https://tjf.totvs.com.br/wiki/tjf-process-core
-[tjf-process-server-sample]: https://github.com/totvs/tjf-process/tjf-process-server-sample
-[tjf-process-service-sample]: https://github.com/totvs/tjf-process/tjf-process-service-sample
+[tjf-process-server-sample]: https://github.com/totvs/tjf-samples/tree/master/tjf-process/tjf-process-server-sample
+[tjf-process-service-sample]: https://github.com/totvs/tjf-samples/tree/master/tjf-process/tjf-process-service-sample

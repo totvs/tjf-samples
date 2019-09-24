@@ -64,14 +64,13 @@ Para rodar o exemplo são necessários uma aplicação do tipo "domain" e uma do
 Fique a vontade para explorar os outros recursos propostos pelas bibliotecas de orquestração e enviar sugestões e melhorias para o [__TOTVS Java Framework__][tjf].
 
 [tjf]: https://tjf.totvs.com.br
-[tjf-process-core]: https://tjf.totvs.com.br/wikiV020/tjf-process-core
-[tjf-process-server]: https://tjf.totvs.com.br/wikiV020/tjf-process-server
-[tjf-process-service]: https://tjf.totvs.com.br/wikiV020/tjf-process-service
-[tjf-process-domain-java-sample]: https://tjf.totvs.com.br/wikiV020/tjf-process-service
-[tjf-process-domain-node-sample]: https://tjf.totvs.com.br/wikiV020/tjf-process-service
-[tjf-process-server-sample]: https://tjf.totvs.com.br/wikiV020/tjf-process-service
-[tjf-process-service-sample]: https://tjf.totvs.com.br/wikiV020/tjf-process-service
-[docker]: https://www.docker.com/
+[tjf-process-core]: https://tjf.totvs.com.br/wiki/tjf-process-core
+[tjf-process-server]: https://tjf.totvs.com.br/wiki/tjf-process-server
+[tjf-process-service]: https://tjf.totvs.com.br/wiki/tjf-process-service
+[tjf-process-domain-java-sample]: https://github.com/totvs/tjf-samples/tree/master/tjf-process/tjf-process-domain-java-sample
+[tjf-process-domain-node-sample]: https://github.com/totvs/tjf-samples/tree/master/tjf-process/tjf-process-domain-node-sample
+[tjf-process-server-sample]: https://github.com/totvs/tjf-samples/tree/master/tjf-process/tjf-process-server-sample
+[tjf-process-service-sample]: https://github.com/totvs/tjf-samples/tree/master/tjf-process/tjf-process-service-sample
 [docker-compose]: https://docs.docker.com/compose/
 [rabbit]: https://www.rabbitmq.com/
 [postgres]: https://www.postgresql.org/

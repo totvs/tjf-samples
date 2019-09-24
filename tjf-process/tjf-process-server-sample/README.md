@@ -97,5 +97,5 @@ Com isso terminamos nosso _sample_, fique a vontade para enriquecê-lo utilizand
 
 [tjf]: https://tjf.totvs.com.br
 [tjf-process-server]: https://tjf.totvs.com.br/wiki/tjf-process-server
-[tjf-process-domain-java-sample]: https://github.com/totvs/tjf-process/tjf-process-domain-java-sample
-[tjf-process-domain-node-sample]: https://github.com/totvs/tjf-process/tjf-process-domain-node-sample
+[tjf-process-domain-java-sample]: https://github.com/totvs/tjf-samples/tree/master/tjf-process/tjf-process-domain-java-sample
+[tjf-process-domain-node-sample]: https://github.com/totvs/tjf-samples/tree/master/tjf-process/tjf-process-domain-node-sample
