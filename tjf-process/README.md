@@ -71,6 +71,7 @@ Fique a vontade para explorar os outros recursos propostos pelas bibliotecas de 
 [tjf-process-domain-node-sample]: https://github.com/totvs/tjf-samples/tree/master/tjf-process/tjf-process-domain-node-sample
 [tjf-process-server-sample]: https://github.com/totvs/tjf-samples/tree/master/tjf-process/tjf-process-server-sample
 [tjf-process-service-sample]: https://github.com/totvs/tjf-samples/tree/master/tjf-process/tjf-process-service-sample
+[docker]: https://docs.docker.com/
 [docker-compose]: https://docs.docker.com/compose/
 [rabbit]: https://www.rabbitmq.com/
 [postgres]: https://www.postgresql.org/
