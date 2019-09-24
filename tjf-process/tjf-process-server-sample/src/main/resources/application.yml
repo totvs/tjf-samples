@@ -1,0 +1,66 @@
+# https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html#common-application-properties
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info,health,messaging,process
+
+spring:
+
+  application:
+    name: anakin-history-application
+
+  cloud:
+    stream:
+      defaultBinder: HoloNet
+      bindings:
+        
+        anakin-output:
+          destination: anakin-exchange
+        
+        star-wars-input:
+          destination: workflow-exchange
+          group: messages
+        star-wars-output:
+          destination: workflow-exchange
+        
+        tjf-messaging-error-input:
+          destination: starwars-errors-exchange
+          group: errors
+        tjf-messaging-error-output:
+          destination: starwars-errors-exchange
+          group: errors
+          producer:
+            requiredGroups: errors
+                      
+      binders:
+        HoloNet:
+          type: rabbit
+          environment:
+            spring:
+              rabbit:
+                host: localhost
+
+  h2:
+    console:
+      enabled: true
+
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:cash-request;DB_CLOSE_ON_EXIT=FALSE;AUTO_RECONNECT=TRUE;
+    username: sa
+    password:
+   
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    properties:      
+      hibernate:
+        format_sql: true
+
+  jackson:
+    serialization:
+       FAIL_ON_EMPTY_BEANS: false
+
+server:
+  port: 8280
+        

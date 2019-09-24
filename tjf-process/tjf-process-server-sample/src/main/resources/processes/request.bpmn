@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <message id="managerOK" name="managerOK"></message>
+  <message id="managerDENIED" name="managerDENIED"></message>
+  <process id="request" name="request" isExecutable="true">
+    <transaction id="transaction1" name="Transaction">
+      <endEvent id="endevent1" name="End">
+        <extensionElements>
+          <activiti:executionListener event="start" delegateExpression="${WProcessEndListener}"></activiti:executionListener>
+        </extensionElements>
+      </endEvent>
+      <sequenceFlow id="flow3" sourceRef="receivetask2" targetRef="exclusivegateway2"></sequenceFlow>
+      <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
+      <sequenceFlow id="flow6" name="Verified Fail" sourceRef="exclusivegateway1" targetRef="endevent1">
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${verified == 0}]]></conditionExpression>
+      </sequenceFlow>
+      <sequenceFlow id="flow9" sourceRef="VerifyRequestCommand" targetRef="exclusivegateway1"></sequenceFlow>
+      <startEvent id="startevent1" name="Start"></startEvent>
+      <endEvent id="cancelendevent1" name="CancelEnd">
+        <extensionElements>
+          <activiti:executionListener event="start" delegateExpression="${WProcessEndListener}"></activiti:executionListener>
+        </extensionElements>
+        <cancelEventDefinition></cancelEventDefinition>
+      </endEvent>
+      <receiveTask id="VerifyRequestCommand" name="Verify">
+        <extensionElements>
+          <activiti:executionListener event="start" delegateExpression="${WVerifyRequestWorker}"></activiti:executionListener>
+        </extensionElements>
+      </receiveTask>
+      <boundaryEvent id="boundarycompensation2" name="Compensate" attachedToRef="VerifyRequestCommand" cancelActivity="true">
+        <compensateEventDefinition></compensateEventDefinition>
+      </boundaryEvent>
+      <receiveTask id="receivetask2" name="Deposit">
+        <extensionElements>
+          <activiti:executionListener event="start" delegateExpression="${WDepositWorker}"></activiti:executionListener>
+        </extensionElements>
+      </receiveTask>
+      <sequenceFlow id="flow16" name="Executed" sourceRef="exclusivegateway2" targetRef="endevent1">
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${deposited == 1}]]></conditionExpression>
+      </sequenceFlow>
+      <sequenceFlow id="flow17" name="Refused" sourceRef="exclusivegateway2" targetRef="cancelendevent1">
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${deposited == 0}]]></conditionExpression>
+      </sequenceFlow>
+      <exclusiveGateway id="exclusivegateway2" name="Exclusive Gateway"></exclusiveGateway>
+      <serviceTask id="servicetask4" name="Reprove" isForCompensation="true" activiti:delegateExpression="${WReproveRequestWorker}"></serviceTask>
+      <userTask id="RequestApprovalRequiredEvent" name="Approval" activiti:candidateGroups="manager">
+        <extensionElements>
+          <activiti:taskListener event="create" delegateExpression="${WRequestApprovalRequiredWorker}"></activiti:taskListener>
+        </extensionElements>
+      </userTask>
+      <sequenceFlow id="flow18" sourceRef="startevent1" targetRef="VerifyRequestCommand"></sequenceFlow>
+      <sequenceFlow id="flow19" name="Verified" sourceRef="exclusivegateway1" targetRef="RequestApprovalRequiredEvent">
+        <conditionExpression xsi:type="tFormalExpression"><![CDATA[${verified == 1}]]></conditionExpression>
+      </sequenceFlow>
+      <sequenceFlow id="flow20" sourceRef="RequestApprovalRequiredEvent" targetRef="receivetask2"></sequenceFlow>
+      <association id="association1" sourceRef="boundarycompensation2" targetRef="servicetask4" associationDirection="None"></association>
+    </transaction>
+    <startEvent id="startevent2" name="Start"></startEvent>
+    <sequenceFlow id="flow11" sourceRef="startevent2" targetRef="transaction1"></sequenceFlow>
+    <boundaryEvent id="boundarycancel1" name="Cancel" attachedToRef="transaction1" cancelActivity="true">
+      <cancelEventDefinition></cancelEventDefinition>
+    </boundaryEvent>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_request">
+    <bpmndi:BPMNPlane bpmnElement="request" id="BPMNPlane_request">
+      <bpmndi:BPMNShape bpmnElement="transaction1" id="BPMNShape_transaction1">
+        <omgdc:Bounds height="411.0" width="1141.0" x="120.0" y="36.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="1160.0" y="310.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="BPMNShape_exclusivegateway1">
+        <omgdc:Bounds height="40.0" width="40.0" x="500.0" y="181.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="170.0" y="184.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="cancelendevent1" id="BPMNShape_cancelendevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="1160.0" y="90.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="VerifyRequestCommand" id="BPMNShape_VerifyRequestCommand">
+        <omgdc:Bounds height="55.0" width="105.0" x="300.0" y="174.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="boundarycompensation2" id="BPMNShape_boundarycompensation2">
+        <omgdc:Bounds height="30.0" width="30.0" x="360.0" y="214.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="receivetask2" id="BPMNShape_receivetask2">
+        <omgdc:Bounds height="55.0" width="105.0" x="870.0" y="174.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway2" id="BPMNShape_exclusivegateway2">
+        <omgdc:Bounds height="40.0" width="40.0" x="1050.0" y="181.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="servicetask4" id="BPMNShape_servicetask4">
+        <omgdc:Bounds height="55.0" width="105.0" x="240.0" y="290.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="RequestApprovalRequiredEvent" id="BPMNShape_RequestApprovalRequiredEvent">
+        <omgdc:Bounds height="55.0" width="105.0" x="680.0" y="174.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="boundarycancel1" id="BPMNShape_boundarycancel1">
+        <omgdc:Bounds height="30.0" width="30.0" x="770.0" y="440.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="startevent2" id="BPMNShape_startevent2">
+        <omgdc:Bounds height="35.0" width="35.0" x="30.0" y="226.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
+        <omgdi:waypoint x="975.0" y="201.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1050.0" y="201.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6">
+        <omgdi:waypoint x="520.0" y="221.0"></omgdi:waypoint>
+        <omgdi:waypoint x="579.0" y="327.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1160.0" y="327.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="18.0" width="85.0" x="570.0" y="302.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow9" id="BPMNEdge_flow9">
+        <omgdi:waypoint x="405.0" y="201.0"></omgdi:waypoint>
+        <omgdi:waypoint x="500.0" y="201.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow16" id="BPMNEdge_flow16">
+        <omgdi:waypoint x="1070.0" y="221.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1177.0" y="310.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="18.0" width="65.0" x="1100.0" y="243.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow17" id="BPMNEdge_flow17">
+        <omgdi:waypoint x="1070.0" y="181.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1177.0" y="125.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="18.0" width="58.0" x="1050.0" y="115.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow18" id="BPMNEdge_flow18">
+        <omgdi:waypoint x="205.0" y="201.0"></omgdi:waypoint>
+        <omgdi:waypoint x="300.0" y="201.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow19" id="BPMNEdge_flow19">
+        <omgdi:waypoint x="540.0" y="201.0"></omgdi:waypoint>
+        <omgdi:waypoint x="680.0" y="201.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="18.0" width="55.0" x="540.0" y="201.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow20" id="BPMNEdge_flow20">
+        <omgdi:waypoint x="785.0" y="201.0"></omgdi:waypoint>
+        <omgdi:waypoint x="870.0" y="201.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="association1" id="BPMNEdge_association1">
+        <omgdi:waypoint x="375.0" y="244.0"></omgdi:waypoint>
+        <omgdi:waypoint x="292.0" y="290.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow11" id="BPMNEdge_flow11">
+        <omgdi:waypoint x="65.0" y="243.0"></omgdi:waypoint>
+        <omgdi:waypoint x="120.0" y="241.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

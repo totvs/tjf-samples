@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/DMN/20151101" id="ForceSideDecisionDefinition" name="ForceSideDecisionDefinition" namespace="http://www.flowable.org/dmn">
+  <decision id="ForceSideDecision" name="ForceSideDecision">
+    <decisionTable id="ForceSideDecisionTable" hitPolicy="FIRST">
+      <input label="killSandPeople">
+        <inputExpression id="killSandPeopleExpression" typeRef="boolean">
+          <text>killSandPeople</text>
+        </inputExpression>
+      </input>
+      <input label="killMaceWindu">
+        <inputExpression id="killMaceWinduExpression" typeRef="boolean">
+          <text>killMaceWindu</text>
+        </inputExpression>
+      </input>
+      <output id="sideOutput" label="side" name="side" typeRef="string"></output>
+      <rule>
+        <inputEntry id="test0">
+          <text><![CDATA[false]]></text>
+        </inputEntry>
+        <inputEntry id="test1">
+          <text><![CDATA[false]]></text>
+        </inputEntry>
+        <outputEntry id="result2">
+          <text><![CDATA['light']]></text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry id="test3">
+          <text><![CDATA[true]]></text>
+        </inputEntry>
+        <inputEntry id="test4">
+          <text><![CDATA[false]]></text>
+        </inputEntry>
+        <outputEntry id="result5">
+          <text><![CDATA['dark']]></text>
+        </outputEntry>
+      </rule>
+      <rule>
+        <inputEntry id="test6">
+          <text><![CDATA[true]]></text>
+        </inputEntry>
+        <inputEntry id="test7">
+          <text><![CDATA[true]]></text>
+        </inputEntry>
+        <outputEntry id="result8">
+          <text><![CDATA['dark']]></text>
+        </outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

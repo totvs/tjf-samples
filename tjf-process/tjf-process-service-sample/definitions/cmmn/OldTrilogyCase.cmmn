@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/CMMN/20151109/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:flowable="http://flowable.org/cmmn" xmlns:cmmndi="http://www.omg.org/spec/CMMN/20151109/CMMNDI" xmlns:dc="http://www.omg.org/spec/CMMN/20151109/DC" xmlns:di="http://www.omg.org/spec/CMMN/20151109/DI" targetNamespace="http://www.flowable.org/test">
+  <case id="OldTrilogyCase" name="OldTrilogyCase" flowable:initiatorVariableName="initiator">
+    <casePlanModel id="container" flowable:includeInStageOverview="false">
+      <planItem id="planvisitDeathStar" name="VisitDeathStar" definitionRef="VisitDeathStarCommand"></planItem>
+      <planItem id="planrevealToLuke" name="RevealToLuke" definitionRef="RevealToLukeCommand"></planItem>
+      <planItem id="planfightWithLuke" name="FightWithLuke" definitionRef="FightWithLukeCommand"></planItem>
+      <task id="VisitDeathStarCommand" name="VisitDeathStar">
+        <extensionElements>
+          <flowable:planItemLifecycleListener sourceState="available" targetState="active" delegateExpression="${processWorker}"></flowable:planItemLifecycleListener>
+        </extensionElements>
+      </task>
+      <task id="RevealToLukeCommand" name="RevealToLuke">
+        <extensionElements>
+          <flowable:planItemLifecycleListener sourceState="available" targetState="active" delegateExpression="${processWorker}"></flowable:planItemLifecycleListener>
+        </extensionElements>
+      </task>
+      <task id="FightWithLukeCommand" name="FightWithLuke">
+        <extensionElements>
+          <flowable:planItemLifecycleListener sourceState="available" targetState="active" delegateExpression="${processWorker}"></flowable:planItemLifecycleListener>
+        </extensionElements>
+      </task>
+    </casePlanModel>
+  </case>
+  <cmmndi:CMMNDI>
+    <cmmndi:CMMNDiagram id="CMMNDiagram_OldTrilogyCase"></cmmndi:CMMNDiagram>
+  </cmmndi:CMMNDI>
+</definitions>
