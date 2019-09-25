@@ -45,6 +45,14 @@ Certifique-se que o [__Docker__][docker] e o [__Docker Compose__][docker-compose
 
 Utilizaremos estas ferramentas para montar um ambiente local com todos os componentes de infraestrutura necessários, que de acordo com o exemplo, além do [__RabbitMQ__][rabbit], pode incluir o [__PostgreSQL__][postgres] e o [__TJF Process Service__][tjf-process-service].
 
+
+# Arquitetura
+
+Estes exemplos partem da premissa que o orquestrador é um micro-serviço distinto ao da aplicação, e que a comunicação entre estes é feita por meio de um _broker_ de mensageria, onde o orquestrador envia comandos para a aplicação e a aplicação responde aos mesmos por meio de eventos.
+
+Caso a orquestração seja muito simples e fique restrita aos serviço da própria aplicação, é possível sim agrupar o orquestrador à aplicação, muito parecido com a implementação do [__tjf-process-server-sample__][tjf-process-server-sample], porém, os _workers_ não mais enviariam mensagens para o _broker_, ficando eles mesmos responsáveis por finalizar as atividades que os executaram.
+
+
 # Exemplos
 
 Os exemplos são:
