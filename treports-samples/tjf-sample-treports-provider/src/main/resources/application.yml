@@ -10,13 +10,12 @@ spring:
     hibernate:
       ddl-auto: create
 
-server:
-  port: 8880
-  
 security:
   oauth2:
     resource:
       id: authorization_api
       jwk:
         key-set-uri: http://localhost:5009/totvs.rac/.well-known/openid-configuration/jwks
-  
+
+server:
+  port: 8880

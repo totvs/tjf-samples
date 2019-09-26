@@ -10,8 +10,6 @@ networks:
 services:
   treports:
     image: docker.totvs.io/treports/treports:12125
-    build:
-      context: .
     environment:
       DOCKER_DBPROVIDER: "SqlServer"
       DOCKER_CONNECTIONSTRING: "Server=db;database=TRFDb_Docker;User=sa;Password=012345678@totvs123"
@@ -24,13 +22,13 @@ services:
       DOCKER_AUTHORITYENDPOINT_SERVER: "http://rac/totvs.rac"
       DOCKER_AUTHORITYENDPOINT_CLIENT: "http://localhost:5009/totvs.rac"
       DOCKER_CLIENTID: "js_oidc_treports"
-      DOCKER_DEFAULTTENANT: "treports"
+      DOCKER_DEFAULTTENANT: "empresa1"
     ports:
-     - "7017:7017"
+      - "7017:7017"
     networks:
-     - docker-network-trep
+      - docker-network-trep
     depends_on:
-     - rac
+      - rac
 
   rac:
     image: docker.totvs.io/tnf/rac:1.6.4
@@ -39,6 +37,7 @@ services:
       DefaultConnectionString: "SqlServer"
       ConnectionStrings__SqlServer: "Data Source=db;User Id=sa;Password=012345678@totvs123"
       RunMigrator: "T"
+      
       Clients__0__ClientId: "rac_oidc"
       Clients__0__ClientName: "Client OIDC padrão do RAC"
       Clients__0__ProductName: "TOTVS RAC"
@@ -73,9 +72,9 @@ services:
       Clients__1__Secrets__0__Description: "Senha Padrão (totvs@123)"
       Clients__1__Secrets__0__Value: "totvs@123"
 
-      Clients__2__ClientId: "js_oidc_tjf"
-      Clients__2__ClientName: "js_oidc_tjf"
-      Clients__2__ProductName: "TJF"
+      Clients__2__ClientId: "js_oidc_sampleapp"
+      Clients__2__ClientName: "js_oidc_sampleapp"
+      Clients__2__ProductName: "SampleApp"
       Clients__2__GrantTypes__0: "Hybrid"
       Clients__2__GrantTypes__1: "ClientCredentials"
       Clients__2__ExpirationTimeInMinutes: "20"
@@ -88,33 +87,35 @@ services:
       Clients__2__Secrets__0__Description: "Senha Padrão (totvs@123)"
       Clients__2__Secrets__0__Value: "totvs@123"
 
-      Tenants__0__TenantName: "treports"
-      Tenants__0__Name: "TReports"
-      Tenants__0__CNPJ: "13030973000115"
+      Clients__3__ClientId: "treports_ro"
+      Clients__3__ClientName: "treports_ro"
+      Clients__3__ProductName: "TReports"
+      Clients__3__GrantTypes__0: "ResourceOwner"
+      Clients__3__ExpirationTimeInMinutes: "20"
+      Clients__3__Secrets__0__Description: "Senha Padrão (totvs@123)"
+      Clients__3__Secrets__0__Value: "totvs@123"
+
+      Tenants__0__TenantName: "empresa1"
+      Tenants__0__Name: "Empresa Sample"
+      Tenants__0__CNPJ: "53113791001102"
       Tenants__0__Products__0__ProductName: "TOTVS RAC"
       Tenants__0__Products__1__ProductName: "TReports"
+      Tenants__0__Products__2__ProductName: "SampleApp"
 
-      Tenants__1__TenantName: "tjf"
-      Tenants__1__Name: "TOTVS Java Framework"
-      Tenants__1__CNPJ: "13030973000115"
-      Tenants__1__Products__0__ProductName: "TOTVS RAC"
-      Tenants__1__Products__1__ProductName: "TJF"
-      
       HostUrl: "http://*.localhost:5009/totvs.rac"
     ports:
-     - "5009:80"
+      - "5009:80"
     networks:
-     - docker-network-trep
+      - docker-network-trep
     depends_on:
-     - db
+      - db
 
   db:
-    image: mcr.microsoft.com/mssql/server:2017-CU11-ubuntu
+    image: mcr.microsoft.com/mssql/server:2017-CU14-ubuntu
     environment:
       SA_PASSWORD: "012345678@totvs123"
       ACCEPT_EULA: "Y"
     ports:
-     - "14336:1433"
+      - "14336:1433"
     networks:
-     - docker-network-trep
-
+      - docker-network-trep

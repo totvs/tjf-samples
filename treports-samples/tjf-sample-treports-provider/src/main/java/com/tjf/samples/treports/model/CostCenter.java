@@ -9,12 +9,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class CostCenter {
 
 	@Id
-	String code;
-	String companyId;
-	String registerSituation;
-	String name;
-	String shortCode;
-	boolean sped;
+	private String code;
+	private String companyId;
+	private String registerSituation;
+	private String name;
+	private String shortCode;
+	private boolean sped;
 
 	public CostCenter() {
 	}

@@ -1,11 +1,8 @@
-package teste.treports;
+package com.tjf.samples.treports.command;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 
-public class ReportRequest {
+public class ExecuteCommand {
 
 	private GenerateParams generateParams = new GenerateParams();
 	private ScheduleParams scheduleParams = new ScheduleParams();
@@ -27,7 +24,7 @@ public class ReportRequest {
 	}
 
 	public class GenerateParams {
-		private boolean isView = true; 
+		private boolean isView = false; 
 		private boolean stopExecutionOnError = true;
 		Object[] parameters = new Object[0];
 		
@@ -54,21 +51,5 @@ public class ReportRequest {
 		public int getType() {
 			return type;
 		}
-	}
-	
-	@Override
-	public String toString() {
-		
-		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-		
-		String json = null;
-		
-		try {
-			json = ow.writeValueAsString(this);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-			
-		return json;
 	}
 }

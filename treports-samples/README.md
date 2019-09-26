@@ -228,7 +228,7 @@ public class CostCentersController {
 Usaremos o [Docker][docker] para rodar o TReports, segue abaixo o docker-compose.yml com as definições necessárias para rodar as imagens do RAC, já configurado para o TReports e para nossa aplicação, do TReports e do banco de dados que precisáremos para execução da nossa instancia do TReports e do RAC.
 
 ```yml
-version: `3.6`
+version: '3.6'
 
 networks:
   docker-network-trep:
@@ -237,8 +237,6 @@ networks:
 services:
   treports:
     image: docker.totvs.io/treports/treports:12125
-    build:
-      context: .
     environment:
       DOCKER_DBPROVIDER: "SqlServer"
       DOCKER_CONNECTIONSTRING: "Server=db;database=TRFDb_Docker;User=sa;Password=012345678@totvs123"
@@ -251,13 +249,13 @@ services:
       DOCKER_AUTHORITYENDPOINT_SERVER: "http://rac/totvs.rac"
       DOCKER_AUTHORITYENDPOINT_CLIENT: "http://localhost:5009/totvs.rac"
       DOCKER_CLIENTID: "js_oidc_treports"
-      DOCKER_DEFAULTTENANT: "treports"
+      DOCKER_DEFAULTTENANT: "empresa1"
     ports:
-     - "7017:7017"
+      - "7017:7017"
     networks:
-     - docker-network-trep
+      - docker-network-trep
     depends_on:
-     - rac
+      - rac
 
   rac:
     image: docker.totvs.io/tnf/rac:1.6.4
@@ -266,6 +264,7 @@ services:
       DefaultConnectionString: "SqlServer"
       ConnectionStrings__SqlServer: "Data Source=db;User Id=sa;Password=012345678@totvs123"
       RunMigrator: "T"
+      
       Clients__0__ClientId: "rac_oidc"
       Clients__0__ClientName: "Client OIDC padrão do RAC"
       Clients__0__ProductName: "TOTVS RAC"
@@ -300,9 +299,9 @@ services:
       Clients__1__Secrets__0__Description: "Senha Padrão (totvs@123)"
       Clients__1__Secrets__0__Value: "totvs@123"
 
-      Clients__2__ClientId: "js_oidc_tjf"
-      Clients__2__ClientName: "js_oidc_tjf"
-      Clients__2__ProductName: "TJF"
+      Clients__2__ClientId: "js_oidc_sampleapp"
+      Clients__2__ClientName: "js_oidc_sampleapp"
+      Clients__2__ProductName: "SampleApp"
       Clients__2__GrantTypes__0: "Hybrid"
       Clients__2__GrantTypes__1: "ClientCredentials"
       Clients__2__ExpirationTimeInMinutes: "20"
@@ -315,35 +314,38 @@ services:
       Clients__2__Secrets__0__Description: "Senha Padrão (totvs@123)"
       Clients__2__Secrets__0__Value: "totvs@123"
 
-      Tenants__0__TenantName: "treports"
-      Tenants__0__Name: "TReports"
-      Tenants__0__CNPJ: "13030973000115"
+      Clients__3__ClientId: "treports_ro"
+      Clients__3__ClientName: "treports_ro"
+      Clients__3__ProductName: "TReports"
+      Clients__3__GrantTypes__0: "ResourceOwner"
+      Clients__3__ExpirationTimeInMinutes: "20"
+      Clients__3__Secrets__0__Description: "Senha Padrão (totvs@123)"
+      Clients__3__Secrets__0__Value: "totvs@123"
+
+      Tenants__0__TenantName: "empresa1"
+      Tenants__0__Name: "Empresa Sample"
+      Tenants__0__CNPJ: "53113791001102"
       Tenants__0__Products__0__ProductName: "TOTVS RAC"
       Tenants__0__Products__1__ProductName: "TReports"
+      Tenants__0__Products__2__ProductName: "SampleApp"
 
-      Tenants__1__TenantName: "tjf"
-      Tenants__1__Name: "TOTVS Java Framework"
-      Tenants__1__CNPJ: "13030973000115"
-      Tenants__1__Products__0__ProductName: "TOTVS RAC"
-      Tenants__1__Products__1__ProductName: "TJF"
-      
       HostUrl: "http://*.localhost:5009/totvs.rac"
     ports:
-     - "5009:80"
+      - "5009:80"
     networks:
-     - docker-network-trep
+      - docker-network-trep
     depends_on:
-     - db
+      - db
 
   db:
-    image: mcr.microsoft.com/mssql/server:2017-CU11-ubuntu
+    image: mcr.microsoft.com/mssql/server:2017-CU14-ubuntu
     environment:
       SA_PASSWORD: "012345678@totvs123"
       ACCEPT_EULA: "Y"
     ports:
-     - "14336:1433"
+      - "14336:1433"
     networks:
-     - docker-network-trep
+      - docker-network-trep
 ```
 
 Para subir o ambiente do TReports use o comando abaixo:
@@ -356,25 +358,27 @@ $ docker-compose up -d -f 'docker-compose.yml'
 
 # Configuração 
 
-Pricisamos configurar o RAC antes de continuar, acesse o RAC pela URL http://localhost:5009/, tenant `treports` usuário `admin` e senha `totvs@123`. Crie um novo perfil e de permissão a ele nas features do TReports, depois altere o usuário e acrecente a ele o perfil que criamos.
+Pricisamos configurar o RAC antes de continuar, acesse o RAC pela URL http://localhost:5009/, tenant `empresa1` usuário `admin` e senha `totvs@123`. Crie um novo perfil e de permissão a ele nas features do TReports, depois altere o usuário e acrecente a ele o perfil que criamos.
 
 Agora acesse o TReports pela URL http://localhost:7017/, usuário `admin` e senha `totvs@123`. Crie um novo provedor de dados com nome `TJF`, tipo do provedor `Api padrão Totvs`, fonte de dados `Api Git`, protocolo `http`, host `172.20.0.1` **¹**, porta `8880`, tipo de autenticação `OpenID`, Client ID	 `js_oidc_tjf`, Client Secret `totvs@123`, Access Token URL `http://rac/totvs.rac/connect/token` e Scope `authorization_api`.
 
 > **¹ Observação:** O ip do host no container do TReports pode variar dependendo do seu docker, geralmente é `192.168.0.1` ou `172.20.0.1`, mas você pode rodar esse comando para identificar o ip: 
 
 ```sh
-sudo docker inspect -f '{{range .NetworkSettings.Networks}}{{.Gateway}}{{end}}' treports-samples_treports_1
+sudo docker inspect -f '{{range .NetworkSettings.Networks}}{{.Gateway}}{{end}}' <Nome do seu container do treports no 'docker ps'>
 ```
 
 ## Relatório
 
-Abra relatórios no menu do TReports, importe o arquivo RelCostCenters.trep, informe como provedor o que criamos.
+Vamos precisar para nosso exemplo um grupo de relatórios, crie um grupo de relatório informando `TJF` em todos os campos.
+
+Abra relatórios no menu do TReports, importe o arquivo RelCostCenters.trep que se encontra na pasta `relatorios` do projeto, informe o provedor e o grupo de relatório que criamos. Nessa pasta a mais dois relatórios de exemplo, o `RelRetailStockLevel` que faz uso de gráficos e o `RelProduct` que faz uso de imagens.
 
 > **Observação:** Para mais detalhes de como desenvolver o relatório e de como criar o provedor de dados, sugiro o vídeo [TReports - Provedor de API][treportsprovedorapi] da nossa comunidade [Totvs Developers][totvsdevelopers] no Facebook, ele demostra a criação de um relatório com base em um provedor API. Você pode encontrar mais material também nosso canal [How To - TReports][howtotreports] no Youtube.
 
 # Vamos testar!
 
-Para testar execute nossa aplicação de exemplo, após ele concluir a inicialização vá no relatório RelCostCenters que importamos e nas opções clique em `Gerar`, ele irá automaticamente realizar a autenticação com o RAC e com nossa aplicação e irá gerar o relatório com os dados retornados por nossa API.
+Para testar execute nossa aplicação de exemplo, após ela concluir a inicialização vá no relatório RelCostCenters que importamos e nas opções clique em `Gerar`, ele irá automaticamente realizar a autenticação com o RAC e com nossa aplicação e irá gerar o relatório com os dados retornados por nossa API.
 
 [tjf]: https://tjf.totvs.com.br
 [treports]: https://treports.totvs.com.br
