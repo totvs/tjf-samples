@@ -29,4 +29,20 @@
 		</dependency>
 	</dependencies>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+	<repositories>
+		<repository>
+			<id>central-release</id>
+			<name>TOTVS Java Framework: Release</name>
+			<url>http://maven.engpro.totvs.com.br/artifactory/libs-release</url>
+		</repository>
+	</repositories>
 </project>
