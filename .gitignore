@@ -4,4 +4,6 @@ target/
 .classpath
 .project
 .flattened-pom.xml
+.attach*
 
+/.metadata/

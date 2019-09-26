@@ -1,30 +1,10 @@
 version: '3'
 
-volumes:
-
-  starwars-pg-data: {}
-
 services:
 
-  starwars-postgres:
-    image: sameersbn/postgresql:10-1
-    restart: always
-    environment:
-      DB_NAME: sw-messaging
-      DB_USER: jedi
-      DB_PASS: jedi@123
-      PG_PASSWORD: postgres
+  starwars-rabbit:
+    image: rabbitmq:3.7.7-management
     ports:
-      - 5432:5432
-    volumes:
-      - starwars-pg-data:/var/lib/postgresql
-
-  starwars-pg-admin:
-    image: dpage/pgadmin4
-    environment:
-      PGADMIN_DEFAULT_EMAIL: dev-starwars@totvs.com.br
-      PGADMIN_DEFAULT_PASSWORD: dev-starwars@123
-    ports:
-      - 8380:8080
-      - 8480:80
+      - 5672:5672 
+      - 15672:15672
 
