@@ -14,57 +14,57 @@ Uma das maneiras de integrar o [TReports][treports] à aplicação é fazendo ac
 Crie um novo maven project, no pom.xml do projeto acresente o parent tjf-boot-starter e o nosso repositório de pacotes:
 
 ```xml
-	<parent>
-		<groupId>com.totvs.tjf</groupId>
-		<artifactId>tjf-boot-starter</artifactId>
-		<version>1.4.0-RELEASE</version>
-	</parent>
+<parent>
+  <groupId>com.totvs.tjf</groupId>
+  <artifactId>tjf-boot-starter</artifactId>
+  <version>1.4.0-RELEASE</version>
+</parent>
 
-  <repositories>
-		<repository>
-			<id>central-release</id>
-			<name>TOTVS Java Framework: Release</name>
-			<url>http://maven.engpro.totvs.com.br/artifactory/libs-release</url>
-		</repository>
-	</repositories>
+<repositories>
+  <repository>
+    <id>central-release</id>
+    <name>TOTVS Java Framework: Release</name>
+    <url>http://maven.engpro.totvs.com.br/artifactory/libs-release</url>
+  </repository>
+</repositories>
 ```
 
-Ainda no pom.xml acresente as pedencias que iremos precisar:
-* spring-boot-starter-web: Para fazermos requisições rest para a nossa aplicação.
-* tjf-api-core: Módulo do TJF que torna nossas API no padrão de API da TOTVS.
-* tjf-api-jpa: Módulo do TJF com métodos de consulta a banco de dados e que em conjunto com o tjf-api-core já retorna os dados no padrão de API da TOTVS.
-* tjf-security-web: Módulo do TJF que implementa segurança em nossa aplicação e a integra a um serviço de autenticação, no nosso exemplo será o RAC.
-* h2: Um banco de dados em memória que usaremos para fazer a persistencia e leitura dos dados.
+Ainda no pom.xml acresente as dependências que iremos precisar:
+* **spring-boot-starter-web:** Para fazermos requisições rest para a nossa aplicação.
+* **tjf-api-core:** Módulo do TJF que torna nossas API no padrão de API da TOTVS.
+* **tjf-api-jpa:** Módulo do TJF com métodos de consulta a banco de dados e que em conjunto com o tjf-api-core já retorna os dados no padrão de API da TOTVS.
+* **tjf-security-web:** Módulo do TJF que implementa segurança em nossa aplicação e a integra a um serviço de autenticação, no nosso exemplo será o RAC.
+* **h2:** Um banco de dados em memória que usaremos para fazer a persistencia e leitura dos dados.
 
 ```xml
-	<dependencies>
-		<!-- Spring -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
+<dependencies>
+  <!-- Spring -->
+  <dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+  </dependency>
 
-		<!-- TJF -->
-		<dependency>
-			<groupId>com.totvs.tjf</groupId>
-			<artifactId>tjf-api-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.totvs.tjf</groupId>
-			<artifactId>tjf-api-jpa</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.totvs.tjf</groupId>
-			<artifactId>tjf-security-web</artifactId>
-		</dependency>
-		
-		<!-- Database -->
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-	</dependencies>
+  <!-- TJF -->
+  <dependency>
+    <groupId>com.totvs.tjf</groupId>
+    <artifactId>tjf-api-core</artifactId>
+  </dependency>
+  <dependency>
+    <groupId>com.totvs.tjf</groupId>
+    <artifactId>tjf-api-jpa</artifactId>
+  </dependency>
+  <dependency>
+    <groupId>com.totvs.tjf</groupId>
+    <artifactId>tjf-security-web</artifactId>
+  </dependency>
+
+  <!-- Database -->
+  <dependency>
+    <groupId>com.h2database</groupId>
+    <artifactId>h2</artifactId>
+    <scope>runtime</scope>
+  </dependency>
+</dependencies>
 ```
 
 ## Propriedades
@@ -347,6 +347,8 @@ services:
     networks:
       - docker-network-trep
 ```
+
+> :warning: **Observação:** Você precisa de autorização para ultilizar a imagem do RAC.
 
 Para subir o ambiente do TReports use o comando abaixo:
 
