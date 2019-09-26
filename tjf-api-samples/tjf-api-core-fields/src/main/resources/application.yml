@@ -1,5 +1,0 @@
-tjf:
-  api:
-    filter:
-      fields:
-        enabled: true
