@@ -1,0 +1,48 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.totvs.tjf</groupId>
+		<artifactId>tjf-boot-starter</artifactId>
+		<version>1.6.0-RELEASE</version>
+	</parent>
+
+	<groupId>com.totvs.tjf.samples</groupId>
+	<artifactId>tjf-sample-treports-viewer</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	
+	<dependencies>
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.security.oauth</groupId>
+			<artifactId>spring-security-oauth2</artifactId>
+			<version>2.3.6.RELEASE</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.security</groupId>
+					<artifactId>spring-security-web</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.springframework.security</groupId>
+					<artifactId>spring-security-config</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+	</dependencies>
+
+	<repositories>
+		<repository>
+			<id>central-release</id>
+			<name>TOTVS Java Framework: Release</name>
+			<url>http://maven.engpro.totvs.com.br/artifactory/libs-release</url>
+		</repository>
+	</repositories>
+
+</project>
