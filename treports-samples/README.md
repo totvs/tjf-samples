@@ -7,7 +7,7 @@ e com segurança usando o RAC para autenticação.
 
 Uma das maneiras de integrar o [TReports][treports] à aplicação é fazendo acesso a um API, para isso a API devem estar cadastradas no portal [API reference TOTVS][api].
 
-> **Observação:** mais informações de como construir a API e como disponibiliza-la no portal podem ser encontradas na página [TTalk no TDN][ttalk].
+> **Observação:** mais informações de como construir a API e como disponibilizá-la no portal podem ser encontradas na página [TTalk no TDN][ttalk].
 
 # Começando
 
