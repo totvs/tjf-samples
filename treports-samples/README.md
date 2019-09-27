@@ -31,7 +31,7 @@ Crie um novo _maven project_, no pom.xml do projeto acresente o _parent_ tjf-boo
 
 Ainda no pom.xml acrescente as dependências que iremos precisar:
 * **spring-boot-starter-web:** Para fazermos requisições _rest_ para a nossa aplicação.
-* **tjf-api-core:** Módulo do TJF que torna a API no padrão de API da TOTVS.
+* **tjf-api-core:** Módulo do TJF que torna nossa API no padrão de API da TOTVS.
 * **tjf-api-jpa:** Módulo do TJF com métodos de consulta a banco de dados e que em conjunto com o tjf-api-core já retorna os dados no padrão de API da TOTVS.
 * **tjf-security-web:** Módulo do TJF que implementa segurança em nossa aplicação e a integra a um serviço de autenticação, no nosso exemplo será o RAC.
 * **h2:** Um banco de dados em memória que usaremos para fazer a persistência e leitura dos dados.
