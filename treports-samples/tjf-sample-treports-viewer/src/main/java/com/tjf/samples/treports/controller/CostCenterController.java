@@ -25,8 +25,8 @@ public class CostCenterController {
 		// Precisa estar logado no TReports
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
-		out.println(
-				"<object data=\"" + REL_COST_CENTER + "\" type=\"text/html\" style=\"height: 700px; width: 100%\"/>");
+		out.println("<object data=\"" + treportsService.view(REL_COST_CENTER)
+				+ "\" type=\"text/html\" style=\"height: 700px; width: 100%\"/>");
 		out.close();
 	}
 }
