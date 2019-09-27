@@ -369,7 +369,7 @@ Agora acesse o TReports pela URL http://localhost:7017/, usuário `admin` e senh
 | Tipo do provedor     | Api padrão Totvs                   |
 | Fonte de dados       | Api Git                            |
 | Protocolo            | http                               |
-| Host                 | 172.20.0.1¹                         |
+| Host                 | 172.20.0.1¹                        |
 | Porta                | 8880                               |
 | Tipo de autenticação | OpenID                             |
 | Client ID            | js_oidc_tjf                        |
