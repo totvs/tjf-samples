@@ -12,7 +12,7 @@
 	<groupId>com.tjf.sample.github</groupId>
 	<artifactId>core-validation</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>core-validation</name>
+	<name>Star Wars :: core-validation-sample</name>
 	<description>Demo project for Spring Boot</description>
 
 	<dependencies>

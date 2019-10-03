@@ -9,6 +9,7 @@
 	<artifactId>sw-parent</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
+	<name>Star Wars :: Jedi Master</name>
 
 	<modules>
 		<module>tjf-messaging-samples/tjf-messaging-stream-sample/sw-messaging-subscriber-starship</module>
@@ -23,7 +24,7 @@
 		<module>tjf-core-samples/tjf-core-validation-sample</module>
 		<module>tjf-tenant-samples/tjf-tenant-discriminator-sample</module>
 		<module>tjf-tenant-samples/tjf-tenant-schema-sample</module>
-		<module>tjf-api-samples/tjf-api-core-fields</module>
+		<module>tjf-api-samples/tjf-api-core-fields-sample</module>
 		<module>tjf-api-samples/tjf-api-core-exception-sample</module>
 		<module>tjf-api-samples/tjf-api-context-sample</module>
 		<module>tjf-api-samples/tjf-api-jpa-filters-sample</module>

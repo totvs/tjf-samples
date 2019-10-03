@@ -16,8 +16,8 @@
 	<artifactId>sw-trilogy-history</artifactId>
 	<packaging>jar</packaging>
 
-	<name>Cash :: Workflow Domain</name>
-	<description>Cash :: Workflow Domain</description>
+	<name>Star Wars :: process-server-sample</name>
+	<description>Process Server Sample</description>
 
 	<dependencies>
 

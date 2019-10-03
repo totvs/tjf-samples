@@ -14,7 +14,7 @@
 	<artifactId>sw-i18n-core</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<name>Star Wars Services</name>
+	<name>Star Wars :: i18n-core-sample</name>
 	<description>Serviço de tradução relacionados ao universo Star Wars</description>
 
 	<dependencies>

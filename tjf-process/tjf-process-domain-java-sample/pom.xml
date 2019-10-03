@@ -15,7 +15,7 @@
 	<artifactId>sw-anakin-skywalker</artifactId>
 	<packaging>jar</packaging>
 
-	<name>Cash :: Workflow</name>
+	<name>Star Wars :: process-domain-java-sample</name>
 	<description>Cash :: Workflow Server</description>
 
 	<dependencies>

@@ -14,7 +14,7 @@
 	<artifactId>sw-services-context</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<name>Star Wars Services</name>
+	<name>Star Wars :: api-context-sample</name>
 	<description>Serviços de consultas relacionados ao universo Star Wars</description>
 
 	<dependencies>
