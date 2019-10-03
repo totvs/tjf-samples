@@ -13,7 +13,7 @@
 	<groupId>br.com.star.wars.discriminator</groupId>
 	<artifactId>sw-habitants-discriminator</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Star Wars Habitants (Discriminator)</name>
+	<name>Star Wars :: tenant-discriminator-sample</name>
 	<description>Serviço de manutenção e consulta dos habitantes do universo Star Wars utilizando a biblioteca TJF Tenant Discriminator</description>
 
 	<dependencies>

@@ -12,6 +12,7 @@
 	<groupId>com.totvs.tjf.samples</groupId>
 	<artifactId>tjf-sample-treports-viewer</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<name>Star Wars :: treports-viewer-sample</name>
 	
 	<dependencies>
 		<!-- Spring -->

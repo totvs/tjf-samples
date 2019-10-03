@@ -13,7 +13,7 @@
 	<groupId>br.com.star.wars.habitants</groupId>
 	<artifactId>sw-habitants-schema</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Star Wars Habitants (Schema)</name>
+	<name>Star Wars :: tenant-schema-sample</name>
 	<description>Serviço de manutenção e consulta dos habitantes do universo Star Wars utilizando a biblioteca TJF Tenant Schema</description>
 
 	<dependencies>

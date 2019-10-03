@@ -15,8 +15,7 @@
 	<groupId>br.com.starwars</groupId>
 	<artifactId>starwars-familytree</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-
-	<name>starwars-familytree</name>
+	<name>Star Wars :: repository-aggregate-sample</name>
 	<description>Star Wars Family Tree using TJF's Repository Aggregate</description>
 
 	<properties>

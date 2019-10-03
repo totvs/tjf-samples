@@ -14,7 +14,7 @@
 	<artifactId>sw-services-jpa</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<name>Star Wars Services</name>
+	<name>Star Wars :: api-jpa-sample</name>
 	<description>Serviços de consultas relacionados ao universo Star Wars</description>
 
 	<dependencies>
