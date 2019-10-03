@@ -8,7 +8,7 @@
 	<parent>
 		<groupId>com.totvs.tjf</groupId>
 		<artifactId>tjf-boot-starter</artifactId>
-		<version>1.5.0-RELEASE</version>
+		<version>1.6.1-RELEASE</version>
 	</parent>
 
 	<groupId>com.tjf.sample.github</groupId>
@@ -20,7 +20,7 @@
 	<description>História deste personagem na trilogia Star Wars</description>
 
 	<modules>
-		<module>tjf-process-domain-sample</module>
+		<module>tjf-process-domain-java-sample</module>
 		<module>tjf-process-server-sample</module>
 	</modules>
 

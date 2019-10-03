@@ -8,7 +8,7 @@
 	<parent>
 		<groupId>com.totvs.tjf</groupId>
 		<artifactId>tjf-boot-starter</artifactId>
-		<version>1.4.0-RELEASE</version>
+		<version>1.6.1-RELEASE</version>
 		<relativePath />
 	</parent>
 
@@ -46,13 +46,6 @@
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
-		</dependency>
-
-		<!-- Others -->
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<scope>provided</scope>
 		</dependency>
 
 		<!-- TJF -->

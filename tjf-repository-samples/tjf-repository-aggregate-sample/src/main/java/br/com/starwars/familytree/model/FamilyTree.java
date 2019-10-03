@@ -7,14 +7,7 @@ import java.util.UUID;
 import com.totvs.tjf.core.stereotype.Aggregate;
 import com.totvs.tjf.core.stereotype.AggregateIdentifier;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
 @Aggregate
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
 public class FamilyTree {
 
 	@AggregateIdentifier
