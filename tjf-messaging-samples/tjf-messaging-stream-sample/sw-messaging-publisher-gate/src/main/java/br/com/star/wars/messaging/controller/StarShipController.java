@@ -53,7 +53,7 @@ public class StarShipController {
     }
 	
 	private void setTenant(String tenant) {
-		SecurityPrincipal principal = new SecurityPrincipal("", tenant, tenant.split("-")[0]);
+		SecurityPrincipal principal = new SecurityPrincipal(null, "", tenant, tenant.split("-")[0]);
 	    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(principal, "N/A", null);
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 	}

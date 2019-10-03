@@ -38,7 +38,7 @@ public class I18nCoreIT {
 	public void i18n_pt_br_test() throws IOException {
 
 		Locale.setDefault(new Locale("pt", "br"));
-		assertEquals("sNave Millennium Falcon, pouso autorizado", starshipMessage.starshipConfirmLanding(name));
+		assertEquals("Nave Millennium Falcon, pouso autorizado", starshipMessage.starshipConfirmLanding(name));
 	}
 
 	@Test
