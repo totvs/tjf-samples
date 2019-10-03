@@ -11,7 +11,7 @@
 		<relativePath />
 	</parent>
 
-	<name>sw-services-api-core-fields</name>
+	<name>Star Wars :: api-core-fields-sample</name>
 	<description>Exemplo do uso de fields</description>
 	<groupId>br.com.star.wars</groupId>
 	<artifactId>sw-services-api-core-fields</artifactId>

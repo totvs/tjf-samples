@@ -14,7 +14,7 @@
 	<groupId>com.tjf.sample.github</groupId>
 	<artifactId>security-web</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>security-web</name>
+	<name>Star Wars :: security-web-sample</name>
 	<description>Sample Security Web</description>
 
 	<dependencies>

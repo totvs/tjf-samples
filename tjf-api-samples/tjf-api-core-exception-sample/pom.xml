@@ -11,7 +11,7 @@
 		<relativePath />
 	</parent>
 
-	<name>sw-services-api-core-exception</name>
+	<name>Star Wars :: api-core-exception-sample</name>
 	<description>Exemplo de Validações e Exceções</description>
 	<groupId>br.com.star.wars</groupId>
 	<artifactId>sw-services-api-core-exception</artifactId>

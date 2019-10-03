@@ -14,7 +14,7 @@
 	<artifactId>sw-messaging-publisher-gate</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<name>Star Wars Messaging</name>
+	<name>Star Wars :: messaging-stream-publisher-sample</name>
 	<description>Serviço de messageria relacionado ao universo Star Wars</description>
 
 	<dependencies>

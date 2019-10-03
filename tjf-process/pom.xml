@@ -16,7 +16,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name>Anakin Skywalker History</name>
+	<name>Star Wars :: process-sample</name>
 	<description>História deste personagem na trilogia Star Wars</description>
 
 	<modules>
