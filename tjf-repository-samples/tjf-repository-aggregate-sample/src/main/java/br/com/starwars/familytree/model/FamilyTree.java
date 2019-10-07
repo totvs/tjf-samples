@@ -28,5 +28,13 @@ public class FamilyTree {
 	public void addRelative(Relative relative) {
 		this.relatives.add(relative);
 	}
+	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 }
