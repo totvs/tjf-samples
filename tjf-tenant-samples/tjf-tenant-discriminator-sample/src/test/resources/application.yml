@@ -1,0 +1,19 @@
+spring:
+
+  # Configurações banco de dados
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASSWORD} 
+
+  # Configurações JPA
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    properties:
+      hibernate:
+        session_factory:
+          statement_inspector: com.totvs.tjf.tenant.discriminator.SQLInspector
+        show_sql: true
+        format_sql: true
+        ddl-auto: create-drop

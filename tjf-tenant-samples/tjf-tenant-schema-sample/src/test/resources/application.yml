@@ -1,0 +1,20 @@
+spring:
+
+  # Configurações banco de dados
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASSWORD} 
+
+  # Configurações JPA
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+        show_sql: true
+        format_sql: true
+        ddl-auto: create-drop
