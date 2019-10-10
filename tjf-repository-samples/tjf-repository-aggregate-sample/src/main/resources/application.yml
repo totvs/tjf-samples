@@ -3,9 +3,9 @@ spring:
   # Configurações banco de dados
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: ${DATABASE_URL}
-    username: ${DATABASE_USER}
-    password: ${DATABASE_PASSWORD} 
+    url: jdbc:postgresql://localhost:5432/swfamilytree
+    username: postgres
+    password: postgres
 
   # Configurações JPA
   jpa:
