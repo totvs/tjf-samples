@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.totvs.tjf</groupId>
+		<artifactId>tjf-boot-starter</artifactId>
+		<version>1.6.1-RELEASE</version>
+	</parent>
+	
+	<artifactId>tjf-messaging-test</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+
+	<name>TJF Messaging Test</name>
+
+	<dependencies>
+		<dependency>
+			<groupId>br.com.star.wars</groupId>
+			<artifactId>sw-messaging-publisher-gate</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
+		<!-- TEST -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<repositories>
+		<repository>
+			<id>central-release</id>
+			<name>TOTVS Java Framework: Release</name>
+			<url>http://maven.engpro.totvs.com.br/artifactory/libs-release</url>
+		</repository>
+		<repository>
+			<id>central-snapshot</id>
+			<name>TOTVS Java Framework: Snapshots</name>
+			<url>http://maven.engpro.totvs.com.br/artifactory/libs-snapshot</url>
+		</repository>
+	</repositories>
+</project>
