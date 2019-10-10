@@ -16,4 +16,4 @@ spring:
           statement_inspector: com.totvs.tjf.tenant.discriminator.SQLInspector
         show_sql: true
         format_sql: true
-        ddl-auto: create-drop
+        ddl-auto: update
