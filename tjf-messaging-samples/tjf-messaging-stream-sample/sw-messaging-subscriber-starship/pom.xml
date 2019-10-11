@@ -7,12 +7,13 @@
 	<parent>
 		<groupId>com.totvs.tjf</groupId>
 		<artifactId>tjf-boot-starter</artifactId>
-		<version>1.6.1-RELEASE</version>
+		<version>1.6.2-RELEASE</version>
 	</parent>
 
 	<groupId>br.com.star.wars</groupId>
 	<artifactId>sw-messaging-subscriber-starship</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 
 	<name>Star Wars :: messaging-stream-subscriber-sample</name>
 	<description>Serviço de messageria relacionado ao universo Star Wars</description>
