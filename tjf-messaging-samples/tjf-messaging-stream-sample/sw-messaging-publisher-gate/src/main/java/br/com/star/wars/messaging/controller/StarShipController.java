@@ -38,6 +38,20 @@ public class StarShipController {
         return "The identification of the arrived starship " + name + " of tenant " + tenant + " was sent!";
     }
 	
+	@GetMapping("/arrivedWithoutTenant")
+    String starShipArrived(@RequestParam("name") String name) {
+        
+		this.setTenant(null);
+        
+		System.out.println("\nStarship arrived name: " + name);
+        System.out.println("Current tenant: " + SecurityDetails.getTenant() + "\n");
+
+        StarShipArrivedEvent starShipEvent = new StarShipArrivedEvent(name);        
+        samplePublisher.publish(starShipEvent, StarShipArrivedEvent.NAME);
+        
+        return "The identification of the arrived starship " + name + " without tenant was sent!";
+    }
+	
 	@GetMapping("/left")
     String starShipLeft(@RequestParam("name") String name, @RequestParam("tenant") String tenant) {
         
@@ -53,7 +67,7 @@ public class StarShipController {
     }
 	
 	private void setTenant(String tenant) {
-		SecurityPrincipal principal = new SecurityPrincipal(null, "", tenant, tenant.split("-")[0]);
+		SecurityPrincipal principal = new SecurityPrincipal(null, "", tenant, tenant);
 	    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(principal, "N/A", null);
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 	}
