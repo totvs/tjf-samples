@@ -22,8 +22,8 @@
 		<module>treports-samples/tjf-sample-treports-server-client</module>
 		<module>tjf-i18n-samples/tjf-i18n-core-sample</module>
 		<module>tjf-core-samples/tjf-core-validation-sample</module>
-		<!--module>tjf-tenant-samples/tjf-tenant-discriminator-sample</module-->
-		<!--module>tjf-tenant-samples/tjf-tenant-schema-sample</module-->
+		<module>tjf-tenant-samples/tjf-tenant-discriminator-sample</module>
+		<module>tjf-tenant-samples/tjf-tenant-schema-sample</module>
 		<module>tjf-api-samples/tjf-api-core-fields-sample</module>
 		<module>tjf-api-samples/tjf-api-core-exception-sample</module>
 		<module>tjf-api-samples/tjf-api-context-sample</module>

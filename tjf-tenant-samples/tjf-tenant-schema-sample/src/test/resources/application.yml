@@ -3,7 +3,7 @@ spring:
   # Configurações banco de dados
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: ${DATABASE_URL}
+    url: ${DATABASE_URL}/tjf-tenant-schema
     username: ${DATABASE_USER}
     password: ${DATABASE_PASSWORD} 
 
