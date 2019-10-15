@@ -25,7 +25,7 @@ Além das já existentes, precisamos adicionar as seguintes dependências no arq
 <dependency>
   <groupId>org.springframework.boot</groupId>
   <artifactId>spring-boot-starter-data-jpa</artifactId>
-  <version>2.1.4.RELEASE</version>
+  <version>1.7.0-RELEASE</version>
 </dependency>
 
 <!-- TJF -->

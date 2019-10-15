@@ -21,14 +21,14 @@ Além da dependência do [Spring][spring], para utilização do módulo __API Co
 <dependency>
   <groupId>org.springframework.boot</groupId>
   <artifactId>spring-boot-starter-web</artifactId>
-  <version>2.1.4.RELEASE</version>
+  <version>1.7.0-RELEASE</version>
 </dependency>
 
 <!-- TJF -->
 <dependency>
   <groupId>com.totvs.tjf</groupId>
   <artifactId>tjf-api-core</artifactId>
-  <version>0.2.0-RELEASE</version>
+  <version>1.7.0-RELEASE</version>
 </dependency>
 ```
 
