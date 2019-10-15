@@ -26,13 +26,22 @@ Primeiramente configure o repositório do TJF em seu pom.xml.
 </repositories>
 ```
 
+Adicione o parent do TJF.
+
+```xml
+<parent>
+	<groupId>com.totvs.tjf</groupId>
+	<artifactId>tjf-boot-starter</artifactId>
+	<version>1.7.0-RELEASE</version>
+</parent>
+```
+
 Para utilização do componente de segurança do TJF é necessário inserir a seguinte dependência em seu arquivo pom.xml.
 
 ```xml
 <dependency>
     <groupId>com.totvs.tjf</groupId>
     <artifactId>tjf-security-web</artifactId>
-    <version>1.7.0-RELEASE</version>
 </dependency>
 ```
 
@@ -42,7 +51,6 @@ Em nosso exemplo iremos utilizar um serviço web para disponibilizar os endpoint
 <dependency>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-web</artifactId>
-    <version>1.7.0-RELEASE</version>
 </dependency>
 ```
 ### Configurando integração com o *Authorization Service*

@@ -17,18 +17,24 @@ Para criação deste exemplo, vamos iniciar a explicação a partir de um projet
 Além da dependência do [Spring][spring], para utilização do módulo __API Context__ é necessário inserir as seguintes dependências no arquivo `pom.xml` do projeto:
 
 ```xml
+<parent>
+  <groupId>com.totvs.tjf</groupId>
+  <artifactId>tjf-boot-starter</artifactId>
+  <version>1.7.0-RELEASE</version>
+</parent>
+```
+
+```xml
 <!-- Spring -->
 <dependency>
   <groupId>org.springframework.boot</groupId>
   <artifactId>spring-boot-starter-web</artifactId>
-  <version>1.7.0-RELEASE</version>
 </dependency>
 
 <!-- TJF -->
 <dependency>
   <groupId>com.totvs.tjf</groupId>
   <artifactId>tjf-api-core</artifactId>
-  <version>1.7.0-RELEASE</version>
 </dependency>
 ```
 

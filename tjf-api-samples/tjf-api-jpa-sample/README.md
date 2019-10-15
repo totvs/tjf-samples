@@ -21,18 +21,24 @@ A biblioteca __API JPA__ irá auxiliar na criação deste repositório e será r
 Além das já existentes, precisamos adicionar as seguintes dependências no arquivo `pom.xml` do projeto:
 
 ```xml
+<parent>
+  <groupId>com.totvs.tjf</groupId>
+  <artifactId>tjf-boot-starter</artifactId>
+  <version>1.7.0-RELEASE</version>
+</parent>
+```
+
+```xml
 <!-- Spring -->
 <dependency>
   <groupId>org.springframework.boot</groupId>
   <artifactId>spring-boot-starter-data-jpa</artifactId>
-  <version>1.7.0-RELEASE</version>
 </dependency>
 
 <!-- TJF -->
 <dependency>
   <groupId>com.totvs.tjf</groupId>
   <artifactId>tjf-api-jpa</artifactId>
-  <version>0.2.0-SNAPSHOT</version>
 </dependency>
 
 <!-- H2 Database -->

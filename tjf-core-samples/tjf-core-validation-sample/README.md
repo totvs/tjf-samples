@@ -15,17 +15,24 @@ Para fácil entendimento do componente **TJF Core Validation** vamos seguir a se
 
 Para utilização do componente será necessário inserir a seguinte dependência em seu arquivo pom.xml.
 
+```xml
+<parent>
+	<groupId>com.totvs.tjf</groupId>
+	<artifactId>tjf-boot-starter</artifactId>
+	<version>1.7.0-RELEASE</version>
+</parent>
 ```
+
+```xml
 <dependency>
     <groupId>com.totvs.tjf</groupId>
     <artifactId>tjf-core-validation</artifactId>
-    <version>{{version}}</version> <!-- Utilize a versão desejada -->
 </dependency>
 ```
 
 Como iremos criar um micro serviço REST, para facilitar a criação do Model, vamos utilizar o Lombok como dependência.
 
-```
+```xml
 <dependency>
 	<groupId>org.projectlombok</groupId>
 	<artifactId>lombok</artifactId>
@@ -38,7 +45,7 @@ Mais informações sobre o Lombok: [https://projectlombok.org/](https://projectl
 
 Para demonstrar o suporte ao Spring Fox Swagger, também o teremos como dependência:
 
-```
+```xml
 <dependency>
 	<groupId>io.springfox</groupId>
 	<artifactId>springfox-swagger2</artifactId>
