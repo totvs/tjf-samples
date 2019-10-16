@@ -15,6 +15,7 @@
 		<module>tjf-messaging-samples/tjf-messaging-stream-sample/sw-messaging-subscriber-starship</module>
 		<module>tjf-messaging-samples/tjf-messaging-stream-sample/sw-messaging-publisher-gate</module>
 		<module>tjf-repository-samples/tjf-repository-aggregate-sample</module>
+		<module>tjf-migration-samples/tjf-migration-schema-sample</module>
 		<module>tjf-process</module>
 		<module>tjf-security-samples/tjf-security-web-sample</module>
 		<module>treports-samples/tjf-sample-treports-viewer</module>
