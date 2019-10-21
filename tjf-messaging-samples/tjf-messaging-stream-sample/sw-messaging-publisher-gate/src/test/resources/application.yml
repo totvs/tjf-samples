@@ -8,19 +8,25 @@ spring:
           group: requests
         starship-output:
           destination: starship-input
+        tjf-messaging-error-input:
+          destination: starship-errors
+          group: errors
+        tjf-messaging-error-output:
+          destination: starship-errors
+          group: errors
       binders:
         rabbit1:
           type: rabbit
           environment:
             spring:
-              rabbit:
-                host: localhost
+              rabbitmq:
+                host: ${RABBIT_HOST}
                 
 management:
   endpoints:
     web:
       exposure:
-        include: info,health,messaging                
+        include: info,health,messaging         
                 
 server:
   port: 8080

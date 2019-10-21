@@ -15,12 +15,8 @@
 		<module>tjf-messaging-samples/tjf-messaging-stream-sample/sw-messaging-subscriber-starship</module>
 		<module>tjf-messaging-samples/tjf-messaging-stream-sample/sw-messaging-publisher-gate</module>
 		<module>tjf-repository-samples/tjf-repository-aggregate-sample</module>
-		<module>tjf-migration-samples/tjf-migration-schema-sample</module>
 		<module>tjf-process</module>
 		<module>tjf-security-samples/tjf-security-web-sample</module>
-		<module>treports-samples/tjf-sample-treports-viewer</module>
-		<module>treports-samples/tjf-sample-treports-provider</module>
-		<module>treports-samples/tjf-sample-treports-server-client</module>
 		<module>tjf-i18n-samples/tjf-i18n-core-sample</module>
 		<module>tjf-core-samples/tjf-core-validation-sample</module>
 		<module>tjf-tenant-samples/tjf-tenant-discriminator-sample</module>
@@ -30,7 +26,6 @@
 		<module>tjf-api-samples/tjf-api-context-sample</module>
 		<module>tjf-api-samples/tjf-api-jpa-filters-sample</module>
 		<module>tjf-api-samples/tjf-api-jpa-sample</module>
+		<module>tjf-api-samples/tjf-api-jpa-specification-sample</module>
 	</modules>
 </project>
-
-
