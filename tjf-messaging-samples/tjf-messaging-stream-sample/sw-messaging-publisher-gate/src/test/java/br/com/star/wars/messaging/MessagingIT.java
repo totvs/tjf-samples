@@ -13,9 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
-import org.springframework.web.util.NestedServletException;
 
-import br.com.star.wars.messaging.events.StarShipLeftEvent;
 import br.com.star.wars.messaging.infrastructure.messaging.StarShipPublisher;
 import br.com.star.wars.messaging.services.StarShipService;
 
@@ -25,7 +23,7 @@ import br.com.star.wars.messaging.services.StarShipService;
 public class MessagingIT {
 
 	public static final String ARRIVED_URL = "/starship/arrived";
-	public static final String LEFT_URL = "/starship/left";
+	public static final String ARRIVED_WITHOUT_TENANT = "/starship/arrivedWithoutTenant";
 
 	public static boolean error;
 
@@ -54,13 +52,22 @@ public class MessagingIT {
 		expectedCounter("def", 2);
 	}
 
-	@Test(expected = NestedServletException.class)
-	public void errorQueueTest() throws Exception {
-		StarShipLeftEvent starShipEvent = new StarShipLeftEvent("");
-		samplePublisher.publish(starShipEvent, StarShipLeftEvent.NAME);
+	@Test(timeout = 10000)
+	public void messagingWithoutTenantTest() throws Exception {
+		sendArrivedWithoutTenantMessage("Millenium Falcon");
+		expectedCounter(null, 1);
 
-		mockMvc.perform(get("/actuator/messaging")).andExpect(status().isOk()).andReturn();
+		sendArrivedWithoutTenantMessage("X-Wing");
+		expectedCounter(null, 2);
 	}
+
+//	@Test
+//	public void errorQueueTest() throws Exception {
+//		StarShipLeftEvent starShipEvent = new StarShipLeftEvent("");
+//		samplePublisher.publish(starShipEvent, StarShipLeftEvent.NAME);
+//
+//		mockMvc.perform(get("/actuator/messaging")).andExpect(status().isOk());
+//	}
 
 	private void expectedCounter(String tenant, int amount) throws InterruptedException {
 
@@ -76,6 +83,10 @@ public class MessagingIT {
 
 	private void sendArrivedMessaging(String tenant) throws Exception {
 		mockMvc.perform(getRequest(ARRIVED_URL).param("tenant", tenant)).andExpect(status().isOk());
+	}
+
+	private void sendArrivedWithoutTenantMessage(String name) throws Exception {
+		mockMvc.perform(getRequest(ARRIVED_WITHOUT_TENANT).param("name", name)).andExpect(status().isOk());
 	}
 
 	private MockHttpServletRequestBuilder getRequest(String url) {

@@ -60,7 +60,7 @@ public class StarShipService {
 	private int leftCount() {
 
 		String tenant = SecurityDetails.getTenant();
-		counter.put(tenant, counter.getOrDefault(tenant, 0) + 1);
+		counter.put(tenant, counter.getOrDefault(tenant, 0) - 1);
 
 		return counter.get(tenant);
 	}
