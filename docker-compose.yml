@@ -12,10 +12,10 @@ services:
     networks:
       - docker-network
     environment:
-      DB_NAME: starwars-db
-      DB_USER: jedi
+      DB_NAME: tjf-aggregate, tjf-tenant-schema, tjf-tenant-discriminator
+      DB_USER: postgres
       DB_PASS: jedi
-      PG_PASSWORD: starwars@123
+      PG_PASSWORD: samples@123
     ports: 
       - 5432:5432
 
@@ -35,10 +35,12 @@ services:
     networks:
       - docker-network
     environment:
-      DATABASE_URL: "jdbc:postgresql://tjf-postgres:5432/starwars-db"
+      DATABASE_URL: "jdbc:postgresql://tjf-postgres:5432"
+      DATABASE_USER: "postgres"
+      DATABASE_PASSWORD: "samples@123"
       RABBIT_HOST: "tjf-rabbitmq"
     depends_on:
       - postgres
       - rabbitMq
     volumes: 
-      - "/home/luca/Git/TJF-Samples:/maven-repo/tjf-samples"
+      - ${VOLUME}:/maven-repo/tjf-samples #Altere o valor ${VOLUME} para o seu diretorio com os fontes dos samples TJF
