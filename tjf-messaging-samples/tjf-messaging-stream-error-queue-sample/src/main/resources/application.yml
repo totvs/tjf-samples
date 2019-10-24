@@ -1,0 +1,39 @@
+spring:
+  cloud:
+    stream:
+      defaultBinder: rabbit1
+      bindings:
+        # Filas de Execução
+        bbunit-input:
+          destination: bbunit-input
+          group: requests
+          consumer:
+            max-attempts: 1          
+        bbunit-output:
+          destination: bbunit-input
+        # Filas de Erros
+        tjf-messaging-error-input:
+          destination: bbunit-errors
+          group: errors
+        tjf-messaging-error-output:
+          destination: bbunit-errors
+          group: errors
+          producer:
+            requiredGroups: errors
+                      
+      binders:
+        rabbit1:
+          type: rabbit
+          environment:
+            spring:
+              rabbit:
+                host: localhost
+                
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info,health,messaging                
+                
+server:
+  port: 8080
