@@ -2,7 +2,7 @@
 
 # Contexto
 
-Para exemplificar a biblioteca __API JPA__ vamos utilizar o mesmo projeto criado para o _sample_ da bilioteca __API Context__ disponível em nosso [GitHub][tjf-api-context-sample].
+Para exemplificar a biblioteca __API JPA__ vamos utilizar o mesmo projeto criado para o _sample_ da biblioteca __API Context__ disponível em nosso [GitHub][tjf-api-context-sample].
 
 > É muito importante que, antes de iniciar o desenvolvimento deste _sample_, você tenha lido e compreendido o _sample_ do __API Context__.
 
@@ -308,14 +308,12 @@ Muito mais simples e fácil, não?
 
 Com isso terminamos nosso _sample_, fique a vontade para enriquecê-lo utilizando outros recursos propostos pelo componente __API JPA__ e enviar sugestões e melhorias para o projeto __TOTVS Java Framework__.
 
-> O conteúdo deste _sample_ está em nosso repositório do [GitHub][github].
 
-
-[tjf-api-context-sample]: https://github.com/totvs/tjf-api-context-sample
+[tjf-api-context-sample]: https://github.com/totvs/tjf-samples/tree/master/tjf-api-samples/tjf-api-context-sample
 [guia-api-totvs]: http://tdn.totvs.com/x/nDUxE
 [h2]: https://www.h2database.com
 [hibernate]: https://hibernate.org
 [spring]: https://spring.io
 [@EnableJpaRepositories]: https://docs.spring.io/spring-data/data-jpa/docs/current/api/org/springframework/data/jpa/repository/config/EnableJpaRepositories.html
-[tjf-api-context]: https://tjf.totvs.com.br/wikiV020/tjf-api-context
+[tjf-api-context]: https://tjf.totvs.com.br/wiki/tjf-api-context
 [github]: https://github.com/totvs/tjf-api-jpa-sample

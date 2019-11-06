@@ -543,4 +543,4 @@ Content-Type: application/json
 
 ## Que a força esteja com você!
 
-Com isso terminamos nosso sample, fique a vontade para enriquecê-lo ou evoluí-lo utilizando outros recursos e enviar sugestões e melhorias para o [TOTVS Java Framework](http://tjf.totvs.com).
+Com isso terminamos nosso sample, fique a vontade para enriquecê-lo ou evoluí-lo utilizando outros recursos e enviar sugestões e melhorias para o [TOTVS Java Framework](http://tjf.totvs.com.br).

@@ -130,7 +130,7 @@ public void testSchemas() throws SQLException {
 
 Com isso terminamos nosso _sample_, fique a vontade para enriquecê-lo utilizando outros recursos propostos pela biblioteca [__Migration Schema__][tjf-migration-schema] e enviar sugestões e melhorias para o [__TOTVS Java Framework__][tjf].
 
-[tjf-migration-schema]: https://tjf.totvs.com.br/wiki/V1/tjf-migration-schema
+[tjf-migration-schema]: https://tjf.totvs.com.br/wiki/tjf-migration
 [tjf]: https://tjf.totvs.com.br
 [h2]: https://www.h2database.com
 [spring]: https://spring.io

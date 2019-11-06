@@ -244,4 +244,3 @@ com.tjf.sample.github.validation.exception.AccountException: address: tamanho de
 ## Finalizando
 
 Pronto! Agora já poderemos implementar as funcionalidades do módulo **TJF-CORE-VALIDATION** nos nossos projetos. Lembrando que as informações técnicas se encontram no próprio README.md do módulo.
-Este exemplo está em nosso repositório no [GitHub](https://github.com/totvs/tjf-core-validation-sample).
