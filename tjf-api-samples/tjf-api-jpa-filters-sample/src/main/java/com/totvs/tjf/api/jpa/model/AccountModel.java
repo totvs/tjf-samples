@@ -23,7 +23,7 @@ public class AccountModel implements SimpleFilterSupport <AccountModel> {
 
 	@Id
     @NotNull
-    private String accountId;
+    private Integer accountId;
 
     @NotNull
     @Column(name = "val_balance")
@@ -47,11 +47,11 @@ public class AccountModel implements SimpleFilterSupport <AccountModel> {
     @JoinColumn(name = "id")
     private EmployeeModel employee;
 
-	public String getAccountId() {
+	public Integer getAccountId() {
 		return accountId;
 	}
 
-	public void setAccountId(String accountId) {
+	public void setAccountId(Integer accountId) {
 		this.accountId = accountId;
 	}
 

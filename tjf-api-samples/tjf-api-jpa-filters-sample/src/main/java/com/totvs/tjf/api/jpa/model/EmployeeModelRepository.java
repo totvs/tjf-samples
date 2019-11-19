@@ -8,4 +8,4 @@ import com.totvs.tjf.api.jpa.repository.ApiJpaRepository;
 
 @Repository
 @Transactional
-public interface EmployeeModelRepository extends JpaRepository<EmployeeModel, String>, ApiJpaRepository <EmployeeModel> {}
+public interface EmployeeModelRepository extends JpaRepository<EmployeeModel, Integer>, ApiJpaRepository <EmployeeModel> {}
