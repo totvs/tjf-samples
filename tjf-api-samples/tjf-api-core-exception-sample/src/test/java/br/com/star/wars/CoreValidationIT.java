@@ -7,6 +7,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 import org.json.JSONException;
 import org.junit.Test;
@@ -48,21 +51,24 @@ public class CoreValidationIT {
 	public void createStarshipWithExceptionTest() throws JSONException, URISyntaxException {
 
 		HttpHeaders headers = new HttpHeaders();
+		List<Locale.LanguageRange> acceptableLanguages = new ArrayList<>();
 
-		String expectedResult = "{\"code\":\"StarshipCreateConstraintException\",\"message\":\"É uma armadilha\",\"detailedMessage\":\"A força não está com você\",\"details\":[{\"code\":\"Starship.description.Size\",\"message\":\"A descrição da nave não deve ser menor que 1 ou maior que 15\",\"detailedMessage\":\"description: A sucata mais veloz da galáxia\"}]}";
+		String expectedResult = "{\"code\":\"StarshipCreateConstraintException\",\"message\":\"It's a trap\",\"detailedMessage\":\"The force is not with you\",\"details\":[{\"code\":\"Starship.description.Size\",\"message\":\"Ship description must not be less than 1 or greater than 15\",\"detailedMessage\":\"description: A sucata mais veloz da galaxia\"}]}";
 		final String baseUrl = "/api/v1/starship/create";
 		URI uri = new URI(baseUrl);
 
+		acceptableLanguages.add(new Locale.LanguageRange("en"));
+
 		headers.setContentType(MediaType.APPLICATION_JSON);
+		headers.setAcceptLanguage(acceptableLanguages);
 
 		HttpEntity<String> entity = new HttpEntity<String>(
 				"{\n" + "    \"name\": \"Millenium Falcon\",\n"
-						+ "    \"description\": \"A sucata mais veloz da galáxia\",\n" + "    \"crew\": 5\n" + "}",
+						+ "    \"description\": \"A sucata mais veloz da galaxia\",\n" + "    \"crew\": 5\n" + "}",
 				headers);
 
 		ResponseEntity<String> result = template.postForEntity(uri, entity, String.class);
 
 		assertTrue(result.getBody().equals(expectedResult));
-
 	}
 }

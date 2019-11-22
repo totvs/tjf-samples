@@ -16,17 +16,17 @@ public class EmployeeModel implements SimpleFilterSupport <EmployeeModel> {
 
 	@Id
     @NotNull
-    private String employeeId;
+    private Integer employeeId;
 
     @NotNull
     @Column(name = "name")
     private String name;
     
-	public String getEmployeeId() {
+	public Integer getEmployeeId() {
 		return employeeId;
 	}
 
-	public void setEmployeeId(String employeeId) {
+	public void setEmployeeId(Integer employeeId) {
 		this.employeeId = employeeId;
 	}
 
