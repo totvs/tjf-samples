@@ -31,7 +31,7 @@ public class MachineController {
 	}
 
 	@PostMapping("stop")
-	@RolesAllowed("ROLE_SUPERVISOR")
+	@RolesAllowed("SUPERVISOR")
 	public List<Map<String, Object>> stopAll() {
 
 		machineManager.stopAll();
