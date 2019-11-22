@@ -32,7 +32,7 @@ Adicione o parent do TJF.
 <parent>
 	<groupId>com.totvs.tjf</groupId>
 	<artifactId>tjf-boot-starter</artifactId>
-	<version>1.8.0-RELEASE</version>
+	<version>1.9.0-RELEASE</version>
 </parent>
 ```
 
@@ -332,10 +332,10 @@ Vamos executar novamente a request, você deve conseguir parar todas maquinas co
 ]
 ```
 
-**Importante:** Os retornos de erros seguirão o padrão do [API Core](framework/tjf-api-core) caso você o use nos endpoints do seu projeto.
+**Importante:** Os retornos de erros seguirão o padrão do [API Core](https://tjf.totvs.com.br/wiki/tjf-api-core) caso você o use nos endpoints do seu projeto.
 
 ## Isso é tudo pessoal!
 
-Com isso terminamos nosso exemplo, fique a vontade para incrementar o exemplo utilizando todos recursos proposto pelo componente **Security Web**, caso necessário utilize nossa [documentação](framework/tjf-security-web). Este exemplo está em nosso repositório no [GitHub](https://github.com/totvs/tjf-security-sample).
+Com isso terminamos nosso exemplo, fique a vontade para incrementar o exemplo utilizando todos recursos proposto pelo componente **Security Web**, caso necessário utilize nossa [documentação](https://tjf.totvs.com.br/wiki/tjf-security-web).
 
 E fique a vontade para mandar sugestões e melhorias para o projeto TJF.

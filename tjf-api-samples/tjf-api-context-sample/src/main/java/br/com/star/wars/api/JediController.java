@@ -41,8 +41,8 @@ public class JediController {
 	}
 
 	private void sortList(List<Jedi> jedis, Map<String, ApiSortDirection> sort) {
-		// Converte o Map de ordenação para List, assim poderemos navegar entre
-		// a lista de valores de forma reversa para aplicar a ordenação na
+		// Converte o Map de ordenacao para List, assim poderemos navegar entre
+		// a lista de valores de forma reversa para aplicar a ordenacao na
 		// lista de Jedis.
 		List<Map.Entry<String, ApiSortDirection>> keys;
 		keys = new ArrayList<Map.Entry<String, ApiSortDirection>>(sort.entrySet());

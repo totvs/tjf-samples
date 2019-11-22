@@ -1,7 +1,6 @@
 package com.totvs.tjf.api.jpa.controller;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
@@ -27,27 +26,36 @@ public class DataInit {
 	@Transactional
 	private void init () {
 		EmployeeModel john = new EmployeeModel();
-		john.setEmployeeId(UUID.randomUUID().toString());
+		john.setEmployeeId(1);
 		john.setName("John");
 		employeeRepos.saveAndFlush(john);
+		
 		EmployeeModel mary = new EmployeeModel();
-		mary.setEmployeeId(UUID.randomUUID().toString());
+		mary.setEmployeeId(2);
 		mary.setName("Mary");
 		employeeRepos.saveAndFlush(mary);
+		
 		boolean isJohn = true;
 		for (int i=0; i < 10; i++) {
 			AccountModel account = new AccountModel();
-			account.setAccountId(UUID.randomUUID().toString());
-			account.setBalance(new BigDecimal(Math.random() * 10000));
+			account.setAccountId(i);
+			
+			if(i != 8) {
+				account.setBalance(new BigDecimal(i * 1000));	
+			} else {
+				account.setBalance(new BigDecimal(9 * 1000));
+			}
+			
 			account.setBalanceCurrencyCode("BRL");
 			account.setLimit(new BigDecimal(10000 + i * 1000));
 			account.setLimitCurrencyCode("BRL");
+			
 			if (isJohn = !isJohn) {
 				account.setEmployee(mary);
-			}
-			else {
+			} else {
 				account.setEmployee(john);
 			}
+			
 			accountRepos.saveAndFlush(account);
 		}
 	}

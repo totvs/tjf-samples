@@ -31,7 +31,7 @@ Após gerado, precisamos substituir no arquivo `pom.xml` o _parent_ do projeto p
 <parent>
   <groupId>com.totvs.tjf</groupId>
   <artifactId>tjf-boot-starter</artifactId>
-  <version>1.8.0-RELEASE</version>
+  <version>1.9.0-RELEASE</version>
 </parent>
 ```
 
@@ -451,11 +451,11 @@ X-Planet: Bespin
 
 Com isso terminamos nosso _sample_, fique a vontade para enriquecê-lo utilizando outros recursos propostos pela biblioteca [__Tenant Schema__][tjf-tenant-schema] e enviar sugestões e melhorias para o [__TOTVS Java Framework__][tjf].
 
-[tjf-tenant-schema]: https://tjf.totvs.com.br/wikiV020/tjf-tenant-schema
+[tjf-tenant-schema]: https://tjf.totvs.com.br/wiki/tjf-tenant-schema
 [tjf]: https://tjf.totvs.com.br
 [h2]: https://www.h2database.com
 [spring]: https://spring.io
 [spring-initializr]: https://start.spring.io
-[tjf-boot-starter]: https://tjf.totvs.com.br/wikiV020/tjf-boot-starter
+[tjf-boot-starter]: https://tjf.totvs.com.br/wiki/tjf-boot-starter
 [flyway]: https://flywaydb.org
 [dto]: https://pt.stackoverflow.com/questions/31362/o-que-é-um-dto

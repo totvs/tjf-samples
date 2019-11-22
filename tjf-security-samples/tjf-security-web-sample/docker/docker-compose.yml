@@ -1,0 +1,81 @@
+# How To TReports - Instalação via Docker: https://youtu.be/Al9NoY58DJs
+# TReports - Provedor de API: https://www.facebook.com/totvsdevelopers/videos/2355074714610562/?q=treports&epa=SEARCH_BOX
+# RAC - http://localhost:5009/totvs.rac/.well-known/openid-configuration
+version: '3.6'
+
+networks:
+  docker-network-trep:
+    driver: bridge
+
+services:
+  postgres:
+    image: sameersbn/postgresql:10-1
+    restart: always
+    environment:
+      DB_NAME: TOTVSRAC
+      DB_USER: sample
+      DB_PASS: sample@123
+      PG_PASSWORD: admin
+    ports: 
+      - 5432:5432
+    networks:
+     - docker-network-trep
+
+  rac:
+    image: docker.totvs.io/tnf/rac:latest
+    restart: always
+    environment:
+      DefaultSchema: "public"
+      ApplicationSchema: "public"
+      DefaultConnectionString: "PostgreSQL"
+      ConnectionStrings__PostgreSQL: "Data Source=postgres;Port=5432;Database=TOTVSRAC;User ID=postgres;password=admin;Unicode=true;"
+      RunMigrator: "T"
+      
+      Clients__0__ClientId: "rac_oidc"
+      Clients__0__ClientName: "Client OIDC padrão do RAC"
+      Clients__0__ProductName: "TOTVS RAC"
+      Clients__0__GrantTypes__0: "Hybrid"
+      Clients__0__GrantTypes__1: "ClientCredentials"
+      Clients__0__ExpirationTimeInMinutes: "20"
+      Clients__0__RedirectUrls__0: "http?://rac/totvs.rac/auth-callback"
+      Clients__0__RedirectUrls__1: "http?://rac/totvs.rac/assets/silent-renew.html"
+      Clients__0__RedirectUrls__2: "http?://localhost:5009/totvs.rac/auth-callback"
+      Clients__0__RedirectUrls__3: "http?://localhost:5009/totvs.rac/assets/silent-renew.html"
+      Clients__0__RedirectUrls__4: "http?://*.localhost:5009/totvs.rac/auth-callback"
+      Clients__0__RedirectUrls__5: "http?://*.localhost:5009/totvs.rac/assets/silent-renew.html"
+      Clients__0__LogoutUrls__0: "http?://rac/totvs.rac"
+      Clients__0__LogoutUrls__1: "http?://localhost:5009/totvs.rac"
+      Clients__0__LogoutUrls__2: "http?://*.localhost:5009/totvs.rac"
+      Clients__0__LogoutUrls__3: "http://rac/totvs.rac"
+      Clients__0__Secrets__0__Description: "Senha Padrão (totvs@123)"
+      Clients__0__Secrets__0__Value: "totvs@123"
+
+      Clients__1__ClientId: "js_oidc_sampleapp"
+      Clients__1__ClientName: "js_oidc_sampleapp"
+      Clients__1__ProductName: "SampleApp"
+      Clients__1__GrantTypes__0: "Hybrid"
+      Clients__1__GrantTypes__1: "ClientCredentials"
+      Clients__1__ExpirationTimeInMinutes: "20"
+      Clients__1__RedirectUrls__0: "http?://localhost:8880/auth-callback"
+      Clients__1__RedirectUrls__1: "http?://localhost:8880/assets/silent-renew.html"
+      Clients__1__RedirectUrls__2: "http?://*.localhost:8880/auth-callback"
+      Clients__1__RedirectUrls__3: "http?://*.localhost:8880/assets/silent-renew.html"
+      Clients__1__LogoutUrls__0: "http?://localhost:8880"
+      Clients__1__LogoutUrls__1: "http?://*.localhost:8880"
+      Clients__1__Secrets__0__Description: "Senha Padrão (totvs@123)"
+      Clients__1__Secrets__0__Value: "totvs@123"
+
+      Tenants__0__TenantName: "empresa1"
+      Tenants__0__Name: "Empresa Sample"
+      Tenants__0__CNPJ: "53113791001102"
+      Tenants__0__Products__0__ProductName: "TOTVS RAC"
+      Tenants__0__Products__1__ProductName: "SampleApp"
+
+      HostUrl: "http://*.localhost:5009/totvs.rac"
+    ports:
+      - "5009:80"
+    networks:
+      - docker-network-trep
+    depends_on:
+      - postgres
+

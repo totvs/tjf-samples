@@ -19,7 +19,7 @@ Para utilização do componente será necessário inserir a seguinte dependênci
 <parent>
 	<groupId>com.totvs.tjf</groupId>
 	<artifactId>tjf-boot-starter</artifactId>
-	<version>1.8.0-RELEASE</version>
+	<version>1.9.0-RELEASE</version>
 </parent>
 ```
 
@@ -244,4 +244,3 @@ com.tjf.sample.github.validation.exception.AccountException: address: tamanho de
 ## Finalizando
 
 Pronto! Agora já poderemos implementar as funcionalidades do módulo **TJF-CORE-VALIDATION** nos nossos projetos. Lembrando que as informações técnicas se encontram no próprio README.md do módulo.
-Este exemplo está em nosso repositório no [GitHub](https://github.com/totvs/tjf-core-validation-sample).

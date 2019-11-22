@@ -8,4 +8,4 @@ import com.totvs.tjf.api.jpa.repository.ApiJpaRepository;
 
 @Repository
 @Transactional
-public interface AccountModelRepository extends JpaRepository<AccountModel, String>, ApiJpaRepository <AccountModel> {}
+public interface AccountModelRepository extends JpaRepository<AccountModel, Integer>, ApiJpaRepository <AccountModel> {}

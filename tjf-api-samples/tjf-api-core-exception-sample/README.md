@@ -41,7 +41,7 @@ Após gerado, precisamos realizar pequenas alterações e inserir algumas depend
 <parent>
 	<groupId>com.totvs.tjf</groupId>
 	<artifactId>tjf-boot-starter</artifactId>
-	<version>1.8.0-RELEASE</version>
+	<version>1.9.0-RELEASE</version>
 	<relativePath />
 </parent>
 ```
@@ -183,7 +183,7 @@ public class StarshipController {
 
 A mágica acontece dentro do método `createStarship` que possui a validação dos objetos que dispara nossa exceção criada anteriormente.
 
-Agora antes de testarmos, precisamos criar as mensagens de validação e exceção das classes `Starship` e  `StarshipCreateConstraintException`. Para isso crie a seguinte estrutura de mensagens, conforme a documentação do modulo [tjf-api-core](https://tjf.totvs.com.br/wiki/tjf-api-core). Lembre-se que conforme a documentação do modulo [tjf-i18n-core](https://tjf.totvs.com.br/wiki/v1.5.0/tjf-i18n-core) as mensagens deve seguir o padrão de caracteres *unicode*.
+Agora antes de testarmos, precisamos criar as mensagens de validação e exceção das classes `Starship` e  `StarshipCreateConstraintException`. Para isso crie a seguinte estrutura de mensagens, conforme a documentação do modulo [tjf-api-core](https://tjf.totvs.com.br/wiki/tjf-api-core). Lembre-se que conforme a documentação do modulo [tjf-i18n-core](https://tjf.totvs.com.br/wiki/tjf-i18n-core) as mensagens deve seguir o padrão de caracteres *unicode*.
 
 ![Estrutura de Mensagens](Resources/messages.png)
 

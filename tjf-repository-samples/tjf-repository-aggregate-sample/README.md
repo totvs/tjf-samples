@@ -45,7 +45,7 @@ Após gerado, precisamos substituir no arquivo `pom.xml` o *parent* do projeto p
 <parent>
   <groupId>com.totvs.tjf</groupId>
   <artifactId>tjf-boot-starter</artifactId>
-  <version>1.8.0-RELEASE</version>
+  <version>1.9.0-RELEASE</version>
   <relativePath />
 </parent>
 ```
@@ -543,4 +543,4 @@ Content-Type: application/json
 
 ## Que a força esteja com você!
 
-Com isso terminamos nosso sample, fique a vontade para enriquecê-lo ou evoluí-lo utilizando outros recursos e enviar sugestões e melhorias para o [TOTVS Java Framework](http://tjf.totvs.com).
+Com isso terminamos nosso sample, fique a vontade para enriquecê-lo ou evoluí-lo utilizando outros recursos e enviar sugestões e melhorias para o [TOTVS Java Framework](http://tjf.totvs.com.br).
