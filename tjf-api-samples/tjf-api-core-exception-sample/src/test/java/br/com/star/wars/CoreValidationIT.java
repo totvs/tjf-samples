@@ -69,6 +69,8 @@ public class CoreValidationIT {
 
 		ResponseEntity<String> result = template.postForEntity(uri, entity, String.class);
 
+		System.out.println(result.getBody());
+
 		assertTrue(result.getBody().equals(expectedResult));
 	}
 }
