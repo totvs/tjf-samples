@@ -53,7 +53,7 @@ public class CoreValidationIT {
 		HttpHeaders headers = new HttpHeaders();
 		List<Locale.LanguageRange> acceptableLanguages = new ArrayList<>();
 
-		String expectedResult = "{\"code\":\"StarshipCreateConstraintException\",\"message\":\"It's a trap\",\"detailedMessage\":\"The force is not with you\",\"details\":[{\"code\":\"Starship.description.Size\",\"message\":\"A descrição da nave não deve ser menor que 1 ou maior que 15\",\"detailedMessage\":\"description: A sucata mais veloz da galaxia\"}]}";
+		String expectedResult = "{\"code\":\"StarshipCreateConstraintException\",\"message\":\"It's a trap\",\"detailedMessage\":\"The force is not with you\",\"details\":[{\"code\":\"Starship.description.Size\",\"message\":\"Ship description must not be less than 1 or greater than 15\",\"detailedMessage\":\"description: A sucata mais veloz da galaxia\"}]}";
 		final String baseUrl = "/api/v1/starship/create";
 		URI uri = new URI(baseUrl);
 
@@ -68,8 +68,6 @@ public class CoreValidationIT {
 				headers);
 
 		ResponseEntity<String> result = template.postForEntity(uri, entity, String.class);
-
-		System.out.println(result.getBody());
 
 		assertTrue(result.getBody().equals(expectedResult));
 	}
