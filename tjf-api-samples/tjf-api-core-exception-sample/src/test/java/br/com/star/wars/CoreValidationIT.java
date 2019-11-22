@@ -49,7 +49,7 @@ public class CoreValidationIT {
 
 		HttpHeaders headers = new HttpHeaders();
 
-		String expectedResult = "{\"code\":\"StarshipCreateConstraintException\",\"message\":\"É uma armadilha\",\"detailedMessage\":\"A força não está com você\",\"details\":[{\"code\":\"Starship.description.Size\",\"message\":\"A descrição da nave não deve ser menor que 1 ou maior que 15\",\"detailedMessage\":\"description: A sucata mais veloz da galáxia\"}]}";
+		String expectedResult = "{\"code\":\"StarshipCreateConstraintException\",\"message\":\"It's a trap\",\"detailedMessage\":\"The force is not with you\",\"details\":[{\"code\":\"Starship.description.Size\",\"message\":\"{Starship.description.Size}\",\"detailedMessage\":\"description: A sucata mais veloz da galáxia\"}]}";
 		final String baseUrl = "/api/v1/starship/create";
 		URI uri = new URI(baseUrl);
 
@@ -63,6 +63,5 @@ public class CoreValidationIT {
 		ResponseEntity<String> result = template.postForEntity(uri, entity, String.class);
 
 		assertTrue(result.getBody().equals(expectedResult));
-
 	}
 }
