@@ -14,7 +14,7 @@ Para fácil entendimento do componente **Security Web** vamos seguir a sequencia
 
 ### Dependências
 
-Primeiramente configure o repositório do TJF em seu pom.xml.
+Primeiramente configure o repositório do TJF em seu `pom.xml`.
 
 ```xml
 <repositories>
@@ -26,7 +26,7 @@ Primeiramente configure o repositório do TJF em seu pom.xml.
 </repositories>
 ```
 
-Adicione o parent do TJF.
+Adicione o _parent_ do TJF.
 
 ```xml
 <parent>
@@ -36,7 +36,7 @@ Adicione o parent do TJF.
 </parent>
 ```
 
-Para utilização do componente de segurança do TJF é necessário inserir a seguinte dependência em seu arquivo pom.xml.
+Para utilização do componente de segurança do TJF é necessário inserir a seguinte dependência em seu arquivo `pom.xml`.
 
 ```xml
 <dependency>
@@ -45,7 +45,7 @@ Para utilização do componente de segurança do TJF é necessário inserir a se
 </dependency>
 ```
 
-Em nosso exemplo iremos utilizar um serviço web para disponibilizar os endpoints, para isso adicione a seguinte dependência em seu arquivo pom.xml.
+Em nosso exemplo iremos utilizar um serviço web para disponibilizar os endpoints, para isso adicione a seguinte dependência em seu arquivo `pom.xml`.
 
 ```xml
 <dependency>
@@ -56,6 +56,7 @@ Em nosso exemplo iremos utilizar um serviço web para disponibilizar os endpoint
 ### Configurando integração com o *Authorization Service*
 
 No arquivo `application.yml` precisamos informar nas propriedades na nossa aplicação, quais as URI que serão usadas, para que nossa aplicação integre com o *Authorization Service*.
+
 ```yml
 security:
   access:
@@ -65,12 +66,17 @@ security:
     resource:
       id: 'authorization_api'
       jwk:
-        key-set-uri: <O URI para obter chaves de verificação para validação do token JWT.>
+        key-set-uri: <O URI para obter chaves de verificação para validação do token JWT> 
+        
 ```
+
+> **Propriedade opcional**  
+A propriedade `security.access.api.permissions-uri` é necessária apenas se no código for utilizada a anotação `@PreAuthorize` com a função `hasPermission()`. 
+
 
 ### Criando o modelo
 
-No nosso exemplo usaremos o enum `Type`, que defini os tipos de maquinas que teremos em nossa fábrica.
+No nosso exemplo usaremos o enum `Type`, que define os tipos de máquinas que teremos em nossa fábrica.
 
 ```java
 public enum Type {
@@ -170,6 +176,8 @@ Nela criaremos 3 endpoints:
 * Um sem validação de autorização, irá verificar apenas a autenticação do usuário. Nela usaremos apenas a anotação `@GetMapping`.
 * Um com autorização por *role*, que irá verificar se o usuário tem determinada autorização em determinada *role*. Para isso usaremos alem da anotação `@PostMapping` usaremos a anotação `@RolesAllowed`, passando de parâmetro para ela a *role*.
 * E por fim dois outros endpoints com autorização por *permission*, que irá verificar se o usuário tem autorização em determinada *permission*. Para isso usaremos alem da anotação `@PostMapping` a anotação `@PreAuthorize`, passando para ela o método `hasPermission` e que receberá qual a *permission* que queremos validar.
+
+> **Lembrando**: O uso de *permission* depende da correta configuração da propriedade `security.access.api.permissions-uri` no arquivo de configurações `application.yml`.
 
 ```java
 @RestController
