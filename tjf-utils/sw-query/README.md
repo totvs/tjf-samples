@@ -1,4 +1,4 @@
-# Diferentes Maneiras de Fazer uma busca de dados
+# Diferentes Maneiras de Realizar uma Busca de Dados
 
 Neste exemplo vamos mostrar diferentes técnicas para se fazer uma seleção dos seus dados. Para isso usaremos 3 técnicas de busca, sendo elas **NamedQuery**, **Criteria** e **Specification**. 
 
