@@ -1,0 +1,240 @@
+{
+	"info": {
+		"_postman_id": "e3ad4420-5c15-455a-b239-155e209de986",
+		"name": "Sample Query",
+		"description": "Requisições para a realização de query",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "NamedQuery GetByDescription",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/v1/droid/namedQuery/getByDescription/nave",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"droid",
+						"namedQuery",
+						"getByDescription",
+						"nave"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "NamedQuery GetByName",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/v1/droid/namedQuery/getByName/I",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"droid",
+						"namedQuery",
+						"getByName",
+						"I"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criteria GetByName",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/v1/droid/criteria/getByName/I",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"droid",
+						"criteria",
+						"getByName",
+						"I"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criteria GetByDescription",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/v1/droid/criteria/getByDescription/nave",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"droid",
+						"criteria",
+						"getByDescription",
+						"nave"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "NamedQuery GetByNameAndDescription",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/v1/droid/namedQuery/getByNameAndDescription/Dro/na",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"droid",
+						"namedQuery",
+						"getByNameAndDescription",
+						"Dro",
+						"na"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criteria GetByNameAndDescription",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/v1/droid/criteria/getByNameAndDescription/Dro/na",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"droid",
+						"criteria",
+						"getByNameAndDescription",
+						"Dro",
+						"na"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Specification GetByName",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/v1/droid/specification/getByName/I",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"droid",
+						"specification",
+						"getByName",
+						"I"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Specification GetByDescription",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/v1/droid/specification/getByDescription/nave",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"droid",
+						"specification",
+						"getByDescription",
+						"nave"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Specification GetByNameAndDescription",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/v1/droid/specification/getByNameAndDescription/Dro/na",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"droid",
+						"specification",
+						"getByNameAndDescription",
+						"Dro",
+						"na"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
