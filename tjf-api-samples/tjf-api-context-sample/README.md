@@ -20,7 +20,7 @@ Além da dependência do [Spring][spring], para utilização do módulo __API Co
 <parent>
   <groupId>com.totvs.tjf</groupId>
   <artifactId>tjf-boot-starter</artifactId>
-  <version>1.10.0-RELEASE</version>
+  <version>1.11.0-RELEASE</version>
 </parent>
 ```
 
