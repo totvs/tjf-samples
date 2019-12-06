@@ -10,7 +10,7 @@ O projeto foi criado baseado no Spring e não utiliza componentes providos pelo 
 
 Ao abrir o projeto em sua IDE de preferência será possível ver que o mesmo possui uma arquitetura simples, contendo apenas um pacote para o modelo dos objetos, um pacote para o repositório e outro para o controller, além do pacote padrão de configuração do projeto.
 
-## Querys
+## Queries
 
 Como citado anteriormente o projeto contém 3 técnicas de query, desta forma iremos explorar um pouco de cada técnica, contendo um retorno com informação de tempo das buscas, facilitando a sua escolha na hora de optar entre as técnicas de busca.
 
