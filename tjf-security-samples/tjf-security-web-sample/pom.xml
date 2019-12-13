@@ -41,8 +41,8 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.totvs.tjf</groupId>
-			<artifactId>tjf-test-rac</artifactId>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

@@ -53,7 +53,7 @@ services:
       Clients__1__ClientId: "js_oidc_sampleapp"
       Clients__1__ClientName: "js_oidc_sampleapp"
       Clients__1__ProductName: "SampleApp"
-      Clients__1__GrantTypes__0: "Hybrid"
+      Clients__1__GrantTypes__0: "ResourceOwner"
       Clients__1__GrantTypes__1: "ClientCredentials"
       Clients__1__ExpirationTimeInMinutes: "20"
       Clients__1__RedirectUrls__0: "http?://localhost:8880/auth-callback"

@@ -1,9 +1,9 @@
 security:
   access:
     api:
-      permissions-uri: <O URI do Authorization Service para validação da permission.>
-  oauth2:
+      permissions-uri: http://admin.rac.totvs.com.br/totvs.rac/api/permissions
+  oauth2:    
     resource:
       id: 'authorization_api'
       jwk:
-        key-set-uri: <O URI do Authorization Service para obter chaves de verificação para validação do token JWT.> 
+        key-set-uri: http://admin.rac.totvs.com.br/totvs.rac/.well-known/openid-configuration/jwks
