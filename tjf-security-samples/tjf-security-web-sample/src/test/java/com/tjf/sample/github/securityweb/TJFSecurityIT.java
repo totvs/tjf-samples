@@ -24,7 +24,9 @@ public class TJFSecurityIT {
 
 	private static String accessApplicationToken;
 
-	private static final String URL = "http://localhost:5009/totvs.rac/connect/token";
+	private static final String URL_CONNECT = "http://localhost:5009/totvs.rac/connect/token";
+	
+	private static final String URL_RAC = "http://localhost:5009/totvs.rac/";
 
 	private static final String CLIENT_ID = "js_oidc_sampleapp";
 
@@ -36,8 +38,8 @@ public class TJFSecurityIT {
 		
 		try {
 			
-			accessApplicationToken = racAuthorization.generateToken(URL, CLIENT_ID, CLIENT_SECRET, "admin", "totvs@123");
-			racAuthorization.updateRolesUser(URL, accessApplicationToken);
+			accessApplicationToken = racAuthorization.generateToken(URL_CONNECT, CLIENT_ID, CLIENT_SECRET, "admin", "totvs@123");
+			racAuthorization.updateRolesUser(URL_RAC, accessApplicationToken);
 			
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
