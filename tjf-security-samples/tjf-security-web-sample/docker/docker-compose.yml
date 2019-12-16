@@ -22,7 +22,7 @@ services:
      - docker-network-trep
 
   rac:
-    image: docker.totvs.io/tnf/rac:latest
+    image: docker.totvs.io/tnf/rac:dev
     restart: always
     environment:
       DefaultSchema: "public"
@@ -73,7 +73,7 @@ services:
 
       HostUrl: "http://*.localhost:5009/totvs.rac"
     ports:
-      - "5009:80"
+      - "5009:8080"
     networks:
       - docker-network-trep
     depends_on:
