@@ -10,7 +10,7 @@
 		<artifactId>tjf-boot-starter</artifactId>
 		<version>1.11.0-RELEASE</version>
 	</parent>
-	
+
 	<groupId>com.tjf.sample.github</groupId>
 	<artifactId>security-web</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -27,7 +27,7 @@
 			<groupId>com.totvs.tjf</groupId>
 			<artifactId>tjf-security-web</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -41,8 +41,8 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.totvs.tjf</groupId>
-			<artifactId>tjf-test-rac</artifactId>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -69,6 +69,65 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<profiles>
+		<profile>
+			<!-- Precisa ser evetivado na azure ainda - id>integration-test-report-beta</id-->
+			<id>integration-test-report-beta</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.totvs.tjf</groupId>
+						<artifactId>tjf-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>pre-integration-test</phase>
+								<goals>
+									<goal>rac-provisioning</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-failsafe-plugin</artifactId>
+						<configuration>
+							<additionalClasspathElements>
+								<additionalClasspathElement>${basedir}/target/classes</additionalClasspathElement>
+							</additionalClasspathElements>
+							<includes>
+								<include>**/*IT.java</include>
+							</includes>
+						</configuration>
+						<executions>
+							<execution>
+								<goals>
+									<goal>integration-test</goal>
+									<goal>verify</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.jacoco</groupId>
+						<artifactId>jacoco-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>report-aggregate</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>report-aggregate</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${basedir}/../../../../tjf-security/tjf-security-web/target/site/jacoco-aggregate</outputDirectory>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 	<repositories>
 		<repository>

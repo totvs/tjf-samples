@@ -2,7 +2,7 @@ security:
   access:
     api:
       permissions-uri: <O URI do Authorization Service para validação da permission.>
-  oauth2:
+  oauth2:    
     resource:
       id: 'authorization_api'
       jwk:
