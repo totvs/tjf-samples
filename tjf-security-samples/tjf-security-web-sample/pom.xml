@@ -72,7 +72,8 @@
 
 	<profiles>
 		<profile>
-			<id>integration-test-report</id>
+			<!-- Precisa ser evetivado na azure ainda - id>integration-test-report-beta</id-->
+			<id>integration-test-report-beta</id>
 			<build>
 				<plugins>
 					<plugin>

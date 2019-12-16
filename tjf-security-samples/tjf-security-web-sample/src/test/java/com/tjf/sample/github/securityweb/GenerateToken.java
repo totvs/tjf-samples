@@ -49,7 +49,7 @@ public class GenerateToken {
 	/*
 	 * Updates the profile in rac, including the second role (2), which was imported by the plugin. 
 	 */
-	public void updateRolesUser(String url, String accessApplicationToken) {
+	public void updateRolesUser(String url, String accessApplicationToken, String productRoles) {
 		try (CloseableHttpClient client = HttpClients.createDefault()) {
 			HttpPut put = new HttpPut(url + "/api/user/2");
 			
@@ -67,7 +67,7 @@ public class GenerateToken {
 					"    \"externalId\": null,\n" + 
 					"    \"organizations\": [],\n" + 
 					"    \"roles\": [2],\n" + 
-					"    \"productRoles\": [1],\n" + 
+					"    \"productRoles\": [" + productRoles + "],\n" + 
 					"    \"_expandables\": []\n" + 
 					"}");
 			
