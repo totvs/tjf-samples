@@ -38,8 +38,10 @@ public class TJFSecurityIT {
 		
 		try {
 			
+			String updateApplicationToken = racAuthorization.generateToken(URL_CONNECT, CLIENT_ID, CLIENT_SECRET, "admin", "totvs@123");
+			racAuthorization.updateRolesUser(URL_RAC, updateApplicationToken);
+
 			accessApplicationToken = racAuthorization.generateToken(URL_CONNECT, CLIENT_ID, CLIENT_SECRET, "admin", "totvs@123");
-			racAuthorization.updateRolesUser(URL_RAC, accessApplicationToken);
 			
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();

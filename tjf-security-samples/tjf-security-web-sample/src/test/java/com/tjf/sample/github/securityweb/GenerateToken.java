@@ -11,6 +11,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
+import org.springframework.http.MediaType;
 
 public class GenerateToken {
 	
@@ -52,34 +53,29 @@ public class GenerateToken {
 		try (CloseableHttpClient client = HttpClients.createDefault()) {
 			HttpPut put = new HttpPut(url + "/api/user/2");
 			
-			StringEntity params = new StringEntity("{\r\n" + 
-					"    \"id\": 2,\r\n" + 
-					"    \"userName\": \"admin\",\r\n" + 
-					"    \"emailAddress\": \"admin@seudominio.com.br\",\r\n" + 
-					"    \"fullName\": \"Administrador do Tenant\",\r\n" + 
-					"    \"name\": \"Administrador\",\r\n" + 
-					"    \"surname\": \"do Tenant\",\r\n" + 
-					"    \"phoneNumber\": null,\r\n" + 
-					"    \"isUndefinedPassword\": false,\r\n" + 
-					"    \"sentEmailSuccessfully\": true,\r\n" + 
-					"    \"isActive\": true,\r\n" + 
-					"    \"externalId\": null,\r\n" + 
-					"    \"organizations\": [],\r\n" + 
-					"    \"roles\": [\r\n" + 
-					"        2,\r\n" + 
-					"        4\r\n" + 
-					"    ],\r\n" + 
-					"    \"productRoles\": [],\r\n" + 
-					"    \"_expandables\": []\r\n" + 
+			StringEntity params = new StringEntity("{\n" + 
+					"    \"id\": 2,\n" + 
+					"    \"userName\": \"admin\",\n" + 
+					"    \"emailAddress\": \"admin@seudominio.com.br\",\n" + 
+					"    \"fullName\": \"Administrador do Tenant\",\n" + 
+					"    \"name\": \"Administrador\",\n" + 
+					"    \"surname\": \"do Tenant\",\n" + 
+					"    \"phoneNumber\": null,\n" + 
+					"    \"isUndefinedPassword\": false,\n" + 
+					"    \"sentEmailSuccessfully\": null,\n" + 
+					"    \"isActive\": true,\n" + 
+					"    \"externalId\": null,\n" + 
+					"    \"organizations\": [],\n" + 
+					"    \"roles\": [2],\n" + 
+					"    \"productRoles\": [1],\n" + 
+					"    \"_expandables\": []\n" + 
 					"}");
-				
+			
 			put.setHeader(HttpHeaders.AUTHORIZATION, "Bearer " + accessApplicationToken);
-			put.setHeader(HttpHeaders.CONTENT_TYPE, "application/x-www-form-urlencoded");
-			put.setHeader("charset", "UTF-8");
+			put.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE);
 			put.setEntity(params);
 
 			client.execute(put);
-
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
