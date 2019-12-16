@@ -45,6 +45,9 @@ public class GenerateToken {
 		return token;
 	}
 
+	/*
+	 * Updates the profile in rac, including the second role (2), which was imported by the plugin. 
+	 */
 	public void updateRolesUser(String url, String accessApplicationToken) {
 		try (CloseableHttpClient client = HttpClients.createDefault()) {
 			HttpPut put = new HttpPut(url + "/api/user/2");
