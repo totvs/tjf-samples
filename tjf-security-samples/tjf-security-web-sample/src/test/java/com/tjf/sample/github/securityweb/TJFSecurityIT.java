@@ -17,7 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class TJFSecurityTest {
+public class TJFSecurityIT {
 
 	@Autowired
 	private MockMvc mockMvc;

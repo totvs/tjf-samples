@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = MigrationApplication.class)
-public class MigrationTests {
+public class MigrationIT {
 	
 	@Test
 	public void testSchemas() throws SQLException {
