@@ -1,0 +1,74 @@
+management:
+  endpoint:
+    health:
+      enabled: true
+    info:
+      enabled: true
+    web:
+      exposure:
+        include: info, health, messaging
+
+tjf:
+  api:
+    filter:
+      fields:
+        enabled: true
+
+spring:
+
+  application:
+    name: sgdp-test-sample
+  
+  h2:
+    console:
+      enabled: true
+  
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:cash-account;DB_CLOSE_ON_EXIT=FALSE;AUTO_RECONNECT=TRUE;
+    username: sa
+    password:
+  
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    properties:      
+      hibernate:
+        format_sql: true
+
+  cloud:
+    stream:
+      defaultBinder: local
+
+      bindings:
+        sgdp-kafka-reader:
+          destination: sgdp-audit
+          binder: local
+        sgdp-audit:
+          destination: sgdp-audit
+          contentType: application/json
+          binder: local
+        sgdp-input:
+          destination: sgdp-commands
+          group: requests
+          binder: local
+        sgdp-output:
+          destination: sgdp-commands
+          binder: local
+        tjf-messaging-error-input:
+          destination: error-messaging
+          group: errors
+          binder: local
+        tjf-messaging-error-output:
+          destination: error-messaging
+          group: errors
+          producer:
+            requiredGroups: errors
+          binder: local
+          
+      binders:
+        local:
+          type: local    
+          
+server:
+  port: 8180        
