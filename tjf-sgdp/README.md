@@ -114,17 +114,17 @@ Agora vamos a inclusão das anotações SGDP, vamos começar com a anotação `@
 Além disso, vamos incluir a `@SGDPPurpose` que define os propósitos do tratamento de um determinado dado pessoal e o `@SGDPDescription` que torna mais claro a descrição da entidade ou atributo durante a geração do metadado.
 
 ```java
-	@SGDPData(allowsAnonymization = true, isSensitive = true, type = SGDPType.CPF)
-	@SGDPPurpose(classification = SGDPClassification.REGULAR_EXERCISE_OF_LAW, justification = "Numero de identificação do Jedi")
-	@SGDPDescription("Identification")
-	private int identification;
-	
-	@NotNull
-	@SGDPData(allowsAnonymization = true, type = SGDPType.EMAIL)
-	@SGDPPurpose(classification = SGDPClassification.CONSENTMENT, justification = "Email para contato.")
-	@SGDPPurpose(classification = SGDPClassification.CONTRACT_EXECUTION, justification = "Necessário para contato.")
-	@SGDPDescription("Email")
-	private String email;
+@SGDPData(allowsAnonymization = true, isSensitive = true, type = SGDPType.CPF)
+@SGDPPurpose(classification = SGDPClassification.REGULAR_EXERCISE_OF_LAW, justification = "Numero de identificação do Jedi")
+@SGDPDescription("Identification")
+private int identification;
+
+@NotNull
+@SGDPData(allowsAnonymization = true, type = SGDPType.EMAIL)
+@SGDPPurpose(classification = SGDPClassification.CONSENTMENT, justification = "Email para contato.")
+@SGDPPurpose(classification = SGDPClassification.CONTRACT_EXECUTION, justification = "Necessário para contato.")
+@SGDPDescription("Email")
+private String email;
 ```
 
 > A anotação `@SGDPPurpose` pode ser incluída mais de uma vez por atributo.
@@ -208,7 +208,7 @@ public interface SGDPKafkaReader {
 }
 ```
 
-**Subscriber.java** - Servirá como listener para interceptarmos as mensagens que são enviadas para o Kafka.
+**Subscriber.java** - Servirá como _listener_ para interceptarmos as mensagens que são enviadas para o Kafka.
 
 ```java
 package br.com.star.wars;
@@ -253,6 +253,7 @@ GenericMessage [payload={"uuid":"23294bc3-8c9e-43f8-8dbe-3ffc14a5b5a3","tenantId
 
 ```
 
+> Cada registro lido na tabela será conteúdo de uma mensagem.
 
 ## Metadado
 
@@ -342,4 +343,4 @@ Com isso terminamos nosso _sample_, fique a vontade para enriquecê-lo utilizand
 
 [tjf-api-jpa-sample]: https://github.com/totvs/tjf-samples/tree/master/tjf-api-samples/tjf-api-jpa-sample
 [h2]: https://www.h2database.com
-[tjf-sgdp]: https://tjf.totvs.com.br/wiki/tjf-sgdp
+[tjf-sgdp]: https://tjf.totvs.com.br/wiki/tjf-sgdp-core
