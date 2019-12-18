@@ -1,13 +1,3 @@
-management:
-  endpoint:
-    health:
-      enabled: true
-    info:
-      enabled: true
-    web:
-      exposure:
-        include: info, health, messaging
-
 tjf:
   api:
     filter:
@@ -38,37 +28,19 @@ spring:
 
   cloud:
     stream:
-      defaultBinder: local
-
+      kafka:
+        binder:
+          brokers: localhost:9092
       bindings:
         sgdp-kafka-reader:
           destination: sgdp-audit
-          binder: local
+          binder: kafka
         sgdp-audit:
           destination: sgdp-audit
           contentType: application/json
-          binder: local
-        sgdp-input:
-          destination: sgdp-commands
-          group: requests
-          binder: local
-        sgdp-output:
-          destination: sgdp-commands
-          binder: local
-        tjf-messaging-error-input:
-          destination: error-messaging
-          group: errors
-          binder: local
-        tjf-messaging-error-output:
-          destination: error-messaging
-          group: errors
-          producer:
-            requiredGroups: errors
-          binder: local
+          binder: kafka
           
-      binders:
-        local:
-          type: local    
+      default-binder: kafka
           
 server:
   port: 8180        
