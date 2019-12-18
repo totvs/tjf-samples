@@ -1,0 +1,46 @@
+tjf:
+  api:
+    filter:
+      fields:
+        enabled: true
+
+spring:
+
+  application:
+    name: sgdp-test-sample
+  
+  h2:
+    console:
+      enabled: true
+  
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:cash-account;DB_CLOSE_ON_EXIT=FALSE;AUTO_RECONNECT=TRUE;
+    username: sa
+    password:
+  
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    properties:      
+      hibernate:
+        format_sql: true
+
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:9092
+      bindings:
+        sgdp-kafka-reader:
+          destination: sgdp-audit
+          binder: kafka
+        sgdp-audit:
+          destination: sgdp-audit
+          contentType: application/json
+          binder: kafka
+          
+      default-binder: kafka
+          
+server:
+  port: 8180        
