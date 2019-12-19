@@ -27,4 +27,10 @@ services:
           KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
         depends_on:
           - zoo1
+          
+    rabbit:
+      image: rabbitmq:3.7.7-management
+      ports:
+        - 5672:5672 
+        - 15672:15672
        

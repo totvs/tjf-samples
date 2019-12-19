@@ -1,4 +1,4 @@
-package br.com.star.wars;
+package br.com.star.wars.messaging;
 
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
@@ -14,5 +14,5 @@ public class Subscriber {
 		System.out.println("#################### MENSAGEM ENVIADA ######################");
 		System.out.println(message);
 	}
-
+	
 }

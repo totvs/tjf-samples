@@ -42,13 +42,14 @@
 
 		<dependency>
 			<groupId>com.totvs.tjf</groupId>
-			<artifactId>tjf-test-broker</artifactId>
+			<artifactId>tjf-sgdp-core</artifactId>
 		</dependency>
 
 		<dependency>
 			<groupId>com.totvs.tjf</groupId>
-			<artifactId>tjf-sgdp-core</artifactId>
+			<artifactId>tjf-messaging-stream</artifactId>
 		</dependency>
+
 
 		<!-- H2 Database -->
 		<dependency>
