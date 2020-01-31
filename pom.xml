@@ -12,22 +12,25 @@
 	<name>Star Wars :: Jedi Master</name>
 
 	<modules>
-		<module>tjf-messaging-samples/tjf-messaging-stream-sample/sw-messaging-subscriber-starship</module>
-		<module>tjf-messaging-samples/tjf-messaging-stream-sample/sw-messaging-publisher-gate</module>
-		<module>tjf-messaging-samples/tjf-messaging-stream-error-queue-sample</module>
-		<module>tjf-migration-samples/tjf-migration-schema-sample</module>
-		<module>tjf-repository-samples/tjf-repository-aggregate-sample</module>
-		<module>tjf-process</module>
-		<module>tjf-security-samples/tjf-security-web-sample</module>
-		<module>tjf-i18n-samples/tjf-i18n-core-sample</module>
-		<module>tjf-core-samples/tjf-core-validation-sample</module>
-		<module>tjf-tenant-samples/tjf-tenant-discriminator-sample</module>
-		<module>tjf-tenant-samples/tjf-tenant-schema-sample</module>
 		<module>tjf-api-samples/tjf-api-core-fields-sample</module>
 		<module>tjf-api-samples/tjf-api-core-exception-sample</module>
 		<module>tjf-api-samples/tjf-api-context-sample</module>
 		<module>tjf-api-samples/tjf-api-jpa-filters-sample</module>
 		<module>tjf-api-samples/tjf-api-jpa-sample</module>
 		<module>tjf-api-samples/tjf-api-jpa-specification-sample</module>
+		<module>tjf-core-samples/tjf-core-validation-sample</module>
+		<module>tjf-core-samples/tjf-core-validation-custom-interpolator-sample</module>
+		<module>tjf-i18n-samples/tjf-i18n-core-sample</module>
+		<module>tjf-messaging-samples/tjf-messaging-stream-sample/sw-messaging-subscriber-starship</module>
+		<module>tjf-messaging-samples/tjf-messaging-stream-sample/sw-messaging-publisher-gate</module>
+		<module>tjf-messaging-samples/tjf-messaging-stream-error-queue-sample</module>
+		<module>tjf-migration-samples/tjf-migration-schema-sample</module>
+		<module>tjf-process-samples</module>
+		<module>tjf-repository-samples/tjf-repository-aggregate-sample</module>
+		<module>tjf-security-samples/tjf-security-web-sample</module>
+		<module>tjf-sgdp-samples/tjf-sgdp-core-sample</module>
+		<module>tjf-tenant-samples/tjf-tenant-discriminator-sample</module>
+		<module>tjf-tenant-samples/tjf-tenant-schema-sample</module>
+		<module>tjf-utils-samples/sw-query</module>
 	</modules>
 </project>

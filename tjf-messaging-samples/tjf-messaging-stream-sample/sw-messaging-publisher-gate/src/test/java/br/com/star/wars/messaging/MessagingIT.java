@@ -61,14 +61,6 @@ public class MessagingIT {
 		expectedCounter(null, 2);
 	}
 
-//	@Test
-//	public void errorQueueTest() throws Exception {
-//		StarShipLeftEvent starShipEvent = new StarShipLeftEvent("");
-//		samplePublisher.publish(starShipEvent, StarShipLeftEvent.NAME);
-//
-//		mockMvc.perform(get("/actuator/messaging")).andExpect(status().isOk());
-//	}
-
 	private void expectedCounter(String tenant, int amount) throws InterruptedException {
 
 		HashMap<String, Integer> counter = new HashMap<>();
