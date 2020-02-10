@@ -18,7 +18,7 @@ Para utilização do componente de tradução do TJF é necessário inserir a se
 <dependency>
     <groupId>com.totvs.tjf</groupId>
     <artifactId>tjf-i18n-core</artifactId>
-    <version>1.15.0-RELEASE</version>
+    <version>1.15.1-RELEASE</version>
 </dependency>
 ```
 Em nosso exemplo iremos utilizar um arquivo JSON como base, para isso adicione a  seguinte dependência em seu arquivo pom.xml.
