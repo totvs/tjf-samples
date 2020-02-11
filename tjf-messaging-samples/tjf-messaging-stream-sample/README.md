@@ -23,7 +23,7 @@ Após gerado os dois projetos, precisamos substituir no arquivo `pom.xml` de amb
 <parent>
   <groupId>com.totvs.tjf</groupId>
   <artifactId>tjf-boot-starter</artifactId>
-  <version>1.15.1-RELEASE</version>
+  <version>1.15.2-RELEASE</version>
 </parent>
 ```
 Ela define algumas configuração para os projetos que utilizar os módulos do [__TOTVS Java Framework__][tjf].
