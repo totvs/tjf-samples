@@ -13,10 +13,15 @@ public class FamilyTree {
 	@AggregateIdentifier
 	private String id;
 	private Person person;
-	private List<Relative> relatives;
+	private List<Relative> relatives = new ArrayList<>();
+
+	public FamilyTree() {
+		this.id = UUID.randomUUID().toString();
+	}
 
 	public FamilyTree(Person person) {
-		this(person, new ArrayList<Relative>());
+		this.id = UUID.randomUUID().toString();
+		this.person = person;
 	}
 
 	public FamilyTree(Person person, List<Relative> relatives) {
@@ -25,16 +30,32 @@ public class FamilyTree {
 		this.relatives = relatives;
 	}
 
-	public void addRelative(Relative relative) {
-		this.relatives.add(relative);
-	}
-	
 	public String getId() {
 		return id;
 	}
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public Person getPerson() {
+		return this.person;
+	}
+
+	public void setPerson(Person person) {
+		this.person = person;
+	}
+
+	public List<Relative> getRelatives() {
+		return this.relatives;
+	}
+
+	public void setRelatives(List<Relative> relatives) {
+		this.relatives = relatives;
+	}
+
+	public void addRelative(Relative relative) {
+		this.relatives.add(relative);
 	}
 
 }

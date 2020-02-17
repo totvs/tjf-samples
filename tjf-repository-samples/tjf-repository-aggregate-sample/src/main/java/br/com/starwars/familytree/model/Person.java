@@ -9,6 +9,10 @@ public class Person extends Human {
 	@AggregateIdentifier
 	private String id;
 
+	public Person() {
+		super();
+	}
+
 	public String getId() {
 		return id;
 	}
@@ -20,10 +24,6 @@ public class Person extends Human {
 	public Person(String id) {
 		super();
 		this.id = id;
-	}
-
-	public Person() {
-		super();
 	}
 
 }

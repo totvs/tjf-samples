@@ -32,8 +32,7 @@ public class FamilyTreeController {
 			@PathVariable String relationship) {
 
 		FamilyTree fm = treeRepository
-				.findOne("data @> ?", new SqlParameterValue(Types.OTHER, "{\"id\":\"" + personId + "\"}"))
-				.orElse(null);
+				.findOne("data->'person' @> ?", new SqlParameterValue(Types.OTHER, "{\"id\":\"" + personId + "\"}")).orElse(null);
 
 		if (fm == null) {
 			Person person = personRepository.get(personId).orElseThrow();
