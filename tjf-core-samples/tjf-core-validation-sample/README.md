@@ -19,7 +19,7 @@ Para utilização do componente será necessário inserir a seguinte dependênci
 <parent>
 	<groupId>com.totvs.tjf</groupId>
 	<artifactId>tjf-boot-starter</artifactId>
-	<version>1.16.0-RELEASE</version>
+	<version>1.16.1-RELEASE</version>
 </parent>
 ```
 

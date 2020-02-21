@@ -24,7 +24,7 @@ Além das já existentes, precisamos adicionar as seguintes dependências no arq
 <parent>
   <groupId>com.totvs.tjf</groupId>
   <artifactId>tjf-boot-starter</artifactId>
-  <version>1.16.0-RELEASE</version>
+  <version>1.16.1-RELEASE</version>
 </parent>
 ```
 
