@@ -30,5 +30,6 @@
 		<module>tjf-tenant-samples/tjf-tenant-discriminator-sample</module>
 		<module>tjf-tenant-samples/tjf-tenant-schema-sample</module>
 		<module>tjf-utils-samples/sw-query</module>
+		<module>tjf-sgdp-samples/tjf-sgdp-core-sample</module>	
 	</modules>
 </project>
