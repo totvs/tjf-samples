@@ -1,5 +1,6 @@
-package br.com.star.wars;
+package br.com.test;
 
+import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -11,25 +12,40 @@ import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.totvs.tjf.api.context.v1.request.ApiFieldRequest;
+import com.totvs.tjf.api.context.v1.request.ApiPageRequest;
+import com.totvs.tjf.api.context.v1.request.ApiSortRequest;
+
+import br.com.star.wars.StarWarsServicesApplication;
+import br.com.star.wars.messaging.Subscriber;
+import br.com.star.wars.model.JediRepository;
+
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = StarWarsServicesApplication.class)
+@SpringBootTest(classes = StarWarsServicesApplication.class, webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class SGDPSampleIT {
 
 	@Autowired
+	private JediRepository jediRepository;
+
+	@Autowired
 	MockMvc mockMvc;
-	
+
 	@Test
-	public void testA_getAll() throws Exception {
+	@Rollback(false)
+	public void testA_endpointGetJedisAuditing() throws Exception {
 		mockMvc.perform(get("/sgpd/v1/jedis").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
 	}
 
 	@Test
+	@Rollback(false)
 	public void testB_getMetadata() throws Exception {
 		String expectedResult = "{\n" + "    \"models\": {\n" + "        \"br.com.star.wars.model.Jedi\": {\n"
 				+ "            \"sgdpSupport\": true,\n" + "            \"description\": \"Jedi\",\n"
@@ -73,4 +89,26 @@ public class SGDPSampleIT {
 				.andExpect(content().json(expectedResult));
 	}
 
+	@Test
+	@Rollback(false)
+	public void testC_getJedisAuditing() {	
+		ApiFieldRequest field = new ApiFieldRequest();
+		ApiPageRequest page = new ApiPageRequest();
+		ApiSortRequest sort = new ApiSortRequest();
+
+		jediRepository.findAllProjected(field, page, sort);
+	}
+	
+	@Test
+	@Rollback(false)
+	public void testD_countAuditing() {
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		//testA gera 8 mensagens e o testC gera mais 8
+		assertEquals(16, Subscriber.testCount);
+	}
 }

@@ -31,6 +31,10 @@ spring:
       kafka:
         binder:
           brokers: localhost:9092
+          configuration:
+            auto:
+              offset:
+                reset: earliest    
       bindings:
         sgdp-kafka-reader:
           destination: sgdp-audit
