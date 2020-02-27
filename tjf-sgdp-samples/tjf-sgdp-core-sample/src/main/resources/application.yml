@@ -30,8 +30,7 @@ spring:
     stream:
       kafka:
         binder:
-          brokers: ${KAFKA_HOST}:9092
-          #brokers: localhost:9092
+          brokers: localhost:9092
           configuration:
             auto:
               offset:
