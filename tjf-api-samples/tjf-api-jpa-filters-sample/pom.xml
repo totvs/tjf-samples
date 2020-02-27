@@ -110,7 +110,7 @@
 									<goal>report-aggregate</goal>
 								</goals>
 								<configuration>
-									<outputDirectory>${basedir}/../../../../tjf-api/tjf-api-jpa/target/site/jacoco-aggregate</outputDirectory>
+									<outputDirectory>${basedir}/../../../tjf-api/tjf-api-jpa/target/site/jacoco-aggregate</outputDirectory>
 								</configuration>
 							</execution>
 						</executions>
