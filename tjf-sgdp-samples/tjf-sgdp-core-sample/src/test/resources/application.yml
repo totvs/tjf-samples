@@ -31,7 +31,6 @@ spring:
       kafka:
         binder:
           brokers: ${KAFKA_HOST}:9092
-          #brokers: localhost:9092
           configuration:
             auto:
               offset:
@@ -45,7 +44,7 @@ spring:
           environment:
             spring:
               habbit:
-                host: localhost:5672  
+                host: ${RABBIT_HOST}:5672  
                   
       bindings:
         sgdp-kafka-reader:
