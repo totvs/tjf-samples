@@ -28,6 +28,7 @@ Além das propriedades existentes no `application.yml` da aplicação, será nec
     stream:
       kafka:
         binder:
+          #brokers: ${KAFKA_HOST}:9092
           brokers: localhost:9092
       bindings:
         sgdp-kafka-reader:
@@ -41,6 +42,7 @@ Além das propriedades existentes no `application.yml` da aplicação, será nec
       default-binder: kafka
 ```
 
+OBS: Para executar localmente, devemos alterar o *broker* para `localhost:9092`. 
 
 ## Criando as tabelas
 
@@ -190,7 +192,7 @@ public class Jedi {
 
 Agora, somente para validação, implementaremos duas classes para verificar o envio das mensagens para o Kafka.
 
-**SGDPKafkaReade.java** - Utilizada como exchange para definir a fila de leitura.
+**SGDPKafkaReader.java** - Utilizada como exchange para definir a fila de leitura.
 
 ```java
 package br.com.star.wars;
