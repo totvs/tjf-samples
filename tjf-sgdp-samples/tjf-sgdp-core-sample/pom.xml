@@ -50,7 +50,6 @@
 			<artifactId>tjf-messaging-stream</artifactId>
 		</dependency>
 
-
 		<!-- H2 Database -->
 		<dependency>
 			<groupId>com.h2database</groupId>

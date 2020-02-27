@@ -27,10 +27,10 @@ spring:
         format_sql: true
 
   cloud:
-    stream:
+    stream:    
       kafka:
         binder:
-          brokers: localhost:9092
+          brokers: ${KAFKA_HOST}:9092
           configuration:
             auto:
               offset:
@@ -43,8 +43,16 @@ spring:
           destination: sgdp-audit
           contentType: application/json
           binder: kafka
-          
-      default-binder: kafka
+        tjf-messaging-error-input:
+          destination: error-messaging
+          group: errors
+          binder: kafka
+        tjf-messaging-error-output:
+          destination: error-messaging
+          group: errors
+          producer:
+            requiredGroups: errors
+          binder: kafka     
           
 server:
   port: 8180        
