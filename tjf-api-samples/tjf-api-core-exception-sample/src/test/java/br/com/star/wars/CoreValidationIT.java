@@ -1,6 +1,6 @@
 package br.com.star.wars;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -51,16 +51,13 @@ public class CoreValidationIT {
 	public void createStarshipWithExceptionTest() throws JSONException, URISyntaxException {
 
 		HttpHeaders headers = new HttpHeaders();
-		List<Locale.LanguageRange> acceptableLanguages = new ArrayList<>();
 
 		String expectedResult = "{\"code\":\"StarshipCreateConstraintException\",\"message\":\"It's a trap\",\"detailedMessage\":\"The force is not with you\",\"details\":[{\"code\":\"Starship.description.Size\",\"message\":\"Ship description must not be less than 1 or greater than 15\",\"detailedMessage\":\"description: A sucata mais veloz da galaxia\"}]}";
 		final String baseUrl = "/api/v1/starship/create";
 		URI uri = new URI(baseUrl);
 
-		acceptableLanguages.add(new Locale.LanguageRange("en"));
-
 		headers.setContentType(MediaType.APPLICATION_JSON);
-		headers.setAcceptLanguage(acceptableLanguages);
+		headers.setAcceptLanguageAsLocales(List.of(Locale.forLanguageTag("en-US")));
 
 		HttpEntity<String> entity = new HttpEntity<String>(
 				"{\n" + "    \"name\": \"Millenium Falcon\",\n"
@@ -69,6 +66,6 @@ public class CoreValidationIT {
 
 		ResponseEntity<String> result = template.postForEntity(uri, entity, String.class);
 
-		assertTrue(result.getBody().equals(expectedResult));
+		assertEquals(expectedResult, result.getBody());
 	}
 }
