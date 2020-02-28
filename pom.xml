@@ -32,30 +32,4 @@
 		<module>tjf-utils-samples/sw-query</module>
 		<module>tjf-sgdp-samples/tjf-sgdp-core-sample</module>	
 	</modules>
-	
-	<profiles>
-		<profile>
-			<id>integration-test-report</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.jacoco</groupId>
-						<artifactId>jacoco-maven-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>report-aggregate</id>
-								<phase>verify</phase>
-								<goals>
-									<goal>report-aggregate</goal>
-								</goals>
-								<configuration>
-									<outputDirectory>${basedir}/../target/site/jacoco-aggregate</outputDirectory>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
 </project>
