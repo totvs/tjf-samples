@@ -106,7 +106,7 @@
 									<goal>report-aggregate</goal>
 								</goals>
 								<configuration>
-									<outputDirectory>${basedir}/../../../../tjf-tenant/tjf-tenant-discriminator/target/site/jacoco-aggregate</outputDirectory>
+									<outputDirectory>${basedir}/../../../tjf-tenant/tjf-tenant-discriminator/target/site/jacoco-aggregate</outputDirectory>
 								</configuration>
 							</execution>
 						</executions>
