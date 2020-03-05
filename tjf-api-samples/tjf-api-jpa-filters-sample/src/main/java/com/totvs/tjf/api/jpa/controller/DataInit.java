@@ -1,6 +1,8 @@
 package com.totvs.tjf.api.jpa.controller;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
@@ -21,6 +23,8 @@ public class DataInit {
 
 	@Autowired
 	private AccountModelRepository accountRepos;
+	
+	private List<AccountModel> accounts = new ArrayList<>();
 	
 	@PostConstruct
 	@Transactional
@@ -57,7 +61,12 @@ public class DataInit {
 			}
 			
 			accountRepos.saveAndFlush(account);
+			
+			accounts.add(account);
 		}
 	}
-	
+
+	public List<AccountModel> getAccounts() {
+		return accounts;
+	}
 }
