@@ -163,7 +163,7 @@ public class CFController {
 Para testar os endpoints acima basta requisitar uma das URLs, informado os campos passíveis de pesquisa, conforme exemplos abaixo: 
 
 - [http://localhost:8380/api/v1/contas](http://localhost:8380/api/v1/contas)
-- [http://localhost:8380/api/v1/empregados?$filter=name eq 'John'](http://localhost:8380/api/v1/empregados?$filter=name eq 'John')
+- [http://localhost:8380/api/v1/empregados?$filter=name eq 'John'](http://localhost:8380/api/v1/empregados?$filter=name%20eq%20%27John%27)
 
 
 # Isso é tudo pessoal!
