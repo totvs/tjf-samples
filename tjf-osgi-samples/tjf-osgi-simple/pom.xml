@@ -3,7 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	
+
 	<parent>
 		<groupId>com.totvs.tjf</groupId>
 		<artifactId>tjf-boot-starter</artifactId>
@@ -11,10 +11,10 @@
 	</parent>
 
 	<packaging>${packaging.type}</packaging>
-	
+
 	<artifactId>tjf-osgi-simple</artifactId>
 	<version>1.0-SNAPSHOT</version>
-	
+
 	<name>TJF OSGI Simple</name>
 	<description>Exemplo de deploy um containers OSGI</description>
 
@@ -22,23 +22,23 @@
 		<java.version>11</java.version>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
-        <osgi.package>br.com.star.wars</osgi.package>
-        <osgi.activator>SwQueryApplication</osgi.activator>
+		<osgi.package>br.com.star.wars</osgi.package>
+		<osgi.activator>SwQueryApplication</osgi.activator>
 	</properties>
 
 	<dependencies>
-		
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-	        <exclusions>
-	            <exclusion>
-	                <groupId>org.springframework.boot</groupId>
-	                <artifactId>spring-boot-starter-tomcat</artifactId>
-	            </exclusion>
-	        </exclusions>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jetty</artifactId>
@@ -48,33 +48,33 @@
 			<groupId>com.totvs.tjf</groupId>
 			<artifactId>tjf-core-common</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-jdbc</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.totvs.tjf</groupId>
 			<artifactId>tjf-messaging-stream</artifactId>
 		</dependency>
 
 		<dependency>
-		    <groupId>com.totvs.tjf</groupId>
-		    <artifactId>tjf-api-core</artifactId>
-		</dependency>		
-		
+			<groupId>com.totvs.tjf</groupId>
+			<artifactId>tjf-api-core</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.osgi</groupId>
 			<artifactId>org.osgi.core</artifactId>
 			<scope>provided</scope>
-		</dependency>		
-		
+		</dependency>
+
 	</dependencies>
 
 	<repositories>
@@ -88,6 +88,6 @@
 			<name>TOTVS Java Framework: Snapshots</name>
 			<url>http://maven.engpro.totvs.com.br/artifactory/libs-snapshot</url>
 		</repository>
-	</repositories>	
+	</repositories>
 
 </project>
