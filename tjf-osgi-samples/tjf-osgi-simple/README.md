@@ -137,8 +137,7 @@ Já o [Spring Data JDBC][spring-data-jdbc] funciona sem maiores problemas, que p
 
 # Testando
 
-O [Apache Karak][karaf] pode ser baixado [aqui][karaf-download].
-
+O [Apache Karak][karaf] pode ser baixado [aqui][karaf-download]. Já instruções para instalar o ActiveMQ (Artemis) no Karaf podem ser encontradas [aqui][artemis-on-karaf].
 
 Uma vez iniciada a aplicação dentro do Karaf a mesma pode ser testada pela URL:
 
@@ -173,3 +172,4 @@ Com isso terminamos nosso  _sample_ , fique a vontade para enriquecê-lo utiliza
 [tomcat]: http://tomcat.apache.org/
 [spring-data-jpa]: https://spring.io/projects/spring-data-jpa
 [spring-data-jdbc]: https://spring.io/projects/spring-data-jdbc
+[artemis-on-karaf]: https://activemq.apache.org/components/artemis/documentation/1.3.0/karaf.html
