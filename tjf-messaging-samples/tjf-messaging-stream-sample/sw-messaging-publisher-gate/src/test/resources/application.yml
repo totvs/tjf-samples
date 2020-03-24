@@ -20,7 +20,8 @@ spring:
           environment:
             spring:
               rabbitmq:
-                host: localhost
+                host: ${RABBIT_HOST}
+
                 
 management:
   endpoints:
