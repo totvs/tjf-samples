@@ -1,6 +1,6 @@
-package br.com.star.wars.messaging.infrastructure.messaging;
+package br.com.star.wars.messaging.test.infrastructure.messaging;
 
-import static br.com.star.wars.messaging.infrastructure.messaging.StarShipExchange.INPUT;
+import static br.com.star.wars.messaging.test.infrastructure.messaging.StarShipExchangeTest.INPUT;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.EnableBinding;
@@ -14,9 +14,9 @@ import br.com.star.wars.messaging.events.StarShipArrivedEvent;
 import br.com.star.wars.messaging.events.StarShipArrivedWithoutTenantEvent;
 import br.com.star.wars.messaging.events.StarShipLeftEvent;
 import br.com.star.wars.messaging.model.StarShip;
-import br.com.star.wars.messaging.services.StarShipService;
+import br.com.star.wars.messaging.test.services.StarShipService;
 
-@EnableBinding(StarShipExchange.class)
+@EnableBinding(StarShipExchangeTest.class)
 public class StarShipSubscriber {
 
 	@Autowired

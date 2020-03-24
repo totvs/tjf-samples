@@ -1,4 +1,4 @@
-package br.com.star.wars.messaging.services;
+package br.com.star.wars.messaging.test.services;
 
 import java.util.HashMap;
 

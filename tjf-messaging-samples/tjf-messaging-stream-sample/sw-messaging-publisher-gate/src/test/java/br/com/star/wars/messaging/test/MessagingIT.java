@@ -1,4 +1,4 @@
-package br.com.star.wars.messaging;
+package br.com.star.wars.messaging.test;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -14,8 +14,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
+import br.com.star.wars.messaging.PublisherApplication;
 import br.com.star.wars.messaging.infrastructure.messaging.StarShipPublisher;
-import br.com.star.wars.messaging.services.StarShipService;
+import br.com.star.wars.messaging.test.services.StarShipService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = { PublisherApplication.class })

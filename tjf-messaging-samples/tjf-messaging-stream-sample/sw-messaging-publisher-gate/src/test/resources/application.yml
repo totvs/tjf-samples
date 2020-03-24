@@ -4,10 +4,10 @@ spring:
       defaultBinder: rabbit1
       bindings:
         starship-input:
-          destination: starship-input
+          destination: starship-test-input
           group: requests
         starship-output:
-          destination: starship-input
+          destination: starship-test-input
         tjf-messaging-error-input:
           destination: starship-errors
           group: errors
@@ -20,7 +20,7 @@ spring:
           environment:
             spring:
               rabbitmq:
-                host: ${RABBIT_HOST}
+                host: localhost
                 
 management:
   endpoints:

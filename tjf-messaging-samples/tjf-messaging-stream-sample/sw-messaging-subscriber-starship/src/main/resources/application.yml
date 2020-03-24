@@ -1,19 +1,32 @@
 spring:
   cloud:
     stream:
+#      defaultBinder: kafka1
       defaultBinder: rabbit1
       bindings:
         starship-input:
           destination: starship-input
           group: requests
+#          consumer:
+#            concurrency: 2
         starship-output:
           destination: starship-input
       binders:
+#        kafka1:
+#          type: kafka
         rabbit1:
           type: rabbit
           environment:
             spring:
               rabbit:
                 host: localhost
+#      kafka:
+#        binder:
+#          brokers: localhost:9092
+#          configuration:
+#            auto:
+#              offset:
+#                reset: earliest  
+                
 server:
   port: 8180
