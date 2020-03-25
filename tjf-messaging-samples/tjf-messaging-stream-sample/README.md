@@ -400,7 +400,7 @@ Starship ranking: 1
 Counter by tenant: 1
 ```
 
-Agora vamos enviar uma nave saindo do gate [http://localhost:8080/starship/left?name=at&tenant=Alderaan](http://localhost:8080/starship/arrived?name=at&tenant=Alderaan):
+Agora vamos enviar uma nave saindo do gate [http://localhost:8080/starship/left?name=at&tenant=Alderaan](http://localhost:8080/starship/left?name=at&tenant=Alderaan):
 
 ```
 StarShip left!
