@@ -41,7 +41,7 @@ Após gerado, precisamos realizar pequenas alterações e inserir algumas depend
 <parent>
 	<groupId>com.totvs.tjf</groupId>
 	<artifactId>tjf-boot-starter</artifactId>
-	<version>1.18.2-RELEASE</version>
+	<version>1.18.3-RELEASE</version>
 	<relativePath />
 </parent>
 ```
