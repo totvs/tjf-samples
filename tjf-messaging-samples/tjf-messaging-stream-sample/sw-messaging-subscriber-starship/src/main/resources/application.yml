@@ -1,25 +1,39 @@
+######## RABBIT
+
 spring:
   cloud:
     stream:
-#      defaultBinder: kafka1
       defaultBinder: rabbit1
       bindings:
         starship-input:
           destination: starship-input
           group: requests
-#          consumer:
-#            concurrency: 2
         starship-output:
           destination: starship-input
       binders:
-#        kafka1:
-#          type: kafka
         rabbit1:
           type: rabbit
           environment:
             spring:
               rabbit:
                 host: localhost
+ 
+######## KAFKA
+               
+#spring:
+#  cloud:
+#    stream:
+#      defaultBinder: kafka1
+#      bindings:
+#        starship-input:
+#          destination: starship-input
+#          group: requests
+#        starship-output:
+#          destination: starship-input
+#      binders:                
+#        kafka1:
+#          type: kafka
+#                         
 #      kafka:
 #        binder:
 #          brokers: localhost:9092
@@ -27,6 +41,36 @@ spring:
 #            auto:
 #              offset:
 #                reset: earliest  
+
+
+######## JMS
+
+#spring:
+#  cloud:
+#    stream:
+#      defaultBinder: local1
+#      bindings:
+#        starship-input:
+#         destination: starship-input
+#        starship-output:
+#         destination: starship-input
+#      binders:
+#        local1:
+#          type: jms
+#          environment:
+#            spring:
+#              activemq:
+#                protocol: tcp
+#                host: localhost
+#                port: 61616
+#                username: user-amq
+#                password: password-amq
+                
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info,health,messaging                
                 
 server:
   port: 8180

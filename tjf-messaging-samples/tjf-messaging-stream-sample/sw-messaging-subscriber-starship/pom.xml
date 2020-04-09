@@ -23,12 +23,18 @@
 			<groupId>com.totvs.tjf</groupId>
 			<artifactId>tjf-messaging-stream</artifactId>
 		</dependency>
-		
+
 		<!-- Kafka -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-stream-binder-kafka</artifactId>
-		</dependency>		
+		</dependency>
+
+		<!-- JMS -->
+		<dependency>
+			<groupId>com.totvs.tjf</groupId>
+			<artifactId>tjf-messaging-binder-jms</artifactId>
+		</dependency>
 	</dependencies>
 
 	<repositories>

@@ -89,6 +89,8 @@ server:
 
 ```
 
+> No nosso arquivo `application.yml` temos também configurações para rodar os _samples_ utilizando o `Kafka` e o `ActiveMQ`, basta descomentar a opção desejada. Disponibilizamos três arquivos `docker-compose`, um para cada imagem.
+
 ### Entidades
 
 Para iniciar, criaremos o pacote `br.com.star.wars.messaging.model`, para guardar a classe do nosso modelo de dados, e dentro dele criaremos a classe que representa a `starship`:
