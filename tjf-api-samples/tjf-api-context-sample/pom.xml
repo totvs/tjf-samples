@@ -2,6 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
@@ -11,18 +12,26 @@
 	</parent>
 
 	<groupId>br.com.star.wars</groupId>
-	<artifactId>sw-services-context</artifactId>
+	<artifactId>sw-api-context</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<name>Star Wars :: api-context-sample</name>
-	<description>Serviços de consultas relacionados ao universo Star Wars</description>
+	<name>Star Wars :: API Context Sample</name>
+	<description>Sample do TJF API Context relacionado ao universo Star Wars</description>
 
 	<dependencies>
+
+		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
+		<!-- TJF -->
 		<dependency>
 			<groupId>com.totvs.tjf</groupId>
 			<artifactId>tjf-api-core</artifactId>
@@ -30,7 +39,13 @@
 
 		<dependency>
 			<groupId>com.totvs.tjf</groupId>
-			<artifactId>tjf-api-context</artifactId>
+			<artifactId>tjf-api-jpa</artifactId>
+		</dependency>
+
+		<!-- Database -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
 		</dependency>
 
 		<!-- Test -->
@@ -39,6 +54,7 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -103,4 +119,5 @@
 			<url>http://maven.engpro.totvs.com.br/artifactory/libs-release</url>
 		</repository>
 	</repositories>
+
 </project>
