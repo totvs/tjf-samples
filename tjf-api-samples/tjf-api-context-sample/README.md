@@ -262,7 +262,7 @@ A resposta da requisição terá a mensagem de erro com o status `404 Not Found`
 
 #### Filtro de Conteúdo de Resposta
 
-Conforme definição do [guia de implementação das APIs TOTVS][guia-api-totvs], todo _endpoint_ deve permitir filtrar o conteúdo `JSON` de retorno através do parâmetro de URL `fields`. Para habilitar esta funcionalidade, precisar incluir uma nova propriedade no arquivo de configuração da aplicação `application.yaml`:
+Conforme definição do [guia de implementação das APIs TOTVS][guia-api-totvs], todo _endpoint_ deve permitir filtrar o conteúdo `JSON` de retorno através do parâmetro de URL `fields`. Para habilitar esta funcionalidade, precisamos incluir uma nova propriedade no arquivo de configuração da aplicação `application.yaml`:
 
 ```yml
 tjf:
@@ -420,8 +420,6 @@ Resposta:
 # Que a força esteja com você!
 
 Com isso terminamos nosso exemplo, fique a vontade para incrementar o exemplo utilizando todos recursos proposto pelo componente **API Context**, mandar sugestões e melhorias para o projeto TJF.
-
-> O conteúdo deste exemplo está em nosso repositório no [GitHub][github].
 
 [tjf]: https://tjf.totvs.com.br
 [tjf-api-context]: https://tjf.totvs.com.br/wiki/tjf-api-context
