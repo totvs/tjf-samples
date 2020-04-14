@@ -15,7 +15,7 @@
 	<artifactId>sw-api-context</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<name>Star Wars :: API Context Sample</name>
+	<name>Star Wars :: api-context-sample</name>
 	<description>Sample do TJF API Context relacionado ao universo Star Wars</description>
 
 	<dependencies>

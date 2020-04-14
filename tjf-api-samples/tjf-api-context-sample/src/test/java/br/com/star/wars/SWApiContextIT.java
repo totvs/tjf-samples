@@ -8,6 +8,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.Locale;
+
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,11 @@ public class SWApiContextIT {
 
 	@Autowired
 	private MockMvc mockMvc;
+
+	@Before
+	public void before() {
+		Locale.setDefault(new Locale("pt"));
+	}
 
 	@Test
 	public void newJedi() throws Exception {
