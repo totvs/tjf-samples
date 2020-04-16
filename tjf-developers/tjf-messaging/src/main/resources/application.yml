@@ -1,0 +1,36 @@
+spring:
+  cloud:
+    stream:
+      defaultBinder: rabbit1 #Nome do binder
+      bindings:
+        #Filas
+        messaging-input:
+         destination: tjf-messaging-input
+         group: requests
+        messaging-output:
+          destination: tjf-messaging-input
+        #Filas de Erro  
+        tjf-messaging-error-input:
+          destination: tjf-messaging-errors
+          group: errors
+        tjf-messaging-error-output:
+          destination: tjf-messaging-errors
+          group: errors
+          producer:
+            requiredGroups: errors
+      binders:
+        rabbit1:
+          type: rabbit
+          environment:
+            spring:
+              rabbit:
+                host: localhost
+    
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info,health,messaging                
+                
+server:
+  port: 8080
