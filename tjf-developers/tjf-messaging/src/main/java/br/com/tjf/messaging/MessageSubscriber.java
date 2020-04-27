@@ -12,10 +12,9 @@ public class MessageSubscriber {
 
 	@StreamListener(target = MessageExchange.INPUT, condition = MessageEvent.CONDITIONAL_EXPRESSION)
 	public void subscriberMessage(TOTVSMessage<MessageEvent> message) {
-		System.out.println("================");
-		System.out.println(message.getContent().getName()); // Conteúdo do evento
-		System.out.println(message.getHeader().getTenantId()); // TenantId
-		System.out.println("================");
+		System.out.println("Subscriber da mensagem");
+		System.out.println("Conteúdo do evento: " + message.getContent().getName());
+		System.out.println("Tenant: " + message.getHeader().getTenantId());
 	}
 
 }

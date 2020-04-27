@@ -31,7 +31,7 @@ public class MessageController {
 
 		publisher.publish(new MessageEvent("Hello Home"), MessageEvent.NAME);
 
-		return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).build();
+		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 
 	private void setTenant(String tenant) {

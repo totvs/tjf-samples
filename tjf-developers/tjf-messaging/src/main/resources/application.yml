@@ -18,14 +18,16 @@ spring:
           group: errors
           producer:
             requiredGroups: errors
+      #Binder de conexão      
       binders:
         rabbit1:
           type: rabbit
           environment:
             spring:
               rabbit:
-                host: localhost
+                host: localhost #host do rabbitMQ
     
+#Habilitar o Endpoint HTTP do serviço de recuperação de mensagens da fila de erro
 management:
   endpoints:
     web:
