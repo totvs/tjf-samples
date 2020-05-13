@@ -1,45 +1,20 @@
-# TJF Repository Aggregate
-
-*Sample* de utilização da biblioteca **TJF Repository Aggregate** do **TOTVS Java Framework**.
+# Exemplo de uso do componente Repository Aggregate
 
 ## Contexto
 
-Para exemplificar o uso da biblioteca [TJF Repository Aggregate](https://tjf.totvs.com.br/wiki/tjf-repository-aggregate), criaremos algumas *APIs REST* que possibilite a criação de uma árvore geneológica dos personagens do universo **Star Wars**.
+Para exemplificar o uso da biblioteca **Repository Aggregate**, criaremos APIs REST que possibilite a criação de uma árvore genealógica dos personagens do universo **Star Wars**.
 
-Os registros de cada personagem e das árvores geneológicas serão armazenadas em banco de dados em entidades que possuem as informações dos registros agragados no formato `JSON` - removendo assim o *boilerplate* de "de-para" entre a camada de domínio e a camada de infra.
-
-Vamos criar estas entidades de forma que o registro final de uma árvore geneológica fique com a seguinte estrutura:
-
-```json
-{
-  "id": "412955e5-c530-44d1-89be-87f6c33f370a",
-  "person": {
-    "id": "b612a670-88a4-47ce-b2a6-85930657d58a",
-    "name": "Leia Organa",
-    "gender": "female"
-  },
-  "relatives": [{
-    "id": "d433b940-5082-4c67-a59c-7cd8f9163d60",
-    "name": "Ben Solo",
-    "gender": "male",
-    "relationship": "son"
-  }]
-}
-```
-
-> Como engine de banco de dados utilizaremos o [PostgreSQL](https://www.postgresql.org) de forma "dockerizada".
+Os registros de cada personagem e das árvores genealógicas serão armazenadas em banco de dados em entidades que possuem as informações dos registros agregados no formato `JSON` - removendo assim o _boilerplate_ de "de-para" entre a camada de domínio e a camada de infra.
 
 ## Começando
 
-Iniciaremos o desenvolvimento criando um novo projeto [Spring](https://spring.io) utilizando o serviço [Spring Initializr](https://start.spring.io). O projeto deve possuir as configurações conforme abaixo:
+Iniciaremos o desenvolvimento criando um novo projeto Spring utilizando o serviço [Spring Initializr](https://start.spring.io). Precisamos adicionar como dependência os módulos **Spring Web Starter**, **PostgreSQL**, **Flyway** e o **Lombok**.
 
-![Spring Initializr](resources/spring-initializr.png)
-
-Precisamos adicionar como dependência os módulos **Spring Web Starter**, **Spring Data JPA**, **PostgreSQL Driver**, **Flyway Migration** e o **Lombok**. Após informados os dados acima e incluídas as dependências necessárias, podemos efetuar a geração do projeto.
+Após informados os dados acima e incluídas as dependências necessárias, podemos efetuar a geração do projeto.
 
 ## Configurações
 
-Após gerado, precisamos substituir no arquivo `pom.xml` o *parent* do projeto pela biblioteca [TJF Boot Starter](https://tjf.totvs.com.br/wiki/tjf-boot-starter):
+Após gerado, precisamos substituir no arquivo `pom.xml` o _parent_ do projeto pela biblioteca **TJF Boot Starter**:
 
 ```xml
 <parent>
@@ -50,7 +25,7 @@ Após gerado, precisamos substituir no arquivo `pom.xml` o *parent* do projeto p
 </parent>
 ```
 
-Incluiremos também a dependência para utilização da biblioteca **Repository Aggregate** e as configurações do repositório **Maven** com a distribuição do **TOTVS Java Framework**:
+Incluiremos também a dependência para utilização da biblioteca **Repository Aggregate** e as configurações do repositório Maven com a distribuição do TJF:
 
 **Dependências**
 
@@ -71,13 +46,11 @@ Incluiremos também a dependência para utilização da biblioteca **Repository 
 
 ```xml
 <repositories>
-
   <repository>
-    <id>tjf-release</id>
-    <name>TOTVS Java Framework: Releases</name>
-    <url>http://maven.engpro.totvs.com.br/artifactory/libs-release/</url>
+    <id>central-release</id>
+    <name>TOTVS Java Framework: Release</name>
+    <url>http://maven.engpro.totvs.com.br/artifactory/libs-release</url>
   </repository>
-
 </repositories>
 ```
 
@@ -89,7 +62,6 @@ As configurações do banco de dados devem ser incluídas no arquivo `applicatio
 
 ```yml
 spring:
-
   # Configurações banco de dados
   datasource:
     driver-class-name: org.postgresql.Driver
@@ -105,33 +77,35 @@ spring:
         jdbc:
           lob:
             non_contextual_creation: true
-        show_sql: true
-        format_sql: true
 ```
 
-Nas configurações acima, definimos qual *driver* será utilizado para conexão com o banco de dados, o nome do banco (`swfamilytree`), usuário (`postgres`) e senha de acesso.
+Nas configurações acima, definimos qual _driver_ será utilizado para conexão com o banco de dados, o nome do banco, usuário e senha de acesso.
 
-Precisamos também do *script* de criação da tabela no banco de dados. Este *script* deve ficar na pasta `src/main/resources/db/migration` com o nome `V1.0__initialize.sql` para que seja feita a execução automática pelo [Flyway](https://flywaydb.org).
+Precisamos também do _script_ de criação da tabela no banco de dados. Este _script_ deve ficar na pasta `src/main/resources/db/migration` com o nome `V1.0__initialize.sql` para que seja feita a execução automática pelo Flyway:
 
 **V1.0__initialize.sql**
 
 ```sql
-CREATE TABLE person (
-  id VARCHAR(36) NOT NULL,
-  data JSONB NOT NULL,
-  PRIMARY KEY(id)
+CREATE TABLE person
+(
+   id VARCHAR (36) NOT NULL,
+   data JSONB NOT NULL,
+   metadata JSONB NOT NULL,
+   PRIMARY KEY (id)
 );
 
-CREATE TABLE familytree (
-  id VARCHAR(36) NOT NULL,
-  data JSONB NOT NULL,
-  PRIMARY KEY(id)
+CREATE TABLE familytree
+(
+   id VARCHAR (36) NOT NULL,
+   data JSONB NOT NULL,
+   metadata JSONB NOT NULL,
+   PRIMARY KEY (id)
 );
 ```
 
-> As entidades possuem apenas duas colunas, pois todas as informações de cada registro serão armazenadas na coluna `data` no formato `JSON`.
+> As entidades possuem apenas três colunas, pois todas as informações de cada registro serão armazenadas na coluna `data` no formato `JSON` e na coluna `metadada` ficarão informações internas da tablea como e data e usuário que efetuou a última atualização na tabela.
 
-### Modelos de dados
+### Modelo de dados
 
 Agora precisamos criar as classes que representam cada uma das entidades do nosso banco de dados.
 
@@ -139,13 +113,11 @@ As classes destas entidades devem ser anotadas com `@Aggregate` e devem possuir 
 
 #### Entidades
 
-Para iniciar, criaremos o pacote `br.com.starwars.familytree.model` e dentro deste pacote criaremos as classes de modelo de dados das tabelas `person` e `familytree` além de outras classes que irão nos auxiliar no desenvolvimento.
+Para iniciar criaremos as classes de modelo de dados das tabelas `Person` e `FamilyTree` além das classes que irão nos auxiliar no desenvolvimento:
 
 **Human.java**
 
 ```java
-package br.com.starwars.familytree.model;
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -161,13 +133,11 @@ public abstract class Human {
 **Person.java**
 
 ```java
-package br.com.starwars.familytree.model;
-
-@Aggregate
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Aggregate
 public class Person extends Human {
 
   @AggregateIdentifier
@@ -179,12 +149,9 @@ public class Person extends Human {
 **Relative.java**
 
 ```java
-package br.com.starwars.familytree.model;
-
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Relative extends Person {
 
   private String relationship;
@@ -202,25 +169,27 @@ public class Relative extends Person {
 **FamilyTree.java**
 
 ```java
-package br.com.starwars.familytree.model;
-
-@Aggregate
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
+@Setter
+@Aggregate
 public class FamilyTree {
 
   @AggregateIdentifier
   private String id;
   private Person person;
-  private List<Relative> relatives;
+  private List<Relative> relatives = new ArrayList<>();
+
+  public FamilyTree() {
+    this.id = UUID.randomUUID().toString();
+  }
 
   public FamilyTree(Person person) {
-    this(person, new ArrayList<Relative>());
+    this();
+    this.person = person;
   }
 
   public FamilyTree(Person person, List<Relative> relatives) {
-    this.id = UUID.randomUUID().toString();
+    this();
     this.person = person;
     this.relatives = relatives;
   }
@@ -234,13 +203,11 @@ public class FamilyTree {
 
 #### Repositories
 
-Após criadas as classes das entidades, criaremos os **repository** - responsáveis pela criação e leitura dos registros das tabelas `person` e `familytree` no banco de dados - dentro do pacote `br.com.starwars.familytree.repository`.
+Após criadas as classes das entidades, criaremos os repositórios responsáveis pela criação e leitura dos registros das tabelas `person` e `familytree` no banco de dados:
 
 **PersonRepository.java**
 
 ```java
-package br.com.starwars.familytree.repository;
-
 @Repository
 public class PersonRepository extends CrudAggregateRepository<Person, String> {
 
@@ -254,8 +221,6 @@ public class PersonRepository extends CrudAggregateRepository<Person, String> {
 **FamilyTreeRepository.java**
 
 ```java
-package br.com.starwars.familytree.repository;
-
 @Repository
 public class FamilyTreeRepository extends CrudAggregateRepository<FamilyTree, String> {
 
@@ -268,13 +233,11 @@ public class FamilyTreeRepository extends CrudAggregateRepository<FamilyTree, St
 
 ### APIs REST
 
-Vamos agora criar nossas *APIs REST* para manutenção das entidades `person` e `familytree` dentro do pacote `br.com.starwars.familytree.api`.
+Vamos agora criar nossas APIs REST para manutenção das entidades `person` e `familytree` respectivamente:
 
 **PersonController.java**
 
 ```java
-package br.com.starwars.familytree.api;
-
 @RestController
 @RequestMapping(path = "api/v1/person",
   produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -287,15 +250,13 @@ public class PersonController {
   public void insert(@RequestBody Person person) {
     repository.insert(person);
   }
-  
+
 }
 ```
 
 **FamilyTreeController.java**
 
 ```java
-package br.com.starwars.familytree.api;
-
 @RestController
 @RequestMapping(path = "api/v1/familytree",
   produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -341,9 +302,7 @@ public class FamilyTreeController {
 
 ### Iniciando o banco de dados
 
-Antes de dar início a execução do nosso projeto, precisamos iniciar o serviço do banco de dados.
-
-Para isto vamos criar um arquivo `docker-compose.yml` para a criação do banco de dados e também da ferramenta de gerenciamento:
+Antes de dar início a execução do projeto precisamos iniciar o serviço do banco de dados. Para isto vamos criar um arquivo `docker-compose.yml` para a criação do banco de dados:
 
 **docker-compose.yml**
 
@@ -351,7 +310,6 @@ Para isto vamos criar um arquivo `docker-compose.yml` para a criação do banco 
 version: '3'
 
 services:
-
   db:
     image: postgres
     restart: always
@@ -361,7 +319,7 @@ services:
       POSTGRES_DB: swfamilytree
     ports:
       - 5432:5432
-  
+
   pgadmin:
     image: dpage/pgadmin4
     environment:
@@ -373,7 +331,7 @@ services:
 
 Para iniciar os serviços basta executar o comando abaixo na pasta onde foi criado o arquivo:
 
-```bash
+```command
 docker-compose up -d
 ```
 
@@ -381,14 +339,14 @@ docker-compose up -d
 
 ### Criação dos registros
 
-Após finalizado o desenvolvimento das *APIs REST* podemos executar nosso projeto, como um **Spring Boot App**, e iniciar a criação dos registros conforme a figura dos personagens abaixo:
+Após finalizado o desenvolvimento das APIs REST podemos executar nosso projeto, como um **Spring Boot App**, e iniciar a criação dos registros conforme a figura dos personagens abaixo:
 
 ![Star Wars Family Tree](resources/sw-familytree.png)
 
-* **Anakin Skywalker** e **Padmé Amidala** são pais de **Luke Skywalker** e **Leia Organa**; e
-* **Leia Organa** e **Han Solo** são pais de **Ben Solo**.
+- **Anakin Skywalker** e **Padmé Amidala** são pais de **Luke Skywalker** e **Leia Organa**; e
+- **Leia Organa** e **Han Solo** são pais de **Ben Solo**.
 
-Vamos iniciar com a criação de cada um destes personagens. Para isto basta efetuar uma requisição *HTTP POST* para cada um deles conforme as informações abaixo:
+Vamos iniciar com a criação de cada um destes personagens. Para isto basta efetuar uma requisição _HTTP POST_ para cada um deles conforme as informações abaixo:
 
 **Anakin Skywalker**
 
@@ -500,7 +458,7 @@ Host: localhost:8080
 Content-Type: application/json
 ```
 
-Após realizadas as inclusões acima, podemos recuperar a ávore geneológica da personagem **Padmé Amidala**:
+Após realizadas as inclusões acima, podemos recuperar a ávore genealógica da personagem **Padmé Amidala**:
 
 ```http
 GET /api/v1/familytree/person/b7325afa-8302-4332-8f8a-ddaa063888e2 HTTP/1.1
@@ -512,35 +470,35 @@ Content-Type: application/json
 
 ```json
 {
-    "id": "2188cde7-da3f-4eea-954b-25a084f54be6",
-    "person": {
-        "name": "Padmé Amidala",
-        "gender": "female",
-        "id": "b7325afa-8302-4332-8f8a-ddaa063888e2"
+  "id": "2188cde7-da3f-4eea-954b-25a084f54be6",
+  "person": {
+    "name": "Padmé Amidala",
+    "gender": "female",
+    "id": "b7325afa-8302-4332-8f8a-ddaa063888e2"
+  },
+  "relatives": [
+    {
+      "name": "Luke Skywalker",
+      "gender": "male",
+      "id": "82f0a882-a87c-4ad6-881b-8ee30cb3dbe9",
+      "relationship": "child"
     },
-    "relatives": [
-        {
-            "name": "Luke Skywalker",
-            "gender": "male",
-            "id": "82f0a882-a87c-4ad6-881b-8ee30cb3dbe9",
-            "relationship": "child"
-        },
-        {
-            "name": "Leia Organa",
-            "gender": "female",
-            "id": "f64e3a46-7624-4764-991a-f12b536d841f",
-            "relationship": "child"
-        },
-        {
-            "name": "Ben Solo",
-            "gender": "male",
-            "id": "320c7cb0-ef2e-4d00-9477-1bb50b16d725",
-            "relationship": "grandchild"
-        }
-    ]
+    {
+      "name": "Leia Organa",
+      "gender": "female",
+      "id": "f64e3a46-7624-4764-991a-f12b536d841f",
+      "relationship": "child"
+    },
+    {
+      "name": "Ben Solo",
+      "gender": "male",
+      "id": "320c7cb0-ef2e-4d00-9477-1bb50b16d725",
+      "relationship": "grandchild"
+    }
+  ]
 }
 ```
 
 ## Que a força esteja com você!
 
-Com isso terminamos nosso sample, fique a vontade para enriquecê-lo ou evoluí-lo utilizando outros recursos e enviar sugestões e melhorias para o [TOTVS Java Framework](http://tjf.totvs.com.br).
+Com isso terminamos nosso exemplo, fique a vontade para incrementar o exemplo utilizando todos os recursos proposto pelo componente **Repository Aggregate**, caso necessário utilize nossa [documentação](https://tjf.totvs.com.br/wiki/tjf-repository-aggregate) e fique a vontade para mandar sugestões e melhorias para o projeto [TJF](https://tjf.totvs.com.br/).

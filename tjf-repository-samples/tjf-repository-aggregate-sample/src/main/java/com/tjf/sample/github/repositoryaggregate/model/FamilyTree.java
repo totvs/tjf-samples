@@ -1,4 +1,4 @@
-package br.com.starwars.familytree.model;
+package com.tjf.sample.github.repositoryaggregate.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +7,11 @@ import java.util.UUID;
 import com.totvs.tjf.core.stereotype.Aggregate;
 import com.totvs.tjf.core.stereotype.AggregateIdentifier;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Aggregate
 public class FamilyTree {
 
@@ -20,37 +25,13 @@ public class FamilyTree {
 	}
 
 	public FamilyTree(Person person) {
-		this.id = UUID.randomUUID().toString();
+		this();
 		this.person = person;
 	}
 
 	public FamilyTree(Person person, List<Relative> relatives) {
-		this.id = UUID.randomUUID().toString();
+		this();
 		this.person = person;
-		this.relatives = relatives;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public Person getPerson() {
-		return this.person;
-	}
-
-	public void setPerson(Person person) {
-		this.person = person;
-	}
-
-	public List<Relative> getRelatives() {
-		return this.relatives;
-	}
-
-	public void setRelatives(List<Relative> relatives) {
 		this.relatives = relatives;
 	}
 

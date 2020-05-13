@@ -1,4 +1,4 @@
-package br.com.starwars.familytree.api;
+package com.tjf.sample.github.repositoryaggregate.api;
 
 import java.sql.Types;
 
@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.starwars.familytree.model.FamilyTree;
-import br.com.starwars.familytree.model.Person;
-import br.com.starwars.familytree.model.Relative;
-import br.com.starwars.familytree.repository.FamilyTreeRepository;
-import br.com.starwars.familytree.repository.PersonRepository;
+import com.tjf.sample.github.repositoryaggregate.model.FamilyTree;
+import com.tjf.sample.github.repositoryaggregate.model.Person;
+import com.tjf.sample.github.repositoryaggregate.model.Relative;
+import com.tjf.sample.github.repositoryaggregate.repository.FamilyTreeRepository;
+import com.tjf.sample.github.repositoryaggregate.repository.PersonRepository;
 
 @RestController
 @RequestMapping(path = "api/v1/familytree", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -32,7 +32,8 @@ public class FamilyTreeController {
 			@PathVariable String relationship) {
 
 		FamilyTree fm = treeRepository
-				.findOne("data->'person' @> ?", new SqlParameterValue(Types.OTHER, "{\"id\":\"" + personId + "\"}")).orElse(null);
+				.findOne("data->'person' @> ?", new SqlParameterValue(Types.OTHER, "{\"id\":\"" + personId + "\"}"))
+				.orElse(null);
 
 		if (fm == null) {
 			Person person = personRepository.get(personId).orElseThrow();

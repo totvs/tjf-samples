@@ -1,13 +1,13 @@
-package br.com.starwars.familytree;
+package com.tjf.sample.github.repositoryaggregate;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class StarwarsFamilytreeApplication {
+public class RepositoryAggregateApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(StarwarsFamilytreeApplication.class, args);
+		SpringApplication.run(RepositoryAggregateApplication.class, args);
 	}
 
 }
