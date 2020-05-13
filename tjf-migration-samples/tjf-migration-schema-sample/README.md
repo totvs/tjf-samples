@@ -1,27 +1,18 @@
-# Tenant Schema Sample
-
-_Sample_ de utilização da biblioteca [__Migration Schema__][tjf-migration-schema] do [__TOTVS Java Framework__][tjf].
+# Exemplo de uso do componente Migration Schema
 
 ## Contexto
 
-Para exemplificar o uso da biblioteca [__Migration Schema__][tjf-migration-schema], criaremos uma aplicação simples de teste, para validar que os _schemas_ serão criados da forma esperada.
+Para exemplificar o uso da biblioteca **Migration Schema**, criaremos uma classe simples de teste, para validar que os _schemas_ serão criados da forma esperada pela ferramenta de migração.
 
-> Como _engine_ de banco de dados utilizaremos o [H2][h2].
+## Começando
 
-# Começando
-
-Iniciaremos o desenvolvimento criando um novo projeto [Spring][spring] utilizando o serviço [Spring Initializr][spring-initializr]. O projeto deve possuir as configurações conforme abaixo:
-
-<p align="center">
-  <img alt="Spring Initializr" src="./resources/spring-initializr.png"/>
-</p>
-
-Precisamos também adicionar como dependência os módulos __Web__, __Flyway__ e __H2__. Após informados os dados e incluídas as dependências necessárias, podemos iniciar a geração do projeto.
-
+Para criação deste exemplo vamos iniciar a explicação a partir de um projeto Spring já criado, caso você não possua um projeto criado basta acessar o [Spring initializr](https://start.spring.io/) e criar o projeto. Precisamos adicionar como dependência os módulos **Spring Starter**, **Flyway** e o **H2**.
 
 ## Configurações
 
-_Dependências_
+Após gerado o projeto, vamos adicionar a dependência do **Migration Schema** e o repositório Maven de _release_ do TJF:
+
+**Dependências**
 
 ```xml
 <dependencies>
@@ -36,13 +27,13 @@ _Dependências_
 </dependencies>
 ```
 
-_Repositórios_
+**Repositório**
 
 ```xml
 <repositories>
 
   <repository>
-    <id>tjf-release</id>
+    <id>central-release</id>
     <name>TOTVS Java Framework: Releases</name>
     <url>http://maven.engpro.totvs.com.br/artifactory/libs-release/</url>
   </repository>
@@ -61,78 +52,69 @@ spring:
     enabled: false
     migrate: true
     locations: classpath:db/migration
-    schemas: _TATOOINE, _ALDERAAN, _BESPIN
+    schemas: TATOOINE, ALDERAAN, BESPIN
     baselineOnMigrate: true
 
-  h2:
-    console:
-      enabled: true
-  
   datasource:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:mem:starwarsdb;DB_CLOSE_ON_EXIT=FALSE;AUTO_RECONNECT=TRUE;
     username: sa
-    password:
 ```
 
-Nas configurações acima, definimos qual _driver_ será utilizado para conexão com o banco de dados, o nome do banco (`starwarsdb`) e usuário de acesso (`sa`).
+Nas configurações acima, definimos qual _driver_ será utilizado para conexão com o banco de dados, o nome do banco e usuário de acesso.
 
-Vejamos que no trecho a seguir estamos criando os _schemas_: __TATOOINE, ALDERAAN e BESPIN__. 
+Observe que no trecho abaixo estamos informando os _schemas_ que serão criados: **TATOOINE**, **ALDERAAN** e **BESPIN**.
 
 ```yml
-  flyway:
-    enabled: false
-    migrate: true
-    locations: classpath:db/migration
-    schemas: _TATOOINE, _ALDERAAN, _BESPIN
-    baselineOnMigrate: true
+flyway:
+  enabled: false
+  migrate: true
+  locations: classpath:db/migration
+  schemas: TATOOINE, ALDERAAN, BESPIN
+  baselineOnMigrate: true
 ```
 
-Precisamos também dos _scripts_ de criação de tabelas no banco de dados. Este _script_ deve ficar na pasta `src/main/resources/db/migration` com o nome `V1.0__initialize.sql` para que seja feita a execução automática pelo [__Flyway__][flyway]:
+Precisamos também do _scripts_ de criação da tabela no banco de dados. Este _script_ deve ficar na pasta `src/main/resources/db/migration` com o nome `V1.0__initialize.sql` para que seja feita a execução automática pelo Flyway:
 
-_V1.0__initialize.sql_
+**V1.0__initialize.sql**
 
 ```sql
-CREATE TABLE habitant (
-  id VARCHAR(36) NOT NULL,
-  name VARCHAR(255) NOT NULL,
-  gender VARCHAR(06) NOT NULL,
-  PRIMARY KEY (id));
+CREATE TABLE habitant
+(
+   id     VARCHAR (036) NOT NULL,
+   name   VARCHAR (255) NOT NULL,
+   gender VARCHAR (006) NOT NULL,
+   PRIMARY KEY (id)
+);
 ```
 
-> OBS: Diferentemente do sample do _tenant-schema_, não precisaremos criar e setar os _schemas_ nesse arquivo, pois o TJF-Migration-Schema faz com base no arquivo _application.yml_. 
+> OBS: diferentemente do _sample_ do **Tenant Schema**, não precisamos criar e definir os _schemas_ nesse arquivo, pois o **Migration Schema** fará este processo com base no arquivo `application.yml`.
 
+## Execução dos testes
 
-### Execução dos testes
-
-Para comprovar que os _schemas_ foram criados, executaremos alguns testes simples, conforme a seguir:
+Para comprovar que os _schemas_ foram criados, criamos uma classe com alguns alguns testes simples:
 
 ```java
 @Test
 public void testSchemas() throws SQLException {
-	Connection connection = DriverManager.getConnection("jdbc:h2:mem:starwarsdb", "sa", "");
+  Connection connection = DriverManager.getConnection("jdbc:h2:mem:starwarsdb", "sa", "");
 
-	PreparedStatement statement = connection.prepareStatement("SET SCHEMA _TATOOINE");
-	statement.execute();
-	assertEquals("_TATOOINE", connection.getSchema());
-	
-	PreparedStatement statement2 = connection.prepareStatement("SET SCHEMA _ALDERAAN");
-	statement2.execute();
-	assertEquals("_ALDERAAN", connection.getSchema());
-	
-	PreparedStatement statement3 = connection.prepareStatement("SET SCHEMA _BESPIN");
-	statement3.execute();
-	assertEquals("_BESPIN", connection.getSchema());
+  PreparedStatement statement = connection.prepareStatement("SET SCHEMA _TATOOINE");
+  statement.execute();
+  assertEquals("_TATOOINE", connection.getSchema());
+
+  PreparedStatement statement2 = connection.prepareStatement("SET SCHEMA _ALDERAAN");
+  statement2.execute();
+  assertEquals("_ALDERAAN", connection.getSchema());
+
+  PreparedStatement statement3 = connection.prepareStatement("SET SCHEMA _BESPIN");
+  statement3.execute();
+  assertEquals("_BESPIN", connection.getSchema());
 }
 ```
 
-# Que a força esteja com você!
+> Vale lembrar que os _schemas_ foram criados com o caractere _underscore_ na frente do nome, pois este é o padrão de nomenclatura atual do TJF.
 
-Com isso terminamos nosso _sample_, fique a vontade para enriquecê-lo utilizando outros recursos propostos pela biblioteca [__Migration Schema__][tjf-migration-schema] e enviar sugestões e melhorias para o [__TOTVS Java Framework__][tjf].
+## Que a força esteja com você!
 
-[tjf-migration-schema]: https://tjf.totvs.com.br/wiki/tjf-migration
-[tjf]: https://tjf.totvs.com.br
-[h2]: https://www.h2database.com
-[spring]: https://spring.io
-[spring-initializr]: https://start.spring.io
-[flyway]: https://flywaydb.org
+Com isso terminamos nosso exemplo, fique a vontade para incrementar o exemplo utilizando todos os recursos proposto pelo componente **Migration Schema**, caso necessário utilize nossa [documentação](https://tjf.totvs.com.br/wiki/tjf-migration-schema) e fique a vontade para mandar sugestões e melhorias para o projeto [TJF](https://tjf.totvs.com.br/).

@@ -255,9 +255,9 @@ Para testar nossa aplicação precisaremos do seguinte `docker-compose` para a c
 version: '3'
 
 services:
+  
   rabbitMq:
     image: rabbitmq:3.7.7-management
-    container_name: tjf-rabbitmq
     ports:
       - 15672:15672
       - 5672:5672
