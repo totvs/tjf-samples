@@ -1,0 +1,80 @@
+tjf:
+  api:
+    filter:
+      fields:
+        enabled: true
+ 
+spring:
+    
+  application:
+    name: sgdp-test-sample
+  
+  h2:
+    console:
+      enabled: true
+  
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:cash-account;DB_CLOSE_ON_EXIT=FALSE;AUTO_RECONNECT=TRUE;
+    username: sa
+    password:
+  
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    properties:      
+      hibernate:
+        format_sql: true
+
+  cloud:
+    stream:
+
+      kafka:
+        binder:
+          brokers: localhost:9092
+          configuration:
+            auto:
+              offset:
+                reset: earliest       
+
+      binders:
+        kafka1:
+          type: kafka
+        rabbit1:
+          type: rabbit
+          environment:
+            spring:
+              habbit:
+                host: localhost:5672  
+                  
+      bindings:
+
+        sgdp-kafka-reader:
+          destination: sgdp-audit
+          binder: kafka1
+        sgdp-audit:
+          destination: sgdp-audit
+          contentType: application/json
+          binder: kafka1
+          
+        tjf-messaging-error-input:
+          destination: error-messaging
+          group: errors
+          binder: rabbit1
+        tjf-messaging-error-output:
+          destination: error-messaging
+          group: errors
+          producer:
+            requiredGroups: errors
+          binder: rabbit1
+          
+        sgdp-input:
+          destination: sgdp-responses
+          group: sw-sgdp-service
+          binder: rabbit1
+        sgdp-output:
+          destination: sgdp-commands
+          binder: rabbit1   
+          
+server:
+  port: 9190
