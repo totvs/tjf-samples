@@ -1,60 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
 		<groupId>com.totvs.tjf</groupId>
 		<artifactId>tjf-boot-starter</artifactId>
-		<version>1.21.0-RELEASE</version>
+		<version>2.0.0-SNAPSHOT</version>
+		<relativePath />
 	</parent>
-	
+
 	<groupId>com.tjf.sample.github</groupId>
-	<artifactId>sw-core-validation</artifactId>
+	<artifactId>core-validation</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Star Wars :: core-validation-sample</name>
-	<description>Demo project for Spring Boot</description>
+	<name>tjf-core-validation-sample</name>
+	<description>TJF Core Validation Sample</description>
 
 	<dependencies>
-		<dependency>
-			<groupId>com.totvs.tjf</groupId>
-			<artifactId>tjf-core-validation</artifactId>
-		</dependency>
 
+		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
 		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger2</artifactId>
+			<version>2.9.2</version>
 		</dependency>
 
+		<!-- Lombok -->
 		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-bean-validators</artifactId>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
+
+		<!-- TJF -->
+		<dependency>
+			<groupId>com.totvs.tjf</groupId>
+			<artifactId>tjf-core-validation</artifactId>
 		</dependency>
 
 		<!-- TEST -->
+		<!-- Test -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.junit.vintage</groupId>
+					<artifactId>junit-vintage-engine</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
+
 	</dependencies>
 
 	<profiles>
+
 		<profile>
 			<id>integration-test-report</id>
 			<build>
 				<plugins>
+
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-failsafe-plugin</artifactId>
@@ -75,6 +87,7 @@
 							</execution>
 						</executions>
 					</plugin>
+
 					<plugin>
 						<groupId>org.jacoco</groupId>
 						<artifactId>jacoco-maven-plugin</artifactId>
@@ -91,9 +104,11 @@
 							</execution>
 						</executions>
 					</plugin>
+
 				</plugins>
 			</build>
 		</profile>
+
 	</profiles>
 
 	<repositories>
@@ -103,4 +118,5 @@
 			<url>http://maven.engpro.totvs.com.br/artifactory/libs-release</url>
 		</repository>
 	</repositories>
+
 </project>

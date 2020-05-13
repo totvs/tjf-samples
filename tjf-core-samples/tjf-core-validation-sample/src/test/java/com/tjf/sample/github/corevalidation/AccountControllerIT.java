@@ -1,14 +1,13 @@
-package com.tjf.sample.github.validation;
+package com.tjf.sample.github.corevalidation;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.List;
 import java.util.Locale;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -17,12 +16,10 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringRunner;
 
-import com.tjf.sample.github.validation.model.AccountModel;
+import com.tjf.sample.github.corevalidation.model.AccountModel;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = { AccountApplication.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = CoreValidationApplication.class, webEnvironment = WebEnvironment.RANDOM_PORT)
 public class AccountControllerIT {
 
 	@Autowired
@@ -34,13 +31,12 @@ public class AccountControllerIT {
 		String path = "/api/v1/sample/account";
 
 		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+		headers.setContentType(MediaType.APPLICATION_JSON);
 		headers.setAcceptLanguageAsLocales(List.of(Locale.forLanguageTag("pt-BR")));
 
-		AccountModel account = new AccountModel(1, "Nome", "teste", new Double("10.35"));
+		AccountModel account = new AccountModel(1, "Nome", "teste", 10.35d);
 
 		HttpEntity<AccountModel> request = new HttpEntity<>(account, headers);
-
 		ResponseEntity<ErrorResponse> response = restTemplate.postForEntity(path, request, ErrorResponse.class);
 
 		assertEquals(500, response.getStatusCodeValue());
@@ -49,6 +45,7 @@ public class AccountControllerIT {
 		assertEquals(path, response.getBody().getPath());
 		assertEquals(500, response.getBody().getStatus().intValue());
 		assertNotNull(response.getBody().getTimestamp());
+
 	}
 
 	@Test
@@ -57,13 +54,12 @@ public class AccountControllerIT {
 		String path = "/api/v1/sample/account";
 
 		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+		headers.setContentType(MediaType.APPLICATION_JSON);
 		headers.setAcceptLanguageAsLocales(List.of(Locale.forLanguageTag("en-US")));
 
-		AccountModel account = new AccountModel(1, "Nome", "teste", new Double("10.35"));
+		AccountModel account = new AccountModel(1, "Nome", "teste", 10.35d);
 
 		HttpEntity<AccountModel> request = new HttpEntity<>(account, headers);
-
 		ResponseEntity<ErrorResponse> response = restTemplate.postForEntity(path, request, ErrorResponse.class);
 
 		assertEquals(500, response.getStatusCodeValue());
@@ -72,24 +68,25 @@ public class AccountControllerIT {
 		assertEquals(path, response.getBody().getPath());
 		assertEquals(500, response.getBody().getStatus().intValue());
 		assertNotNull(response.getBody().getTimestamp());
+
 	}
-	
+
 	@Test
 	public void testValidationSucess() {
 
 		String path = "/api/v1/sample/account";
 
 		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+		headers.setContentType(MediaType.APPLICATION_JSON);
 		headers.setAcceptLanguageAsLocales(List.of(Locale.forLanguageTag("pt-BR")));
 
-		AccountModel account = new AccountModel(1, "Nome", "adress maior que 10 menor que 100", new Double("10.35"));
+		AccountModel account = new AccountModel(1, "Nome", "adress maior que 10 menor que 100", 10.35d);
 
 		HttpEntity<AccountModel> request = new HttpEntity<>(account, headers);
-
 		ResponseEntity<ErrorResponse> response = restTemplate.postForEntity(path, request, ErrorResponse.class);
 
 		assertEquals(200, response.getStatusCodeValue());
 		assertNull(response.getBody());
+
 	}
 }
