@@ -1,41 +1,36 @@
-package br.com.star.wars;
+package com.tjf.sample.github.messagingstream;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = Application.class)
+@SpringBootTest(classes = MessagingStreamApplication.class)
 @AutoConfigureMockMvc
-public class ErrorQueueIT {
+public class MessagingStreamErrorQueueIT {
 
 	@Autowired
-	MockMvc mockMvc;
+	private MockMvc mockMvc;
 
 	@Test
-	public void sendMessageTest() throws Exception {
+	public void testsendMessage() throws Exception {
+		String expectedResult = "{\"messages\":1}";
 
-		String expectedResult = "{\n" + "    \"messages\": 1\n" + "}";
-
-		mockMvc.perform(post("/mission/send").contentType(MediaType.APPLICATION_JSON).content(
-				"{\n" + "    \"name\": \"BB-8\",\n" + "    \"mission\": \"Get and Protected Luke location\"\n" + "}"))
+		mockMvc.perform(post("/mission/send").contentType(MediaType.APPLICATION_JSON)
+				.content("{\"name\":\"BB-8\",\"mission\":\"Get and Protected Luke location\"}"))
 				.andExpect(status().isCreated());
 
-		Thread.sleep(5000);
+		Thread.sleep(2_000);
 
 		mockMvc.perform(get("/actuator/messaging")).andExpect(status().isOk())
 				.andExpect(content().json(expectedResult));
-
 	}
 
 }

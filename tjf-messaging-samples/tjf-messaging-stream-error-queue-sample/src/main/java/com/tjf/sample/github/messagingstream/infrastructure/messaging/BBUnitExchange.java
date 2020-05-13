@@ -1,4 +1,4 @@
-package br.com.star.wars.infrastructure.messaging;
+package com.tjf.sample.github.messagingstream.infrastructure.messaging;
 
 import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.cloud.stream.annotation.Output;

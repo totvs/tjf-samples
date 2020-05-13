@@ -1,4 +1,4 @@
-package br.com.star.wars.controller;
+package com.tjf.sample.github.messagingstream.controller;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -12,31 +12,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tjf.sample.github.messagingstream.event.BBUnitSendMission;
+import com.tjf.sample.github.messagingstream.infrastructure.messaging.BBUnitPublisher;
+import com.tjf.sample.github.messagingstream.model.BBUnit;
 import com.totvs.tjf.api.context.stereotype.ApiGuideline;
 import com.totvs.tjf.api.context.stereotype.ApiGuideline.ApiGuidelineVersion;
-import com.totvs.tjf.api.context.v1.response.ApiCollectionResponse;
-
-import br.com.star.wars.event.BBUnitSendMission;
-import br.com.star.wars.infrastructure.messaging.BBUnitPublisher;
-import br.com.star.wars.model.BBUnit;
+import com.totvs.tjf.api.context.v2.response.ApiCollectionResponse;
 
 @RestController
 @RequestMapping(path = BBUnitMissionController.PATH, produces = APPLICATION_JSON_VALUE)
-@ApiGuideline(ApiGuidelineVersion.v1)
+@ApiGuideline(ApiGuidelineVersion.V2)
 public class BBUnitMissionController {
 
 	public static final String PATH = "mission";
 
 	@Autowired
-	BBUnitPublisher bbPublisher;
+	private BBUnitPublisher bbPublisher;
 
 	@PostMapping(path = "/send")
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public ApiCollectionResponse<BBUnit> sendMessageInBBUnit(@RequestBody BBUnit bbUnit) {
 		BBUnitSendMission missionEvent = new BBUnitSendMission(bbUnit);
 		bbPublisher.publish(missionEvent.getBbUnit(), BBUnitSendMission.MISSION);
-
-		return ApiCollectionResponse.of(List.of(bbUnit));
+		return ApiCollectionResponse.from(List.of(bbUnit));
 	}
 
 }

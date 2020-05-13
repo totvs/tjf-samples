@@ -1,4 +1,4 @@
-package br.com.star.wars.infrastructure.messaging;
+package com.tjf.sample.github.messagingstream.infrastructure.messaging;
 
 import org.springframework.cloud.stream.annotation.EnableBinding;
 
@@ -6,7 +6,7 @@ import com.totvs.tjf.core.message.TOTVSMessage;
 
 @EnableBinding(BBUnitExchange.class)
 public class BBUnitPublisher {
-	BBUnitExchange exchange;
+	private BBUnitExchange exchange;
 
 	public BBUnitPublisher(BBUnitExchange exchange) {
 		this.exchange = exchange;

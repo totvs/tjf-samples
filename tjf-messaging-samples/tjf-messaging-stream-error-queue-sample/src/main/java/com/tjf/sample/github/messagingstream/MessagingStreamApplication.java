@@ -1,13 +1,13 @@
-package br.com.star.wars;
+package com.tjf.sample.github.messagingstream;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Application {
+public class MessagingStreamApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
+		SpringApplication.run(MessagingStreamApplication.class, args);
 	}
 
 }

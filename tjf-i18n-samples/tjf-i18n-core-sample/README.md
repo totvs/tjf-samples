@@ -6,13 +6,13 @@ Para exemplificar o uso da biblioteca **i18n Core** vamos criar uma base de comu
 
 ## Começando
 
-Para criação deste exemplo vamos iniciar a explicação a partir de um projeto Spring já criado, caso você não possua um projeto criado basta acessar o [Spring initializr](<[https://start.spring.io/](https://start.spring.io/)>) e criar o projeto.
+Para criação deste exemplo vamos iniciar a explicação a partir de um projeto Spring já criado, caso você não possua um projeto criado basta acessar o [Spring initializr](https://start.spring.io/) e criar o projeto.
 
 Para fácil entendimento do componente **i18n Core** vamos seguir a sequencia abaixo para criação do exemplo.
 
 ### Dependências
 
-Para utilização do componente de tradução do TJF é necessário inserir a seguinte dependência em seu arquivo `pom.xml`:
+Para utilização do componente de tradução é necessário inserir a seguinte dependência em seu arquivo `pom.xml`:
 
 ```xml
 <dependency>
@@ -22,7 +22,7 @@ Para utilização do componente de tradução do TJF é necessário inserir a se
 </dependency>
 ```
 
-Em nosso exemplo iremos utilizar um arquivo `JSON` como base, para isso adicione a seguinte dependência em seu arquivo `pom.xml`:
+Em nosso exemplo iremos utilizar um arquivo `JSON` como base, para isso adicione também a seguinte dependência:
 
 ```xml
 <dependency>
@@ -121,7 +121,7 @@ Após finalizado teremos a seguinte estrutura:
 
 ![Estrutura dos arquivos JSON](resources/estrutura_json.png)
 
-### Criando o código fonte
+## Codificando
 
 Agora com as dependências e a estrutura de _resources_ do projeto prontas, vamos criar nosso código fontes, iniciando pela classe de domínio:
 
@@ -133,12 +133,12 @@ Agora com as dependências e a estrutura de _resources_ do projeto prontas, vamo
 @NoArgsConstructor
 public class Starship {
 
-	private String name;
-	private String model;
-	private String manufacturer;
-	private String cost;
-	private String passengers;
-	private String cargoCapacity;
+  private String name;
+  private String model;
+  private String manufacturer;
+  private String cost;
+  private String passengers;
+  private String cargoCapacity;
 
 }
 ```
@@ -151,16 +151,16 @@ Agora vamos desenvolver a classe de serviço responsável por ler os arquivos `J
 @Component
 public class StarshipService {
 
-	@Autowired
-	private ObjectMapper objectMapper;
+  @Autowired
+  private ObjectMapper objectMapper;
 
-	public Starship getStarshipInfo(String shipInfo) throws IOException {
-		ClassLoader classLoader = StarshipService.class.getClassLoader();
-		File file = new File(classLoader.getResource("json/" + shipInfo).getFile());
+  public Starship getStarshipInfo(String shipInfo) throws IOException {
+    ClassLoader classLoader = StarshipService.class.getClassLoader();
+    File file = new File(classLoader.getResource("json/" + shipInfo).getFile());
 
-		String content = new String(Files.readAllBytes(file.toPath()));
-		return objectMapper.readValue(content, Starship.class);
-	}
+    String content = new String(Files.readAllBytes(file.toPath()));
+    return objectMapper.readValue(content, Starship.class);
+  }
 
 }
 ```
@@ -175,16 +175,16 @@ E agora vamos criar a classe responsável por retornar as mensagens que criamos,
 @Component
 public class StarshipMessage {
 
-	@Autowired
-	private I18nService i18nService;
+  @Autowired
+  private I18nService i18nService;
 
-	public String starshipConfirmLanding(String starshipName) {
-		return this.i18nService.getMessage("starship.authorized", starshipName);
-	}
+  public String starshipConfirmLanding(String starshipName) {
+    return this.i18nService.getMessage("starship.authorized", starshipName);
+  }
 
-	public String starshipDestroy(String starshipName) {
-		return this.i18nService.getMessage("starship.destroyed", starshipName);
-	}
+  public String starshipDestroy(String starshipName) {
+    return this.i18nService.getMessage("starship.destroyed", starshipName);
+  }
 
 }
 ```
@@ -197,25 +197,25 @@ Por fim, vamos criar as classes que irão executar o processo de autorização d
 @Component
 public class AuthorizedGate {
 
-	@Autowired
-	private StarshipService starshipService;
+  @Autowired
+  private StarshipService starshipService;
 
-	@Autowired
-	private StarshipMessage starshipMessage;
+  @Autowired
+  private StarshipMessage starshipMessage;
 
-	private Random random = new Random();
+  private Random random = new Random();
 
-	public String authorizedShipLanding(String shipCard) throws IOException {
+  public String authorizedShipLanding(String shipCard) throws IOException {
 
-		Starship starship = starshipService.getStarshipInfo(shipCard);
+    Starship starship = starshipService.getStarshipInfo(shipCard);
 
-		if (random.nextBoolean()) {
-			return starshipMessage.starshipConfirmLanding(starship.getName());
-		} else {
-			return starshipMessage.starshipDestroy(starship.getName());
-		}
+    if (random.nextBoolean()) {
+      return starshipMessage.starshipConfirmLanding(starship.getName());
+    } else {
+      return starshipMessage.starshipDestroy(starship.getName());
+    }
 
-	}
+  }
 
 }
 ```
@@ -228,31 +228,31 @@ E depois criando a classe dá início ao nosso processo por implementar o compon
 @Component
 public class MainGate implements CommandLineRunner {
 
-	@Autowired
-	private AuthorizedGate authorizedGate;
+  @Autowired
+  private AuthorizedGate authorizedGate;
 
-	@Override
-	public void run(String... args) throws Exception {
-		enableI18nDebugLog();
+  @Override
+  public void run(String... args) throws Exception {
+    enableI18nDebugLog();
 
-		Locale.setDefault(new Locale("pt", "br"));
-		System.out.println(authorizedGate.authorizedShipLanding("Falcon.json"));
-		Locale.setDefault(new Locale("en", "us"));
-		System.out.println(authorizedGate.authorizedShipLanding("Xwing.json"));
-		Locale.setDefault(new Locale("es", "es"));
-		System.out.println(authorizedGate.authorizedShipLanding("Ywing.json"));
-	}
+    Locale.setDefault(new Locale("pt", "br"));
+    System.out.println(authorizedGate.authorizedShipLanding("Falcon.json"));
+    Locale.setDefault(new Locale("en", "us"));
+    System.out.println(authorizedGate.authorizedShipLanding("Xwing.json"));
+    Locale.setDefault(new Locale("es", "es"));
+    System.out.println(authorizedGate.authorizedShipLanding("Ywing.json"));
+  }
 
-	public void enableI18nDebugLog() {
-		LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
-		Logger rootLogger = loggerContext.getLogger("com.totvs.tjf.i18n");
-		rootLogger.setLevel(Level.DEBUG);
-	}
+  public void enableI18nDebugLog() {
+    LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
+    Logger rootLogger = loggerContext.getLogger("com.totvs.tjf.i18n");
+    rootLogger.setLevel(Level.DEBUG);
+  }
 
 }
 ```
 
-### Vamos testar?
+## Vamos testar?
 
 Para realizarmos o teste do nosso exemplo, execute a classe da aplicação e teremos em nosso console as seguintes mensagens:
 

@@ -1,7 +1,9 @@
 spring:
+
   cloud:
     stream:
       defaultBinder: rabbit1
+      
       bindings:
         # Filas de Execução
         bbunit-input:
@@ -11,6 +13,7 @@ spring:
             max-attempts: 1          
         bbunit-output:
           destination: bbunit-input
+        
         # Filas de Erros
         tjf-messaging-error-input:
           destination: bbunit-errors
@@ -26,14 +29,14 @@ spring:
           type: rabbit
           environment:
             spring:
-              rabbit:
+              rabbitmq:
                 host: localhost
                 
 management:
   endpoints:
     web:
       exposure:
-        include: info,health,messaging                
+        include: info,health,messaging
                 
 server:
   port: 8080
