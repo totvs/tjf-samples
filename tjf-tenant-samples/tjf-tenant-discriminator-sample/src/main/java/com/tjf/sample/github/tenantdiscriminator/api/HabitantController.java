@@ -1,4 +1,4 @@
-package br.com.star.wars.habitants.api;
+package com.tjf.sample.github.tenantdiscriminator.api;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.star.wars.habitants.dto.HabitantDto;
-import br.com.star.wars.habitants.model.HabitantModel;
-import br.com.star.wars.habitants.model.HabitantModelId;
-import br.com.star.wars.habitants.model.HabitantModelRepository;
+import com.tjf.sample.github.tenantdiscriminator.dto.HabitantDto;
+import com.tjf.sample.github.tenantdiscriminator.model.HabitantModel;
+import com.tjf.sample.github.tenantdiscriminator.model.HabitantModelId;
+import com.tjf.sample.github.tenantdiscriminator.model.HabitantModelRepository;
 
 @RestController
 @RequestMapping(path = "/api/v1/habitants", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -25,7 +25,7 @@ public class HabitantController {
 
 	@PostMapping
 	public List<HabitantModel> saveAll(@RequestBody List<HabitantDto> dtos) {
-		List<HabitantModel> habitants = new ArrayList<HabitantModel>();
+		List<HabitantModel> habitants = new ArrayList<>();
 
 		for (HabitantDto dto : dtos) {
 			// Efetua a conversão do objeto recebido para o objeto de modelo.
@@ -33,7 +33,6 @@ public class HabitantController {
 			habitant.setId(new HabitantModelId(dto.getId()));
 			habitant.setName(dto.getName());
 			habitant.setGender(dto.getGender());
-
 			habitants.add(habitant);
 		}
 

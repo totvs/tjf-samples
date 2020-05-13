@@ -1,10 +1,19 @@
-package br.com.star.wars.habitants.model;
+package com.tjf.sample.github.tenantdiscriminator.model;
 
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
 
 import com.totvs.tjf.tenant.discriminator.TenantId;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Embeddable
 public class HabitantModelId extends TenantId {
 
@@ -12,19 +21,5 @@ public class HabitantModelId extends TenantId {
 
 	@NotNull
 	private String id;
-
-	public HabitantModelId() {}
-
-	public HabitantModelId(String id) {
-		this.setId(id);
-	}
-
-	public String getId() {
-		return this.id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
 
 }

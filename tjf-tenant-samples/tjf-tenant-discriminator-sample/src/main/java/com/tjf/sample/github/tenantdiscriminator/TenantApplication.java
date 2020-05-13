@@ -1,13 +1,13 @@
-package br.com.star.wars.habitants;
+package com.tjf.sample.github.tenantdiscriminator;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class StarWarsHabitantsApplication {
+public class TenantApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(StarWarsHabitantsApplication.class, args);
+		SpringApplication.run(TenantApplication.class, args);
 	}
 
 }
