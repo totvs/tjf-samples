@@ -5,17 +5,16 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(classes = StarWarsHabitantsApplication.class)
+import com.tjf.sample.github.tenantschema.TenantApplication;
+
+@SpringBootTest(classes = TenantApplication.class)
 @AutoConfigureMockMvc
 public class SchemaHabitantsIT {
 
@@ -27,11 +26,8 @@ public class SchemaHabitantsIT {
 		String expectedResult = "[{\"id\":\"anakin\",\"name\":\"Anakin Skywalker\",\"gender\":\"male\"},{\"id\":\"luke\",\"name\":\"Luke Skywalker\",\"gender\":\"male\"},{\"id\":\"han\",\"name\":\"Han Solo\",\"gender\":\"male\"}]";
 
 		mockMvc.perform(post("/api/v1/habitants").header("X-Planet", "tatooine").contentType(MediaType.APPLICATION_JSON)
-				.content("[\n" + "    {\n" + "        \"id\": \"anakin\",\n"
-						+ "        \"name\": \"Anakin Skywalker\",\n" + "        \"gender\": \"male\"\n" + "    },\n"
-						+ "    {\n" + "        \"id\": \"luke\",\n" + "        \"name\": \"Luke Skywalker\",\n"
-						+ "        \"gender\": \"male\"\n" + "    },\n" + "    {\n" + "        \"id\": \"han\",\n"
-						+ "        \"name\": \"Han Solo\",\n" + "        \"gender\": \"male\"\n" + "    }\n" + "]"))
+				.content(
+						"[{\"id\":\"anakin\",\"name\":\"Anakin Skywalker\",\"gender\":\"male\"},{\"id\":\"luke\",\"name\":\"Luke Skywalker\",\"gender\":\"male\"},{\"id\":\"han\",\"name\": \"Han Solo\",\"gender\":\"male\"}]"))
 				.andExpect(status().isOk()).andExpect(content().json(expectedResult));
 
 		mockMvc.perform(get("/api/v1/habitants").header("X-Planet", "tatooine").contentType(MediaType.APPLICATION_JSON))
@@ -43,8 +39,7 @@ public class SchemaHabitantsIT {
 		String expectedResult = "[{\"id\":\"leia\",\"name\":\"Leia Organa\",\"gender\":\"female\"}]";
 
 		mockMvc.perform(post("/api/v1/habitants").header("X-Planet", "alderaan").contentType(MediaType.APPLICATION_JSON)
-				.content("[\n" + "    {\n" + "        \"id\": \"leia\",\n" + "        \"name\": \"Leia Organa\",\n"
-						+ "        \"gender\": \"female\"\n" + "    }\n" + "]"))
+				.content("[{\"id\":\"leia\",\"name\":\"Leia Organa\",\"gender\":\"female\"}]"))
 				.andExpect(status().isOk()).andExpect(content().json(expectedResult));
 
 		mockMvc.perform(get("/api/v1/habitants").header("X-Planet", "alderaan").contentType(MediaType.APPLICATION_JSON))
@@ -56,12 +51,8 @@ public class SchemaHabitantsIT {
 		String expectedResult = "[{\"id\":\"lando\",\"name\":\"Lando Calrissian\",\"gender\":\"male\"},{\"id\":\"dengar\",\"name\":\"Dengar, The Bounty Hunter\",\"gender\":\"male\"}]";
 
 		mockMvc.perform(
-				post("/api/v1/habitants").header("X-Planet", "bespin").contentType(MediaType.APPLICATION_JSON)
-						.content("[\n" + "    {\n" + "        \"id\": \"lando\",\n"
-								+ "        \"name\": \"Lando Calrissian\",\n" + "        \"gender\": \"male\"\n"
-								+ "    },\n" + "    {\n" + "        \"id\": \"dengar\",\n"
-								+ "        \"name\": \"Dengar, The Bounty Hunter\",\n"
-								+ "        \"gender\": \"male\"\n" + "    }\n" + "]"))
+				post("/api/v1/habitants").header("X-Planet", "bespin").contentType(MediaType.APPLICATION_JSON).content(
+						"[{\"id\":\"lando\",\"name\":\"Lando Calrissian\",\"gender\":\"male\"},{\"id\":\"dengar\",\"name\":\"Dengar, The Bounty Hunter\",\"gender\": \"male\"}]"))
 				.andExpect(status().isOk()).andExpect(content().json(expectedResult));
 
 		mockMvc.perform(get("/api/v1/habitants").header("X-Planet", "bespin").contentType(MediaType.APPLICATION_JSON))
