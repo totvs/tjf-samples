@@ -248,7 +248,7 @@ public class SWMaskService implements SGDPMaskService {
 
 > Os endpoints podem ser testados também via **Swagger-UI** pela url `localhost:8180/swagger-ui.html`.
 
-** Lista de Jedis **
+**Lista de Jedis**
 
 Para verificar a lista dos Jedis deve ser requisitada a url `localhost:8180/api/v1/jedis`.
 
@@ -268,7 +268,7 @@ Para verificar a lista dos Jedis deve ser requisitada a url `localhost:8180/api/
 }
 ```
 
-** SGDP Metadata **
+**SGDP Metadata**
 
 Para extrair o metadado conforme descrito na documentação do SGDP Core, basta requisitar a url `localhost:8180/sgdp/metadata`.
 
