@@ -94,7 +94,7 @@ server:
 
 ### Entidades
 
-Para iniciar, criaremos o pacote `br.com.star.wars.messaging.model`, para guardar a classe do nosso modelo de dados, e dentro dele criaremos a classe que representa a `starship`:
+Para iniciar, criaremos o pacote `com.tjf.sample.github.messaging.model`, para guardar a classe do nosso modelo de dados, e dentro dele criaremos a classe que representa a `starship`:
 
 _StarShip.java_
 
@@ -110,7 +110,7 @@ public class StarShip {
 
 ### Eventos
 
-Criaremos duas classes no pacote `br.com.star.wars.messaging.events`, uma para o evento da nave chegar no gate e outra para quando uma nave sai do gate, respectivamente:
+Criaremos duas classes no pacote `com.tjf.sample.github.messaging.events`, uma para o evento da nave chegar no gate e outra para quando uma nave sai do gate, respectivamente:
 
 _StarShipArrivedEvent.java_
 
@@ -149,7 +149,7 @@ public class StarShipLeftEvent {
 
 Iremos criar uma _API REST_ no nosso projeto de publicação, apenas como forma de receber os dados que usaremos para testar e transformar na mensagens do nosso exemplo.
 
-Criaremos o pacote `br.com.star.wars.messaging.controller` para guardar a classe que irá receber os dados via rest e irá criar e chamar o método para publicar nossa mensagem, para demostrarmos o uso do multi tenant criaremos o metodo setTenant, ele irá alterar o tenant atual do contexto, assim automaticamente as mensagem enviadas pra fila passam a ser do tenant recebido via rest.
+Criaremos o pacote `com.tjf.sample.github.messaging.controller` para guardar a classe que irá receber os dados via rest e irá criar e chamar o método para publicar nossa mensagem, para demostrarmos o uso do multi tenant criaremos o metodo setTenant, ele irá alterar o tenant atual do contexto, assim automaticamente as mensagem enviadas pra fila passam a ser do tenant recebido via rest.
 
 _StarShipController.java_
 
@@ -206,7 +206,7 @@ public class StarShipController {
 
 Iremos agora criar a interface que irá definir os canais nos quais faremos a comunicação das mensagens, será criada em ambos os projetos.
 
-Criaremos o pacote `br.com.star.wars.messaging.infrastructure.messaging` para guardar a classe que defini os canais.
+Criaremos o pacote `com.tjf.sample.github.messaging.infrastructure.messaging` para guardar a classe que defini os canais.
 
 Publisher _StarShipExchange.java_
 
@@ -232,7 +232,7 @@ public interface StarShipExchange {
 
 ### publisher
 
-No projeto de publicação criaremos a classe responsável por publicar a mensagem, crie no pacote `br.com.star.wars.messaging.infrastructure.messaging`.
+No projeto de publicação criaremos a classe responsável por publicar a mensagem, crie no pacote `com.tjf.sample.github.messaging.infrastructure.messaging`.
 
 _StarShipPublisher.java_
 
@@ -255,7 +255,7 @@ public class StarShipPublisher {
 
 ### Subscriber
 
-No projeto que será inscrito para receber as mensagens criaremos a classe responsável por receber a mensagem, crie no pacote `br.com.star.wars.messaging.infrastructure.messaging`.
+No projeto que será inscrito para receber as mensagens criaremos a classe responsável por receber a mensagem, crie no pacote `com.tjf.sample.github.messaging.infrastructure.messaging`.
 
 _StarShipSubscriber.java_
 
@@ -285,7 +285,7 @@ public class StarShipSubscriber {
 }
 ```
 
-Criaremos também no projeto receptor a classe que irá dar uma mensagem no log ao receber a mensagem, crie-a no pacote  `br.com.star.wars.messaging.services`, nele também tem um contador simples, mas que é separado pelo _tenant_ corrente.
+Criaremos também no projeto receptor a classe que irá dar uma mensagem no log ao receber a mensagem, crie-a no pacote  `com.tjf.sample.github.messaging.services`, nele também tem um contador simples, mas que é separado pelo _tenant_ corrente.
 
 _StarShipService.java_
 
