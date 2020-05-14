@@ -1,4 +1,4 @@
-package br.com.star.wars.jedi.api;
+package com.tjf.sample.github.apicontext.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -9,27 +9,26 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tjf.sample.github.apicontext.exception.JediNotFoundException;
+import com.tjf.sample.github.apicontext.model.Jedi;
+import com.tjf.sample.github.apicontext.model.JediRepository;
 import com.totvs.tjf.api.context.stereotype.ApiGuideline;
 import com.totvs.tjf.api.context.stereotype.ApiGuideline.ApiGuidelineVersion;
-import com.totvs.tjf.api.context.v1.request.ApiFieldRequest;
-import com.totvs.tjf.api.context.v1.request.ApiPageRequest;
-import com.totvs.tjf.api.context.v1.request.ApiSortRequest;
-import com.totvs.tjf.api.context.v1.response.ApiCollectionResponse;
-
-import br.com.star.wars.jedi.exception.JediNotFoundException;
-import br.com.star.wars.jedi.model.Jedi;
-import br.com.star.wars.jedi.model.JediRepository;
+import com.totvs.tjf.api.context.v2.request.ApiFieldRequest;
+import com.totvs.tjf.api.context.v2.request.ApiPageRequest;
+import com.totvs.tjf.api.context.v2.request.ApiSortRequest;
+import com.totvs.tjf.core.api.jpa.repository.ApiJpaCollectionResult;
 
 @RestController
 @RequestMapping(path = "/api/v1/jedis", produces = MediaType.APPLICATION_JSON_VALUE)
-@ApiGuideline(ApiGuidelineVersion.v1)
+@ApiGuideline(ApiGuidelineVersion.V2)
 public class JediController {
 
 	@Autowired
 	private JediRepository jediRepo;
 
 	@GetMapping
-	public ApiCollectionResponse<Jedi> getAll(ApiFieldRequest field, ApiPageRequest page, ApiSortRequest sort) {
+	public ApiJpaCollectionResult<Jedi> getAll(ApiFieldRequest field, ApiPageRequest page, ApiSortRequest sort) {
 		return jediRepo.findAllProjected(field, page, sort);
 	}
 

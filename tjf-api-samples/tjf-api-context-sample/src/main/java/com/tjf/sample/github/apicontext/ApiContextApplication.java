@@ -1,4 +1,4 @@
-package br.com.star.wars;
+package com.tjf.sample.github.apicontext;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,10 +8,10 @@ import com.totvs.tjf.api.jpa.repository.impl.ApiJpaRepositoryImpl;
 
 @SpringBootApplication
 @EnableJpaRepositories(repositoryBaseClass = ApiJpaRepositoryImpl.class)
-public class SWApiContextApplication {
+public class ApiContextApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SWApiContextApplication.class, args);
+		SpringApplication.run(ApiContextApplication.class, args);
 	}
 
 }

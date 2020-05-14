@@ -1,4 +1,4 @@
-package br.com.star.wars.jedi.exception;
+package com.tjf.sample.github.apicontext.exception;
 
 import org.springframework.http.HttpStatus;
 
