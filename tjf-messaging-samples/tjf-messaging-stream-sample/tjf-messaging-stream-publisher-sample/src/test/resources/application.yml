@@ -1,0 +1,32 @@
+spring:
+  cloud:
+    stream:
+      defaultBinder: rabbit1
+      bindings:
+        starship-input:
+          destination: starship-test-input
+          group: requests
+        starship-output:
+          destination: starship-test-input
+        tjf-messaging-error-input:
+          destination: starship-errors
+          group: errors
+        tjf-messaging-error-output:
+          destination: starship-errors
+          group: errors
+      binders:
+        rabbit1:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                host: 172.23.0.2
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info,health,messaging         
+                
+server:
+  port: 8080
