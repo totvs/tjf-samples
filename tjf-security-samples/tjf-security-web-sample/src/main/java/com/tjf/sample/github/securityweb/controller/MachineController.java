@@ -26,25 +26,21 @@ public class MachineController {
 
 	@GetMapping
 	public List<Map<String, Object>> machineList() {
-
 		return machineManager.getMachines();
 	}
 
 	@PostMapping("stop")
 	@RolesAllowed("SUPERVISOR")
 	public List<Map<String, Object>> stopAll() {
-
 		machineManager.stopAll();
-		
 		return machineManager.getMachines();
 	}
 
 	@PostMapping("{id}/run")
 	@PreAuthorize("hasPermission(\"SampleSecurityWeb.machine.run\")")
 	public Map<String, Object> run(@PathVariable int id) {
-
 		machineManager.run(id);
-		
 		return machineManager.getMachine(id);
 	}
+
 }

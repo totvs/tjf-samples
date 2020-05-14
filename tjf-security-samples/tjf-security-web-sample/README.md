@@ -2,41 +2,41 @@
 
 ## Contexto
 
-Para explicação do componente **Security Web** vamos criar uma API rest para controle de maquinas de uma fábrica e aplicar segurança de autenticação e autorização nos endpoins dessa API.
+Para explicação do componente **Security Web** vamos criar uma API REST para controle de máquinas de uma fábrica e aplicar segurança de autenticação e autorização nos _endpoints_ dessa API.
 
 ## Começando com Security Web
 
-Para criação deste exemplo, você vai precisar de um Authorization Service para podermos realizar as validações de segurança, por exemplo o **TOTVS RAC**.
+Para criação deste exemplo, você vai precisar de um _Authorization Service_ para podermos realizar as validações de segurança, por exemplo o **TOTVS RAC**.
 
-Vamos iniciar a explicação a partir de um projeto Spring já criado, caso você não possua um projeto criado basta acessar o [Spring initializr]([https://start.spring.io/](https://start.spring.io/)) e criar o projeto.
-
-Para fácil entendimento do componente **Security Web** vamos seguir a sequencia a baixo para criação do exemplo.
+Vamos iniciar a explicação a partir de um projeto Spring já criado, caso você não possua um projeto basta acessar o [Spring initializr](https://start.spring.io/) e criar o projeto. Para fácil entendimento do componente **Security Web** vamos seguir a sequencia abaixo para criação do exemplo.
 
 ### Dependências
 
-Primeiramente configure o repositório do TJF em seu `pom.xml`.
+Primeiramente configure o repositório do TJF em seu `pom.xml`:
 
 ```xml
 <repositories>
-    <repository>
-        <id>central-snapshot</id>
-        <name>TOTVS Java Framework: Snapshots</name>
-        <url>http://maven.engpro.totvs.com.br/artifactory/libs-release</url>
-    </repository>
+
+  <repository>
+    <id>central-snapshot</id>
+    <name>TOTVS Java Framework: Snapshots</name>
+    <url>http://maven.engpro.totvs.com.br/artifactory/libs-release</url>
+  </repository>
+
 </repositories>
 ```
 
-Adicione o _parent_ do TJF.
+Adicione o _parent_ do TJF:
 
 ```xml
 <parent>
-	<groupId>com.totvs.tjf</groupId>
-	<artifactId>tjf-boot-starter</artifactId>
-	<version>1.21.0-RELEASE</version>
+  <groupId>com.totvs.tjf</groupId>
+  <artifactId>tjf-boot-starter</artifactId>
+  <version>1.21.0-RELEASE</version>
 </parent>
 ```
 
-Para utilização do componente de segurança do TJF é necessário inserir a seguinte dependência em seu arquivo `pom.xml`.
+Para utilização do componente de segurança do TJF é necessário inserir a seguinte dependência em seu arquivo `pom.xml`:
 
 ```xml
 <dependency>
@@ -45,7 +45,7 @@ Para utilização do componente de segurança do TJF é necessário inserir a se
 </dependency>
 ```
 
-Em nosso exemplo iremos utilizar um serviço web para disponibilizar os endpoints, para isso adicione a seguinte dependência em seu arquivo `pom.xml`.
+Em nosso exemplo iremos utilizar um serviço web para disponibilizar os endpoints, para isso adicione a seguinte dependência em seu arquivo `pom.xml`:
 
 ```xml
 <dependency>
@@ -53,9 +53,10 @@ Em nosso exemplo iremos utilizar um serviço web para disponibilizar os endpoint
     <artifactId>spring-boot-starter-web</artifactId>
 </dependency>
 ```
-### Configurando integração com o *Authorization Service*
 
-No arquivo `application.yml` precisamos informar nas propriedades na nossa aplicação, quais as URI que serão usadas, para que nossa aplicação integre com o *Authorization Service*.
+### Configurando integração com o _Authorization Service_
+
+No arquivo `application.yml` precisamos informar nas propriedades na nossa aplicação quais as URI que serão usadas para que nossa aplicação integre com o _Authorization Service_.
 
 ```yml
 security:
@@ -66,284 +67,291 @@ security:
     resource:
       id: 'authorization_api'
       jwk:
-        key-set-uri: <O URI para obter chaves de verificação para validação do token JWT> 
-        
+        key-set-uri: <O URI para obter chaves de verificação para validação do token JWT>
 ```
 
 > **Propriedade opcional**  
-A propriedade `security.access.api.permissions-uri` é necessária apenas se no código for utilizada a anotação `@PreAuthorize` com a função `hasPermission()`. 
-
+> A propriedade `security.access.api.permissions-uri` é necessária apenas se no código for utilizada a anotação `@PreAuthorize` com a função `hasPermission()`.
 
 ### Criando o modelo
 
-No nosso exemplo usaremos o enum `Type`, que define os tipos de máquinas que teremos em nossa fábrica.
+No nosso exemplo usaremos o enum `Type` que define os tipos de máquinas que teremos em nossa fábrica.
 
 ```java
 public enum Type {
-	COLLECTOR,
-	CONVEYOR,
-	PRESS;
+  COLLECTOR,
+  CONVEYOR,
+  PRESS;
 }
 ```
-A class `Machine` será o modelo principal da nossa aplicação, nela teremos os métodos para rodar, parar e verificar se está em execução.
+
+A classe `Machine` será o modelo principal da nossa aplicação, nela teremos os métodos para rodar, parar e verificar se está em execução.
 
 ```java
 public class Machine {
 
-	private boolean running = false;
-	private final Type type;
+  private boolean running = false;
+  private final Type type;
 
-	public Type getType() {
-		return type;
-	}
+  public Type getType() {
+    return type;
+  }
 
-	public Machine(Type type) {
-		this.type = type;
-	}
+  public Machine(Type type) {
+    this.type = type;
+  }
 
-	public boolean running() {
-		return running;
-	}
+  public boolean running() {
+    return running;
+  }
 
-	public void run() {
-		this.running = true;
-	}
+  public void run() {
+    this.running = true;
+  }
 
-	public void stop() {
-		this.running = false;
-	}
+  public void stop() {
+    this.running = false;
+  }
+
 }
 ```
 
 ### Criando o componente
 
-Para gerenciar nossas maquinas criaremos o component `MachineManager`, o qual nossos endpoints irão interagir para parar uma maquina, executar determinada maquina ou parar todas as maquinas.
-A título de exemplo já instanciaremos a `MachineManager` com 3 maquinas diferentes em seu pool, uma de cada um dos tipo.
+Para gerenciar nossas máquinas criaremos o componente `MachineManager`, o qual nossos _endpoints_ irão interagir para parar uma máquina, executar determinada máquina ou parar todas as máquinas.
+A título de exemplo já instanciaremos a `MachineManager` com 3 máquinas diferentes em seu pool, uma de cada um dos tipo.
 
 ```java
 @Component
 public class MachineManager {
 
-	private List<Machine> machines = new LinkedList<Machine>();
+  private List<Machine> machines = new LinkedList<Machine>();
 
-	public MachineManager(){
-		machines.add(new Machine(Type.COLLECTOR));
-		machines.add(new Machine(Type.CONVEYOR));
-		machines.add(new Machine(Type.PRESS));
-	}
+  public MachineManager(){
+    machines.add(new Machine(Type.COLLECTOR));
+    machines.add(new Machine(Type.CONVEYOR));
+    machines.add(new Machine(Type.PRESS));
+  }
 
-	public void stop(int id) {
-		machines.get(id).stop();
-	}
+  public void stop(int id) {
+    machines.get(id).stop();
+  }
 
-	public void stopAll() {
-		for(Machine machine:machines) {
-			machine.stop();
-		}
-	}
+  public void stopAll() {
+    for(Machine machine:machines) {
+      machine.stop();
+    }
+  }
 
-	public void run(int id) {
-		machines.get(id).run();
-	}
+  public void run(int id) {
+    machines.get(id).run();
+  }
 
-	public List<Map<String, Object>> getMachines() {
-		List<Map<String, Object>> listMachines = new ArrayList<Map<String, Object>>();
-		for(int id = 0; id < machines.size();id++) {
-			listMachines.add(getMachine(id));
-		}
-		return listMachines;
-	}
+  public List<Map<String, Object>> getMachines() {
+    List<Map<String, Object>> listMachines = new ArrayList<Map<String, Object>>();
+    for(int id = 0; id < machines.size();id++) {
+      listMachines.add(getMachine(id));
+    }
+    return listMachines;
+  }
 
-	public HashMap<String, Object> getMachine(int id) {
-		Machine machine = machines.get(id);
+  public HashMap<String, Object> getMachine(int id) {
+    Machine machine = machines.get(id);
 
-		HashMap<String, Object> mapMachine = new HashMap<String, Object>();
-	    mapMachine.put("id", id);
-	    mapMachine.put("type", machine.getType());
-	    mapMachine.put("running", machine.running());
+    HashMap<String, Object> mapMachine = new HashMap<String, Object>();
+      mapMachine.put("id", id);
+      mapMachine.put("type", machine.getType());
+      mapMachine.put("running", machine.running());
 
-		return mapMachine;
-	}
+    return mapMachine;
+  }
 }
 ```
 
-### Criando os endpoints
+### Criando os _endpoints_
 
+Para iniciarmos o desenvolvimento dos _endpoints_ primeiramente vamos criar o _controller_ que ficará responsável pór receber as requisições e interagir com nosso `MachineManager`.
 
-Para iniciarmos o desenvolvimento dos endpoints primeiramente vamos criar o Controller que ficará responsável receber as requisições e interagir com nosso `MachineManager`.
+Nela criaremos três endpoints:
 
-Nela criaremos 3 endpoints:
-* Um sem validação de autorização, irá verificar apenas a autenticação do usuário. Nela usaremos apenas a anotação `@GetMapping`.
-* Um com autorização por *role*, que irá verificar se o usuário tem determinada autorização em determinada *role*. Para isso usaremos alem da anotação `@PostMapping` usaremos a anotação `@RolesAllowed`, passando de parâmetro para ela a *role*.
-* E por fim dois outros endpoints com autorização por *permission*, que irá verificar se o usuário tem autorização em determinada *permission*. Para isso usaremos alem da anotação `@PostMapping` a anotação `@PreAuthorize`, passando para ela o método `hasPermission` e que receberá qual a *permission* que queremos validar.
+- Um sem validação de autorização, irá verificar apenas a autenticação do usuário. Nela usaremos apenas a anotação `@GetMapping`;
+- Um com autorização por _role_ que irá verificar se o usuário tem determinada autorização em determinada _role_. Para isso usaremos além da anotação `@PostMapping` usaremos a anotação `@RolesAllowed`, passando de parâmetro para ela a _role_;
+- E por fim dois outros _endpoints_ com autorização por _permission_ que irá verificar se o usuário tem autorização em determinada _permission_. Para isso usaremos alem da anotação `@PostMapping` a anotação `@PreAuthorize`, passando para ela o método `hasPermission` e que receberá qual a _permission_ que queremos validar.
 
-> **Lembrando**: O uso de *permission* depende da correta configuração da propriedade `security.access.api.permissions-uri` no arquivo de configurações `application.yml`.
+> **Lembrando**: O uso de _permission_ depende da correta configuração da propriedade `security.access.api.permissions-uri` no arquivo de configurações `application.yml`.
 
 ```java
 @RestController
 @RequestMapping(path = "/api/v1/machine", produces = { APPLICATION_JSON_VALUE })
 public class MachineController {
 
-	@Autowired
-	private MachineManager machineManager;
+  @Autowired
+  private MachineManager machineManager;
 
-	@GetMapping
-	public List<Map<String, Object>> machineList() {
-		return machineManager.getMachines();
-	}
+  @GetMapping
+  public List<Map<String, Object>> machineList() {
+    return machineManager.getMachines();
+  }
 
-	@PostMapping("stop")
-	@RolesAllowed("ROLE_SUPERVISOR")
-	public List<Map<String, Object>> stopAll() {
-		machineManager.stopAll();
-		return machineManager.getMachines();
-	}
+  @PostMapping("stop")
+  @RolesAllowed("ROLE_SUPERVISOR")
+  public List<Map<String, Object>> stopAll() {
+    machineManager.stopAll();
+    return machineManager.getMachines();
+  }
 
-	@PostMapping("{id}/run")
-	@PreAuthorize("hasPermission(\"SampleSecurityWeb.machine.run\")")
-	public Map<String, Object> run(@PathVariable int id) {
-		machineManager.run(id);
-		return machineManager.getMachine(id);
-	}
+  @PostMapping("{id}/run")
+  @PreAuthorize("hasPermission(\"SampleSecurityWeb.machine.run\")")
+  public Map<String, Object> run(@PathVariable int id) {
+    machineManager.run(id);
+    return machineManager.getMachine(id);
+  }
 }
 ```
 
 ### Fluxo de validação da autorização
 
-Esse é o fluxo para realizar uma *request* usando o `tjf-security-web` que passará por todas as etapas.
+Esse é o fluxo para realizar uma requisição usando o `tjf-security-web` que passará por todas as etapas.
 
 ![Diagrama de Sequência](resources/diagrama_sequencia.png)
 
 ## Vamos testar?
 
-Para realizarmos o testes, execute a classe de aplicação do nosso exemplo.
+Para realizarmos os testes, execute a classe de aplicação do nosso exemplo. Para facilitar nossos testes usaremos o [Postman](https://www.getpostman.com/).
 
-Para facilitar nossos testes usaremos o [Postman](https://www.getpostman.com/).
+### _endpoint_ com apenas validação de autenticação
 
-### Endpoint com apenas validação de autenticação
+Crie uma nova requisição no Postman do tipo _get_ para o _endpoint_ `http://[host]:[porta]/api/v1/machine` e execute a requisição. Como não autenticamos nossa requisição, o retorno deverá ser o seguinte:
 
-Crie um novo request no Postman do tipo *get* para o endpoint [http://localhost:\<porta da sua aplicação\>/api/v1/machine](http://localhost:8080/api/v1/machine) e clique em `Send` para executar a request.
-
-Como não autenticamos nossa request, o retorno deverá ser o seguinte:
 ```json
 {
-    "error": "unauthorized",
-    "error_description": "Full authentication is required to access this resource"
+  "error": "unauthorized",
+  "error_description": "Full authentication is required to access this resource"
 }
 ```
-Agora vamos autenticar a request no Postman:
-* Vá na aba *Authorization* da request que criamos, em *Type* selecione o `Oauth 2.0` e clique em `Get New Acess Token`.
-* Informe um nome ao token que será gerado e o tipo como *Authorization Code*.
-* Informe os demais campos conforme o Authorization Service no qual você está integrando.
-* Clique em `Request Token`, ele irá solicitar o usuário e senha para autenticar no *Authorization Service*.
-* Gerado o token clique em `Use Token`.
 
-Agora que estamos autenticados, execute novamente a request, deveremos conseguir consultar com sucesso todas as maquinas, o retorno deverá ser como esse:
+Agora vamos autenticar a requisição no Postman:
+
+- Na aba _Authorization_ da requisição que criamos, em _Type_ selecione `Oauth 2.0` e clique em `Get New Acess Token`;
+- Informe um nome ao _token_ que será gerado e o tipo como _Authorization Code_.
+- Informe os demais campos conforme o _Authorization Service_ no qual você está integrando;
+- Clique em `Request Token` e ele irá solicitar o usuário e senha para autenticar no _Authorization Service_;
+- Gerado o _token_ clique em `Use Token`.
+
+Agora que estamos autenticados, execute novamente a requisição, deveremos conseguir consultar com sucesso todas as máquinas e o retorno deverá ser conforme abaixo:
+
 ```json
 [
-    {
-        "running": false,
-        "id": 0,
-        "type": "COLLECTOR"
-    },
-    {
-        "running": false,
-        "id": 1,
-        "type": "CONVEYOR"
-    },
-    {
-        "running": false,
-        "id": 2,
-        "type": "PRESS"
-    }
+  {
+    "running": false,
+    "id": 0,
+    "type": "COLLECTOR"
+  },
+  {
+    "running": false,
+    "id": 1,
+    "type": "CONVEYOR"
+  },
+  {
+    "running": false,
+    "id": 2,
+    "type": "PRESS"
+  }
 ]
 ```
 
-### Endpoint com validação de autorização por *permission*
+### _endpoint_ com validação de autorização por _permission_
 
-Agora vamos fazer um teste do endpoint com a validação de autorização por *permission*.
+Agora vamos fazer um teste do _endpoint_ com a validação de autorização por _permission_.
 
-Crie um novo request no Postman do tipo *post* para o endpoint [http://localhost:\<porta da sua aplicação\>/api/v1/machine/\<id da maquina\>/run](http://localhost:8080/api/v1/machine/0/run) e clique em `Send` para executar a request.
+Crie uma nova requisição no Postman do tipo _post_ para o endpoint `http://[host]:[porta]/api/v1/machine/{id da máquina}/run` e clique em `Send` para executar a requisição. Como não autenticamos a requição, o retorno deverá ser o seguinte:
 
-Como não autenticamos a request, o retorno deverá ser o seguinte:
 ```json
 {
-    "error": "unauthorized",
-    "error_description": "Full authentication is required to access this resource"
-}
-```
-Autentique a request, conforme já vimos, mas use um usuário que no *Authorization Service* no qual você está integrando não tem autorização para a *permission* `SampleSecurityWeb.machine.run`.
-**Observação:** Talvez você precisará antes excluir os cookies no Postman, para que ele não use o mesmo usuário já informado.
-
-Execute a request, o retorno será conforme abaixo, mostrando que estamos autenticado, mas o usuário não tem permissão:
-```json
-{
-    "error": "access_denied",
-    "error_description": "Access denied"
+  "error": "unauthorized",
+  "error_description": "Full authentication is required to access this resource"
 }
 ```
 
-Agora autentique a request gerando um novo token, mas agora com um usuário que tem autorização para a *permission* `SampleSecurityWeb.machine.run`, que foi a *permission* que definimos para o nosso endpoint.
+Autentique a requisição conforme anteriormente, mas use um usuário, que no _Authorization Service_ no qual você está integrando, não tenha autorização para a _permission_ `SampleSecurityWeb.machine.run`.
 
-Vamos executar novamente a request, você deve conseguir iniciar a maquina com sucesso e o retorno deverá ser como este:
+> Talvez você precisará antes excluir os _cookies_ no Postman para que ele não use o mesmo usuário já informado.
+
+Execute a requisição, o retorno será conforme abaixo, mostrando que estamos autenticado, mas o usuário não tem permissão:
+
 ```json
 {
-    "running": true,
-    "id": <Id da maquina>,
-    "type": <Tipo da maquina>
-}
-```
-### Endpoint com validação de autorização por *role*
-
-Agora vamos fazer um teste do endpoint com a validação de autorização por *role*.
-
-Crie um novo request no Postman do tipo *post* para o endpoint [http://localhost:\<porta da sua aplicação\>/api/v1/machine/stop](http://localhost:8080/api/v1/machine/stop) e clique em `Send` para executar a request.
-
-Como não autenticamos a request, o retorno deverá ser o seguinte:
-```json
-{
-    "error": "unauthorized",
-    "error_description": "Full authentication is required to access this resource"
-}
-```
-Autentique a request, conforme já vimos, mas use um usuário que no *Authorization Service* no qual você está integrando não tem autorização para a *role* `SUPERVISOR`.
-**Observação:** Talvez você precisará antes excluir os cookies no Postman, para que ele não use o mesmo usuário já informado anteriormente.
-
-Execute a request, o retorno será conforme abaixo, mostrando que estamos autenticado, mas o usuário não tem permissão:
-```json
-{
-    "error": "access_denied",
-    "error_description": "Access denied"
+  "error": "access_denied",
+  "error_description": "Access denied"
 }
 ```
 
-Agora autentique a request gerando um novo token, mas agora com um usuário que tem autorização para a *role* `SUPERVISOR`, que foi a *role* que definimos para o nosso endpoint.
+Agora autentique a requisição gerando um novo _token_, mas agora com um usuário que tem autorização para a _permission_ `SampleSecurityWeb.machine.run`, que foi a _permission_ que definimos para o nosso _endpoint_.
 
-Vamos executar novamente a request, você deve conseguir parar todas maquinas com sucesso e o retorno deverá ser como este:
+Vamos executar novamente a requisição, você deve conseguir iniciar a máquina com sucesso e o retorno deverá ser como este:
+
+```json
+{
+  "running": true,
+  "id": "<id da máquina>",
+  "type": "<tipo da máquina>"
+}
+```
+
+### _endpoint_ com validação de autorização por _role_
+
+Agora vamos fazer um teste do _endpoint_ com a validação de autorização por _role_.
+
+Crie uma nova requisição no Postman do tipo _post_ para o endpoint `http://[host]:[porta]/api/v1/machine/stop` e clique em `Send` para executar a requisição.
+
+Como não autenticamos a requisição, o retorno deverá ser o seguinte:
+
+```json
+{
+  "error": "unauthorized",
+  "error_description": "Full authentication is required to access this resource"
+}
+```
+
+Autentique a requisição conforme visto anteriormente, mas use um usuário que, no _Authorization Service_ no qual você está integrando, não tem autorização para a _role_ `SUPERVISOR`.
+
+> Talvez você precisará antes excluir os _cookies_ no Postman para que ele não use o mesmo usuário já informado anteriormente.
+
+Execute a requisição, o retorno será conforme abaixo, mostrando que estamos autenticado, mas o usuário não tem permissão:
+
+```json
+{
+  "error": "access_denied",
+  "error_description": "Access denied"
+}
+```
+
+Agora autentique a requisição gerando um novo _token_, mas agora com um usuário que tem autorização para a _role_ `SUPERVISOR`, que foi a _role_ que definimos para o nosso _endpoint_.
+
+Vamos executar novamente a requisição, você deve conseguir parar todas máquinas com sucesso e o retorno deverá ser como este:
+
 ```json
 [
-    {
-        "running": false,
-        "id": 0,
-        "type": "COLLECTOR"
-    },
-    {
-        "running": false,
-        "id": 1,
-        "type": "CONVEYOR"
-    },
-    {
-        "running": false,
-        "id": 2,
-        "type": "PRESS"
-    }
+  {
+    "running": false,
+    "id": 0,
+    "type": "COLLECTOR"
+  },
+  {
+    "running": false,
+    "id": 1,
+    "type": "CONVEYOR"
+  },
+  {
+    "running": false,
+    "id": 2,
+    "type": "PRESS"
+  }
 ]
 ```
 
-**Importante:** Os retornos de erros seguirão o padrão do [API Core](https://tjf.totvs.com.br/wiki/tjf-api-core) caso você o use nos endpoints do seu projeto.
+> :warning: **Importante:** Os retornos de erros seguirão o padrão do [API Core](https://tjf.totvs.com.br/wiki/tjf-api-core) caso você o use nos _endpoints_ do seu projeto.
 
-## Isso é tudo pessoal!
+## Que a força esteja com você!
 
-Com isso terminamos nosso exemplo, fique a vontade para incrementar o exemplo utilizando todos recursos proposto pelo componente **Security Web**, caso necessário utilize nossa [documentação](https://tjf.totvs.com.br/wiki/tjf-security-web).
-
-E fique a vontade para mandar sugestões e melhorias para o projeto TJF.
+Com isso terminamos nosso exemplo, fique a vontade para incrementar o exemplo utilizando todos os recursos proposto pelo componente **Security Web**, caso necessário utilize nossa [documentação](https://tjf.totvs.com.br/wiki/tjf-security-web) e fique a vontade para mandar sugestões e melhorias para o projeto [TJF](https://tjf.totvs.com.br/).
