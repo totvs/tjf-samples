@@ -1,24 +1,17 @@
 package br.com.star.wars.messaging.events;
 
-public class StarShipArrivedEvent {
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class StarShipArrivedEvent {
 	public static final transient String NAME = "StarShipArrivedEvent";
 	public static final transient String CONDITIONAL_EXPRESSION = "headers['type']=='" + NAME + "'";
- 
+
 	private String name;
-
-	public StarShipArrivedEvent() {
-	}
-	
-	public StarShipArrivedEvent(String name) {
-		this.name = name;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 }

@@ -7,21 +7,26 @@
 	<parent>
 		<groupId>com.totvs.tjf</groupId>
 		<artifactId>tjf-boot-starter</artifactId>
-		<version>1.21.0-RELEASE</version>
+		<version>2.0.0-SNAPSHOT</version>
 	</parent>
 
 	<groupId>br.com.star.wars</groupId>
-	<artifactId>sw-messaging-publisher-gate</artifactId>
+	<artifactId>messaging-stream-publisher</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<name>tjf-messaging-stream-publisher</name>
+	<description>TJF Messaging Stream Publisher Sample</description>
 	<packaging>jar</packaging>
 
-	<name>Star Wars :: messaging-stream-publisher-sample</name>
-	<description>Serviço de messageria relacionado ao universo Star Wars</description>
-
 	<dependencies>
+		<!-- TJF -->
 		<dependency>
 			<groupId>com.totvs.tjf</groupId>
 			<artifactId>tjf-messaging-stream</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.totvs.tjf</groupId>
+			<artifactId>tjf-messaging-binder-jms</artifactId>
 		</dependency>
 
 		<!-- Kafka -->
@@ -30,10 +35,10 @@
 			<artifactId>spring-cloud-stream-binder-kafka</artifactId>
 		</dependency>
 
-		<!-- JMS -->
+		<!-- Lombok -->
 		<dependency>
-			<groupId>com.totvs.tjf</groupId>
-			<artifactId>tjf-messaging-binder-jms</artifactId>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
 		</dependency>
 
 		<!-- TEST -->

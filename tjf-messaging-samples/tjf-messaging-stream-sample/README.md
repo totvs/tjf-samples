@@ -6,8 +6,7 @@ _Sample_ de utilização da biblioteca [__Messaging Stream__][tjf-messaging-stre
 
 Para exemplificar o uso da biblioteca [__Messaging Stream__][tjf-messaging-stream], criaremos duas aplicações, uma será responsável por publicar a mensagem na mensageria, o Publisher, e a outra por receber a mensagem da mensageria, o Subscriber.
 
-
-# Começando
+## Começando
 
 Iniciaremos o desenvolvimento criando um novo projeto [Spring][spring] que será o nosso publicador das mensagens, utilizando o serviço [Spring Initializr][spring-initializr].
 
@@ -23,9 +22,10 @@ Após gerado os dois projetos, precisamos substituir no arquivo `pom.xml` de amb
 <parent>
   <groupId>com.totvs.tjf</groupId>
   <artifactId>tjf-boot-starter</artifactId>
-  <version>1.21.0-RELEASE</version>
+  <version>2.0.0-SNAPSHOT</version>
 </parent>
 ```
+
 Ela define algumas configuração para os projetos que utilizar os módulos do [__TOTVS Java Framework__][tjf].
 
 Incluiremos também a dependência para utilização da biblioteca [__Messaging Stream__][tjf-messaging-stream] e as configurações do repositório __Maven__ com a distribuição do [__TOTVS Java Framework__][tjf]:
@@ -34,32 +34,33 @@ _Dependências_
 
 ```xml
 <dependencies>
+	<!-- TJF -->
+	<dependency>
+	<groupId>com.totvs.tjf</groupId>
+	<artifactId>tjf-messaging-stream</artifactId>
+	</dependency>
 
-  <!-- TJF -->
-  <dependency>
-    <groupId>com.totvs.tjf</groupId>
-    <artifactId>tjf-messaging-stream</artifactId>
-  </dependency>
-
+	<!-- Lombok -->
+	<dependency>
+		<groupId>org.projectlombok</groupId>
+		<artifactId>lombok</artifactId>
+	</dependency>
 </dependencies>
 ```
 
-_Repositórios_
+_Repositório_
 
 ```xml
 <repositories>
-
-  <repository>
-    <id>tjf-release</id>
-    <name>TOTVS Java Framework: Releases</name>
-    <url>http://maven.engpro.totvs.com.br/artifactory/libs-release/</url>
-  </repository>
-
+	<repository>
+		<id>tjf-release</id>
+		<name>TOTVS Java Framework: Releases</name>
+		<url>http://maven.engpro.totvs.com.br/artifactory/libs-release/</url>
+	</repository>
 </repositories>
 ```
 
 Por fim, precisamos renomear o arquivo `application.properties`, da pasta `src/main/resources`, para `application.yml`, o qual editaremos mais a frente.
-
 
 ### Mecanismos de mensageria
 
@@ -98,30 +99,15 @@ Para iniciar, criaremos o pacote `br.com.star.wars.messaging.model`, para guarda
 _StarShip.java_
 
 ```java
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class StarShip {
-
 	private String name;
-
-	public StarShip(String name) {
-		this.name = name;
-	}
-
-	public StarShip() {
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String toString() {
-		return this.name;
-	}
 }
 ```
+
 ### Eventos
 
 Criaremos duas classes no pacote `br.com.star.wars.messaging.events`, uma para o evento da nave chegar no gate e outra para quando uma nave sai do gate, respectivamente:
@@ -129,59 +115,37 @@ Criaremos duas classes no pacote `br.com.star.wars.messaging.events`, uma para o
 _StarShipArrivedEvent.java_
 
 ```java
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class StarShipArrivedEvent {
-
 	public static final transient String NAME = "StarShipArrivedEvent";
 	public static final transient String CONDITIONAL_EXPRESSION = "headers['type']=='" + NAME + "'";
- 
+
 	private String name;
-
-	public StarShipArrivedEvent() {
-	}
-	
-	public StarShipArrivedEvent(String name) {
-		this.name = name;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 }
 ```
 
 _StarShipLeftEvent.java_
-```java
-public class StarShipLeftEvent {
 
+```java
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class StarShipLeftEvent {
 	public static final transient String NAME = "StarShipLeftEvent";
 	public static final transient String CONDITIONAL_EXPRESSION = "headers['type']=='" + NAME + "'";
- 
+
+	@NotBlank
 	private String name;
-
-	public StarShipLeftEvent() {
-	}
-	
-	public StarShipLeftEvent(String name) {
-		this.name = name;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 }
 ```
 
-# API REST
+## API REST
 
-## Controller
+### Controller
 
 Iremos criar uma _API REST_ no nosso projeto de publicação, apenas como forma de receber os dados que usaremos para testar e transformar na mensagens do nosso exemplo.
 
@@ -208,7 +172,7 @@ public class StarShipController {
 		System.out.println("\nStarship arrived name: " + name);
         System.out.println("Current tenant: " + SecurityDetails.getTenant() + "\n");
 
-        StarShipArrivedEvent starShipEvent = new StarShipArrivedEvent(name);        
+        StarShipArrivedEvent starShipEvent = new StarShipArrivedEvent(name);
         samplePublisher.publish(starShipEvent, StarShipArrivedEvent.NAME);
         
         return "The identification of the arrived starship " + name + " of tenant " + tenant + " was sent!";
@@ -222,7 +186,7 @@ public class StarShipController {
 		System.out.println("\nStarship left name: " + name);
         System.out.println("Current tenant: " + SecurityDetails.getTenant() + "\n");
 
-        StarShipLeftEvent starShipEvent = new StarShipLeftEvent(name);        
+        StarShipLeftEvent starShipEvent = new StarShipLeftEvent(name);
         samplePublisher.publish(starShipEvent, StarShipLeftEvent.NAME);
         
         return "The identification of the left starship " + name + " of tenant " + tenant + " was sent!";
@@ -236,9 +200,9 @@ public class StarShipController {
 }
 ```
 
-# Infrastructure
+## Infrastructure
 
-## Exchange
+### Exchange
 
 Iremos agora criar a interface que irá definir os canais nos quais faremos a comunicação das mensagens, será criada em ambos os projetos.
 
@@ -248,7 +212,6 @@ Publisher _StarShipExchange.java_
 
 ```java
 public interface StarShipExchange {
-
 	String OUTPUT = "starship-output";
 
 	@Output(StarShipExchange.OUTPUT)
@@ -260,7 +223,6 @@ Subscriber _StarShipExchange.java_
 
 ```java
 public interface StarShipExchange {
-
 	String INPUT = "starship-input";
 
 	@Input(StarShipExchange.INPUT)
@@ -268,7 +230,7 @@ public interface StarShipExchange {
 }
 ```
 
-## Publisher
+### publisher
 
 No projeto de publicação criaremos a classe responsável por publicar a mensagem, crie no pacote `br.com.star.wars.messaging.infrastructure.messaging`.
 
@@ -291,7 +253,7 @@ public class StarShipPublisher {
 }
 ```
 
-## Subscriber
+### Subscriber
 
 No projeto que será inscrito para receber as mensagens criaremos a classe responsável por receber a mensagem, crie no pacote `br.com.star.wars.messaging.infrastructure.messaging`.
 
@@ -322,6 +284,7 @@ public class StarShipSubscriber {
 	}
 }
 ```
+
 Criaremos também no projeto receptor a classe que irá dar uma mensagem no log ao receber a mensagem, crie-a no pacote  `br.com.star.wars.messaging.services`, nele também tem um contador simples, mas que é separado pelo _tenant_ corrente.
 
 _StarShipService.java_
@@ -386,7 +349,7 @@ public class StarShipService {
 
 ```
 
-# Vamos testar
+## Vamos testar
 
 No nosso exemplo você vai precisar estar com o `RabbitMQ` já configurado e em execução, por conversão como não especificamos as portas ele irá usar as portas padrões.
 Execute os nossos dois projetos.
@@ -413,8 +376,7 @@ Starship ranking: 4
 Counter by tenant: 0
 ```
 
-
-# Que a força esteja com você!
+## Que a força esteja com você!
 
 Com isso terminamos nosso _sample_, fique a vontade para enriquecê-lo utilizando outros recursos propostos pela biblioteca [__Messaging Stream__][tjf-messaging-stream] e enviar sugestões e melhorias para o [__TOTVS Java Framework__][tjf].
 
