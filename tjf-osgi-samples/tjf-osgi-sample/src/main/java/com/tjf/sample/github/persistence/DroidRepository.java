@@ -1,4 +1,4 @@
-package br.com.star.wars.persistence;
+package com.tjf.sample.github.persistence;
 
 import java.util.List;
 

@@ -7,16 +7,14 @@
 	<parent>
 		<groupId>com.totvs.tjf</groupId>
 		<artifactId>tjf-boot-starter</artifactId>
-		<version>1.21.0-RELEASE</version>
+		<version>2.0.0-SNAPSHOT</version>
 	</parent>
-
-	<packaging>${packaging.type}</packaging>
 
 	<artifactId>tjf-osgi-simple</artifactId>
 	<version>1.0-SNAPSHOT</version>
-
-	<name>TJF OSGI Simple</name>
-	<description>Exemplo de deploy um containers OSGI</description>
+	<name>tjf-osgi-sample</name>
+	<description>TJF OSGI Sample</description>
+	<packaging>${packaging.type}</packaging>
 
 	<properties>
 		<java.version>11</java.version>
@@ -27,7 +25,7 @@
 	</properties>
 
 	<dependencies>
-
+		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -45,18 +43,14 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.totvs.tjf</groupId>
-			<artifactId>tjf-core-common</artifactId>
-		</dependency>
-
-		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-jdbc</artifactId>
 		</dependency>
 
+		<!-- TJF -->
 		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
+			<groupId>com.totvs.tjf</groupId>
+			<artifactId>tjf-core-common</artifactId>
 		</dependency>
 
 		<dependency>
@@ -69,10 +63,36 @@
 			<artifactId>tjf-api-core</artifactId>
 		</dependency>
 
+		<!-- Database -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+		</dependency>
+
+		<!-- OSGI -->
 		<dependency>
 			<groupId>org.osgi</groupId>
 			<artifactId>org.osgi.core</artifactId>
 			<scope>provided</scope>
+		</dependency>
+
+		<!-- Lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
+
+		<!-- Test -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.junit.vintage</groupId>
+					<artifactId>junit-vintage-engine</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 	</dependencies>

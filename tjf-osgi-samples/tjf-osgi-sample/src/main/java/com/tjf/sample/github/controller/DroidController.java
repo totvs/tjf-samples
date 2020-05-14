@@ -1,4 +1,4 @@
-package br.com.star.wars.controller;
+package com.tjf.sample.github.controller;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -14,37 +14,36 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tjf.sample.github.messaging.StarShipArrivedEvent;
+import com.tjf.sample.github.messaging.StarShipPublisher;
+import com.tjf.sample.github.persistence.Droid;
+import com.tjf.sample.github.persistence.DroidRepository;
 import com.totvs.tjf.api.context.stereotype.ApiGuideline;
 import com.totvs.tjf.api.context.stereotype.ApiGuideline.ApiGuidelineVersion;
-import com.totvs.tjf.api.context.v1.response.ApiCollectionResponse;
-
-import br.com.star.wars.messaging.StarShipArrivedEvent;
-import br.com.star.wars.messaging.StarShipPublisher;
-import br.com.star.wars.persistence.Droid;
-import br.com.star.wars.persistence.DroidRepository;
+import com.totvs.tjf.api.context.v2.response.ApiCollectionResponse;
 
 @RestController
 @RequestMapping(path = DroidController.PATH, produces = APPLICATION_JSON_VALUE)
-@ApiGuideline(ApiGuidelineVersion.v1)
+@ApiGuideline(ApiGuidelineVersion.V2)
 public class DroidController {
 
 	public static final String PATH = "api/v1/droid";
-	
+
 	@Autowired
 	private DroidRepository droidRepository;
-	
+
 	@Autowired
-	JdbcTemplate jdbcTemplate;	
+	JdbcTemplate jdbcTemplate;
 
 	private StarShipPublisher samplePublisher;
 
 	public DroidController(StarShipPublisher samplePublisher) {
 		this.samplePublisher = samplePublisher;
 	}
-	
+
 	@GetMapping(path = "/getAll")
-	public ApiCollectionResponse <Droid> getAllDroids() {
-		List <Droid> items = new ArrayList <Droid> ();
+	public ApiCollectionResponse<Droid> getAllDroids() {
+		List<Droid> items = new ArrayList<Droid>();
 		droidRepository.findAll().forEach(items::add);
 		return ApiCollectionResponse.of(items);
 	}
@@ -77,14 +76,14 @@ public class DroidController {
 		List<Droid> droids = droidRepository.getByNameAndDescription(name, description);
 		long endTime = System.nanoTime();
 		long totalTime = endTime - startTime;
-		
+
 		return new ResponseData("Named Query By Name And Description", totalTime, droids);
 	}
 
 	@GetMapping(path = "/arrived/{name}")
 	public String getEcho(@PathVariable("name") String name) {
 		StarShipArrivedEvent starShipEvent = new StarShipArrivedEvent(name);
-		samplePublisher.publish(starShipEvent, StarShipArrivedEvent.NAME);		
+		samplePublisher.publish(starShipEvent, StarShipArrivedEvent.NAME);
 		return new Date().toString();
 	}
 

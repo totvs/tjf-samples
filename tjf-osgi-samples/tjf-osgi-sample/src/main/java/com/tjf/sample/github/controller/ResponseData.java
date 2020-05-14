@@ -1,8 +1,8 @@
-package br.com.star.wars.controller;
+package com.tjf.sample.github.controller;
 
 import java.util.List;
 
-import br.com.star.wars.persistence.Droid;
+import com.tjf.sample.github.persistence.Droid;
 
 public class ResponseData {
 
