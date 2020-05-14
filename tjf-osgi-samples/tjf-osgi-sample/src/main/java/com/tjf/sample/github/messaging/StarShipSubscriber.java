@@ -1,6 +1,6 @@
-package br.com.star.wars.messaging;
+package com.tjf.sample.github.messaging;
 
-import static br.com.star.wars.messaging.StarShipExchange.INPUT;
+import static com.tjf.sample.github.messaging.StarShipExchange.INPUT;
 
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;

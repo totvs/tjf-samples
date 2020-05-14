@@ -1,4 +1,4 @@
-package br.com.star.wars.messaging;
+package com.tjf.sample.github.messaging;
 
 import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.cloud.stream.annotation.Output;
