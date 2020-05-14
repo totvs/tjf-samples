@@ -1,4 +1,4 @@
-package com.totvs.tjf.api.jpa.model;
+package com.tjf.sample.github.apijpa.filter.model;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -8,4 +8,5 @@ import com.totvs.tjf.api.jpa.repository.ApiJpaRepository;
 
 @Repository
 @Transactional
-public interface AccountModelRepository extends JpaRepository<AccountModel, Integer>, ApiJpaRepository <AccountModel> {}
+public interface AccountModelRepository extends JpaRepository<AccountModel, Integer>, ApiJpaRepository<AccountModel> {
+}

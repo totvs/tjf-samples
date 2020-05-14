@@ -1,6 +1,7 @@
-package com.totvs.tjf.api.jpa.adapter;
+package com.tjf.sample.github.apijpa.filter.adapter;
 
 import java.time.ZonedDateTime;
+
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 public class ZonedDateTimeXmlAdapter extends XmlAdapter<String, ZonedDateTime> {
@@ -14,4 +15,5 @@ public class ZonedDateTimeXmlAdapter extends XmlAdapter<String, ZonedDateTime> {
 	public String marshal(ZonedDateTime v) throws Exception {
 		return v.toString();
 	}
+
 }

@@ -1,19 +1,17 @@
-package com.totvs.tjf.api.jpa;
+package com.tjf.sample.github.apijpa.filter;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import com.totvs.tjf.api.jpa.repository.impl.ApiJpaRepositoryImpl;
 
 @SpringBootApplication
-@ComponentScan("com.totvs.tjf.api.jpa")
 @EnableJpaRepositories(repositoryBaseClass = ApiJpaRepositoryImpl.class)
-public class CashAccountApplication {
+public class ApiJpaFilterApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CashAccountApplication.class, args);
+		SpringApplication.run(ApiJpaFilterApplication.class, args);
 	}
 
 }

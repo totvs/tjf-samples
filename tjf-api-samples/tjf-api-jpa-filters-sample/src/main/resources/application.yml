@@ -1,13 +1,3 @@
-management:
-  endpoint:
-    health:
-      enabled: true
-    info:
-      enabled: true
-    web:
-      exposure:
-        include: info, health, messaging
-
 tjf:
   api:
     filter:
@@ -16,25 +6,13 @@ tjf:
 
 spring:
 
-  application:
-    name: cash-odata-sample
-  
-  h2:
-    console:
-      enabled: true
-  
   datasource:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:mem:cash-account;DB_CLOSE_ON_EXIT=FALSE;AUTO_RECONNECT=TRUE;
     username: sa
-    password:
   
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
-    show-sql: true
-    properties:      
-      hibernate:
-        format_sql: true
 
 server:
   port: 8380        
