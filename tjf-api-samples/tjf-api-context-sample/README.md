@@ -12,7 +12,7 @@ Para criação deste exemplo vamos iniciar a explicação a partir de um projeto
 
 ### Dependências
 
-Além das dependências do Spring mencionadas acima, Para utilização do componente é necessário alterar o `parent` da aplicação no arquivo `pom.xml`:
+Além das dependências do Spring mencionadas acima, para utilização do componente é necessário alterar o `parent` da aplicação no arquivo `pom.xml`:
 
 ```xml
 <parent>
@@ -38,6 +38,18 @@ E incluir as dependências abaixo:
 ```
 
 > Como o **API Context** fornece apenas implementações contratuais, as execuções destas implementações ficam nas bibliotecas **API Core** e **API JPA**.
+
+Vamos adicionar também o repositório Maven de _release_ do TJF:
+
+```xml
+<repositories>
+  <repository>
+    <id>central-release</id>
+    <name>TOTVS Java Framework: Releases</name>
+    <url>http://maven.engpro.totvs.com.br/artifactory/libs-release/</url>
+  </repository>
+</repositories>
+```
 
 ### Configuração
 

@@ -1,13 +1,13 @@
-package br.com.star.wars;
+package com.tjf.sample.github.apicore.exception;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Application {
+public class ApiCoreExceptionApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
+		SpringApplication.run(ApiCoreExceptionApplication.class, args);
 	}
 
 }

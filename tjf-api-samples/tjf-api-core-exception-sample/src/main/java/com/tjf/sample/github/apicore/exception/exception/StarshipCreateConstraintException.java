@@ -1,4 +1,4 @@
-package br.com.star.wars.exception;
+package com.tjf.sample.github.apicore.exception.exception;
 
 import java.util.Set;
 
@@ -14,7 +14,6 @@ public class StarshipCreateConstraintException extends ConstraintViolationExcept
 
 	public StarshipCreateConstraintException(Set<? extends ConstraintViolation<?>> constraintViolations) {
 		super(constraintViolations);
-
 	}
 
 }

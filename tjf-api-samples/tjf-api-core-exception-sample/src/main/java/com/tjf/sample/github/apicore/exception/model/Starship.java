@@ -1,9 +1,16 @@
-package br.com.star.wars.model;
+package com.tjf.sample.github.apicore.exception.model;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
 public class Starship {
 
 	@NotBlank(message = "{Starship.name.NotBlank}")
@@ -15,29 +22,5 @@ public class Starship {
 
 	@Max(value = 5, message = "{Startshp.crew.Max}")
 	private int crew;
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public int getCrew() {
-		return crew;
-	}
-
-	public void setCrew(int crew) {
-		this.crew = crew;
-	}
 
 }
