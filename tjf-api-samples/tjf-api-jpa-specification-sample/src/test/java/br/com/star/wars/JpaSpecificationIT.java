@@ -12,8 +12,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.tjf.sample.github.apijpa.specification.ApiJpaSpecificationApplication;
+
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = StarWarsApiJpaSpecificationSampleApplication.class)
+@SpringBootTest(classes = ApiJpaSpecificationApplication.class)
 @AutoConfigureMockMvc
 public class JpaSpecificationIT {
 
