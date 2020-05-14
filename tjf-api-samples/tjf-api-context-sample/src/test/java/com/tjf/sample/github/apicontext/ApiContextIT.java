@@ -72,11 +72,8 @@ public class ApiContextIT {
 	public void getAllJedisPagingHasNextTrue() throws Exception {
 		String expectedResult = "{\"hasNext\":true,\"items\":[{\"id\":1,\"name\":\"Luke Skywalker\",\"gender\":\"male\"},{\"id\":2,\"name\":\"Obi-Wan Kenobi\",\"gender\":\"male\"},{\"id\":3,\"name\":\"Yoda\",\"gender\":\"male\"}]}";
 
-		var result = mockMvc.perform(get("/api/v1/jedis?page=1&pageSize=3").contentType(APPLICATION_JSON)).andReturn().getResponse().getContentAsString();
-		System.out.println(result);
-		
-		/*.andExpect(status().isOk())
-				.andExpect(content().json(expectedResult));*/
+		mockMvc.perform(get("/api/v1/jedis?page=1&pageSize=3").contentType(APPLICATION_JSON)).andExpect(status().isOk())
+				.andExpect(content().json(expectedResult));
 	}
 
 	@Test
@@ -99,9 +96,8 @@ public class ApiContextIT {
 	public void getAllJedisPagingFields() throws Exception {
 		String expectedResult = "{\"hasNext\":false,\"items\":[{\"name\":\"Yoda\"},{\"name\":\"Anakin Skywalker\"}]}";
 
-		var result = mockMvc.perform(get("/api/v1/jedis?page=2&pageSize=2&fields=name").contentType(APPLICATION_JSON)).andReturn().getResponse().getContentAsString();
-		System.out.println(result);
-				//.andExpect(status().isOk()).andExpect(content().json(expectedResult));
+		mockMvc.perform(get("/api/v1/jedis?page=2&pageSize=2&fields=name").contentType(APPLICATION_JSON))
+				.andExpect(status().isOk()).andExpect(content().json(expectedResult));
 	}
 
 }
