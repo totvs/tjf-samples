@@ -29,6 +29,7 @@
 		<module>tjf-security-samples/tjf-security-web-sample</module>
 		<module>tjf-tenant-samples/tjf-tenant-discriminator-sample</module>
 		<module>tjf-tenant-samples/tjf-tenant-schema-sample</module>
+		<module>tjf-utils-samples/sw-query</module>
 		<module>tjf-sgdp-samples/tjf-sgdp-app-sample</module>
 		<module>tjf-sgdp-samples/tjf-sgdp-service-sample</module>
 		<module>tjf-osgi-samples/tjf-osgi-simple</module>
