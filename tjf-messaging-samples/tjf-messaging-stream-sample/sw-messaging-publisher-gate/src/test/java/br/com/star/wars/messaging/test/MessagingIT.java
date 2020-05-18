@@ -37,7 +37,7 @@ public class MessagingIT {
 	@Autowired
 	StarShipPublisher samplePublisher;
 
-	@Test(timeout = 10000)
+	@Test(timeout = 30_000)
 	public void messagingArrivedTest() throws Exception {
 
 		sendArrivedMessaging("abc");
