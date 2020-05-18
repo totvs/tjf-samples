@@ -17,7 +17,7 @@ import com.totvs.tjf.api.context.stereotype.ApiGuideline.ApiGuidelineVersion;
 import com.totvs.tjf.api.context.v2.request.ApiFieldRequest;
 import com.totvs.tjf.api.context.v2.request.ApiPageRequest;
 import com.totvs.tjf.api.context.v2.request.ApiSortRequest;
-import com.totvs.tjf.core.api.jpa.repository.ApiJpaCollectionResult;
+import com.totvs.tjf.api.context.v2.response.ApiCollectionResponse;
 
 @RestController
 @RequestMapping(path = "/api/v1/jedis", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -28,8 +28,8 @@ public class JediController {
 	private JediRepository jediRepo;
 
 	@GetMapping
-	public ApiJpaCollectionResult<Jedi> getAll(ApiFieldRequest field, ApiPageRequest page, ApiSortRequest sort) {
-		return jediRepo.findAllProjected(field, page, sort);
+	public ApiCollectionResponse<Jedi> getAll(ApiFieldRequest field, ApiPageRequest page, ApiSortRequest sort) {
+		return ApiCollectionResponse.from(jediRepo.findAllProjected(field, page, sort));
 	}
 
 	@GetMapping("/{id}")

@@ -390,12 +390,12 @@ Conforme o [guia de implementação das APIs TOTVS][guia-api-totvs] todos os _en
 
 Para facilitar a execução das funcionalidades acima durante a pesquisa dos registros, vamos alterar o método `getAll` da nossa _API_ e incluir os objetos das classes `ApiFieldRequest`, `ApiPageRequest` e `ApiSortRequest`, respectivamente responsáveis por recuperar os parâmetros de filtro de conteúdo de resposta, paginação e ordenação da requisição.
 
-Também vamos utilizar o método `findAllProjected` do repositório, que facilita a consulta de registros utilizando os objetos acima, e alterar o tipo da resposta para a classe `ApiJpaCollectionResult`:
+Também vamos utilizar o método `findAllProjected` do repositório, que facilita a consulta de registros utilizando os objetos acima:
 
 ```java
 @GetMapping
-public ApiJpaCollectionResult<Jedi> getAll(ApiFieldRequest field, ApiPageRequest page, ApiSortRequest sort) {
-  return jediRepo.findAllProjected(field, page, sort);
+public ApiCollectionResponse<Jedi> getAll(ApiFieldRequest field, ApiPageRequest page, ApiSortRequest sort) {
+  return ApiCollectionResponse.from(jediRepo.findAllProjected(field, page, sort));
 }
 ```
 
