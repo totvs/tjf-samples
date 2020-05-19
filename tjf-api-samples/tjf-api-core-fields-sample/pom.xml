@@ -36,11 +36,6 @@
 			<groupId>com.totvs.tjf</groupId>
 			<artifactId>tjf-api-core</artifactId>
 		</dependency>
-		
-		<dependency>
-			<groupId>com.totvs.tjf</groupId>
-			<artifactId>tjf-api-jpa</artifactId>
-		</dependency>
 
 		<!-- Test -->
 		<dependency>
