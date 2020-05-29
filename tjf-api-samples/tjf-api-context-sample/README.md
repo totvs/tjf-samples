@@ -16,7 +16,7 @@ Além das dependências do [Spring][spring] mencionadas acima, para utilização
 <parent>
   <groupId>com.totvs.tjf</groupId>
   <artifactId>tjf-boot-starter</artifactId>
-  <version>1.22.0-RELEASE</version>
+  <version>1.23.0-RELEASE</version>
 </parent>
 ```
 
