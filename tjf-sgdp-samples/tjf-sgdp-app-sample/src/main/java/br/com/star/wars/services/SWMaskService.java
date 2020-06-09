@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.totvs.tjf.sgdp.config.SGDPMetadata;
 import com.totvs.tjf.sgdp.services.mask.SGDPMaskCommand;
 import com.totvs.tjf.sgdp.services.mask.SGDPMaskException;
 import com.totvs.tjf.sgdp.services.mask.SGDPMaskResponse;
@@ -25,7 +26,7 @@ public class SWMaskService implements SGDPMaskService {
 	private JediRepository jediRepository;
 	
 	@Override
-	public SGDPMaskResponse execute(SGDPMaskCommand command) {
+	public SGDPMaskResponse execute(SGDPMaskCommand command, SGDPMetadata metadata) {
 		int identification = Integer.parseInt(command.getIdentifiers().get("identification"));
 		List <Jedi> list = jediRepository.findByIdentificationEquals(identification);
 		ObjectMapper mapper = new ObjectMapper();
@@ -37,7 +38,7 @@ public class SWMaskService implements SGDPMaskService {
 		}
 		list.forEach((jedi) -> {
 			try {
-				mask(jedi, command.getMetadata());
+				mask(jedi, metadata);
 				try {
 					System.out.println(mapper.writeValueAsString(jedi));
 				} catch (JsonProcessingException e) {
