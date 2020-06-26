@@ -42,7 +42,13 @@
 			<artifactId>tjf-api-jpa</artifactId>
 			<version>1.24.0-RELEASE</version>
 		</dependency>
-		
+
+		<dependency>
+			<groupId>com.totvs.tjf</groupId>
+			<artifactId>tjf-core-validation</artifactId>
+			<version>1.24.0-RELEASE</version>
+		</dependency>
+
 		<dependency>
 			<groupId>com.totvs.tjf</groupId>
 			<artifactId>tjf-api-context</artifactId>
