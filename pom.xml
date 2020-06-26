@@ -33,5 +33,6 @@
 		<module>tjf-sgdp-samples/tjf-sgdp-app-sample</module>
 		<module>tjf-sgdp-samples/tjf-sgdp-service-sample</module>
 		<module>tjf-osgi-samples/tjf-osgi-simple</module>
+		<module>tjf-maven-plugin-samples/tjf-plugin-openapi</module>
 	</modules>
 </project>
