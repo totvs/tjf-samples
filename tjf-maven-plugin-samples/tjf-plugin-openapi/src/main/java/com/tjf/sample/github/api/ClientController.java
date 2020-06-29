@@ -28,13 +28,13 @@ import io.swagger.v3.oas.annotations.servers.Server;
 import io.swagger.v3.oas.annotations.servers.ServerVariable;
 
 @RestController
-@RequestMapping(path = "/api/v1/client", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/api/saude/v1/client", produces = MediaType.APPLICATION_JSON_VALUE)
 @ApiGuideline(ApiGuidelineVersion.v1)
 @OpenAPIDefinition(info = @Info(title = "API de Clientes", 
 								description = "Controle de Clientes", 
 								version = "2.003", 
 								contact = @Contact(name = "", url = "", email = "")), 
-				   servers = @Server(url = "{{host}}/api/v1/client", 
+				   servers = @Server(url = "{{host}}/api/saude/v1/client", 
 				   		description = "Descrição do Server", 
 				   		variables = {
 				   				@ServerVariable(name = "serverUrl", defaultValue = "localhost"),
