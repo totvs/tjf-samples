@@ -7,7 +7,6 @@ spring:
     username: ${DATABASE_USER}
     password: ${DATABASE_PASSWORD} 
     
-
   # Configurações JPA
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQL95Dialect
@@ -16,6 +15,4 @@ spring:
         jdbc:
           lob:
             non_contextual_creation: true
-        show_sql: true
-        format_sql: true
         ddl-auto: update

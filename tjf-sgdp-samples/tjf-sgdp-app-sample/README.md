@@ -1,10 +1,10 @@
 # SGDP - Sistema de Gestão de Dados Pessoais
 
-# Contexto
+## Contexto
 
 Para exemplificar a biblioteca **SGDP** vamos utilizar o mesmo projeto criado para o  _sample_  da biblioteca **API JPA** disponível em nosso [GitHub][tjf-api-jpa-sample].
 
-# Começando com SGDP
+## Começando com SGDP
 
 Com o projeto  _sample_  **API JPA** em mãos, vamos alterar alguns campos no banco de dados e incluir as anotações disponibilizadas pelo SGDP na classe de entidade.
 
@@ -68,6 +68,8 @@ OBS: Para executar localmente, devemos alterar o *broker* para `localhost:9092`.
 Para que seja possível demonstrar de forma mais efetiva algumas das anotações disponibilizadas no SGDP, precisaremos alterar nossa classe `Jedi.java` e adicionar os campos `identification` (algo como o CPF dos Jedis :D) e `Email`.
 
 ```Java
+@Getter
+@Setter
 @Entity
 public class Jedi {
 	@Id
@@ -85,52 +87,18 @@ public class Jedi {
 
 	@NotNull
 	private String gender;
-
-	public String getName() {
-		return this.name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getGender() {
-		return this.gender;
-	}
-
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
-
-	public int getIdentification() {
-		return globalIdentification;
-	}
-
-	public void setIdentification(int identification) {
-		this.identification = identification;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
 }
 ```
-Para melhor entendimento, o tutorial será dividido em tópicos, são eles: 
+
+Para melhor entendimento, o tutorial será dividido em tópicos, são eles:
 
 * **Identificação** - Uso de anotações para identificar dados pessoais;
-
-* **Auditoria** - Auditoria dos tratamentos realizados em dados pessoais; e 
-
+* **Auditoria** - Auditoria dos tratamentos realizados em dados pessoais;
 * **Metadado** - Extração de relatório do metadado da aplicação.
 
+### Identificação
 
-## Identificação
-
-Agora vamos a inclusão das anotações SGDP, vamos começar com a anotação `@SGDPData` que incluiremos nos campos com dados pessoais. 
+Agora vamos a inclusão das anotações SGDP, vamos começar com a anotação `@SGDPData` que incluiremos nos campos com dados pessoais.
 
 Além disso, vamos incluir a `@SGDPPurpose` que define os propósitos do tratamento de um determinado dado pessoal e o `@SGDPDescription` que torna mais claro a descrição da entidade ou atributo durante a geração do metadado.
 
@@ -150,7 +118,7 @@ private String email;
 
 > A anotação `@SGDPPurpose` pode ser incluída mais de uma vez por atributo.
 
-## Auditoria
+### Auditoria
 
 Para realizar a auditoria das informações, precisaremos incluir a anotação `@EntityListeners` na classe `Jedi.java`:
 
@@ -163,7 +131,6 @@ public class Jedi {
 ...
 }
 ```
-
 
 ## Consulta dos Dados Pessoais
 
@@ -194,7 +161,6 @@ public class SWDataService implements SGDPDataService {
 		response.getData().put("data", mapper.valueToTree(list));
 		return response;
 	}
-
 }
 ```
 
@@ -244,13 +210,18 @@ public class SWMaskService implements SGDPMaskService {
 }
 ```
 
-# Hora de testar
+## Hora de testar
 
 > Os endpoints podem ser testados também via **Swagger-UI** pela url `localhost:8180/swagger-ui.html`.
 
-**Lista de Jedis**
+**`Lista de Jedis`**
 
-Para verificar a lista dos Jedis deve ser requisitada a url `localhost:8180/api/v1/jedis`.
+Para verificar a lista dos Jedis deve ser requisitada a url:
+
+```http
+GET /jedi/v1/jedis HTTP/1.1
+Host: localhost:8180
+```
 
 ```json
 {
@@ -268,88 +239,92 @@ Para verificar a lista dos Jedis deve ser requisitada a url `localhost:8180/api/
 }
 ```
 
-**SGDP Metadata**
+**`SGDP Metadata`**
 
-Para extrair o metadado conforme descrito na documentação do SGDP Core, basta requisitar a url `localhost:8180/sgdp/metadata`.
+Para extrair o metadado conforme descrito na documentação do SGDP Core, basta requisitar a url:
+
+```http
+GET /sgdp/metadata HTTP/1.1
+Host: localhost:8180
+```
 
 ```json
 {
-    "tables": {
-        "br.com.star.wars.model.Jedi": {
-            "sgdpSupport": true,
-            "description": "Jedi",
-            "fields": {
-                "identification": {
-                    "type": "int",
-                    "description": "Identification",
-                    "sgdpData": {
-                        "sensitive": true,
-                        "type": "CPF",
-                        "allowsAnonymization": true
-                    },
-                    "sgdpPurposes": [
-                        {
-                            "classification": "REGULAR_EXERCISE_OF_LAW",
-                            "justification": "Numero de identificação do Jedi"
-                        }
-                    ]
-                },
-                "gender": {
-                    "type": "String",
-                    "description": "Gender",
-                    "sgdpData": {
-                        "sensitive": true,
-                        "type": "EMPTY",
-                        "allowsAnonymization": false
-                    },
-                    "sgdpPurposes": []
-                },
-                "name": {
-                    "type": "String",
-                    "description": "Nome do Jedi",
-                    "sgdpData": null,
-                    "sgdpPurposes": []
-                },
-                "id": {
-                    "type": "int",
-                    "description": null,
-                    "sgdpData": null,
-                    "sgdpPurposes": []
-                },
-                "email": {
-                    "type": "String",
-                    "description": "Email",
-                    "sgdpData": {
-                        "sensitive": false,
-                        "type": "EMAIL",
-                        "allowsAnonymization": true
-                    },
-                    "sgdpPurposes": [
-                        {
-                            "classification": "CONSENTMENT",
-                            "justification": "Email para contato."
-                        },
-                        {
-                            "classification": "CONTRACT_EXECUTION",
-                            "justification": "Necessário para contato."
-                        }
-                    ]
-                }
+  "models": {
+    "com.tjf.sample.github.model.Jedi": {
+      "sgdpSupport": true,
+      "description": "Jedi",
+      "attributes": {
+        "identification": {
+          "type": "int",
+          "description": "Identification",
+          "sgdpData": {
+            "sensitive": true,
+            "type": "CPF",
+            "allowsAnonymization": true
+          },
+          "sgdpPurposes": [
+            {
+              "classification": "REGULAR_EXERCISE_OF_LAW",
+              "justification": "Numero de identificação do Jedi"
+            }
+          ]
+        },
+        "gender": {
+          "type": "String",
+          "description": "Gender",
+          "sgdpData": {
+            "sensitive": true,
+            "type": "EMPTY",
+            "allowsAnonymization": false
+          },
+          "sgdpPurposes": []
+        },
+        "name": {
+          "type": "String",
+          "description": "Nome do Jedi",
+          "sgdpData": null,
+          "sgdpPurposes": []
+        },
+        "id": {
+          "type": "int",
+          "description": null,
+          "sgdpData": null,
+          "sgdpPurposes": []
+        },
+        "email": {
+          "type": "String",
+          "description": "Email",
+          "sgdpData": {
+            "sensitive": false,
+            "type": "EMAIL",
+            "allowsAnonymization": true
+          },
+          "sgdpPurposes": [
+            {
+              "classification": "CONSENTMENT",
+              "justification": "Email para contato."
             },
-            "usedAt": []
+            {
+              "classification": "CONTRACT_EXECUTION",
+              "justification": "Necessário para contato."
+            }
+          ]
         }
-    },
-    "codes": {
-        "br.com.star.wars.model.Jedi": {
-            "description": "Validar o LGPD do TJF, sobre a identificação, auditoria e anonimização de dados pessoais dos Jedi"
-        }
-    },
-    "package": "br.com.star.wars"
+      },
+      "usedAt": []
+    }
+  },
+  "codes": {
+    "com.tjf.sample.github.model.Jedi": {
+      "description": "Validar o LGPD do TJF, sobre a identificação, auditoria e anonimização de dados pessoais dos Jedi"
+    }
+  },
+  "package": "com.tjf.sample.github"
 }
 ```
 
-
-# Isso é tudo pessoal!
+## Isso é tudo pessoal!
 
 Com isso terminamos nosso _sample_, fique a vontade para enriquecê-lo utilizando outros recursos propostos pelo componente [SGDP][tjf-sgdp] e enviar sugestões e melhorias para o projeto **TOTVS Java Framework**.
 

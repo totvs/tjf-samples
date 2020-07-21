@@ -22,26 +22,30 @@
 
 		<!-- TJF -->
 		<dependency>
-		    <groupId>com.totvs.tjf</groupId>
-		    <artifactId>tjf-core-common</artifactId>
+			<groupId>com.totvs.tjf</groupId>
+			<artifactId>tjf-core-common</artifactId>
 		</dependency>
+		
 		<dependency>
-		    <groupId>com.totvs.tjf</groupId>
-		    <artifactId>tjf-messaging-stream</artifactId>
+			<groupId>com.totvs.tjf</groupId>
+			<artifactId>tjf-messaging-stream</artifactId>
 		</dependency>
+
 		<dependency>
-		    <groupId>com.totvs.tjf</groupId>
-		    <artifactId>tjf-process-core</artifactId>
+			<groupId>com.totvs.tjf</groupId>
+			<artifactId>tjf-process-service-core</artifactId>
 		</dependency>
+		
 		<dependency>
-		    <groupId>com.totvs.tjf</groupId>
-		    <artifactId>tjf-security-web</artifactId>
+			<groupId>com.totvs.tjf</groupId>
+			<artifactId>tjf-security-web</artifactId>
 		</dependency>
+		
 		<dependency>
-		    <groupId>com.totvs.tjf</groupId>
-		    <artifactId>tjf-test-security</artifactId>
+			<groupId>com.totvs.tjf</groupId>
+			<artifactId>tjf-test-security</artifactId>
 		</dependency>
-			
+
 		<!-- Test -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -49,5 +53,5 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	
+
 </project>

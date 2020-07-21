@@ -7,23 +7,15 @@
 	<parent>
 		<groupId>com.totvs.tjf</groupId>
 		<artifactId>tjf-boot-starter</artifactId>
-		<version>1.25.0-RELEASE</version>
+		<version>2.0.0-RELEASE</version>
 		<relativePath />
 	</parent>
 
-	<name>Star Wars :: api-core-exception-sample</name>
-	<description>Exemplo de Validações e Exceções</description>
-	<groupId>br.com.star.wars</groupId>
-	<artifactId>sw-services-api-core-exception</artifactId>
+	<groupId>com.tjf.sample.github</groupId>
+	<artifactId>api-core-exception</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-
-	<packaging>jar</packaging>
-
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>11</java.version>
-	</properties>
+	<name>tjf-api-core-exception-sample</name>
+	<description>TJF API Core Exception Sample</description>
 
 	<dependencies>
 
@@ -31,6 +23,17 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+
+		<!-- Lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
 		</dependency>
 
 		<!-- TJF -->
@@ -49,7 +52,14 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.junit.vintage</groupId>
+					<artifactId>junit-vintage-engine</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -60,12 +70,14 @@
 			</plugin>
 		</plugins>
 	</build>
-	
+
 	<profiles>
+
 		<profile>
 			<id>integration-test-report</id>
 			<build>
 				<plugins>
+
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-failsafe-plugin</artifactId>
@@ -86,6 +98,7 @@
 							</execution>
 						</executions>
 					</plugin>
+
 					<plugin>
 						<groupId>org.jacoco</groupId>
 						<artifactId>jacoco-maven-plugin</artifactId>
@@ -102,16 +115,19 @@
 							</execution>
 						</executions>
 					</plugin>
+
 				</plugins>
 			</build>
 		</profile>
+
 	</profiles>
-	
+
 	<repositories>
 		<repository>
-			<id>tjf-release</id>
+			<id>central-release</id>
 			<name>TOTVS Java Framework: Releases</name>
 			<url>http://maven.engpro.totvs.com.br/artifactory/libs-release/</url>
 		</repository>
 	</repositories>
+
 </project>

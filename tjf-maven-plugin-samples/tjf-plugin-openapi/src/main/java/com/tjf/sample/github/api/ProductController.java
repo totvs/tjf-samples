@@ -34,7 +34,7 @@ import io.swagger.v3.oas.annotations.servers.ServerVariable;
 
 @RestController
 @RequestMapping(path = "/api/saude/v1/product", produces = MediaType.APPLICATION_JSON_VALUE)
-@ApiGuideline(ApiGuidelineVersion.v1)
+@ApiGuideline(ApiGuidelineVersion.V1)
 @OpenAPIDefinition(info = @Info(title = "API de Produtos", 
 								description = "Controle de Produtos", 
 								version = "3.004", 

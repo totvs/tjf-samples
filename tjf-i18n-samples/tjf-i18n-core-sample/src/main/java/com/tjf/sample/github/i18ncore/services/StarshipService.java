@@ -14,20 +14,14 @@ import com.tjf.sample.github.i18ncore.domain.Starship;
 public class StarshipService {
 
 	@Autowired
-	ObjectMapper objectMapper;
-
-	private Starship starship;
+	private ObjectMapper objectMapper;
 
 	public Starship getStarshipInfo(String shipInfo) throws IOException {
-
-		ClassLoader classLoader = new StarshipService().getClass().getClassLoader();
+		ClassLoader classLoader = StarshipService.class.getClassLoader();
 		File file = new File(classLoader.getResource("json/" + shipInfo).getFile());
 
 		String content = new String(Files.readAllBytes(file.toPath()));
-
-		starship = objectMapper.readValue(content, Starship.class);
-
-		return starship;
-
+		return objectMapper.readValue(content, Starship.class);
 	}
+
 }

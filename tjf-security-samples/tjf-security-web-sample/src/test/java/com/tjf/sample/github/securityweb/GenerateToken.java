@@ -19,26 +19,21 @@ public class GenerateToken {
 		String token = "";
 		
 		try (CloseableHttpClient client = HttpClients.createDefault()) {
-			HttpPost post = new HttpPost(url);
-			
 			StringEntity text = new StringEntity("client_id=" + clientId + "&client_secret=" + clientSecret + "&grant_type=password&username=" + username + "&password=" + password + "&scope=authorization_api&acr_values=tenant:empresa1");
 			
+			HttpPost post = new HttpPost(url);
 			post.setHeader(HttpHeaders.CONTENT_TYPE, "application/x-www-form-urlencoded");
 			post.setHeader("charset", "UTF-8");
-
 			post.setEntity(text);
 			
 			HttpResponse response = client.execute(post);
-
 			HttpEntity entity = response.getEntity();
 
 			if (entity != null) {
 				String retSrc = EntityUtils.toString(entity);
 				JSONObject result = new JSONObject(retSrc);
-												
 				return token = result.getString("access_token");				
 			}
-
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -51,8 +46,6 @@ public class GenerateToken {
 	 */
 	public void updateRolesUser(String url, String accessApplicationToken, String productRoles) {
 		try (CloseableHttpClient client = HttpClients.createDefault()) {
-			HttpPut put = new HttpPut(url + "/api/user/2");
-			
 			StringEntity params = new StringEntity("{\n" + 
 					"    \"id\": 2,\n" + 
 					"    \"userName\": \"admin\",\n" + 
@@ -71,8 +64,9 @@ public class GenerateToken {
 					"    \"_expandables\": []\n" + 
 					"}");
 			
+			HttpPut put = new HttpPut(url + "/api/user/2");
 			put.setHeader(HttpHeaders.AUTHORIZATION, "Bearer " + accessApplicationToken);
-			put.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE);
+			put.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
 			put.setEntity(params);
 
 			client.execute(put);
@@ -80,4 +74,5 @@ public class GenerateToken {
 			ex.printStackTrace();
 		}
 	}
+
 }
