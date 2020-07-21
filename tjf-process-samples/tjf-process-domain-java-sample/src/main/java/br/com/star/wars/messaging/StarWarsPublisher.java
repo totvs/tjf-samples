@@ -27,7 +27,8 @@ public class StarWarsPublisher {
 
 	public void createTenant() {
 		TOTVSMessage<CreateTenantCommand> message = new TOTVSMessage<CreateTenantCommand>("CreateTenantCommand",
-				new CreateTenantCommand());
+				new CreateTenantCommand() {
+				});
 		message.sendTo(exchange.output());
 	}
 
