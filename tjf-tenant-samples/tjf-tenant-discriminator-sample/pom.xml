@@ -2,30 +2,50 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
 		<groupId>com.totvs.tjf</groupId>
 		<artifactId>tjf-boot-starter</artifactId>
-		<version>1.25.0-RELEASE</version>
+		<version>2.0.0-RELEASE</version>
+		<relativePath />
 	</parent>
 
-	<groupId>br.com.star.wars.discriminator</groupId>
-	<artifactId>sw-habitants-discriminator</artifactId>
+	<groupId>com.tjf.sample.github</groupId>
+	<artifactId>tenant-discriminator</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Star Wars :: tenant-discriminator-sample</name>
-	<description>Serviço de manutenção e consulta dos habitantes do universo Star Wars utilizando a biblioteca TJF Tenant Discriminator</description>
+	<name>tjf-tenant-discriminator-sample</name>
+	<description>TJF Tenant Discriminator Sample</description>
 
 	<dependencies>
+
 		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 
+		<!-- Database -->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+		</dependency>
+
+		<!-- Lomobok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
 		</dependency>
 
 		<!-- TJF -->
@@ -34,31 +54,19 @@
 			<artifactId>tjf-tenant-discriminator</artifactId>
 		</dependency>
 
-		<!-- FlywayDB -->
-		<dependency>
-			<groupId>org.flywaydb</groupId>
-			<artifactId>flyway-core</artifactId>
-		</dependency>
-
-		<!-- H2 -->
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-
 		<!-- Test -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.junit.vintage</groupId>
+					<artifactId>junit-vintage-engine</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
-		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
 
 	<build>
@@ -71,10 +79,12 @@
 	</build>
 
 	<profiles>
+
 		<profile>
 			<id>integration-test-report</id>
 			<build>
 				<plugins>
+
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-failsafe-plugin</artifactId>
@@ -95,6 +105,7 @@
 							</execution>
 						</executions>
 					</plugin>
+
 					<plugin>
 						<groupId>org.jacoco</groupId>
 						<artifactId>jacoco-maven-plugin</artifactId>
@@ -111,16 +122,19 @@
 							</execution>
 						</executions>
 					</plugin>
+
 				</plugins>
 			</build>
 		</profile>
+
 	</profiles>
-	
+
 	<repositories>
 		<repository>
-			<id>tjf-release</id>
-			<name>TOTVS Java Framework: Releases</name>
-			<url>http://maven.engpro.totvs.com.br/artifactory/libs-release/</url>
+			<id>central-release</id>
+			<name>TOTVS Java Framework: Release</name>
+			<url>http://maven.engpro.totvs.com.br/artifactory/libs-release</url>
 		</repository>
 	</repositories>
+
 </project>

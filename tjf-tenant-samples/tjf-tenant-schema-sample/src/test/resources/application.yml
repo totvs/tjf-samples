@@ -2,19 +2,10 @@ spring:
 
   # Configurações banco de dados
   datasource:
-    driver-class-name: org.postgresql.Driver
-    url: ${DATABASE_URL}/tjf-tenant-schema
-    username: ${DATABASE_USER}
-    password: ${DATABASE_PASSWORD} 
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:starwarsdbtest
+    username: sa
 
   # Configurações JPA
   jpa:
-    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
-    properties:
-      hibernate:
-        jdbc:
-          lob:
-            non_contextual_creation: true
-        show_sql: true
-        format_sql: true
-        ddl-auto: update
+    database-platform: org.hibernate.dialect.H2Dialect

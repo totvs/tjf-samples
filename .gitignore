@@ -1,10 +1,19 @@
+# Eclipse
 .settings/
-bin/
-target/
+.metadata/
 .classpath
 .project
-.flattened-pom.xml
-.attach*
-pom.xml.versionsBackup
 
-/.metadata/
+# Maven
+bin/
+target/
+.flattened-pom.xml
+
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# Crash files
+.attach*

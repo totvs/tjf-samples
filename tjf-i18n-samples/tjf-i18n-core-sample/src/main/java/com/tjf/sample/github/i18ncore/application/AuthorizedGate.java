@@ -14,12 +14,12 @@ import com.tjf.sample.github.i18ncore.services.StarshipService;
 public class AuthorizedGate {
 
 	@Autowired
-	StarshipService starshipService;
+	private StarshipService starshipService;
 
 	@Autowired
-	StarshipMessage starshipMessage;
+	private StarshipMessage starshipMessage;
 
-	Random random = new Random();
+	private Random random = new Random();
 
 	public String authorizedShipLanding(String shipCard) throws IOException {
 

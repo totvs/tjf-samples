@@ -2,22 +2,41 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
 		<groupId>com.totvs.tjf</groupId>
 		<artifactId>tjf-boot-starter</artifactId>
-		<version>1.25.0-RELEASE</version>
+		<version>2.0.0-RELEASE</version>
+		<relativePath />
 	</parent>
 
 	<groupId>com.tjf.sample.github</groupId>
-	<artifactId>sw-i18n-core</artifactId>
+	<artifactId>i18n-core</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-
-	<name>Star Wars :: i18n-core-sample</name>
-	<description>Serviço de tradução relacionados ao universo Star Wars</description>
+	<name>tjf-i18n-core-sample</name>
+	<description>TJF I18N Core Sample</description>
 
 	<dependencies>
+
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<!-- Jackson -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+
+		<!-- Lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
 
 		<!-- TJF -->
 		<dependency>
@@ -25,29 +44,19 @@
 			<artifactId>tjf-i18n-core</artifactId>
 		</dependency>
 
-		<!-- JACKSON -->
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-		</dependency>
-
-		<!-- SPRING -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-webflux</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
-		</dependency>
-
-		<!-- TEST -->
+		<!-- Test -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.junit.vintage</groupId>
+					<artifactId>junit-vintage-engine</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -60,10 +69,12 @@
 	</build>
 
 	<profiles>
+
 		<profile>
 			<id>integration-test-report</id>
 			<build>
 				<plugins>
+
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-failsafe-plugin</artifactId>
@@ -84,6 +95,7 @@
 							</execution>
 						</executions>
 					</plugin>
+
 					<plugin>
 						<groupId>org.jacoco</groupId>
 						<artifactId>jacoco-maven-plugin</artifactId>
@@ -100,9 +112,11 @@
 							</execution>
 						</executions>
 					</plugin>
+
 				</plugins>
 			</build>
 		</profile>
+
 	</profiles>
 
 	<repositories>
@@ -112,4 +126,5 @@
 			<url>http://maven.engpro.totvs.com.br/artifactory/libs-release</url>
 		</repository>
 	</repositories>
+
 </project>

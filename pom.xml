@@ -6,22 +6,21 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.tjf.sample.github</groupId>
-	<artifactId>sw-parent</artifactId>
+	<artifactId>tjf-samples-parent</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>Star Wars :: Jedi Master</name>
+	<name>TJF Samples Parent</name>
 
 	<modules>
 		<module>tjf-api-samples/tjf-api-core-fields-sample</module>
 		<module>tjf-api-samples/tjf-api-core-exception-sample</module>
 		<module>tjf-api-samples/tjf-api-context-sample</module>
 		<module>tjf-api-samples/tjf-api-jpa-filters-sample</module>
-		<module>tjf-api-samples/tjf-api-jpa-sample</module>
 		<module>tjf-api-samples/tjf-api-jpa-specification-sample</module>
 		<module>tjf-core-samples/tjf-core-validation-sample</module>
 		<module>tjf-i18n-samples/tjf-i18n-core-sample</module>
-		<module>tjf-messaging-samples/tjf-messaging-stream-sample/sw-messaging-subscriber-starship</module>
-		<module>tjf-messaging-samples/tjf-messaging-stream-sample/sw-messaging-publisher-gate</module>
+		<module>tjf-messaging-samples/tjf-messaging-stream-sample/tjf-messaging-stream-publisher-sample</module>
+		<module>tjf-messaging-samples/tjf-messaging-stream-sample/tjf-messaging-stream-subscriber-sample</module>
 		<module>tjf-messaging-samples/tjf-messaging-stream-error-queue-sample</module>
 		<module>tjf-migration-samples/tjf-migration-schema-sample</module>
 		<module>tjf-process-samples</module>
@@ -32,7 +31,7 @@
 		<module>tjf-utils-samples/sw-query</module>
 		<module>tjf-sgdp-samples/tjf-sgdp-app-sample</module>
 		<module>tjf-sgdp-samples/tjf-sgdp-service-sample</module>
-		<module>tjf-osgi-samples/tjf-osgi-simple</module>
+		<module>tjf-osgi-samples/tjf-osgi-sample</module>
 		<module>tjf-maven-plugin-samples/tjf-plugin-openapi</module>
 	</modules>
 </project>

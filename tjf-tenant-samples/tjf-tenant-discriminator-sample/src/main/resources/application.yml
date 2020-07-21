@@ -1,14 +1,5 @@
 spring:
   
-  flyway:
-    enabled: true
-
-  # Configurações H2
-  h2:
-    console:
-      enabled: true
-      path: /h2
-
   # Configurações banco de dados
   datasource:
     driver-class-name: org.h2.Driver

@@ -1,26 +1,28 @@
-# API Context
+# Exemplo de uso do componente API Context
 
-Para exemplificar a biblioteca [TJF API Context][tjf-api-context] vamos criar uma _API REST_ que possa trazer informações dos principais **Jedis** do universo **Star Wars**.
+## Contexto
+
+Para exemplificar o uso da biblioteca **API Context** vamos criar uma API REST que possa trazer informações dos principais **Jedis** do universo **Star Wars**.
 
 As informações devem ser retornadas no formato `JSON` e seguir os padrões do [guia de implementação das APIs TOTVS][guia-api-totvs].
 
 ## Começando
 
-Para este exemplo vamos criar uma aplicação [Spring][spring] gerada a partir do [Spring Initializr][spring-initializr]. Na geração da aplicação adicione como dependência as bibliotecas **Spring WEB** e **Spring Data JPA**.
+Para criação deste exemplo vamos iniciar a explicação a partir de um projeto Spring já criado, caso você não possua um projeto criado basta acessar o [Spring initializr](https://start.spring.io/) e criar o projeto. Na geração da aplicação adicione como dependência as bibliotecas **Spring WEB**, **Spring Data JPA**, **H2** e o **Lombok**.
 
 ### Dependências
 
-Além das dependências do [Spring][spring] mencionadas acima, para utilização do [TJF API Context][tjf-api-context] é necessário alterar o `parent` da aplicação no arquivo `pom.xml`:
+Além das dependências do Spring mencionadas acima, para utilização do componente é necessário alterar o `parent` da aplicação no arquivo `pom.xml`:
 
 ```xml
 <parent>
   <groupId>com.totvs.tjf</groupId>
   <artifactId>tjf-boot-starter</artifactId>
-  <version>1.25.0-RELEASE</version>
+  <version>2.0.0-RELEASE</version>
 </parent>
 ```
 
-E incluir as depêndencias do [TJF][tjf] abaixo:
+E incluir as dependências abaixo:
 
 ```xml
 <!-- TJF -->
@@ -35,21 +37,23 @@ E incluir as depêndencias do [TJF][tjf] abaixo:
 </dependency>
 ```
 
-> Como o [TJF API Context][tjf-api-context] fornece apenas implementações contratuais, as execuções destas implementações ficam nas bibliotecas [TJF API Core][tjf-api-core] e [TJF API JPA][tjf-api-jpa].
+> Como o **API Context** fornece apenas implementações contratuais, as execuções destas implementações ficam nas bibliotecas **API Core** e **API JPA**.
 
-Vamos incluir também a dependência do banco de dados que será utilizado pela aplicação, que neste caso será o [H2][h2]:
+Vamos adicionar também o repositório Maven de _release_ do TJF:
 
 ```xml
-<!-- Database -->
-<dependency>
-  <groupId>com.h2database</groupId>
-  <artifactId>h2</artifactId>
-</dependency>
+<repositories>
+  <repository>
+    <id>central-release</id>
+    <name>TOTVS Java Framework: Releases</name>
+    <url>http://maven.engpro.totvs.com.br/artifactory/libs-release/</url>
+  </repository>
+</repositories>
 ```
 
 ### Configuração
 
-Para que a aplicação possa comunicar-se com o banco de dados, precisamos alterar sua configuração no arquivo `application.yaml` dentro da pasta `src/main/resources`.
+Para que a aplicação possa comunicar-se com o banco de dados, precisamos alterar sua configuração no arquivo `application.yaml` da pasta `src/main/resources`.
 
 **`application.yaml`**
 
@@ -67,15 +71,17 @@ spring:
 
 ## Modelo de dados
 
-Primeiramente precisamos habilitar nossa aplicação para utilizar o repositório [`ApiJpaRepository`][apijparepository] que facilita as consultas respeitando o [guia de implementação das APIs TOTVS][guia-api-totvs]. Vamos então incluir a anotação [`@EnableJpaRepositories`][enablejparepositories] e defini-lo como `"repositoryBaseClass"` na classe principal da aplicação:
+Primeiramente precisamos habilitar nossa aplicação para utilizar o repositório `ApiJpaRepository` que facilita as consultas respeitando o [guia de implementação das APIs TOTVS][guia-api-totvs].
+
+Vamos então incluir a anotação `@EnableJpaRepositories` e defini-lo como `"repositoryBaseClass"` na classe principal da aplicação:
 
 ```java
 @SpringBootApplication
 @EnableJpaRepositories(repositoryBaseClass = ApiJpaRepositoryImpl.class)
-public class SWApiContextApplication {
+public class ApiContextApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(SWApiContextApplication.class, args);
+    SpringApplication.run(ApiContextApplication.class, args);
   }
 
 }
@@ -86,21 +92,22 @@ Depois podemos iniciar a criação da classe da entidade **Jedi**:
 **`Jedi.java`**
 
 ```java
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "jedi")
 public class Jedi {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id;
 
-	@NotNull
-	private String name;
+  @NotNull
+  private String name;
 
-	@NotNull
-	private String gender;
-
-	// Métodos Getters e Setters
+  @NotNull
+  private String gender;
 
 }
 ```
@@ -111,13 +118,12 @@ E criaremos também a interface de repositório desta entidade:
 
 ```java
 @Repository
-@Transactional
 public interface JediRepository extends JpaRepository<Jedi, Integer>, ApiJpaRepository<Jedi> {}
 ```
 
 ## API REST
 
-Com as classe da entidade e respositório criadas, iniciaremos o desenvolvimento da _API REST_ responsável pela consulta e manutenção de Jedis. É importante que a nossa _API_ seja anotada com [`@ApiGuideline`][apiguideline] para que as respostas adequem-se ao [guia de implementação das APIs TOTVS][guia-api-totvs].
+Com as classe da entidade e repositório criadas, iniciaremos o desenvolvimento da API REST responsável pela consulta e manutenção de Jedis. É importante que a nossa classe seja anotada com `@ApiGuideline` para que as respostas adequem-se ao [guia de implementação das APIs TOTVS][guia-api-totvs].
 
 ### Adicionando um novo Jedi
 
@@ -128,16 +134,16 @@ Primeiramente vamos desenvolver o método responsável por criar um novo Jedi, a
 ```java
 @RestController
 @RequestMapping(path = "/api/v1/jedis", produces = MediaType.APPLICATION_JSON_VALUE)
-@ApiGuideline(ApiGuidelineVersion.v1)
+@ApiGuideline(ApiGuidelineVersion.V2)
 public class JediController {
 
-	@Autowired
-	private JediRepository jediRepo;
+  @Autowired
+  private JediRepository jediRepo;
 
-	@PostMapping
-	public Jedi add(@RequestBody Jedi jedi) {
-		return jediRepo.saveAndFlush(jedi);
-	}
+  @PostMapping
+  public Jedi add(@RequestBody Jedi jedi) {
+    return jediRepo.saveAndFlush(jedi);
+  }
 
 }
 ```
@@ -184,7 +190,7 @@ Host: localhost:8080
 Content-Type: application/json
 ```
 
-E a resposta da requisição deve ser semlhante ao conteúdo abaixo:
+E a resposta da requisição deve ser semelhante ao conteúdo abaixo:
 
 ```json
 {
@@ -198,7 +204,7 @@ E a resposta da requisição deve ser semlhante ao conteúdo abaixo:
 
 Após criado o método que permite recuperar o Jedi pelo seu respectivo código, será necessário tratar possíveis inconsistências que podem ocorrer se o usuário informar um código de Jedi inexistente, por exemplo.
 
-Conforme o [guia de implementação das APIs TOTVS][guia-api-totvs], o correto neste caso é que a resposta seja uma mensagem de erro tratada e status HTTP `404 Not Found`. Para isto vamos criar uma `Exception` específica e nesta utilizar a anotação [`@ApiError`][apierror]:
+Conforme o [guia de implementação das APIs TOTVS][guia-api-totvs], o correto neste caso é que a resposta seja uma mensagem de erro tratada e status HTTP `404 Not Found`. Para isto vamos criar uma `Exception` específica e nesta utilizar a anotação `@ApiError`:
 
 **`JediNotFoundException.java`**
 
@@ -206,23 +212,23 @@ Conforme o [guia de implementação das APIs TOTVS][guia-api-totvs], o correto n
 @ApiError(status = HttpStatus.NOT_FOUND, value = "JediNotFoundException")
 public class JediNotFoundException extends RuntimeException {
 
-	private static final long serialVersionUID = -52548244535504794L;
+  private static final long serialVersionUID = -52548244535504794L;
 
-	@ApiErrorParameter
-	private final int jediId;
+  @ApiErrorParameter
+  private final int jediId;
 
-	public JediNotFoundException(int jediId) {
-		this.jediId = jediId;
-	}
+  public JediNotFoundException(int jediId) {
+    this.jediId = jediId;
+  }
 
-	public int getJediId() {
-		return jediId;
-	}
+  public int getJediId() {
+    return jediId;
+  }
 
 }
 ```
 
-> É possível também utilizar a anotação [`@ApiNotFound`][apinotfound] sem que seja necessário informar o status HTTP.
+> É possível também utilizar a anotação `@ApiNotFound` sem que seja necessário informar o status HTTP.
 
 Vamos precisar criar também o arquivo `messages.properties` na pasta `src/main/resources/i18n/exception` contendo a mensagem de erro que será utilizada na resposta de erro:
 
@@ -290,12 +296,12 @@ A resposta trará apenas os atributos informados:
 
 ### Listando Jedis
 
-Já criamos o método que retorna um determinado Jedi pelo seu código, vamos então criar um método que nos retorne a lista de Jedis. Para este método será utilizada a classe [`ApiCollectionResponse`][apicollectionresponse] que padroniza a resposta conforme definido pelo [guia de implementação das APIs TOTVS][guia-api-totvs]:
+Já criamos o método que retorna um determinado Jedi pelo seu código, vamos então criar um método que nos retorne a lista de Jedis. Para este método será utilizada a classe `ApiCollectionResponse` que padroniza a resposta conforme definido pelo [guia de implementação das APIs TOTVS][guia-api-totvs]:
 
 ```java
 @GetMapping
 public ApiCollectionResponse<Jedi> getAll() {
-  return ApiCollectionResponse.of(jediRepo.findAll());
+  return ApiCollectionResponse.from(jediRepo.findAll());
 }
 ```
 
@@ -382,14 +388,14 @@ Conforme o [guia de implementação das APIs TOTVS][guia-api-totvs] todos os _en
 
 - filtro de conteúdo de resposta através do parâmetro de URL `fields`. Exemplo: `/jedis?fields=name`.
 
-Para facilitar a execução das funcionalidades acima durante a pesquisa dos registros, vamos alterar o método `getAll` da nossa _API_ e incluir os objetos das classes [`ApiFieldRequest`][apifieldrequest], [`ApiPageRequest`][apipagerequest] e [`ApiSortRequest`][apisortrequest], respectivamente responsáveis por recuperar os parâmetros de filtro de conteúdo de resposta, paginação e ordenação da requisição.
+Para facilitar a execução das funcionalidades acima durante a pesquisa dos registros, vamos alterar o método `getAll` da nossa _API_ e incluir os objetos das classes `ApiFieldRequest`, `ApiPageRequest` e `ApiSortRequest`, respectivamente responsáveis por recuperar os parâmetros de filtro de conteúdo de resposta, paginação e ordenação da requisição.
 
 Também vamos utilizar o método `findAllProjected` do repositório, que facilita a consulta de registros utilizando os objetos acima:
 
 ```java
 @GetMapping
 public ApiCollectionResponse<Jedi> getAll(ApiFieldRequest field, ApiPageRequest page, ApiSortRequest sort) {
-  return jediRepo.findAllProjected(field, page, sort);
+  return ApiCollectionResponse.from(jediRepo.findAllProjected(field, page, sort));
 }
 ```
 
@@ -417,27 +423,8 @@ Resposta:
 }
 ```
 
-# Que a força esteja com você!
+## Que a força esteja com você!
 
-Com isso terminamos nosso exemplo, fique a vontade para incrementar o exemplo utilizando todos recursos proposto pelo componente **API Context**, mandar sugestões e melhorias para o projeto TJF.
+Com isso terminamos nosso exemplo, fique a vontade para incrementar o exemplo utilizando todos os recursos proposto pelo componente **API Context**, caso necessário utilize nossa [documentação](https://tjf.totvs.com.br/wiki/tjf-api-context) e fique a vontade para mandar sugestões e melhorias para o projeto [TJF](https://tjf.totvs.com.br/).
 
-[tjf]: https://tjf.totvs.com.br
-[tjf-api-context]: https://tjf.totvs.com.br/wiki/tjf-api-context
-[tjf-api-core]: https://tjf.totvs.com.br/wiki/tjf-api-core
-[tjf-api-jpa]: https://tjf.totvs.com.br/wiki/tjf-api-jpa
-[apiguideline]: https://tjf.totvs.com.br/javadoc/com/totvs/tjf/api/context/stereotype/ApiGuideline.html
-[apicollectionresponse]: https://tjf.totvs.com.br/javadoc/com/totvs/tjf/api/context/v1/response/ApiCollectionResponse.html
-[apisortrequest]: https://tjf.totvs.com.br/javadoc/com/totvs/tjf/api/context/v1/request/ApiSortRequest.html
-[apipagerequest]: https://tjf.totvs.com.br/javadoc/com/totvs/tjf/api/context/v1/request/ApiPageRequest.html
-[apifieldrequest]: https://tjf.totvs.com.br/javadoc/com/totvs/tjf/api/context/v1/request/ApiFieldRequest.html
-[apijparepository]: https://tjf.totvs.com.br/javadoc/com/totvs/tjf/api/jpa/repository/ApiJpaRepository.html
-[apierror]: https://tjf.totvs.com.br/javadoc/com/totvs/tjf/api/context/stereotype/ApiError.html
-[apinotfound]: https://tjf.totvs.com.br/javadoc/com/totvs/tjf/api/context/stereotype/error/ApiNotFound.html
-[apicollectionresponse]: https://tjf.totvs.com.br/javadoc/com/totvs/tjf/api/context/v1/response/ApiCollectionResponse.html
-[github]: https://github.com/totvs/tjf-samples/tree/master/tjf-api-samples/tjf-api-context-sample
 [guia-api-totvs]: http://tdn.totvs.com/x/nDUxE
-[spring]: https://spring.io
-[spring-initializr]: https://start.spring.io
-[restcontroller]: https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/bind/annotation/RestController.html
-[enablejparepositories]: https://docs.spring.io/spring-data/data-jpa/docs/current/api/org/springframework/data/jpa/repository/config/EnableJpaRepositories.html
-[h2]: https://www.h2database.com
