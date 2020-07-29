@@ -308,17 +308,25 @@ public class StarShipSubscriber {
 
 	private StarShipService starShipService;
 
+	@Autowired
+	private TransactionContext transactionContext;
+
 	public StarShipSubscriber(StarShipService starShipService) {
 		this.starShipService = starShipService;
 	}
 
 	@StreamListener(target = INPUT, condition = StarShipArrivedEvent.CONDITIONAL_EXPRESSION)
 	public void subscribeArrived(TOTVSMessage<StarShipArrivedEvent> message) {
-		
+
 		StarShipArrivedEvent starShipArrivedEvent = message.getContent();
 		starShipService.arrived(new StarShip(starShipArrivedEvent.getName()));
+
+		System.out.println("TransactionInfo TransactionId: "
+				+ transactionContext.getTransactionInfo().getTransactionId());
+		System.out.println("TransactionInfo GeneratedBy: "
+				+ transactionContext.getTransactionInfo());
 	}
-	
+
 	@StreamListener(target = INPUT, condition = StarShipLeftEvent.CONDITIONAL_EXPRESSION)
 	public void subscribeLeft(TOTVSMessage<StarShipLeftEvent> message) {
 		
@@ -387,6 +395,18 @@ public class StarShipService {
 		counter.put(tenant, counter.getOrDefault(tenant, 0) - 1);
 		
 		return counter.get(tenant); 
+	}
+
+	public void transactionClose(TransactionInfo transaction) {
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+
+		Map map = new ObjectMapper().convertValue(transaction, Map.class);
+
+		HttpEntity<Map> request = new HttpEntity<Map>(map, headers);
+
+		rest.postForEntity("http://localhost:8080/starship/transaction", request, String.class);
 	}
 }
 
