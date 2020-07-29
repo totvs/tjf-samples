@@ -191,14 +191,57 @@ public class StarShipController {
         
         return "The identification of the left starship " + name + " of tenant " + tenant + " was sent!";
     }
+
+	@GetMapping("/arrived/transacted")
+	String starShipArrivedTransacted(@RequestParam("name") String name, @RequestParam("tenant") String tenant) {
+
+		this.setTenant(tenant);
+
+		System.out.println("\nStarship arrived name: " + name);
+		System.out.println("Current tenant: " + SecurityDetails.getTenant() + "\n");
+
+		StarShipArrivedEvent starShipEvent = new StarShipArrivedEvent(name);
+
+		String id = UUID.randomUUID().toString();
+		TransactionInfo transaction = new TransactionInfo(id, starShipEvent.toString());
+		transactions.put(id, Status.SENDED);
+
+		samplePublisher.publish(starShipEvent, StarShipArrivedEvent.NAME, transaction);
+
+		return "The identification of the arrived starship " + name + " of tenant " + tenant + " was sent!\n"
+				+ "In transaction " + id + ", acess http://localhost:8080/starship/transaction/" + id
+				+ " to consult the status.";
+	}
 	
+	@GetMapping("/transaction/{id}")
+	String starShipArrivedTransacted(@PathVariable("id") String id) {
+
+		Status status = transactions.get(id);
+
+		return status != null ? "Status: " + status.toString() : "Transaction " + id + " not found!";
+	}
+
+	@PostMapping("/transaction")
+	void closeTransaction(@RequestBody TransactionInfo transaction) {
+		transactions.replace(transaction.getTransactionId(), Status.CONCLUDED);
+	}
+
 	private void setTenant(String tenant) {
-		SecurityPrincipal principal = new SecurityPrincipal("", tenant, tenant.split("-")[0]);
-	    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(principal, "N/A", null);
+		SecurityPrincipal principal = new SecurityPrincipal(null, "", tenant, tenant);
+		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(principal, "N/A",
+				null);
 		SecurityContextHolder.getContext().setAuthentication(authentication);
+	}
+
+	enum Status {
+		SENDED, CONCLUDED;
 	}
 }
 ```
+
+## Transações
+
+O _endpoint_ `starship/arrived/transacted` faz o mesmo que o `starship/arrived`, mas para exemplificar o uso de transações ele cria no header da mensagem o `transactionInfo`, o projeto subscriber lê essas informações setadas automaticamente do contexto, ele imprime no console e para simplificar os projetos de exemplo o subscriber responde via rest que recebeu a transação, pode ser consultado o status da transação no _endpoint_ `/starship/transaction/<id>`.
 
 ## Infrastructure
 
