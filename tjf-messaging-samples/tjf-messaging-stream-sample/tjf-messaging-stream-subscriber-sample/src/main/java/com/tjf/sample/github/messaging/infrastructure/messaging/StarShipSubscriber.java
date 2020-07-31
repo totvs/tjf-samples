@@ -34,7 +34,7 @@ public class StarShipSubscriber {
 		System.out.println("TransactionInfo TransactionId: "
 				+ transactionContext.getTransactionInfo().getTransactionId());
 		System.out.println("TransactionInfo GeneratedBy: "
-				+ transactionContext.getTransactionInfo());
+				+ transactionContext.getTransactionInfo().getGeneratedBy());
 	}
 
 	@StreamListener(target = INPUT, condition = StarShipLeftEvent.CONDITIONAL_EXPRESSION)
