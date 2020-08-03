@@ -54,6 +54,11 @@
 			<artifactId>tjf-tenant-schema</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>com.totvs.tjf</groupId>
+			<artifactId>tjf-migration-schema</artifactId>
+		</dependency>
+
 		<!-- Test -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
