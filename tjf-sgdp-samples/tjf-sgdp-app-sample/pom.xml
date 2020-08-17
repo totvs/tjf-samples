@@ -41,12 +41,14 @@
 
 		<dependency>
 			<groupId>com.totvs.tjf</groupId>
-			<artifactId>tjf-sgdp-core</artifactId>
+			<artifactId>tjf-messaging-stream</artifactId>
 		</dependency>
 
+		<!-- SGDP SDK -->
 		<dependency>
-			<groupId>com.totvs.tjf</groupId>
-			<artifactId>tjf-messaging-stream</artifactId>
+			<groupId>com.totvs.sgdp.sdk</groupId>
+			<artifactId>sgdp</artifactId>
+			<version>1.0.0-RELEASE</version>
 		</dependency>
 
 		<!-- H2 Database -->

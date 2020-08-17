@@ -16,8 +16,9 @@ Incluir a biblioteca como dependência no `pom.xml` da aplicação:
 
 ```xml
 <dependency>
-    <groupId>com.totvs.tjf</groupId>
-    <artifactId>tjf-sgdp-core</artifactId>
+	<groupId>com.totvs.sgdp.sdk</groupId>
+	<artifactId>sgdp</artifactId>
+	<version>{versão}</version>
 </dependency>
 ```
 
@@ -191,8 +192,7 @@ Os dados podem ser verificados no log do serviço.
 
 # Isso é tudo pessoal!
 
-Com isso terminamos nosso _sample_, fique a vontade para enriquecê-lo utilizando outros recursos propostos pelo componente [SGDP][tjf-sgdp] e enviar sugestões e melhorias para o projeto **TOTVS Java Framework**.
+Com isso terminamos nosso _sample_, fique a vontade para enriquecê-lo utilizando outros recursos propostos pelo componente SGDP e enviar sugestões e melhorias para o projeto **TOTVS Java Framework**.
 
 [tjf-api-jpa-sample]: https://github.com/totvs/tjf-samples/tree/master/tjf-api-samples/tjf-api-jpa-sample
 [h2]: https://www.h2database.com
-[tjf-sgdp]: https://tjf.totvs.com.br/wiki/tjf-sgdp-core

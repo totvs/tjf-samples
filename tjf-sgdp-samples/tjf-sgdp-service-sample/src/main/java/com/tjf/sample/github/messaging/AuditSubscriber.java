@@ -5,7 +5,7 @@ import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.messaging.Message;
 import org.springframework.scheduling.annotation.Async;
 
-import com.totvs.tjf.sgdp.annotations.SGDPCode;
+import com.totvs.sgdp.sdk.annotations.SGDPCode;
 
 @Async
 @EnableBinding(AuditExchange.class)

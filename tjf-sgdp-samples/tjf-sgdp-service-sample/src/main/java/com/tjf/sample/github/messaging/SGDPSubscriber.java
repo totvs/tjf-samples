@@ -5,11 +5,11 @@ import org.springframework.cloud.stream.annotation.StreamListener;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.totvs.sgdp.sdk.services.SGDPRabbitExchange;
+import com.totvs.sgdp.sdk.services.SGDPRabbitExchangeChannel;
+import com.totvs.sgdp.sdk.services.data.SGDPDataResponse;
+import com.totvs.sgdp.sdk.services.mask.SGDPMaskResponse;
 import com.totvs.tjf.core.message.TOTVSMessage;
-import com.totvs.tjf.sgdp.services.SGDPRabbitExchange;
-import com.totvs.tjf.sgdp.services.SGDPRabbitExchangeChannel;
-import com.totvs.tjf.sgdp.services.data.SGDPDataResponse;
-import com.totvs.tjf.sgdp.services.mask.SGDPMaskResponse;
 
 @EnableBinding(SGDPRabbitExchange.class)
 public class SGDPSubscriber {

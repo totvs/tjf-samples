@@ -11,11 +11,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tjf.sample.github.model.Jedi;
 import com.tjf.sample.github.model.JediRepository;
-import com.totvs.tjf.sgdp.config.SGDPMetadata;
-import com.totvs.tjf.sgdp.services.mask.SGDPMaskCommand;
-import com.totvs.tjf.sgdp.services.mask.SGDPMaskException;
-import com.totvs.tjf.sgdp.services.mask.SGDPMaskResponse;
-import com.totvs.tjf.sgdp.services.mask.SGDPMaskService;
+import com.totvs.sgdp.sdk.config.SGDPMetadata;
+import com.totvs.sgdp.sdk.services.mask.SGDPMaskCommand;
+import com.totvs.sgdp.sdk.services.mask.SGDPMaskException;
+import com.totvs.sgdp.sdk.services.mask.SGDPMaskResponse;
+import com.totvs.sgdp.sdk.services.mask.SGDPMaskService;
 
 @Component
 @Transactional

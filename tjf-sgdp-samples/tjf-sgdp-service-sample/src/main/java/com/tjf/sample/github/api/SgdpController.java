@@ -18,10 +18,10 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tjf.sample.github.messaging.SGDPPublisher;
+import com.totvs.sgdp.sdk.config.SGDPMetadata;
+import com.totvs.sgdp.sdk.services.data.SGDPDataCommand;
+import com.totvs.sgdp.sdk.services.mask.SGDPMaskCommand;
 import com.totvs.tjf.mock.test.MockAuthenticationInfo;
-import com.totvs.tjf.sgdp.config.SGDPMetadata;
-import com.totvs.tjf.sgdp.services.data.SGDPDataCommand;
-import com.totvs.tjf.sgdp.services.mask.SGDPMaskCommand;
 
 @RestController
 @RequestMapping(path = "/sgdp/v1/", produces = MediaType.APPLICATION_JSON_VALUE)

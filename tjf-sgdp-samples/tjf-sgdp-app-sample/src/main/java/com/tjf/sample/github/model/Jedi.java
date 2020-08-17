@@ -7,13 +7,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
-import com.totvs.tjf.sgdp.annotations.SGDPClassification;
-import com.totvs.tjf.sgdp.annotations.SGDPCode;
-import com.totvs.tjf.sgdp.annotations.SGDPData;
-import com.totvs.tjf.sgdp.annotations.SGDPDescription;
-import com.totvs.tjf.sgdp.annotations.SGDPPurpose;
-import com.totvs.tjf.sgdp.annotations.SGDPType;
-import com.totvs.tjf.sgdp.audit.SGDPSupport;
+import com.totvs.sgdp.sdk.annotations.SGDPClassification;
+import com.totvs.sgdp.sdk.annotations.SGDPCode;
+import com.totvs.sgdp.sdk.annotations.SGDPData;
+import com.totvs.sgdp.sdk.annotations.SGDPDescription;
+import com.totvs.sgdp.sdk.annotations.SGDPPurpose;
+import com.totvs.sgdp.sdk.annotations.SGDPType;
+import com.totvs.sgdp.sdk.audit.SGDPSupport;
 
 import lombok.Getter;
 import lombok.Setter;

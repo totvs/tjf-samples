@@ -2,10 +2,10 @@ package com.tjf.sample.github.messaging;
 
 import org.springframework.cloud.stream.annotation.EnableBinding;
 
+import com.totvs.sgdp.sdk.services.SGDPRabbitExchange;
+import com.totvs.sgdp.sdk.services.data.SGDPDataCommand;
+import com.totvs.sgdp.sdk.services.mask.SGDPMaskCommand;
 import com.totvs.tjf.core.message.TOTVSMessage;
-import com.totvs.tjf.sgdp.services.SGDPRabbitExchange;
-import com.totvs.tjf.sgdp.services.data.SGDPDataCommand;
-import com.totvs.tjf.sgdp.services.mask.SGDPMaskCommand;
 
 @EnableBinding(SGDPRabbitExchange.class)
 public class SGDPPublisher {
