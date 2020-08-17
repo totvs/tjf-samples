@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +23,7 @@ import com.tjf.sample.github.messaging.SGDPPublisher;
 import com.totvs.sgdp.sdk.config.SGDPMetadata;
 import com.totvs.sgdp.sdk.services.data.SGDPDataCommand;
 import com.totvs.sgdp.sdk.services.mask.SGDPMaskCommand;
-import com.totvs.tjf.mock.test.MockAuthenticationInfo;
+import com.totvs.tjf.core.common.security.SecurityPrincipal;
 
 @RestController
 @RequestMapping(path = "/sgdp/v1/", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -60,7 +62,7 @@ public class SgdpController {
 
 	@GetMapping("mask")
 	public String mask(@RequestParam() String identification) {
-		MockAuthenticationInfo.setAuthenticationInfo("10");
+		setTenant("10");
 		SGDPMaskCommand maskCommand = new SGDPMaskCommand();
 		maskCommand.setIdentifiers(new HashMap<String, String>());
 		maskCommand.getIdentifiers().put("identification", identification);
@@ -70,7 +72,7 @@ public class SgdpController {
 
 	@GetMapping("data")
 	public String data(@RequestParam() String identification) {
-		MockAuthenticationInfo.setAuthenticationInfo("10");
+		setTenant("10");
 		SGDPDataCommand dataCommand = new SGDPDataCommand();
 		dataCommand.setIdentifiers(new HashMap<String, String>());
 		dataCommand.getIdentifiers().put("identification", identification);
@@ -78,4 +80,10 @@ public class SgdpController {
 		return "Data Command was sent !";
 	}
 
+	private void setTenant(String tenant) {
+		SecurityPrincipal principal = new SecurityPrincipal(null, "", tenant, tenant.split("-")[0]);
+		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(principal, "N/A",
+				null);
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+	}
 }
