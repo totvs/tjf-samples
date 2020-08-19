@@ -1,6 +1,6 @@
 # How To TReports - Instalação via Docker: https://youtu.be/Al9NoY58DJs
 # TReports - Provedor de API: https://www.facebook.com/totvsdevelopers/videos/2355074714610562/?q=treports&epa=SEARCH_BOX
-# RAC - http://localhost:5009/totvs.rac/.well-known/openid-configuration
+# RAC - http://localhost:8080/totvs.rac/.well-known/openid-configuration
 version: '3.6'
 
 networks:
@@ -39,13 +39,13 @@ services:
       Clients__0__ExpirationTimeInMinutes: "20"
       Clients__0__RedirectUrls__0: "http?://rac/totvs.rac/auth-callback"
       Clients__0__RedirectUrls__1: "http?://rac/totvs.rac/assets/silent-renew.html"
-      Clients__0__RedirectUrls__2: "http?://localhost:5009/totvs.rac/auth-callback"
-      Clients__0__RedirectUrls__3: "http?://localhost:5009/totvs.rac/assets/silent-renew.html"
-      Clients__0__RedirectUrls__4: "http?://*.localhost:5009/totvs.rac/auth-callback"
-      Clients__0__RedirectUrls__5: "http?://*.localhost:5009/totvs.rac/assets/silent-renew.html"
+      Clients__0__RedirectUrls__2: "http?://localhost:8080/totvs.rac/auth-callback"
+      Clients__0__RedirectUrls__3: "http?://localhost:8080/totvs.rac/assets/silent-renew.html"
+      Clients__0__RedirectUrls__4: "http?://*.localhost:8080/totvs.rac/auth-callback"
+      Clients__0__RedirectUrls__5: "http?://*.localhost:8080/totvs.rac/assets/silent-renew.html"
       Clients__0__LogoutUrls__0: "http?://rac/totvs.rac"
-      Clients__0__LogoutUrls__1: "http?://localhost:5009/totvs.rac"
-      Clients__0__LogoutUrls__2: "http?://*.localhost:5009/totvs.rac"
+      Clients__0__LogoutUrls__1: "http?://localhost:8080/totvs.rac"
+      Clients__0__LogoutUrls__2: "http?://*.localhost:8080/totvs.rac"
       Clients__0__LogoutUrls__3: "http://rac/totvs.rac"
       Clients__0__Secrets__0__Description: "Senha Padrão (totvs@123)"
       Clients__0__Secrets__0__Value: "totvs@123"
@@ -71,9 +71,9 @@ services:
       Tenants__0__Products__0__ProductName: "TOTVS RAC"
       Tenants__0__Products__1__ProductName: "SampleApp"
 
-      HostUrl: "http://*.localhost:5009/totvs.rac"
+      HostUrl: "http://*.localhost:8080/totvs.rac"
     ports:
-      - "5009:8080"
+      - "8080:8080"
     networks:
       - docker-network-trep
     depends_on:

@@ -20,8 +20,8 @@ public class SecurityWebIT {
 	private MockMvc mockMvc;
 
 	private static String accessApplicationToken;
-	private static final String URL_CONNECT = "http://localhost:5009/totvs.rac/connect/token";
-	private static final String URL_RAC = "http://localhost:5009/totvs.rac/";
+	private static final String URL_CONNECT = "http://localhost:8080/totvs.rac/connect/token";
+	private static final String URL_RAC = "http://localhost:8080/totvs.rac/";
 	private static final String CLIENT_ID = "js_oidc_sampleapp";
 	private static final String CLIENT_SECRET = "totvs@123";
 	private static final String SUPERVISOR_ROLE = "1";
