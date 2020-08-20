@@ -78,7 +78,7 @@
 				</dependencies>
 				<configuration>
 					<packageName>com.tjf.sample.github.securityweb</packageName>
-					<racUrl>http://localhost:8080/totvs.rac</racUrl>
+					<racUrl>http://rac:8080/totvs.rac</racUrl>
 					<clientId>js_oidc_sampleapp</clientId>
 					<clientSecret>totvs@123</clientSecret>
 				</configuration>

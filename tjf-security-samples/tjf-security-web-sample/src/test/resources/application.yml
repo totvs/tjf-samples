@@ -1,9 +1,9 @@
 security:
   access:
     api:
-      permissions-uri: http://localhost:8080/totvs.rac/api/permissions
+      permissions-uri: http://rac:8080/totvs.rac/api/permissions
   oauth2:    
     resource:
       id: 'authorization_api'
       jwk:
-        key-set-uri: http://localhost:8080/totvs.rac/.well-known/openid-configuration/jwks
+        key-set-uri: http://rac:8080/totvs.rac/.well-known/openid-configuration/jwks

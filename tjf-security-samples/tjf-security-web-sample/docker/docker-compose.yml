@@ -15,7 +15,7 @@ services:
       DB_NAME: TOTVSRAC
       DB_USER: sample
       DB_PASS: sample@123
-      PG_PASSWORD: admin
+      PG_PASSWORD: samples@123
     ports: 
       - 5432:5432
     networks:
@@ -28,7 +28,7 @@ services:
       DefaultSchema: "public"
       ApplicationSchema: "public"
       DefaultConnectionString: "PostgreSQL"
-      ConnectionStrings__PostgreSQL: "Data Source=postgres;Port=5432;Database=TOTVSRAC;User ID=postgres;password=admin;Unicode=true;"
+      ConnectionStrings__PostgreSQL: "Data Source=postgres;Port=5432;Database=TOTVSRAC;User ID=postgres;password=samples@123;Unicode=true;"
       RunMigrator: "T"
       
       Clients__0__ClientId: "rac_oidc"
