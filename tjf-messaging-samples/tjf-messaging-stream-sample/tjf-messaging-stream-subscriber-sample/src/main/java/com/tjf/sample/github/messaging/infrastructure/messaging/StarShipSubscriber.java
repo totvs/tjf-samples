@@ -31,10 +31,12 @@ public class StarShipSubscriber {
 		StarShipArrivedEvent starShipArrivedEvent = message.getContent();
 		starShipService.arrived(new StarShip(starShipArrivedEvent.getName()));
 
-		System.out.println("TransactionInfo TransactionId: "
-				+ transactionContext.getTransactionInfo().getTransactionId());
-		System.out.println("TransactionInfo GeneratedBy: "
-				+ transactionContext.getTransactionInfo().getGeneratedBy());
+		if(transactionContext.getTransactionInfo() != null) {
+			System.out.println("TransactionInfo TransactionId: "
+					+ transactionContext.getTransactionInfo().getTransactionId());
+			System.out.println("TransactionInfo GeneratedBy: "
+					+ transactionContext.getTransactionInfo().getGeneratedBy());
+		}
 	}
 
 	@StreamListener(target = INPUT, condition = StarShipLeftEvent.CONDITIONAL_EXPRESSION)
