@@ -42,8 +42,10 @@ spring:
       bindings:
         starship-input:
          destination: starship-test-input
+         binder: local1
         starship-output:
          destination: starship-test-input
+         binder: local1
       binders:
         local1:
           type: jms

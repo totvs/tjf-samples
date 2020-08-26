@@ -16,7 +16,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import com.tjf.sample.github.messaging.PublisherApplication;
-import com.tjf.sample.github.messaging.infrastructure.messaging.StarShipPublisher;
 import com.tjf.sample.github.messaging.test.services.StarShipService;
 
 @RunWith(SpringRunner.class)
@@ -34,9 +33,6 @@ public abstract class MessagingIT {
 
 	@Autowired
 	StarShipService starShipService;
-
-	@Autowired
-	StarShipPublisher samplePublisher;
 
 	public void messagingArrivedTest() throws Exception {
 
@@ -85,20 +81,6 @@ public abstract class MessagingIT {
 		return get(url).param("name", "nave");
 	}
 
-	@ActiveProfiles("jms")
-	public static class MessagingForJmsIT extends MessagingIT {
-
-		@Test(timeout = 30_000)
-		public void messagingArrivedTest() throws Exception {
-			super.messagingArrivedTest();
-		}
-
-		@Test(timeout = 10000)
-		public void messagingWithoutTenantTest() throws Exception {
-			super.messagingWithoutTenantTest();
-		}
-	}
-
 	@ActiveProfiles("rabbit")
 	public static class MessagingForRabbitIT extends MessagingIT {
 
@@ -112,9 +94,23 @@ public abstract class MessagingIT {
 			super.messagingWithoutTenantTest();
 		}
 	}
-	
+
 	@ActiveProfiles("kafka")
 	public static class MessagingForKafkaIT extends MessagingIT {
+
+		@Test(timeout = 30_000)
+		public void messagingArrivedTest() throws Exception {
+			super.messagingArrivedTest();
+		}
+
+		@Test(timeout = 10000)
+		public void messagingWithoutTenantTest() throws Exception {
+			super.messagingWithoutTenantTest();
+		}
+	}
+
+	@ActiveProfiles("jms")
+	public static class MessagingForJmsIT extends MessagingIT {
 
 		@Test(timeout = 30_000)
 		public void messagingArrivedTest() throws Exception {
