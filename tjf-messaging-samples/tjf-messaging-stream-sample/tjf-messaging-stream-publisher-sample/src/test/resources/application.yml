@@ -1,4 +1,15 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info,health,messaging         
+
+server:
+  port: 8080
+
+---                
 spring:
+  profiles: rabbit
   cloud:
     stream:
       defaultBinder: rabbit1
@@ -20,13 +31,55 @@ spring:
           environment:
             spring:
               rabbitmq:
-                host: ${RABBIT_HOST}
+                host: rabbit
 
-management:
-  endpoints:
-    web:
-      exposure:
-        include: info,health,messaging         
+---                
+spring:
+  profiles: jms
+  cloud:
+    stream:
+      defaultBinder: local1
+      bindings:
+        starship-input:
+         destination: starship-test-input
+         binder: local1
+        starship-output:
+         destination: starship-test-input
+         binder: local1
+      binders:
+        local1:
+          type: jms
+          environment:
+            spring:
+              activemq:
+                protocol: tcp
+                host: activemq
+                port: 61616
+                username: user-amq
+                password: password-amq
+
+
+---                
+spring:
+  profiles: kafka
+  cloud:
+    stream:
+      defaultBinder: kafka1
+      bindings:
+        starship-input:
+          destination: starship-test-input
+          group: requests
+        starship-output:
+          destination: starship-test-input
+      binders:                
+        kafka1:
+          type: kafka
+                         
+      kafka:
+        binder:
+          brokers: kafka:9092
+          configuration:
+            auto:
+              offset:
+                reset: earliest  
                 
-server:
-  port: 8080

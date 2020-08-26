@@ -10,18 +10,18 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import com.tjf.sample.github.messaging.PublisherApplication;
-import com.tjf.sample.github.messaging.infrastructure.messaging.StarShipPublisher;
 import com.tjf.sample.github.messaging.test.services.StarShipService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = { PublisherApplication.class })
 @AutoConfigureMockMvc
-public class MessagingIT {
+public abstract class MessagingIT {
 
 	public static final String ARRIVED_URL = "/starship/arrived";
 	public static final String ARRIVED_WITHOUT_TENANT = "/starship/arrivedWithoutTenant";
@@ -34,10 +34,6 @@ public class MessagingIT {
 	@Autowired
 	StarShipService starShipService;
 
-	@Autowired
-	StarShipPublisher samplePublisher;
-
-	@Test(timeout = 30_000)
 	public void messagingArrivedTest() throws Exception {
 
 		sendArrivedMessaging("abc");
@@ -53,7 +49,6 @@ public class MessagingIT {
 		expectedCounter("def", 2);
 	}
 
-	@Test(timeout = 10000)
 	public void messagingWithoutTenantTest() throws Exception {
 		sendArrivedWithoutTenantMessage("Millenium Falcon");
 		expectedCounter(null, 1);
@@ -84,5 +79,47 @@ public class MessagingIT {
 
 	private MockHttpServletRequestBuilder getRequest(String url) {
 		return get(url).param("name", "nave");
+	}
+
+	@ActiveProfiles("rabbit")
+	public static class MessagingForRabbitIT extends MessagingIT {
+
+		@Test(timeout = 30_000)
+		public void messagingArrivedTest() throws Exception {
+			super.messagingArrivedTest();
+		}
+
+		@Test(timeout = 10000)
+		public void messagingWithoutTenantTest() throws Exception {
+			super.messagingWithoutTenantTest();
+		}
+	}
+
+	@ActiveProfiles("kafka")
+	public static class MessagingForKafkaIT extends MessagingIT {
+
+		@Test(timeout = 30_000)
+		public void messagingArrivedTest() throws Exception {
+			super.messagingArrivedTest();
+		}
+
+		@Test(timeout = 10000)
+		public void messagingWithoutTenantTest() throws Exception {
+			super.messagingWithoutTenantTest();
+		}
+	}
+
+	@ActiveProfiles("jms")
+	public static class MessagingForJmsIT extends MessagingIT {
+
+		@Test(timeout = 30_000)
+		public void messagingArrivedTest() throws Exception {
+			super.messagingArrivedTest();
+		}
+
+		@Test(timeout = 10000)
+		public void messagingWithoutTenantTest() throws Exception {
+			super.messagingWithoutTenantTest();
+		}
 	}
 }
