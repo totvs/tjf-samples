@@ -51,6 +51,7 @@ E incluir as dependências abaixo:
 
 Vamos adicionar também o repositório Maven de release do TJF:
 
+```xml
 <repositories>
   <repository>
     <id>central-release</id>
@@ -58,6 +59,7 @@ Vamos adicionar também o repositório Maven de release do TJF:
     <url>http://maven.engpro.totvs.com.br/artifactory/libs-release/</url>
   </repository>
 </repositories>
+```
 
 ## Filtro simples
 
