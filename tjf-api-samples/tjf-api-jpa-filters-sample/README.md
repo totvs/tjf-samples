@@ -49,6 +49,16 @@ E incluir as dependências abaixo:
 
 > Ressaltamos aqui o uso do [Apache Olingo][apache-olingo], mecanismo utilizado na implementação do filtro complexo.
 
+Vamos adicionar também o repositório Maven de release do TJF:
+
+<repositories>
+  <repository>
+    <id>central-release</id>
+    <name>TOTVS Java Framework: Releases</name>
+    <url>http://maven.engpro.totvs.com.br/artifactory/libs-release/</url>
+  </repository>
+</repositories>
+
 ## Filtro simples
 
 Para expor uma entidade através do filtro simples basta implementar nela a interface `SimpleFilterSupport`, conforme exemplo abaixo:
