@@ -13,18 +13,17 @@ import com.tjf.sample.github.model.Jedi;
 import com.tjf.sample.github.model.JediRepository;
 import com.totvs.sgdp.sdk.config.SGDPMetadata;
 import com.totvs.sgdp.sdk.services.data.SGDPDataCommand;
-import com.totvs.sgdp.sdk.services.data.SGDPDataResponse;
 import com.totvs.sgdp.sdk.services.data.SGDPDataService;
 
 @Component
 @Transactional
-public class SWDataService implements SGDPDataService {
+public class SWDataService extends SGDPDataService {
 
 	@Autowired
 	private JediRepository jediRepository;
 
 	@Override
-	public SGDPDataResponse execute(SGDPDataCommand command, SGDPMetadata metadata) {
+	public void execute(SGDPDataCommand command, SGDPMetadata metadata) {
 		int identification = Integer.parseInt(command.getIdentifiers().get("identification"));
 		List<Jedi> list = jediRepository.findByIdentificationEquals(identification);
 		ObjectMapper mapper = new ObjectMapper();
@@ -34,9 +33,8 @@ public class SWDataService implements SGDPDataService {
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
-		SGDPDataResponse response = new SGDPDataResponse(command);
-		response.getData().put("data", mapper.valueToTree(list));
-		return response;
+
+		addData(list, metadata);
 	}
 
 }
