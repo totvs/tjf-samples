@@ -53,7 +53,7 @@ spring:
               exchangeType: headers
           sgdp-output:
             producer:
-              exchangeType: headers 
+              exchangeType: headers
 
       bindings:
         sgdp-audit:

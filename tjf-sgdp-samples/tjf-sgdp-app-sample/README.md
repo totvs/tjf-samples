@@ -27,42 +27,38 @@ Além das propriedades existentes no `application.yml` da aplicação, será nec
 ```yml
   cloud:
     stream:
-
-      kafka:
-        binder:
-          brokers: localhost:9092
-          configuration:
-            auto:
-              offset:
-                reset: earliest       
-
+      defaultBinder: rabbit1
       binders:
-        kafka1:
-          type: kafka
         rabbit1:
           type: rabbit
           environment:
             spring:
-              habbit:
-                host: localhost:5672
-      
+              rabbitmq:
+                host: localhost
+
+      rabbit:
+        bindings:
+          sgdp-input:
+            consumer:
+              exchangeType: headers
+          sgdp-audit:
+            producer:
+              exchangeType: headers
+          sgdp-output:
+            producer:
+              exchangeType: headers
+
       bindings:
-      
         sgdp-audit:
           destination: sgdp-audit
-          contentType: application/json
-          binder: kafka1 
-        
+
         sgdp-input:
           destination: sgdp-commands
           group: sw-sgdp-app
-          binder: rabbit1
+
         sgdp-output:
           destination: sgdp-responses
-          binder: rabbit1          
 ```
-
-OBS: Para executar localmente, devemos alterar o *broker* para `localhost:9092`. 
 
 ## Criando as tabelas
 
@@ -142,15 +138,15 @@ A aplicação deve fornecer um componente que implementa a interface com.totvs.t
 ```java
 @Component
 @Transactional
-public class SWDataService implements SGDPDataService {
+public class SWDataService extends SGDPDataService {
 
 	@Autowired
 	private JediRepository jediRepository;
-	
+
 	@Override
-	public SGDPDataResponse execute(SGDPDataCommand command) {
+	public void execute(SGDPDataCommand command, SGDPMetadata metadata) {
 		int identification = Integer.parseInt(command.getIdentifiers().get("identification"));
-		List <Jedi> list = jediRepository.findByIdentificationEquals(identification);
+		List<Jedi> list = jediRepository.findByIdentificationEquals(identification);
 		ObjectMapper mapper = new ObjectMapper();
 		System.out.println("***** DATA COMMAND *****");
 		try {
@@ -158,9 +154,8 @@ public class SWDataService implements SGDPDataService {
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
-		SGDPDataResponse response = new SGDPDataResponse(command);
-		response.getData().put("data", mapper.valueToTree(list));
-		return response;
+
+		addData(list, metadata);
 	}
 }
 ```
@@ -174,25 +169,27 @@ A aplicação deve fornecer um componente que implementa a interface com.totvs.t
 ```java
 @Component
 @Transactional
-public class SWMaskService implements SGDPMaskService {
+public class SWMaskService extends SGDPMaskService {
 
 	@Autowired
 	private JediRepository jediRepository;
-	
+
 	@Override
-	public SGDPMaskResponse execute(SGDPMaskCommand command) {
+	public void execute(SGDPMaskCommand command, SGDPMetadata metadata) {
 		int identification = Integer.parseInt(command.getIdentifiers().get("identification"));
-		List <Jedi> list = jediRepository.findByIdentificationEquals(identification);
+		List<Jedi> list = jediRepository.findByIdentificationEquals(identification);
 		ObjectMapper mapper = new ObjectMapper();
+
 		System.out.println("***** MASK COMMAND *****");
 		try {
 			System.out.println(mapper.writeValueAsString(list));
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
+
 		list.forEach((jedi) -> {
 			try {
-				mask(jedi, command.getMetadata());
+				mask(jedi, metadata, command.getToVerify());
 				try {
 					System.out.println(mapper.writeValueAsString(jedi));
 				} catch (JsonProcessingException e) {
@@ -203,11 +200,7 @@ public class SWMaskService implements SGDPMaskService {
 				e.printStackTrace();
 			}
 		});
-		SGDPMaskResponse response = new SGDPMaskResponse(command);
-		response.setRows(list.size());
-		return response;
 	}
-
 }
 ```
 
