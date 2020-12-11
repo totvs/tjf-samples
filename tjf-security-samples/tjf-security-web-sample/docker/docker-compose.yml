@@ -1,6 +1,7 @@
 # How To TReports - Instalação via Docker: https://youtu.be/Al9NoY58DJs
 # TReports - Provedor de API: https://www.facebook.com/totvsdevelopers/videos/2355074714610562/?q=treports&epa=SEARCH_BOX
-# RAC - http://localhost:8080/totvs.rac/.well-known/openid-configuration
+# No local mudar o hosts do sistema para apontar o rac para 121.0.0.1(localhost)
+# RAC - http://rac:8080/totvs.rac/.well-known/openid-configuration
 version: '3.6'
 
 networks:
@@ -71,7 +72,7 @@ services:
       Tenants__0__Products__0__ProductName: "TOTVS RAC"
       Tenants__0__Products__1__ProductName: "SampleApp"
 
-      HostUrl: "http://*.localhost:8080/totvs.rac"
+      HostUrl: "http://*.rac:8080/totvs.rac"
     ports:
       - "8080:8080"
     networks:
