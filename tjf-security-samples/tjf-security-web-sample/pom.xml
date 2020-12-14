@@ -88,7 +88,7 @@
 
 	<profiles>
 		<profile>
-			<id>integration-test-report-removido-temporariamente</id> <!-- TJF-809 - tjf-security-web: Erro no teste integrado na ultima versão do RAC -->
+			<id>integration-test-report</id>
 			<build>
 				<plugins>
 					<plugin>
