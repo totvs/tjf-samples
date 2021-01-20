@@ -24,7 +24,7 @@ public class SWDataService extends SGDPDataService {
 
 	@Override
 	public void execute(SGDPDataCommand command, SGDPMetadata metadata) {
-		int identification = Integer.parseInt(command.getIdentifiers().get("identification"));
+		String identification = command.getIdentifiers().get("identification");
 		List<Jedi> list = jediRepository.findByIdentificationEquals(identification);
 		ObjectMapper mapper = new ObjectMapper();
 		System.out.println("***** DATA COMMAND *****");

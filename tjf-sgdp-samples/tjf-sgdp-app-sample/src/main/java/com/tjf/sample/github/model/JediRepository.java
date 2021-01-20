@@ -12,6 +12,6 @@ import com.totvs.tjf.api.jpa.repository.ApiJpaRepository;
 @Transactional
 public interface JediRepository extends JpaRepository<Jedi, Integer>, ApiJpaRepository<Jedi> {
 
-	List<Jedi> findByIdentificationEquals(int identification);
+	List<Jedi> findByIdentificationEquals(String identification);
 
 }

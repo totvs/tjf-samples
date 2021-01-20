@@ -25,7 +25,7 @@ public class SWMaskService extends SGDPMaskService {
 
 	@Override
 	public void execute(SGDPMaskCommand command, SGDPMetadata metadata) {
-		int identification = Integer.parseInt(command.getIdentifiers().get("identification"));
+		String identification = command.getIdentifiers().get("identification");
 		List<Jedi> list = jediRepository.findByIdentificationEquals(identification);
 		ObjectMapper mapper = new ObjectMapper();
 

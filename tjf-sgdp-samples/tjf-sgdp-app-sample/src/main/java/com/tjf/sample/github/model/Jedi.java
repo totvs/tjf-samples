@@ -2,8 +2,6 @@ package com.tjf.sample.github.model;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
@@ -12,6 +10,7 @@ import com.totvs.sgdp.sdk.annotations.SGDPCode;
 import com.totvs.sgdp.sdk.annotations.SGDPData;
 import com.totvs.sgdp.sdk.annotations.SGDPDescription;
 import com.totvs.sgdp.sdk.annotations.SGDPPurpose;
+import com.totvs.sgdp.sdk.annotations.SGDPRole;
 import com.totvs.sgdp.sdk.annotations.SGDPType;
 import com.totvs.sgdp.sdk.audit.SGDPSupport;
 
@@ -24,11 +23,12 @@ import lombok.Setter;
 @EntityListeners(SGDPSupport.class)
 @SGDPDescription("Jedi")
 @SGDPCode("Validar o LGPD do TJF, sobre a identificação, auditoria e anonimização de dados pessoais dos Jedi")
+@SGDPRole(Master.class)
 public class Jedi {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	@SGDPData(allowsAnonymization = true, isSensitive = true, type = SGDPType.CPF)
+	private String id;
 
 	@NotNull
 	@SGDPDescription("Nome do Jedi")
@@ -51,4 +51,5 @@ public class Jedi {
 	@SGDPData(isSensitive = true)
 	@SGDPDescription("Gender")
 	private String gender;
+
 }
