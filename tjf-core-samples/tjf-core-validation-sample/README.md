@@ -18,7 +18,7 @@ Para utilização do componente será necessário alterar o _parent_ e inserir a
 <parent>
   <groupId>com.totvs.tjf</groupId>
   <artifactId>tjf-boot-starter</artifactId>
-  <version>2.12.0-RELEASE</version>
+  <version>2.13.0-RELEASE</version>
 </parent>
 ```
 
