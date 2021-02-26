@@ -1,6 +1,10 @@
 security:
   access:
     api:
+# Usando multiplas JWK - Exemplo: RAC e Fluig
+#      jwk-uris:
+#      - <O URI do Authorization Service para obter chaves de verificação para validação do token JWT.> 
+#      - <O URI do Authorization Service para obter chaves de verificação para validação do token JWT.> 
       permissions-uri: <O URI do Authorization Service para validação da permission.>
   oauth2:    
     resource:
