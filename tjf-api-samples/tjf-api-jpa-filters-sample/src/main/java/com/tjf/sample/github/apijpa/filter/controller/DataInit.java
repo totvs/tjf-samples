@@ -29,14 +29,10 @@ public class DataInit {
 	@PostConstruct
 	@Transactional
 	private void init() {
-		EmployeeModel john = new EmployeeModel();
-		john.setEmployeeId(1);
-		john.setName("John");
+		EmployeeModel john = new EmployeeModel(1, "John");
 		employeeRepos.saveAndFlush(john);
 
-		EmployeeModel mary = new EmployeeModel();
-		mary.setEmployeeId(2);
-		mary.setName("Mary");
+		EmployeeModel mary = new EmployeeModel(2, "Mary");
 		employeeRepos.saveAndFlush(mary);
 
 		boolean isJohn = true;
