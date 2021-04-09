@@ -32,7 +32,7 @@ Adicione o _parent_ do TJF:
 <parent>
   <groupId>com.totvs.tjf</groupId>
   <artifactId>tjf-boot-starter</artifactId>
-  <version>2.16.0-RELEASE</version>
+  <version>3.0.0-SNAPSHOT</version>
 </parent>
 ```
 

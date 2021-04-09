@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>com.totvs.tjf</groupId>
 		<artifactId>tjf-boot-starter</artifactId>
-		<version>2.0.0-RELEASE</version>
+		<version>3.0.0-SNAPSHOT</version>
 	</parent>
 
 	<groupId>br.com.tjf</groupId>
