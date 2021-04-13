@@ -1,5 +1,7 @@
 package com.tjf.sample.github.repositoryaggregate.api;
 
+import java.util.Collection;
+
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +30,7 @@ public class PersonController {
 	}
 
 	@GetMapping
-	public AggregateCollectionResult<Person> readPageable(@NotNull final Pageable pageable) {
-		return repository.findAll(pageable, null, null);
+	public Collection<Person> readPageable(@NotNull final Pageable pageable) {
+		return repository.findAll(pageable, null, null).getItems();
 	}
 }

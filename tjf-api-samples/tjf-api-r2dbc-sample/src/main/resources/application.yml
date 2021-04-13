@@ -1,0 +1,37 @@
+server:
+  port: 8380        
+
+tjf:
+  api:
+    filter:
+      fields:
+        enabled: true
+
+
+## Configuração do JPA
+
+#spring:
+
+#  datasource:
+#    driver-class-name: org.h2.Driver
+#    url: jdbc:h2:mem:cash-account;DB_CLOSE_ON_EXIT=FALSE;AUTO_RECONNECT=TRUE;
+#    username: sa
+  
+#  jpa:
+#    database-platform: org.hibernate.dialect.H2Dialect
+
+
+## Configuração do R2DBC  
+
+spring:
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/swfamilytree
+    username: postgres
+    password: postgres
+
+logging:
+  level:
+    org:
+      springframework:
+        data:
+          r2dbc: DEBUG
