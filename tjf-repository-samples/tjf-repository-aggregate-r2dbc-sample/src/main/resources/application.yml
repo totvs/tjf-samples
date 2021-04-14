@@ -1,0 +1,35 @@
+## Configuração do JPA 
+
+#spring:
+
+  # Configurações banco de dados
+#  datasource:
+#    driver-class-name: org.postgresql.Driver
+#    url: jdbc:postgresql://localhost:5432/swfamilytree
+#    username: postgres
+#    password: postgres
+
+  # Configurações JPA
+#  jpa:
+#    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+#    properties:
+#      hibernate:
+#        jdbc:
+#          lob:
+#            non_contextual_creation: true
+
+## Configuração do R2DBC  
+
+spring:
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/swfamilytree
+    username: postgres
+    password: postgres
+
+logging:
+  level:
+    org:
+      springframework:
+        data:
+          r2dbc: DEBUG
+            

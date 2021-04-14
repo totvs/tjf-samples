@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: swfamilytree
+    ports:
+      - 5432:5432
+  
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: sample@test.com
+      PGADMIN_DEFAULT_PASSWORD: postgres
+    ports:
+      - 5480:80
