@@ -1,0 +1,23 @@
+spring:
+
+#  r2dbc:
+#    url: r2dbc:h2:mem:///starwarsdb
+#    username: postgres
+#    password: postgres
+
+  flyway:
+    #url: jdbc:h2:mem:starwarsdb
+    #user: sa
+    #password: 
+    #driver-class-name: org.h2.Driver
+    enabled: true
+    migrate: true
+    locations: classpath:db/migration
+    schemas: TATOOINE, ALDERAAN, BESPIN
+    baselineOnMigrate: true
+
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:postgresql://localhost:5432/swfamilytree
+    username: postgres
+    password: postgres
