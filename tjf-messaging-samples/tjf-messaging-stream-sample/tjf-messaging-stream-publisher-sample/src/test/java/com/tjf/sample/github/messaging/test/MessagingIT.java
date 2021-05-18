@@ -5,20 +5,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.HashMap;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import com.tjf.sample.github.messaging.PublisherApplication;
 import com.tjf.sample.github.messaging.test.services.StarShipService;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest(classes = { PublisherApplication.class })
 @AutoConfigureMockMvc
 public abstract class MessagingIT {
@@ -84,12 +82,14 @@ public abstract class MessagingIT {
 	@ActiveProfiles("rabbit")
 	public static class MessagingForRabbitIT extends MessagingIT {
 
-		@Test(timeout = 30_000)
+		@Test
+		@Timeout(30_000)
 		public void messagingArrivedTest() throws Exception {
 			super.messagingArrivedTest();
 		}
 
-		@Test(timeout = 10000)
+		@Test
+		@Timeout(30_000)
 		public void messagingWithoutTenantTest() throws Exception {
 			super.messagingWithoutTenantTest();
 		}
@@ -98,12 +98,14 @@ public abstract class MessagingIT {
 	@ActiveProfiles("kafka")
 	public static class MessagingForKafkaIT extends MessagingIT {
 
-		@Test(timeout = 30_000)
+		@Test
+		@Timeout(30_000)
 		public void messagingArrivedTest() throws Exception {
 			super.messagingArrivedTest();
 		}
 
-		@Test(timeout = 10000)
+		@Test
+		@Timeout(30_000)
 		public void messagingWithoutTenantTest() throws Exception {
 			super.messagingWithoutTenantTest();
 		}
@@ -112,12 +114,14 @@ public abstract class MessagingIT {
 	@ActiveProfiles("jms")
 	public static class MessagingForJmsIT extends MessagingIT {
 
-		@Test(timeout = 30_000)
+		@Test
+		@Timeout(30_000)
 		public void messagingArrivedTest() throws Exception {
 			super.messagingArrivedTest();
 		}
 
-		@Test(timeout = 10000)
+		@Test
+		@Timeout(30_000)
 		public void messagingWithoutTenantTest() throws Exception {
 			super.messagingWithoutTenantTest();
 		}
