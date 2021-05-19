@@ -36,12 +36,12 @@ spring:
 #                         
 #      kafka:
 #        binder:
-#          brokers: localhost:9092
+#          replication-factor: 1
+#          brokers: kafka:9092
 #          configuration:
 #            auto:
 #              offset:
 #                reset: earliest  
-
 
 ######## JMS
 
