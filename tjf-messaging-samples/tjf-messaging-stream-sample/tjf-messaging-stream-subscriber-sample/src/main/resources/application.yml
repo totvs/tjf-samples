@@ -8,6 +8,8 @@ spring:
         starship-input:
           destination: starship-input
           group: requests
+          consumer:
+            max-attempts: 1
         starship-output:
           destination: starship-input
       binders:
@@ -17,7 +19,8 @@ spring:
             spring:
               rabbit:
                 host: localhost
- 
+
+
 ######## KAFKA
                
 #spring:
@@ -36,6 +39,7 @@ spring:
 #                         
 #      kafka:
 #        binder:
+#          replication-factor: 1
 #          brokers: localhost:9092
 #          configuration:
 #            auto:

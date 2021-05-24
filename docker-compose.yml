@@ -1,46 +1,14 @@
 version: '3'
 
-networks:
-  docker-network:
-    driver: bridge
-
 services:
   postgres:
     image: sameersbn/postgresql:10-1
     restart: always
-    container_name: tjf-postgres
-    networks:
-      - docker-network
     environment:
-      DB_NAME: tjf-aggregate, tjf-tenant-schema, tjf-tenant-discriminator
-      DB_USER: postgres
-      DB_PASS: jedi
-      PG_PASSWORD: samples@123
+      DB_NAME: communication
+      DB_USER: comm
+      DB_PASS: totvs@123
+      PG_PASSWORD: totvs@123
     ports: 
       - 5432:5432
 
-  rabbitMq:
-    image: rabbitmq:3
-    container_name: tjf-rabbitmq
-    networks:
-      - docker-network
-    ports:
-      - 15672:15672
-      - 5672:5672
-
-  samples:
-    image: docker.totvs.io/tjf/compile:latest
-    container_name: tjf-samples
-    command: mvn -f tjf-samples verify
-    networks:
-      - docker-network
-    environment:
-      DATABASE_URL: "jdbc:postgresql://tjf-postgres:5432"
-      DATABASE_USER: "postgres"
-      DATABASE_PASSWORD: "samples@123"
-      RABBIT_HOST: "tjf-rabbitmq"
-    depends_on:
-      - postgres
-      - rabbitMq
-    volumes: 
-      - ${VOLUME}:/maven-repo/tjf-samples #Altere o valor ${VOLUME} para o seu diretorio com os fontes dos samples TJF

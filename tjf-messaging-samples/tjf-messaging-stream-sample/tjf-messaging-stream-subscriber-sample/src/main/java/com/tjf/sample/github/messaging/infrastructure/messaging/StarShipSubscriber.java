@@ -13,6 +13,12 @@ import com.tjf.sample.github.messaging.services.StarShipService;
 import com.totvs.tjf.core.message.TOTVSMessage;
 import com.totvs.tjf.messaging.TransactionContext;
 
+import io.cloudevents.CloudEvent;
+import io.cloudevents.core.format.EventFormat;
+import io.cloudevents.core.provider.EventFormatProvider;
+
+import io.cloudevents.jackson.JsonFormat;
+
 @EnableBinding(StarShipExchange.class)
 public class StarShipSubscriber {
 
@@ -23,6 +29,9 @@ public class StarShipSubscriber {
 
 	public StarShipSubscriber(StarShipService starShipService) {
 		this.starShipService = starShipService;
+		
+		
+		EventFormatProvider.getInstance().registerFormat(new JsonFormat());
 	}
 
 	@StreamListener(target = INPUT, condition = StarShipArrivedEvent.CONDITIONAL_EXPRESSION)
@@ -37,6 +46,11 @@ public class StarShipSubscriber {
 			System.out.println("TransactionInfo GeneratedBy: "
 					+ transactionContext.getTransactionInfo().getGeneratedBy());
 		}
+	}
+
+	@StreamListener(target = INPUT, condition = "headers['type']=='StarShipArrivedCloudEvent'")
+	public void subscribeArrived(CloudEvent event) {
+		System.out.println(event.getData());
 	}
 
 	@StreamListener(target = INPUT, condition = StarShipLeftEvent.CONDITIONAL_EXPRESSION)
