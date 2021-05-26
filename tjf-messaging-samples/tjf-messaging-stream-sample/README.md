@@ -122,6 +122,7 @@ _StarShipArrivedEvent.java_
 public class StarShipArrivedEvent {
 	public static final transient String NAME = "StarShipArrivedEvent";
 	public static final transient String CONDITIONAL_EXPRESSION = "headers['type']=='" + NAME + "'";
+	public static final transient String CONDITIONAL_EXPRESSION_CLOUDEVENT = "headers['type']=='" + NAME + "CloudEvent'";
 
 	private String name;
 }
@@ -411,6 +412,27 @@ public class StarShipService {
 }
 
 ```
+## CloudEvent
+
+Vamos criar um exemplo de recibemento de mensagens usando CloudEvent, insira no nosso `subscriber` o metodo abaixo:
+
+```java
+	@StreamListener(target = INPUT, condition = StarShipArrivedEvent.CONDITIONAL_EXPRESSION_CLOUDEVENT)
+	public void subscribeArrived(CloudEvent event) {
+		if (transactionContext.getTransactionInfo() != null) {
+			System.out.println("TransactionInfo TaskId: " + transactionContext.getTransactionInfo().getTaskId());
+		}
+		System.out.println("Current tenant: " + SecurityDetails.getTenant());
+
+		PojoCloudEventData<StarShipArrivedEvent> cloudEventData = mapData(event,
+				PojoCloudEventDataMapper.from(objectMapper, StarShipArrivedEvent.class));
+
+		StarShipArrivedEvent starShipArrivedEvent = cloudEventData.getValue();
+		starShipService.arrived(new StarShip(starShipArrivedEvent.getName()));
+	}
+```
+
+Para mais informações sobre o recebimento de CloudEvents, veja a documentação do [tjf-messaging-stream] e a [RFC000011].
 
 ## Vamos testar
 
@@ -439,6 +461,32 @@ Starship ranking: 4
 Counter by tenant: 0
 ```
 
+Agora para testar nosso método que recebe um CloudEvent, acesse o RabbitMQ Management, no nosso exchange starship-input, vamos publicar uma mensagem:
+
+```
+Routing key: #
+Headers: Type = StarShipArrivedCloudEvent
+         contentType = application/cloudevents+json
+Payload: 
+{
+    "specversion" : "1.0",
+    "id" : "acd12cac-73a7-4c85-88ed-971881e8c9c2",
+    "type" : "UserCreated",
+    "source" : "rac.totvs.app/user",
+    "subject" : "accountUser",
+    "time" : "2019-07-05T17:00:00Z",
+    "tenantid": "12345678-1234-1234-1234-123456789012",
+    "transactionid": "778972d3-76a8-4276-8c76-567685db8229",
+    "correlationid": "6e8bc430-9c3a-11d9-9669-0800200c9a66",
+    "locale": "pt-BR",
+    "datacontenttype" : "application/json",
+    "dataschema": "https://schemas.totvs.io/events",
+    "data" : {"name": "nave1"},
+    "processinfo": {"taskId": "123"}
+}
+```
+Para mais informações sobre a definição dos campos, veja a documentação do padrão de CloudEvents no Modelo base de mensagem para comunicação entre serviços da TOTVS na [RFC000011].
+
 ## Que a força esteja com você!
 
 Com isso terminamos nosso _sample_, fique a vontade para enriquecê-lo utilizando outros recursos propostos pela biblioteca [__Messaging Stream__][tjf-messaging-stream] e enviar sugestões e melhorias para o [__TOTVS Java Framework__][tjf].
@@ -448,3 +496,4 @@ Com isso terminamos nosso _sample_, fique a vontade para enriquecê-lo utilizand
 [spring]: https://spring.io
 [spring-initializr]: https://start.spring.io
 [tjf-boot-starter]: https://tjf.totvs.com.br/wiki/tjf-boot-starter
+[RFC000011]: https://arquitetura.totvs.io/architectural-records/RFCs/Corporativas/RFC000011/

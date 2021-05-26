@@ -18,8 +18,6 @@ import com.totvs.tjf.messaging.TransactionContext;
 
 import io.cloudevents.CloudEvent;
 import io.cloudevents.core.data.PojoCloudEventData;
-import io.cloudevents.core.provider.EventFormatProvider;
-import io.cloudevents.jackson.JsonFormat;
 import io.cloudevents.jackson.PojoCloudEventDataMapper;
 
 @EnableBinding(StarShipExchange.class)
@@ -51,7 +49,7 @@ public class StarShipSubscriber {
 		starShipService.arrived(new StarShip(starShipArrivedEvent.getName()));
 	}
 
-	@StreamListener(target = INPUT, condition = "headers['type']=='StarShipArrivedCloudEvent'")
+	@StreamListener(target = INPUT, condition = StarShipArrivedEvent.CONDITIONAL_EXPRESSION_CLOUDEVENT)
 	public void subscribeArrived(CloudEvent event) {
 		if (transactionContext.getTransactionInfo() != null) {
 			System.out.println("TransactionInfo TaskId: " + transactionContext.getTransactionInfo().getTaskId());

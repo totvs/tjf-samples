@@ -13,6 +13,7 @@ public class StarShipArrivedEvent {
 
 	public static final transient String NAME = "StarShipArrivedEvent";
 	public static final transient String CONDITIONAL_EXPRESSION = "headers['type']=='" + NAME + "'";
+	public static final transient String CONDITIONAL_EXPRESSION_CLOUDEVENT = "headers['type']=='" + NAME + "CloudEvent'";
 
 	private String name;
 }
