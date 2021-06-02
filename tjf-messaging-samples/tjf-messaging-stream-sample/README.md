@@ -482,7 +482,8 @@ Payload:
     "datacontenttype" : "application/json",
     "dataschema": "https://schemas.totvs.io/events",
     "data" : {"name": "nave1"},
-    "processinfo": {"taskId": "123"}
+    "taskid": "123",
+    "roles": "roleA,roleB"
 }
 ```
 Para mais informações sobre a definição dos campos, veja a documentação do padrão de CloudEvents no Modelo base de mensagem para comunicação entre serviços da TOTVS na [RFC000011].
