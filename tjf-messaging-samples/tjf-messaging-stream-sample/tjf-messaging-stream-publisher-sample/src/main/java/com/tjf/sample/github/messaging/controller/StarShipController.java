@@ -57,7 +57,7 @@ public class StarShipController {
 		System.out.println("Current tenant: " + SecurityDetails.getTenant() + "\n");
 
 		StarShipArrivedEvent starShipEvent = new StarShipArrivedEvent(name);
-		samplePublisher.publishCloudEvent(starShipEvent, StarShipArrivedEvent.NAME);
+		samplePublisher.publishCloudEvent(starShipEvent, StarShipArrivedEvent.NAME, name);
 
 		return "The identification of the arrived starship " + name + " of tenant " + tenant + " was sent!";
 	}

@@ -36,42 +36,16 @@ public class StarShipPublisher {
 		new TOTVSMessage<T>(eventName, event, transactionInfo).sendTo(exchange.output());
 	}
 
-	public <T> void publishCloudEvent(T event, String eventName) {
-
-		var data = JsonCloudEventData.wrap(mapper.valueToTree(event));
-
+	public <T> void publishCloudEvent(T event, String eventName, String id) {
 		var messageId = UUID.randomUUID().toString();
-
+		var data = JsonCloudEventData.wrap(mapper.valueToTree(event));
 		var cloudEvent = CloudEventBuilder.v1()
 				.withId(messageId)
 				.withType(eventName)
-				.withSource(URI.create(messageId))
+				.withSource(URI.create(id))
 				.withData(data)
 				.build();
 
-		// var rr = GenericStructuredMessageReader.from(cloudEvent, )
-
-		//var payload = EventFormatProvider.getInstance().resolveFormat("application/cloudevents+json").serialize(cloudEvent);
-
-		//var msg = MessageBuilder.withPayload(payload).setHeader("type", eventName).setHeader("contentType", "application/cloudevents+json").build();
-
-		// exchange.output().send(msg);
-
-		// exchange.output().send(GenericStructuredMessageReader.from(rr,
-		// "appication/cloudevent+json"));
-
-		send(exchange.output(), cloudEvent);
-	}
-
-	public static void send(MessageChannel chanel, CloudEvent cloudEvent) {
-
-		//var payload = EventFormatProvider.getInstance().resolveFormat("application/cloudevents+json").serialize(cloudEvent);
-
-		//var message = MessageBuilder.withPayload(payload).setHeader("type", cloudEvent.getType())
-		//		.setHeader("contentType", "application/cloudevents+json").build();
-
-		//chanel.send(message);
-		
-		chanel.send(MessageBuilder.withPayload(cloudEvent).build());
+		exchange.output().send(MessageBuilder.withPayload(cloudEvent).build());
 	}
 }
