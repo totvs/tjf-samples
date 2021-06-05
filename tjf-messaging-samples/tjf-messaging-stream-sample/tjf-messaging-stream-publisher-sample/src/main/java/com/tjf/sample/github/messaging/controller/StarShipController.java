@@ -21,17 +21,19 @@ import com.tjf.sample.github.messaging.infrastructure.messaging.StarShipPublishe
 import com.totvs.tjf.core.common.security.SecurityDetails;
 import com.totvs.tjf.core.common.security.SecurityPrincipal;
 import com.totvs.tjf.core.message.TransactionInfo;
+import com.totvs.tjf.messaging.TransactionContext;
 
 @RestController
 @RequestMapping(path = "/starship")
 public class StarShipController {
 
 	private StarShipPublisher samplePublisher;
-
 	private static Map<String, Status> transactions = new HashMap<String, Status>();
+	private TransactionContext transactionContext;
 
-	public StarShipController(StarShipPublisher samplePublisher) {
+	public StarShipController(StarShipPublisher samplePublisher, TransactionContext transactionContext) {
 		this.samplePublisher = samplePublisher;
+		this.transactionContext = transactionContext;
 	}
 
 	@GetMapping("/arrived")
@@ -52,12 +54,13 @@ public class StarShipController {
 	String starShipArrivedCloudEvent(@RequestParam("name") String name, @RequestParam("tenant") String tenant) {
 
 		this.setTenant(tenant);
+		this.setTransactionContext(new TransactionInfo(null, UUID.randomUUID().toString(), null, null));
 
 		System.out.println("\nStarship arrived name: " + name);
 		System.out.println("Current tenant: " + SecurityDetails.getTenant() + "\n");
 
 		StarShipArrivedEvent starShipEvent = new StarShipArrivedEvent(name);
-		samplePublisher.publishCloudEvent(starShipEvent, StarShipArrivedEvent.NAME, name);
+		samplePublisher.publishCloudEvent(starShipEvent, "StarShipArrivedEventCloudEvent", name);
 
 		return "The identification of the arrived starship " + name + " of tenant " + tenant + " was sent!";
 	}
@@ -129,6 +132,10 @@ public class StarShipController {
 		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(principal, "N/A",
 				null);
 		SecurityContextHolder.getContext().setAuthentication(authentication);
+	}
+	
+	private void setTransactionContext(TransactionInfo transactionInfo) {
+		transactionContext.setTransactionInfo(transactionInfo);
 	}
 
 	enum Status {

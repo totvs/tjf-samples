@@ -414,7 +414,52 @@ public class StarShipService {
 ```
 ## CloudEvent
 
-Vamos criar um exemplo de recibemento de mensagens usando CloudEvent, insira no nosso `subscriber` o metodo abaixo:
+Vamos criar um exemplo de envio de mensagens CloudEvent, vamos criar um novo _endpoint_ no controller do no nosso projeto de `publisher`, conforme abaixo:
+
+```java
+[...]
+public class StarShipController {
+	[...]
+	@GetMapping("/arrived/cloudevent")
+	String starShipArrivedCloudEvent(@RequestParam("name") String name, @RequestParam("tenant") String tenant) {
+
+		this.setTenant(tenant);
+		this.setTransactionContext(new TransactionInfo(null, UUID.randomUUID().toString(), null, null));
+
+		System.out.println("\nStarship arrived name: " + name);
+		System.out.println("Current tenant: " + SecurityDetails.getTenant() + "\n");
+
+		StarShipArrivedEvent starShipEvent = new StarShipArrivedEvent(name);
+		samplePublisher.publishCloudEvent(starShipEvent, "StarShipArrivedEventCloudEvent", name);
+
+		return "The identification of the arrived starship " + name + " of tenant " + tenant + " was sent!";
+	}
+}
+```
+> Foi criado apenas para exemplificar o método setTransactionContext, que vai setar no contexto uma TransactionInfo com taskId para ser consultada do contexto setado automaticamente no recebimento do CloudEvent. Mais informações sobre transações, multi-tenância e localização em [tjf-messaging-stream].
+
+E vamos criar no publisher o metodo de exemplo para envio de mensagens CloudEvent:
+
+```java
+[...]
+public class StarShipPublisher {
+	[...]
+	public <T> void publishCloudEvent(T event, String eventName, String id) {
+		var messageId = UUID.randomUUID().toString();
+		var data = JsonCloudEventData.wrap(mapper.valueToTree(event));
+		var cloudEvent = CloudEventBuilder.v1()
+				.withId(messageId)
+				.withType(eventName)
+				.withSource(URI.create(id))
+				.withData(data)
+				.build();
+
+		exchange.output().send(MessageBuilder.withPayload(cloudEvent).build());
+	}
+}
+```
+
+Agora vamos criar um exemplo de recibemento de mensagens usando CloudEvent, insira no nosso `subscriber` o metodo abaixo:
 
 ```java
 	@StreamListener(target = INPUT, condition = StarShipArrivedEvent.CONDITIONAL_EXPRESSION_CLOUDEVENT)
@@ -432,7 +477,7 @@ Vamos criar um exemplo de recibemento de mensagens usando CloudEvent, insira no 
 	}
 ```
 
-Para mais informações sobre o recebimento de CloudEvents, veja a documentação do [tjf-messaging-stream] e a [RFC000011].
+> Para mais informações sobre o recebimento de CloudEvents, veja a documentação do [tjf-messaging-stream] e a [RFC000011].
 
 ## Vamos testar
 
@@ -486,7 +531,16 @@ Payload:
     "roles": "roleA,roleB"
 }
 ```
-Para mais informações sobre a definição dos campos, veja a documentação do padrão de CloudEvents no Modelo base de mensagem para comunicação entre serviços da TOTVS na [RFC000011].
+> Para mais informações sobre a definição dos campos, veja a documentação do padrão de CloudEvents no Modelo base de mensagem para comunicação entre serviços da TOTVS na [RFC000011].
+
+Você também pode usar o _endpoint_ que criamos para envio de CloudEvents, pro exemplo http://localhost:8080/starship/arrived/cloudevent?name=nave1&tenant=2 você verá algo como abaixo no console do app `subscriber`:
+
+```console
+TransactionInfo TaskId: f2d4bb79-448f-425a-906d-060e227c9c21
+Current tenant: 2
+StarShip arrived!
+Starship name: nave1
+```
 
 ## Que a força esteja com você!
 
