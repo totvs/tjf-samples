@@ -527,7 +527,6 @@ Payload:
     "datacontenttype" : "application/json",
     "dataschema": "https://schemas.totvs.io/events",
     "data" : {"name": "nave1"},
-    "taskid": "123",
     "roles": "roleA,roleB"
 }
 ```
@@ -542,12 +541,6 @@ StarShip arrived!
 Starship name: nave1
 ```
 
-## Que a força esteja com você!
-
-Com isso terminamos nosso _sample_, fique a vontade para enriquecê-lo utilizando outros recursos propostos pela biblioteca [__Messaging Stream__][tjf-messaging-stream] e enviar sugestões e melhorias para o [__TOTVS Java Framework__][tjf].
-
-[tjf-messaging-stream]: https://tjf.totvs.com.br/wiki/tjf-messaging-stream
-[tjf]: https://tjf.totvs.com.br
 [spring]: https://spring.io
 [spring-initializr]: https://start.spring.io
 [tjf-boot-starter]: https://tjf.totvs.com.br/wiki/tjf-boot-starter
