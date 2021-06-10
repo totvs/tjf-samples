@@ -1,0 +1,39 @@
+tjf:
+  lscloud:
+    module-id: "72e6db44-c952-11eb-b8bc-0242ac130003"
+
+#spring:
+#  cloud:
+#    stream:
+#      defaultBinder: rabbit1
+#      binders:
+#        rabbit1:
+#          type: rabbit
+#          environment:
+#            spring:
+#              rabbitmq:
+#                host: ${MQ_HOST}
+#                port: ${MQ_PORT}
+#                username: ${MQ_USERNAME}
+#                password: ${MQ_PASSWORD}
+#                virtual-host: ${MQ_VHOST}
+
+#      bindings:
+#        lscloud-consumer:
+#          destination: LogLicense.input.dlq
+#          binder: rabbit1
+#        lscloud-producer:
+#          destination: LogLicense.input
+#          binder: rabbit1
+
+#      rabbit:
+#        bindings:
+#          lscloud-consumer:
+#            consumer:
+#              exchangeType: topic
+#          lscloud-producer:
+#            producer:
+#              exchangeType: topic
+
+server:
+  port: 8080
