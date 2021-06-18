@@ -44,7 +44,7 @@ public class ApiCoreExceptionIT {
 
 	@Test
 	public void createStarshipWithExceptionTest() throws JSONException, URISyntaxException {
-		String expectedResult = "{\"code\":\"StarshipCreateConstraintException\",\"message\":\"It's a trap\",\"detailedMessage\":\"The force is not with you\",\"details\":[{\"code\":\"Starship.description.Size\",\"message\":\"Ship description must not be less than 1 or greater than 15\",\"detailedMessage\":\"description: A sucata mais veloz da galaxia\"}]}";
+		String expectedResult = "{\"code\":\"StarshipCreateConstraintException\",\"message\":\"It's a trap\",\"detailedMessage\":\"The force is not with you\",\"type\":\"error\",\"details\":[{\"code\":\"Starship.description.Size\",\"message\":\"Ship description must not be less than 1 or greater than 15\",\"detailedMessage\":\"description: A sucata mais veloz da galaxia\"}]}";
 		URI uri = new URI("/api/v1/starship/create");
 
 		HttpHeaders headers = new HttpHeaders();

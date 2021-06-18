@@ -49,7 +49,8 @@ public class ApiContextIT {
 		mockMvc.perform(get("/api/v1/jedis/99").contentType(APPLICATION_JSON)).andExpect(status().isNotFound())
 				.andExpect(jsonPath("$.code", is("JediNotFoundException")))
 				.andExpect(jsonPath("$.message", is("Jedi n\u00e3o encontrado")))
-				.andExpect(jsonPath("$.detailedMessage", is("Jedi de c\u00f3digo 99 n\u00e3o foi encontrado")));
+				.andExpect(jsonPath("$.detailedMessage", is("Jedi de c\u00f3digo 99 n\u00e3o foi encontrado")))
+				.andExpect(jsonPath("$.type", is("error")));
 	}
 
 	@Test
