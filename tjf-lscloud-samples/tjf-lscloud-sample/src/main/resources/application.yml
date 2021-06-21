@@ -1,0 +1,28 @@
+tjf:
+  lscloud:
+    module-id: "1234"
+    group-id: "1234"
+    slot-id: "1234"
+
+spring:
+  cloud:
+    stream:
+
+      bindings:
+        lscloud-consumer:
+          destination: LogLicense.input.dlq
+
+        lscloud-producer:
+          destination: LogLicense.input
+
+      rabbit:
+        bindings:
+          lscloud-consumer:
+            consumer:
+              exchangeType: headers
+          lscloud-producer:
+            producer:
+              exchangeType: headers
+
+server:
+  port: 8080
