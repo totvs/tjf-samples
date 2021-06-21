@@ -27,10 +27,18 @@ public class StarShipController {
 		this.setTenant(tenant);
 
 		var logLicense = LogLicense.builder().withRoutine("starShipArrived").build();
-
 		lscloud.log(logLicense);
 
-		return "The identification of the arrived starship " + name + " of tenant " + tenant + " was sent!";
+		return "The identification of the arrived starship " + name + " of tenant " + tenant + " was sent to lscloud!";
+	}
+
+	@GetMapping("/error")
+	String error() {
+
+		var logLicense = LogLicense.builder().withRoutine("").build();
+		lscloud.log(logLicense);
+
+		return "View error on log!";
 	}
 
 	private void setTenant(String tenant) {
