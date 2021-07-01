@@ -14,6 +14,7 @@ import com.tjf.sample.github.messaging.model.StarShip;
 import com.tjf.sample.github.messaging.services.StarShipService;
 import com.totvs.tjf.core.common.security.SecurityDetails;
 import com.totvs.tjf.core.message.TOTVSMessage;
+import com.totvs.tjf.core.message.cloudevent.CloudEventJson;
 import com.totvs.tjf.messaging.TransactionContext;
 
 import io.cloudevents.CloudEvent;
@@ -50,16 +51,13 @@ public class StarShipSubscriber {
 	}
 
 	@StreamListener(target = INPUT, condition = StarShipArrivedEvent.CONDITIONAL_EXPRESSION_CLOUDEVENT)
-	public void subscribeArrived(CloudEvent event) {
+	public void subscribeArrived(CloudEventJson<StarShipArrivedEvent> event) {
 		if (transactionContext.getTransactionInfo() != null) {
 			System.out.println("TransactionInfo TaskId: " + transactionContext.getTransactionInfo().getTaskId());
 		}
 		System.out.println("Current tenant: " + SecurityDetails.getTenant());
 
-		PojoCloudEventData<StarShipArrivedEvent> cloudEventData = mapData(event,
-				PojoCloudEventDataMapper.from(objectMapper, StarShipArrivedEvent.class));
-
-		StarShipArrivedEvent starShipArrivedEvent = cloudEventData.getValue();
+		StarShipArrivedEvent starShipArrivedEvent = event.getData();
 		starShipService.arrived(new StarShip(starShipArrivedEvent.getName()));
 	}
 

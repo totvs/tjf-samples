@@ -10,8 +10,8 @@ import org.springframework.messaging.MessageChannel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.totvs.tjf.core.message.TOTVSMessage;
 import com.totvs.tjf.core.message.TransactionInfo;
+import com.totvs.tjf.messaging.cloudevents.CloudEventJsonImpl;
 
-import io.cloudevents.CloudEvent;
 import io.cloudevents.core.builder.CloudEventBuilder;
 import io.cloudevents.jackson.JsonCloudEventData;
 
@@ -36,6 +36,11 @@ public class StarShipPublisher {
 		new TOTVSMessage<T>(eventName, event, transactionInfo).sendTo(exchange.output());
 	}
 
+	public <T> void publishCloudEvent(T event) {
+		exchange.output().send(MessageBuilder.withPayload(CloudEventJsonImpl.from(mapper, event)).build());
+	}
+
+	// Outro exemplo CloudEvent
 	public <T> void publishCloudEvent(T event, String eventName, String id) {
 		var messageId = UUID.randomUUID().toString();
 		var data = JsonCloudEventData.wrap(mapper.valueToTree(event));

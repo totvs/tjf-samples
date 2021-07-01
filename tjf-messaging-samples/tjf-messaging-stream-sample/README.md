@@ -430,7 +430,7 @@ public class StarShipController {
 		System.out.println("Current tenant: " + SecurityDetails.getTenant() + "\n");
 
 		StarShipArrivedEvent starShipEvent = new StarShipArrivedEvent(name);
-		samplePublisher.publishCloudEvent(starShipEvent, "StarShipArrivedEventCloudEvent", name);
+		samplePublisher.publish(starShipEvent);
 
 		return "The identification of the arrived starship " + name + " of tenant " + tenant + " was sent!";
 	}
@@ -441,20 +441,12 @@ public class StarShipController {
 E vamos criar no publisher o metodo de exemplo para envio de mensagens CloudEvent:
 
 ```java
+import com.totvs.tjf.messaging.cloudevents.CloudEventJsonImpl;
 [...]
 public class StarShipPublisher {
 	[...]
-	public <T> void publishCloudEvent(T event, String eventName, String id) {
-		var messageId = UUID.randomUUID().toString();
-		var data = JsonCloudEventData.wrap(mapper.valueToTree(event));
-		var cloudEvent = CloudEventBuilder.v1()
-				.withId(messageId)
-				.withType(eventName)
-				.withSource(URI.create(id))
-				.withData(data)
-				.build();
-
-		exchange.output().send(MessageBuilder.withPayload(cloudEvent).build());
+	public <T> void publishCloudEvent(T event) {
+		exchange.output().send(MessageBuilder.withPayload(CloudEventJsonImpl.from(mapper, event)).build());
 	}
 }
 ```
@@ -462,19 +454,17 @@ public class StarShipPublisher {
 Agora vamos criar um exemplo de recibemento de mensagens usando CloudEvent, insira no nosso `subscriber` o metodo abaixo:
 
 ```java
-	@StreamListener(target = INPUT, condition = StarShipArrivedEvent.CONDITIONAL_EXPRESSION_CLOUDEVENT)
-	public void subscribeArrived(CloudEvent event) {
-		if (transactionContext.getTransactionInfo() != null) {
-			System.out.println("TransactionInfo TaskId: " + transactionContext.getTransactionInfo().getTaskId());
-		}
-		System.out.println("Current tenant: " + SecurityDetails.getTenant());
-
-		PojoCloudEventData<StarShipArrivedEvent> cloudEventData = mapData(event,
-				PojoCloudEventDataMapper.from(objectMapper, StarShipArrivedEvent.class));
-
-		StarShipArrivedEvent starShipArrivedEvent = cloudEventData.getValue();
-		starShipService.arrived(new StarShip(starShipArrivedEvent.getName()));
+[...]
+@StreamListener(target = INPUT, condition = StarShipArrivedEvent.CONDITIONAL_EXPRESSION_CLOUDEVENT)
+public void subscribeArrived(CloudEventJson<StarShipArrivedEvent> event) {
+	if (transactionContext.getTransactionInfo() != null) {
+		System.out.println("TransactionInfo TaskId: " + transactionContext.getTransactionInfo().getTaskId());
 	}
+	System.out.println("Current tenant: " + SecurityDetails.getTenant());
+
+	StarShipArrivedEvent starShipArrivedEvent = event.getData();
+	starShipService.arrived(new StarShip(starShipArrivedEvent.getName()));
+}
 ```
 
 > Para mais informações sobre o recebimento de CloudEvents, veja a documentação do [tjf-messaging-stream] e a [RFC000011].
