@@ -17,6 +17,7 @@
 		<module>tjf-api-samples/tjf-api-context-sample</module>
 		<module>tjf-api-samples/tjf-api-jpa-filters-sample</module>
 		<module>tjf-api-samples/tjf-api-jpa-specification-sample</module>
+		<module>tjf-api-samples/tjf-api-jpa-querybyexample-sample</module>
 		<module>tjf-core-samples/tjf-core-validation-sample</module>
 		<module>tjf-i18n-samples/tjf-i18n-core-sample</module>
 		<module>tjf-messaging-samples/tjf-messaging-stream-sample/tjf-messaging-stream-publisher-sample</module>
