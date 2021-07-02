@@ -186,12 +186,12 @@ O primeiro modelo que criaremos será utilizando a função de comparação **EQ
 @GetMapping(path = "/findByName/{name}")
 @ResponseStatus(code = HttpStatus.OK)
 public List<Droid> findDroidByName(@PathVariable("name") String name) {
-	Droid droid = new Droid();
-	droid.setName(name);
+  Droid droid = new Droid();
+  droid.setName(name);
 
-	Example<Droid> example = Example.of(droid);
+  Example<Droid> example = Example.of(droid);
 
-	return droidRepository.findAll(example);
+  return droidRepository.findAll(example);
 }
 ```
 
@@ -201,14 +201,15 @@ O segundo modelo que aplicaremos será utilizando função **CONTAINING**, dessa
 @GetMapping(path = "/findContainingFunction/{function}")
 @ResponseStatus(code = HttpStatus.OK)
 public List<Droid> findDroidLikeDescription(@PathVariable("function") String function) {
-	Droid droid = new Droid();
-	droid.setFunction(function);
+  Droid droid = new Droid();
+  droid.setFunction(function);
 
-	ExampleMatcher matcher = ExampleMatcher.matchingAll().withStringMatcher(StringMatcher.CONTAINING)
-			.withIgnoreCase();
-	Example<Droid> example = Example.of(droid, matcher);
+  ExampleMatcher matcher = ExampleMatcher.matchingAll()
+      .withStringMatcher(StringMatcher.CONTAINING)
+      .withIgnoreCase();
+  Example<Droid> example = Example.of(droid, matcher);
 
-	return droidRepository.findAll(example);
+  return droidRepository.findAll(example);
 }
 ```
 
@@ -227,12 +228,12 @@ E teremos o seguinte retorno:
 
 ```json
 [
-	{
-		"id": 4,
-		"name": "Battle Droid",
-		"function": "Substituir humanos no campo de batalha, usando a quantidade em seu favor",
-		"height": 1.93
-	}
+  {
+    "id": 4,
+    "name": "Battle Droid",
+    "function": "Substituir humanos no campo de batalha, usando a quantidade em seu favor",
+    "height": 1.93
+  }
 ]
 ```
 
@@ -247,18 +248,18 @@ E teremos o seguinte retorno:
 
 ```json
 [
-	{
-		"id": 1,
-		"name": "Super Battle Droid",
-		"function": "Super Soldado de Batalha",
-		"height": 1.91
-	},
-	{
-		"id": 4,
-		"name": "Battle Droid",
-		"function": "Substituir humanos no campo de batalha, usando a quantidade em seu favor",
-		"height": 1.93
-	}
+  {
+    "id": 1,
+    "name": "Super Battle Droid",
+    "function": "Super Soldado de Batalha",
+    "height": 1.91
+  },
+  {
+    "id": 4,
+    "name": "Battle Droid",
+    "function": "Substituir humanos no campo de batalha, usando a quantidade em seu favor",
+    "height": 1.93
+  }
 ]
 ```
 
