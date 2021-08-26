@@ -50,21 +50,6 @@ public class StarShipController {
 		return "The identification of the arrived starship " + name + " of tenant " + tenant + " was sent!";
 	}
 	
-	@GetMapping("/arrived/cloudevent")
-	String starShipArrivedCloudEvent(@RequestParam("name") String name, @RequestParam("tenant") String tenant) {
-
-		this.setTenant(tenant);
-		this.setTransactionContext(new TransactionInfo(null, UUID.randomUUID().toString(), null, null));
-
-		System.out.println("\nStarship arrived name: " + name);
-		System.out.println("Current tenant: " + SecurityDetails.getTenant() + "\n");
-
-		StarShipArrivedEvent starShipEvent = new StarShipArrivedEvent(name);
-		samplePublisher.publishCloudEvent(starShipEvent, "StarShipArrivedEventCloudEvent", name);
-
-		return "The identification of the arrived starship " + name + " of tenant " + tenant + " was sent!";
-	}
-
 	@GetMapping("/arrivedWithoutTenant")
 	String starShipArrived(@RequestParam("name") String name) {
 

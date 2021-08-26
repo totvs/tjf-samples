@@ -11,10 +11,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.totvs.tjf.core.message.TOTVSMessage;
 import com.totvs.tjf.core.message.TransactionInfo;
 
-import io.cloudevents.CloudEvent;
-import io.cloudevents.core.builder.CloudEventBuilder;
-import io.cloudevents.jackson.JsonCloudEventData;
-
 @EnableBinding(StarShipExchange.class)
 public class StarShipPublisher {
 
@@ -36,16 +32,4 @@ public class StarShipPublisher {
 		new TOTVSMessage<T>(eventName, event, transactionInfo).sendTo(exchange.output());
 	}
 
-	public <T> void publishCloudEvent(T event, String eventName, String id) {
-		var messageId = UUID.randomUUID().toString();
-		var data = JsonCloudEventData.wrap(mapper.valueToTree(event));
-		var cloudEvent = CloudEventBuilder.v1()
-				.withId(messageId)
-				.withType(eventName)
-				.withSource(URI.create(id))
-				.withData(data)
-				.build();
-
-		exchange.output().send(MessageBuilder.withPayload(cloudEvent).build());
-	}
 }
