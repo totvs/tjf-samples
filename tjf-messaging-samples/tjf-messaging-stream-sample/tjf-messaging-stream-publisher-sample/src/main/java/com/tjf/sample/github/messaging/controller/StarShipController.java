@@ -20,6 +20,7 @@ import com.tjf.sample.github.messaging.events.StarShipLeftEvent;
 import com.tjf.sample.github.messaging.infrastructure.messaging.StarShipPublisher;
 import com.totvs.tjf.core.common.security.SecurityDetails;
 import com.totvs.tjf.core.common.security.SecurityPrincipal;
+import com.totvs.tjf.core.message.CloudEventsInfo;
 import com.totvs.tjf.core.message.TransactionInfo;
 import com.totvs.tjf.messaging.TransactionContext;
 
@@ -97,6 +98,27 @@ public class StarShipController {
 		return "The identification of the arrived starship " + name + " of tenant " + tenant + " was sent!\n"
 				+ "In transaction " + id + ", acess http://localhost:8080/starship/transaction/" + id
 				+ " to consult the status.";
+	}
+	
+	@GetMapping("/arrived/cloudevent")
+	String starShipArrivedCloudEvent(@RequestParam("name") String name, @RequestParam("tenant") String tenant) {
+
+		this.setTenant(tenant);
+
+		System.out.println("\nStarship arrived name: " + name);
+		System.out.println("Current tenant: " + SecurityDetails.getTenant() + "\n");
+
+		String taskId = UUID.randomUUID().toString();
+		String transactionId = UUID.randomUUID().toString();
+		StarShipArrivedEvent starShipEvent = new StarShipArrivedEvent(name);
+		TransactionInfo transaction = new TransactionInfo(transactionId, null, null, taskId, null, null);
+		
+		transactions.put(taskId, Status.SENDED);
+		CloudEventsInfo cloudEventsInfo = new CloudEventsInfo(taskId, name, tenant, "", "application/cloudevents+json");
+		
+		samplePublisher.publish(starShipEvent, "StarShipArrivedEventCloudEvent", transaction, cloudEventsInfo);
+
+		return "The identification of the arrived starship " + name + " of tenant " + tenant + " was sent!";
 	}
 
 	@GetMapping("/transaction/{id}")

@@ -158,38 +158,38 @@ _StarShipController.java_
 @RestController
 @RequestMapping(path = "/starship")
 public class StarShipController {
-	
+
 	private StarShipPublisher samplePublisher;
-	
+
 	public StarShipController(StarShipPublisher samplePublisher) {
 		this.samplePublisher = samplePublisher;
 	}
-	
+
 	@GetMapping("/arrived")
     String starShipArrived(@RequestParam("name") String name, @RequestParam("tenant") String tenant) {
-        
+
 		this.setTenant(tenant);
-        
+
 		System.out.println("\nStarship arrived name: " + name);
         System.out.println("Current tenant: " + SecurityDetails.getTenant() + "\n");
 
         StarShipArrivedEvent starShipEvent = new StarShipArrivedEvent(name);
         samplePublisher.publish(starShipEvent, StarShipArrivedEvent.NAME);
-        
+
         return "The identification of the arrived starship " + name + " of tenant " + tenant + " was sent!";
     }
-	
+
 	@GetMapping("/left")
     String starShipLeft(@RequestParam("name") String name, @RequestParam("tenant") String tenant) {
-        
+
 		this.setTenant(tenant);
-        
+
 		System.out.println("\nStarship left name: " + name);
         System.out.println("Current tenant: " + SecurityDetails.getTenant() + "\n");
 
         StarShipLeftEvent starShipEvent = new StarShipLeftEvent(name);
         samplePublisher.publish(starShipEvent, StarShipLeftEvent.NAME);
-        
+
         return "The identification of the left starship " + name + " of tenant " + tenant + " was sent!";
     }
 
@@ -213,7 +213,7 @@ public class StarShipController {
 				+ "In transaction " + id + ", acess http://localhost:8080/starship/transaction/" + id
 				+ " to consult the status.";
 	}
-	
+
 	@GetMapping("/transaction/{id}")
 	String starShipArrivedTransacted(@PathVariable("id") String id) {
 
@@ -330,7 +330,7 @@ public class StarShipSubscriber {
 
 	@StreamListener(target = INPUT, condition = StarShipLeftEvent.CONDITIONAL_EXPRESSION)
 	public void subscribeLeft(TOTVSMessage<StarShipLeftEvent> message) {
-		
+
 		StarShipLeftEvent starShipLeftEvent = message.getContent();
 		starShipService.left(new StarShip(starShipLeftEvent.getName()));
 	}
@@ -346,7 +346,7 @@ public class StarShipService {
 
 	private final HashMap<String, String> starShips = new HashMap<>();
 	private final HashMap<String, Integer> counter = new HashMap<>();
-	
+
 	public StarShipService() {
 		starShips.put("millenium falcon", "1");
 		starShips.put("star destroyer", "2");
@@ -359,47 +359,47 @@ public class StarShipService {
 		starShips.put("speeder bike", "9");
 		starShips.put("x-wing", "10");
 	}
-	
+
 	public void arrived(StarShip starShip) {
-		
+
 		String rank = starShips.getOrDefault(starShip.getName(), "Unknown starship!");
-				
+
 		System.out.println("\nStarShip arrived!\n");
 		System.out.println("Current tenant: " + SecurityDetails.getTenant());
 		System.out.println("Starship name: " + starShip.getName());
 		System.out.println("Starship ranking: " + rank);
 		System.out.println("Counter by tenant: " + arrivedCount());
 	}
-	
+
 	public void left(StarShip starShip) {
-		
+
 		String rank = starShips.getOrDefault(starShip.getName(), "Unknown starship!");
-		
+
 		System.out.println("\nStarShip left!\n");
 		System.out.println("Current tenant: " + SecurityDetails.getTenant());
 		System.out.println("Starship name: " + starShip.getName());
 		System.out.println("Starship ranking: " + rank);
 		System.out.println("Counter by tenant: " + leftCount());
 	}
-	
+
 	private int arrivedCount() {
-		
+
 		String tenant = SecurityDetails.getTenant();
 		counter.put(tenant, counter.getOrDefault(tenant, 0) + 1);
-		
-		return counter.get(tenant); 
+
+		return counter.get(tenant);
 	}
-	
+
 	private int leftCount() {
-		
+
 		String tenant = SecurityDetails.getTenant();
 		counter.put(tenant, counter.getOrDefault(tenant, 0) - 1);
-		
-		return counter.get(tenant); 
+
+		return counter.get(tenant);
 	}
 
 	public void transactionClose(TransactionInfo transaction) {
-		
+
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 
@@ -423,20 +423,25 @@ public class StarShipController {
 	@GetMapping("/arrived/cloudevent")
 	String starShipArrivedCloudEvent(@RequestParam("name") String name, @RequestParam("tenant") String tenant) {
 
-		this.setTenant(tenant);
-		this.setTransactionContext(new TransactionInfo(null, UUID.randomUUID().toString(), null, null));
+    this.setTenant(tenant);
 
 		System.out.println("\nStarship arrived name: " + name);
 		System.out.println("Current tenant: " + SecurityDetails.getTenant() + "\n");
 
+		String taskId = UUID.randomUUID().toString();
+		String transactionId = UUID.randomUUID().toString();
 		StarShipArrivedEvent starShipEvent = new StarShipArrivedEvent(name);
-		samplePublisher.publishCloudEvent(starShipEvent, "StarShipArrivedEventCloudEvent", name);
+		TransactionInfo transaction = new TransactionInfo(transactionId, null, null, taskId, null, null);
+
+		transactions.put(taskId, Status.SENDED);
+		CloudEventsInfo cloudEventsInfo = new CloudEventsInfo(taskId, name, tenant, "", "application/cloudevents+json");
+
+		samplePublisher.publish(starShipEvent, "StarShipArrivedEventCloudEvent", transaction, cloudEventsInfo);
 
 		return "The identification of the arrived starship " + name + " of tenant " + tenant + " was sent!";
 	}
 }
 ```
-> Foi criado apenas para exemplificar o método setTransactionContext, que vai setar no contexto uma TransactionInfo com taskId para ser consultada do contexto setado automaticamente no recebimento do CloudEvent. Mais informações sobre transações, multi-tenância e localização em [tjf-messaging-stream].
 
 E vamos criar no publisher o metodo de exemplo para envio de mensagens CloudEvent:
 
@@ -444,18 +449,10 @@ E vamos criar no publisher o metodo de exemplo para envio de mensagens CloudEven
 [...]
 public class StarShipPublisher {
 	[...]
-	public <T> void publishCloudEvent(T event, String eventName, String id) {
-		var messageId = UUID.randomUUID().toString();
-		var data = JsonCloudEventData.wrap(mapper.valueToTree(event));
-		var cloudEvent = CloudEventBuilder.v1()
-				.withId(messageId)
-				.withType(eventName)
-				.withSource(URI.create(id))
-				.withData(data)
-				.build();
+  public <T> void publish(T event, String eventName, TransactionInfo transactionInfo, CloudEventsInfo cloudEventsInfo) {
 
-		exchange.output().send(MessageBuilder.withPayload(cloudEvent).build());
-	}
+    new TOTVSMessage<T>(eventName, event, transactionInfo, cloudEventsInfo).sendTo(exchange.output());
+  }
 }
 ```
 
@@ -463,17 +460,16 @@ Agora vamos criar um exemplo de recibemento de mensagens usando CloudEvent, insi
 
 ```java
 	@StreamListener(target = INPUT, condition = StarShipArrivedEvent.CONDITIONAL_EXPRESSION_CLOUDEVENT)
-	public void subscribeArrived(CloudEvent event) {
-		if (transactionContext.getTransactionInfo() != null) {
-			System.out.println("TransactionInfo TaskId: " + transactionContext.getTransactionInfo().getTaskId());
-		}
-		System.out.println("Current tenant: " + SecurityDetails.getTenant());
+	public void subscribeArrivedCloudEvent(TOTVSMessage<StarShipArrivedEvent> message) {
+    if (transactionContext.getTransactionInfo() != null) {
+  			System.out.println("TransactionInfo TaskId: " + transactionContext.getTransactionInfo().getTaskId());
+  		}
+  		System.out.println("Current tenant: " + SecurityDetails.getTenant());
+  		System.out.println("CloudEventInfo Id: " + message.getHeader().getCloudEventsInfo().getId());
+  		System.out.println("CloudEventInfo Schema: " + message.getHeader().getCloudEventsInfo().getDataSchema());
 
-		PojoCloudEventData<StarShipArrivedEvent> cloudEventData = mapData(event,
-				PojoCloudEventDataMapper.from(objectMapper, StarShipArrivedEvent.class));
-
-		StarShipArrivedEvent starShipArrivedEvent = cloudEventData.getValue();
-		starShipService.arrived(new StarShip(starShipArrivedEvent.getName()));
+  		StarShipArrivedEvent starShipArrivedEvent = message.getContent();
+  		starShipService.arrived(new StarShip(starShipArrivedEvent.getName()));
 	}
 ```
 
@@ -512,7 +508,7 @@ Agora para testar nosso método que recebe um CloudEvent, acesse o RabbitMQ Mana
 Routing key: #
 Headers: Type = StarShipArrivedCloudEvent
          contentType = application/cloudevents+json
-Payload: 
+Payload:
 {
     "specversion" : "1.0",
     "id" : "acd12cac-73a7-4c85-88ed-971881e8c9c2",
@@ -537,6 +533,9 @@ Você também pode usar o _endpoint_ que criamos para envio de CloudEvents, pro 
 ```console
 TransactionInfo TaskId: f2d4bb79-448f-425a-906d-060e227c9c21
 Current tenant: 2
+CloudEventInfo Id: acd12cac-73a7-4c85-88ed-971881e8c9c2
+CloudEventInfo Schema: 2
+
 StarShip arrived!
 Starship name: nave1
 ```

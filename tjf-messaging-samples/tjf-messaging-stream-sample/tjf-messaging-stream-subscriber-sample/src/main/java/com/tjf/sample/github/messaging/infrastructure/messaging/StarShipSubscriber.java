@@ -50,16 +50,15 @@ public class StarShipSubscriber {
 	}
 
 	@StreamListener(target = INPUT, condition = StarShipArrivedEvent.CONDITIONAL_EXPRESSION_CLOUDEVENT)
-	public void subscribeArrived(CloudEvent event) {
+	public void subscribeArrivedCloudEvent(TOTVSMessage<StarShipArrivedEvent> message) {
 		if (transactionContext.getTransactionInfo() != null) {
 			System.out.println("TransactionInfo TaskId: " + transactionContext.getTransactionInfo().getTaskId());
 		}
 		System.out.println("Current tenant: " + SecurityDetails.getTenant());
-
-		PojoCloudEventData<StarShipArrivedEvent> cloudEventData = mapData(event,
-				PojoCloudEventDataMapper.from(objectMapper, StarShipArrivedEvent.class));
-
-		StarShipArrivedEvent starShipArrivedEvent = cloudEventData.getValue();
+		System.out.println("CloudEventInfo Id: " + message.getHeader().getCloudEventsInfo().getId());
+		System.out.println("CloudEventInfo Schema: " + message.getHeader().getCloudEventsInfo().getDataSchema());
+		System.out.println("CloudEventInfo DataContentType: " + message.getHeader().getCloudEventsInfo().getDataContentType());
+		StarShipArrivedEvent starShipArrivedEvent = message.getContent();
 		starShipService.arrived(new StarShip(starShipArrivedEvent.getName()));
 	}
 

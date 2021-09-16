@@ -148,11 +148,10 @@ public class ErrorSubscriber {
 
 	@StreamListener(value = INPUT)
 	@WithoutTenant(ignore = true)
-	public void error(CloudEvent message) {
-		LOG.info("Lscloud error received:\nId: {}\nType: {}\nData: {}", 
-				message.getId(), 
-				message.getType(),
-				message.getData());
+  public void error(TOTVSMessage<?> message) {
+		LOG.info("Lscloud error received:\nType: {}\nContent: {}",
+				message.getHeader().getType(),
+				message.getContent());
 	}
 }
 ```
