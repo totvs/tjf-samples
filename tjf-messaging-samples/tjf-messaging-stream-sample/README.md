@@ -471,7 +471,7 @@ Agora vamos criar um exemplo de recibemento de mensagens usando CloudEvent, insi
 
       StarShipArrivedEvent starShipArrivedEvent = message.getContent();
       starShipService.arrived(new StarShip(starShipArrivedEvent.getName()));
-    }
+  }
 ```
 
 > Para mais informações sobre o recebimento de CloudEvents, veja a documentação do [tjf-messaging-stream] e a [RFC000011].
