@@ -144,14 +144,14 @@ _ErrorSubscriber.java_
 @EnableBinding(LscloudExchange.class)
 public class ErrorSubscriber {
 
-	private static final Logger LOG = LoggerFactory.getLogger(ErrorSubscriber.class);
+  private static final Logger LOG = LoggerFactory.getLogger(ErrorSubscriber.class);
 
-	@StreamListener(value = INPUT)
-	@WithoutTenant(ignore = true)
+  @StreamListener(value = INPUT)
+  @WithoutTenant(ignore = true)
   public void error(TOTVSMessage<?> message) {
-	   LOG.info("Lscloud error received:\nType: {}\nContent: {}",
-     message.getHeader().getType(),
-     message.getContent());
+    LOG.info("Lscloud error received:\nType: {}\nContent: {}",
+    message.getHeader().getType(),
+    message.getContent());
 	}
 }
 ```
