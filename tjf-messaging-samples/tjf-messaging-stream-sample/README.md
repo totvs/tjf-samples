@@ -459,8 +459,8 @@ public class StarShipPublisher {
 Agora vamos criar um exemplo de recibemento de mensagens usando CloudEvent, insira no nosso `subscriber` o metodo abaixo:
 
 ```java
-	@StreamListener(target = INPUT, condition = StarShipArrivedEvent.CONDITIONAL_EXPRESSION_CLOUDEVENT)
-	public void subscribeArrivedCloudEvent(TOTVSMessage<StarShipArrivedEvent> message) {
+@StreamListener(target = INPUT, condition = StarShipArrivedEvent.CONDITIONAL_EXPRESSION_CLOUDEVENT)
+public void subscribeArrivedCloudEvent(TOTVSMessage<StarShipArrivedEvent> message) {
     if (transactionContext.getTransactionInfo() != null) {
       System.out.println("TransactionInfo TaskId: " + transactionContext.getTransactionInfo().getTaskId());
     }
@@ -468,7 +468,7 @@ Agora vamos criar um exemplo de recibemento de mensagens usando CloudEvent, insi
     System.out.println("CloudEventInfo Id: " + message.getHeader().getCloudEventsInfo().getId());
     System.out.println("CloudEventInfo Schema: " + message.getHeader().getCloudEventsInfo().getDataSchema());
     System.out.println("CloudEventInfo DataContentType: " + message.getHeader().getCloudEventsInfo().getDataContentType());
-    
+
     StarShipArrivedEvent starShipArrivedEvent = message.getContent();
     starShipService.arrived(new StarShip(starShipArrivedEvent.getName()));
   }
