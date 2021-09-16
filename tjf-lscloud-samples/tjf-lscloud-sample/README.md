@@ -149,9 +149,9 @@ public class ErrorSubscriber {
 	@StreamListener(value = INPUT)
 	@WithoutTenant(ignore = true)
   public void error(TOTVSMessage<?> message) {
-		LOG.info("Lscloud error received:\nType: {}\nContent: {}",
-				message.getHeader().getType(),
-				message.getContent());
+	   LOG.info("Lscloud error received:\nType: {}\nContent: {}",
+     message.getHeader().getType(),
+     message.getContent());
 	}
 }
 ```
