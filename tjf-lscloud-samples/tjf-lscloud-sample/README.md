@@ -152,7 +152,7 @@ public class ErrorSubscriber {
     LOG.info("Lscloud error received:\nType: {}\nContent: {}",
     message.getHeader().getType(),
     message.getContent());
-	}
+  }
 }
 ```
 
