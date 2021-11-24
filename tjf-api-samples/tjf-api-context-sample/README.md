@@ -18,7 +18,7 @@ Além das dependências do Spring mencionadas acima, para utilização do compon
 <parent>
   <groupId>com.totvs.tjf</groupId>
   <artifactId>tjf-boot-starter</artifactId>
-  <version>2.30.0-RELEASE</version>
+  <version>2.30.1-RELEASE</version>
 </parent>
 ```
 
