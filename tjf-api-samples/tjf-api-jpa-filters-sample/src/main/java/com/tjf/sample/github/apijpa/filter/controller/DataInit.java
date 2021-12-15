@@ -63,7 +63,7 @@ public class DataInit {
 	}
 
 	public List<AccountModel> getAccounts() {
-		return accounts;
+		return accountRepos.findAll();
 	}
 	
 }
