@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tjf.sample.github.repositoryaggregate.model.Person;
 import com.tjf.sample.github.repositoryaggregate.repository.PersonRepository;
-import com.totvs.tjf.core.aggregate.repository.AggregateCollectionResult;
+import com.totvs.tjf.repository.context.aggregate.AggregateCollectionResult;
 
 @RestController
 @RequestMapping(path = "api/v1/person", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
