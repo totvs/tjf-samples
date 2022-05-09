@@ -17,7 +17,7 @@ import com.totvs.tjf.api.context.stereotype.ApiGuideline.ApiGuidelineVersion;
 import com.totvs.tjf.api.context.stereotype.openapi.MessageDocumentationApi;
 import com.totvs.tjf.api.context.stereotype.openapi.ProductInformationApi;
 import com.totvs.tjf.api.context.stereotype.openapi.XTOTVSApi;
-import com.totvs.tjf.api.context.v1.response.ApiCollectionResponse;
+import com.totvs.tjf.api.context.v2.response.ApiCollectionResponse;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
@@ -56,7 +56,7 @@ public class ClientController {
 					   		 			  description = "Erro ao retornar a lista de Clientes.")})
 	@GetMapping(path = "/list")
 	public ApiCollectionResponse<Client> findAll() {
-		return ApiCollectionResponse.of(clientRepository.findAll());
+		return ApiCollectionResponse.from(clientRepository.findAll());
 	}
 	
 	@Operation(summary = "Criar Cliente", 

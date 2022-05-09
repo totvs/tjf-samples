@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
 
-import com.totvs.tjf.core.message.TOTVSMessage;
+import com.totvs.tjf.messaging.context.TOTVSMessage;
 import com.totvs.tjf.lscloud.messaging.LscloudExchange;
 import com.totvs.tjf.messaging.WithoutTenant;
 

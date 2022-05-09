@@ -26,7 +26,7 @@
 
 		<dependency>
 			<groupId>com.totvs.tjf</groupId>
-			<artifactId>tjf-lscloud</artifactId>
+			<artifactId>tjf-metrics-lscloud</artifactId>
 		</dependency>
 	</dependencies>
 

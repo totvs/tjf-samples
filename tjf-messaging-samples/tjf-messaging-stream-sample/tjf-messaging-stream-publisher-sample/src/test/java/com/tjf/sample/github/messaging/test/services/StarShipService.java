@@ -5,7 +5,7 @@ import java.util.HashMap;
 import org.springframework.stereotype.Component;
 
 import com.tjf.sample.github.messaging.model.StarShip;
-import com.totvs.tjf.core.common.security.SecurityDetails;
+import com.totvs.tjf.core.security.context.SecurityDetails;
 
 @Component
 public class StarShipService {

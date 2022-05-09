@@ -45,7 +45,7 @@ public class DroidController {
 	public ApiCollectionResponse<Droid> getAllDroids() {
 		List<Droid> items = new ArrayList<Droid>();
 		droidRepository.findAll().forEach(items::add);
-		return ApiCollectionResponse.of(items);
+		return ApiCollectionResponse.from(items);
 	}
 
 	@GetMapping(path = "/namedQuery/getByName/{name}", produces = { MediaType.APPLICATION_JSON_VALUE })

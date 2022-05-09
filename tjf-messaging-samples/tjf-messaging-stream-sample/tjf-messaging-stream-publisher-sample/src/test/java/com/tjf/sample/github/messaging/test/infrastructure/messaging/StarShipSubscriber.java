@@ -11,7 +11,7 @@ import com.tjf.sample.github.messaging.events.StarShipArrivedWithoutTenantEvent;
 import com.tjf.sample.github.messaging.events.StarShipLeftEvent;
 import com.tjf.sample.github.messaging.model.StarShip;
 import com.tjf.sample.github.messaging.test.services.StarShipService;
-import com.totvs.tjf.core.message.TOTVSMessage;
+import com.totvs.tjf.messaging.context.TOTVSMessage;
 import com.totvs.tjf.core.validation.ValidatorService;
 import com.totvs.tjf.messaging.WithoutTenant;
 

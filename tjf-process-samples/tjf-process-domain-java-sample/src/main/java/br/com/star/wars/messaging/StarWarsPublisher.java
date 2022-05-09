@@ -3,7 +3,7 @@ package br.com.star.wars.messaging;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 
-import com.totvs.tjf.core.message.TOTVSMessage;
+import com.totvs.tjf.messaging.context.TOTVSMessage;
 import com.totvs.tjf.messaging.TransactionContext;
 
 import com.totvs.tjf.process.core.ProcessMessage;

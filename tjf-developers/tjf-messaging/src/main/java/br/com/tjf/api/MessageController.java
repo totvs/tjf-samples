@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.totvs.tjf.core.common.security.SecurityPrincipal;
+import com.totvs.tjf.core.security.context.SecurityPrincipal;
 
 import br.com.tjf.events.MessageEvent;
 import br.com.tjf.messaging.MessagePublisher;

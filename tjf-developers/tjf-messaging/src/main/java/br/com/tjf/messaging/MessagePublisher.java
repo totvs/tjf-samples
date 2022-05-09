@@ -2,7 +2,7 @@ package br.com.tjf.messaging;
 
 import org.springframework.cloud.stream.annotation.EnableBinding;
 
-import com.totvs.tjf.core.message.TOTVSMessage;
+import com.totvs.tjf.messaging.context.TOTVSMessage;
 
 @EnableBinding(MessageExchange.class)
 public class MessagePublisher {

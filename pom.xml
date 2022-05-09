@@ -5,6 +5,13 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
+	<parent>
+		<groupId>com.totvs.tjf</groupId>
+		<artifactId>tjf-boot-starter</artifactId>
+		<version>3.0.0-RELEASE</version>
+		<relativePath />
+	</parent>
+
 	<groupId>com.tjf.sample.github</groupId>
 	<artifactId>tjf-samples-parent</artifactId>
 	<version>0.0.1-SNAPSHOT</version>

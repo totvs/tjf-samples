@@ -13,8 +13,8 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tjf.sample.github.messaging.model.StarShip;
-import com.totvs.tjf.core.common.security.SecurityDetails;
-import com.totvs.tjf.core.message.TransactionInfo;
+import com.totvs.tjf.core.security.context.SecurityDetails;
+import com.totvs.tjf.messaging.context.TransactionInfo;
 
 @Component
 public class StarShipService {

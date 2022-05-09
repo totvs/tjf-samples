@@ -3,7 +3,7 @@ package com.tjf.sample.github.i18ncore.messages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.totvs.tjf.i18n.I18nService;
+import com.totvs.tjf.core.i18n.I18nService;
 
 @Component
 public class StarshipMessage {

@@ -7,7 +7,7 @@ import org.springframework.cloud.stream.annotation.StreamListener;
 import com.tjf.sample.github.messagingstream.event.BBUnitSendMission;
 import com.tjf.sample.github.messagingstream.exceptions.BBUnitException;
 import com.tjf.sample.github.messagingstream.model.BBUnit;
-import com.totvs.tjf.core.message.TOTVSMessage;
+import com.totvs.tjf.messaging.context.TOTVSMessage;
 import com.totvs.tjf.core.validation.ValidatorService;
 import com.totvs.tjf.messaging.WithoutTenant;
 

@@ -41,7 +41,7 @@
 		<!-- TJF -->
 		<dependency>
 			<groupId>com.totvs.tjf</groupId>
-			<artifactId>tjf-i18n-core</artifactId>
+			<artifactId>tjf-core-i18n</artifactId>
 		</dependency>
 
 		<!-- Test -->

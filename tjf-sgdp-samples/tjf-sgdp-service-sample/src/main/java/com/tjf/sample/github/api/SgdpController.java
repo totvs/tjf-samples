@@ -23,7 +23,7 @@ import com.tjf.sample.github.messaging.SGDPPublisher;
 import com.totvs.sgdp.sdk.config.SGDPMetadata;
 import com.totvs.sgdp.sdk.services.data.SGDPDataCommand;
 import com.totvs.sgdp.sdk.services.mask.SGDPMaskCommand;
-import com.totvs.tjf.core.common.security.SecurityPrincipal;
+import com.totvs.tjf.core.security.context.SecurityPrincipal;
 
 @RestController
 @RequestMapping(path = "/sgdp/v1/", produces = MediaType.APPLICATION_JSON_VALUE)

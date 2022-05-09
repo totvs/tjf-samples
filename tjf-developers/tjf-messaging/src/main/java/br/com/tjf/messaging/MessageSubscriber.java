@@ -3,7 +3,7 @@ package br.com.tjf.messaging;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
 
-import com.totvs.tjf.core.message.TOTVSMessage;
+import com.totvs.tjf.messaging.context.TOTVSMessage;
 
 import br.com.tjf.events.MessageEvent;
 

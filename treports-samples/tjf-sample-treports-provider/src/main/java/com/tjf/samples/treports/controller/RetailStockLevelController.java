@@ -9,7 +9,7 @@ import com.tjf.samples.treports.model.RetailStockLevelRepository;
 import com.totvs.tjf.api.context.v1.request.ApiFieldRequest;
 import com.totvs.tjf.api.context.v1.request.ApiPageRequest;
 import com.totvs.tjf.api.context.v1.request.ApiSortRequest;
-import com.totvs.tjf.api.context.v1.response.ApiCollectionResponse;
+import com.totvs.tjf.api.context.v2.response.ApiCollectionResponse;
 
 @RestController
 public class RetailStockLevelController {

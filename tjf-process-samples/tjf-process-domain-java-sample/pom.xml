@@ -34,11 +34,12 @@
 		<dependency>
 			<groupId>com.totvs.tjf</groupId>
 			<artifactId>tjf-process-service-core</artifactId>
+			<version>3.0.0-RELEASE</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>com.totvs.tjf</groupId>
-			<artifactId>tjf-security-web</artifactId>
+			<artifactId>tjf-security-webmvc</artifactId>
 		</dependency>
 		
 		<dependency>

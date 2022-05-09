@@ -3,7 +3,7 @@ package com.tjf.sample.github.tenantdiscriminator;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import com.totvs.tjf.core.common.security.SecurityPrincipal;
+import com.totvs.tjf.core.security.context.SecurityPrincipal;
 
 public class TenantAuthentication {
 

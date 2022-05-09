@@ -106,6 +106,7 @@
 			<plugin>
 				<groupId>com.totvs.tjf</groupId>
 				<artifactId>tjf-api-ttalk-maven-plugin</artifactId>
+				<version>2.38.3-RELEASE</version>
 				<executions>
 					<execution>
 						<phase>integration-test</phase>

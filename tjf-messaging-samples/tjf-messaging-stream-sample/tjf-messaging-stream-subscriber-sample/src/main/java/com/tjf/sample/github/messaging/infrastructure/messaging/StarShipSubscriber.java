@@ -12,8 +12,8 @@ import com.tjf.sample.github.messaging.events.StarShipArrivedEvent;
 import com.tjf.sample.github.messaging.events.StarShipLeftEvent;
 import com.tjf.sample.github.messaging.model.StarShip;
 import com.tjf.sample.github.messaging.services.StarShipService;
-import com.totvs.tjf.core.common.security.SecurityDetails;
-import com.totvs.tjf.core.message.TOTVSMessage;
+import com.totvs.tjf.core.security.context.SecurityDetails;
+import com.totvs.tjf.messaging.context.TOTVSMessage;
 import com.totvs.tjf.messaging.TransactionContext;
 
 import io.cloudevents.CloudEvent;

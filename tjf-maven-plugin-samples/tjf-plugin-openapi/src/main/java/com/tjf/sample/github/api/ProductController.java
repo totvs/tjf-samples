@@ -22,7 +22,7 @@ import com.totvs.tjf.api.context.stereotype.openapi.ProductInformationApi;
 import com.totvs.tjf.api.context.stereotype.openapi.ProductInformationEndPoint;
 import com.totvs.tjf.api.context.stereotype.openapi.XTOTVSApi;
 import com.totvs.tjf.api.context.stereotype.openapi.XTOTVSEndPoint;
-import com.totvs.tjf.api.context.v1.response.ApiCollectionResponse;
+import com.totvs.tjf.api.context.v2.response.ApiCollectionResponse;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
@@ -65,7 +65,7 @@ public class ProductController {
 	@GetMapping(path = "/list")
 	@XTOTVSEndPoint(productInformation = @ProductInformationEndPoint(minimalVersion = "2.0", product = "OpenApiSample"))
 	public ApiCollectionResponse<Product> findAll() {
-		return ApiCollectionResponse.of(productRepository.findAll());
+		return ApiCollectionResponse.from(productRepository.findAll());
 	}
 
 	@Operation(summary = "Criar Produto", 

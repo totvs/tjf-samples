@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.totvs.tjf.core.common.security.SecurityPrincipal;
+import com.totvs.tjf.core.security.context.SecurityPrincipal;
 import com.totvs.tjf.lscloud.message.LogLicense;
 import com.totvs.tjf.lscloud.messaging.Lscloud;
 

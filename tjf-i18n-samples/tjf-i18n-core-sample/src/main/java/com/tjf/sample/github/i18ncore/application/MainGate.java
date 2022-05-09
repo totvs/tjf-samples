@@ -31,7 +31,7 @@ public class MainGate implements CommandLineRunner {
 
 	public void enableI18nDebugLog() {
 		LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
-		Logger rootLogger = loggerContext.getLogger("com.totvs.tjf.i18n");
+		Logger rootLogger = loggerContext.getLogger("com.totvs.tjf.core.i18n");
 		rootLogger.setLevel(Level.DEBUG);
 	}
 

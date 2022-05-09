@@ -9,7 +9,7 @@ import com.totvs.sgdp.sdk.services.SGDPRabbitExchange;
 import com.totvs.sgdp.sdk.services.SGDPRabbitExchangeChannel;
 import com.totvs.sgdp.sdk.services.data.SGDPDataResponse;
 import com.totvs.sgdp.sdk.services.mask.SGDPMaskResponse;
-import com.totvs.tjf.core.message.TOTVSMessage;
+import com.totvs.tjf.messaging.context.TOTVSMessage;
 
 @EnableBinding(SGDPRabbitExchange.class)
 public class SGDPSubscriber {

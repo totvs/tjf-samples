@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
 
-import com.totvs.tjf.core.message.TOTVSMessage;
+import com.totvs.tjf.messaging.context.TOTVSMessage;
 import com.totvs.tjf.process.core.ProcessMessage;
 import com.totvs.tjf.process.server.core.ProcessManager;
 import com.totvs.tjf.process.server.core.ProcessState;

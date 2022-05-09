@@ -24,7 +24,7 @@
 		<!-- TJF -->
 		<dependency>
 			<groupId>com.totvs.tjf</groupId>
-			<artifactId>tjf-security-web</artifactId>
+			<artifactId>tjf-security-webmvc</artifactId>
 		</dependency>
 
 		<dependency>
