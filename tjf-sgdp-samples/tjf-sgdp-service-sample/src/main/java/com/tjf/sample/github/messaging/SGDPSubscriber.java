@@ -17,7 +17,7 @@ public class SGDPSubscriber {
 	@StreamListener(target = SGDPRabbitExchangeChannel.Channel.INPUT, condition = "headers['type']=='SGDPMaskResponse'")
 	public void maskResponse(TOTVSMessage<SGDPMaskResponse> message) {
 		System.out.println("***** MASK RESPONSE *****");
-		System.out.println("ROWS: " + message.getContent().getRows());
+		System.out.println("NonAnonymizedAttributes: " + message.getContent().getNonAnonymizedAttributes());
 		System.out.println(message);
 	}
 
