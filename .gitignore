@@ -17,3 +17,5 @@ target/
 
 # Crash files
 .attach*
+
+**/.pmd*
