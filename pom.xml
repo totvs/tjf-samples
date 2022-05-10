@@ -31,7 +31,6 @@
 		<module>tjf-messaging-samples/tjf-messaging-stream-sample/tjf-messaging-stream-subscriber-sample</module>
 		<module>tjf-messaging-samples/tjf-messaging-stream-error-queue-sample</module>
 		<module>tjf-migration-samples/tjf-migration-schema-sample</module>
-		<module>tjf-process-samples</module>
 		<module>tjf-repository-samples/tjf-repository-aggregate-sample</module>
 		<module>tjf-security-samples/tjf-security-web-sample</module>
 		<module>tjf-tenant-samples/tjf-tenant-discriminator-sample</module>
