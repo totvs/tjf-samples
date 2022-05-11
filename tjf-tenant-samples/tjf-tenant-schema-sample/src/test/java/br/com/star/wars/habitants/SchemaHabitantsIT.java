@@ -22,40 +22,40 @@ public class SchemaHabitantsIT {
 	MockMvc mockMvc;
 
 	@Test
-	public void tatooineHabitantsTest() throws Exception {
+	public void TatooineHabitantsTest() throws Exception {
 		String expectedResult = "[{\"id\":\"anakin\",\"name\":\"Anakin Skywalker\",\"gender\":\"male\"},{\"id\":\"luke\",\"name\":\"Luke Skywalker\",\"gender\":\"male\"},{\"id\":\"han\",\"name\":\"Han Solo\",\"gender\":\"male\"}]";
 
-		mockMvc.perform(post("/api/v1/habitants").header("X-Planet", "tatooine").contentType(MediaType.APPLICATION_JSON)
+		mockMvc.perform(post("/api/v1/habitants").header("X-Planet", "Tatooine").contentType(MediaType.APPLICATION_JSON)
 				.content(
 						"[{\"id\":\"anakin\",\"name\":\"Anakin Skywalker\",\"gender\":\"male\"},{\"id\":\"luke\",\"name\":\"Luke Skywalker\",\"gender\":\"male\"},{\"id\":\"han\",\"name\": \"Han Solo\",\"gender\":\"male\"}]"))
 				.andExpect(status().isOk()).andExpect(content().json(expectedResult));
 
-		mockMvc.perform(get("/api/v1/habitants").header("X-Planet", "tatooine").contentType(MediaType.APPLICATION_JSON))
+		mockMvc.perform(get("/api/v1/habitants").header("X-Planet", "Tatooine").contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk()).andExpect(content().json(expectedResult));
 	}
 
 	@Test
-	public void alderaanHabitantsTest() throws Exception {
+	public void AlderaanHabitantsTest() throws Exception {
 		String expectedResult = "[{\"id\":\"leia\",\"name\":\"Leia Organa\",\"gender\":\"female\"}]";
 
-		mockMvc.perform(post("/api/v1/habitants").header("X-Planet", "alderaan").contentType(MediaType.APPLICATION_JSON)
+		mockMvc.perform(post("/api/v1/habitants").header("X-Planet", "Alderaan").contentType(MediaType.APPLICATION_JSON)
 				.content("[{\"id\":\"leia\",\"name\":\"Leia Organa\",\"gender\":\"female\"}]"))
 				.andExpect(status().isOk()).andExpect(content().json(expectedResult));
 
-		mockMvc.perform(get("/api/v1/habitants").header("X-Planet", "alderaan").contentType(MediaType.APPLICATION_JSON))
+		mockMvc.perform(get("/api/v1/habitants").header("X-Planet", "Alderaan").contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk()).andExpect(content().json(expectedResult));
 	}
 
 	@Test
-	public void bespinHabitantsTest() throws Exception {
+	public void BespinHabitantsTest() throws Exception {
 		String expectedResult = "[{\"id\":\"lando\",\"name\":\"Lando Calrissian\",\"gender\":\"male\"},{\"id\":\"dengar\",\"name\":\"Dengar, The Bounty Hunter\",\"gender\":\"male\"}]";
 
 		mockMvc.perform(
-				post("/api/v1/habitants").header("X-Planet", "bespin").contentType(MediaType.APPLICATION_JSON).content(
+				post("/api/v1/habitants").header("X-Planet", "Bespin").contentType(MediaType.APPLICATION_JSON).content(
 						"[{\"id\":\"lando\",\"name\":\"Lando Calrissian\",\"gender\":\"male\"},{\"id\":\"dengar\",\"name\":\"Dengar, The Bounty Hunter\",\"gender\": \"male\"}]"))
 				.andExpect(status().isOk()).andExpect(content().json(expectedResult));
 
-		mockMvc.perform(get("/api/v1/habitants").header("X-Planet", "bespin").contentType(MediaType.APPLICATION_JSON))
+		mockMvc.perform(get("/api/v1/habitants").header("X-Planet", "Bespin").contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk()).andExpect(content().json(expectedResult));
 	}
 
