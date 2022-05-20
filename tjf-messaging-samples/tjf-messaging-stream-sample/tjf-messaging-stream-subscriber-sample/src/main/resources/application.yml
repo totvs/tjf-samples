@@ -1,87 +1,26 @@
-logging:
-  level:
-    com:
-      totvs:
-        tjf:
-          messaging: DEBUG
-
-######## RABBIT
+server:
+  port: 8180
 
 spring:
   cloud:
+    #function:
+    #  definition: subscribeArrived
     stream:
-      defaultBinder: rabbit1
-      bindings:
-        starship-input:
-          destination: starship-input
-          group: requests
-          consumer:
-            max-attempts: 1
-        starship-output:
-          destination: starship-input
       binders:
         rabbit1:
           type: rabbit
-          environment:
-            spring:
-              rabbit:
-                host: localhost
-
-
-######## KAFKA
-               
-#spring:
-#  cloud:
-#    stream:
-#      defaultBinder: kafka1
-#      bindings:
-#        starship-input:
-#          destination: starship-input
-#          group: requests
-#        starship-output:
-#          destination: starship-input
-#      binders:                
-#        kafka1:
-#          type: kafka
-#                         
-#      kafka:
-#        binder:
-#          replication-factor: 1
-#          brokers: localhost:9092
-#          configuration:
-#            auto:
-#              offset:
-#                reset: earliest  
-
-
-######## JMS
-
-#spring:
-#  cloud:
-#    stream:
-#      defaultBinder: local1
-#      bindings:
-#        starship-input:
-#         destination: starship-input
-#        starship-output:
-#         destination: starship-input
-#      binders:
-#        local1:
-#          type: jms
-#          environment:
-#            spring:
-#              activemq:
-#                protocol: tcp
-#                host: localhost
-#                port: 61616
-#                username: user-amq
-#                password: password-amq
-                
-management:
-  endpoints:
-    web:
-      exposure:
-        include: info,health,messaging                
-                
-server:
-  port: 8180
+      bindings:
+        starship-input:
+          binder: rabbit1
+          destination: starship-input
+          group: reader
+           
+      rabbit:
+        default:
+          exchangeType: headers
+        bindings:
+          starship-input:
+            consumer:
+              exchangeType: headers
+            producer:
+              exchangeType: headers

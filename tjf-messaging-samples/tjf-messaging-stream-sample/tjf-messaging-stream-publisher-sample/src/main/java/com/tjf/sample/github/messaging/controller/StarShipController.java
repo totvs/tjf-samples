@@ -18,10 +18,10 @@ import com.tjf.sample.github.messaging.events.StarShipArrivedEvent;
 import com.tjf.sample.github.messaging.events.StarShipArrivedWithoutTenantEvent;
 import com.tjf.sample.github.messaging.events.StarShipLeftEvent;
 import com.tjf.sample.github.messaging.infrastructure.messaging.StarShipPublisher;
-import com.totvs.tjf.core.security.context.SecurityDetails;
-import com.totvs.tjf.core.security.context.SecurityPrincipal;
-import com.totvs.tjf.messaging.context.CloudEventsInfo;
-import com.totvs.tjf.messaging.context.TransactionInfo;
+import com.totvs.tjf.core.common.security.SecurityDetails;
+import com.totvs.tjf.core.common.security.SecurityPrincipal;
+import com.totvs.tjf.core.message.CloudEventsInfo;
+import com.totvs.tjf.core.message.TransactionInfo;
 import com.totvs.tjf.messaging.TransactionContext;
 
 @RestController

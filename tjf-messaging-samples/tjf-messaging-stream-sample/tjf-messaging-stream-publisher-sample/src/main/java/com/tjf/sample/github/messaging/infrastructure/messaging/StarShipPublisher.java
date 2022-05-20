@@ -3,9 +3,9 @@ package com.tjf.sample.github.messaging.infrastructure.messaging;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.totvs.tjf.messaging.context.CloudEventsInfo;
-import com.totvs.tjf.messaging.context.TOTVSMessage;
-import com.totvs.tjf.messaging.context.TransactionInfo;
+import com.totvs.tjf.core.message.CloudEventsInfo;
+import com.totvs.tjf.core.message.TOTVSMessage;
+import com.totvs.tjf.core.message.TransactionInfo;
 
 @EnableBinding(StarShipExchange.class)
 public class StarShipPublisher {
