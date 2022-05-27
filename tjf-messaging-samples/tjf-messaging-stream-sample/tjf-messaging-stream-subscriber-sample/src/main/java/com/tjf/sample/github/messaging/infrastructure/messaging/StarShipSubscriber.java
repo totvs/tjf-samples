@@ -36,15 +36,14 @@ public class StarShipSubscriber {
 //	@StreamListener(target = INPUT, condition = StarShipArrivedEvent.CONDITIONAL_EXPRESSION)
 //	public void subscribeArrived(TOTVSMessage<StarShipArrivedEvent> message) {
 
-	@Bean
-//	@Bean(name = "subscribAarrived")
+	@Bean(name = "subscribearrived")
 //	public Consumer<TOTVSMessage<StarShipArrivedEvent>> hire() {
 //	public Consumer<String> hire() {
 	public Consumer<TOTVSMessage<StarShipArrivedEvent>> subscribeArrived() {
 		return  this::subscribeArrived;
 	}
 
-	@StreamListener(target = StarShipExchange.INPUT, condition = StarShipArrivedEvent.CONDITIONAL_EXPRESSION)
+	//@StreamListener(target = StarShipExchange.INPUT, condition = StarShipArrivedEvent.CONDITIONAL_EXPRESSION)
 	public void subscribeArrived(TOTVSMessage<StarShipArrivedEvent> message) {
 
 		System.out.println("StarShipArrivedEvent recebido");
@@ -83,7 +82,7 @@ public class StarShipSubscriber {
 	}
 */
 
-	@Bean
+	@Bean(name = "subscribeleft")
 	public Consumer<TOTVSMessage<StarShipLeftEvent>> subscribeLeft() {
 
 		return  message -> {

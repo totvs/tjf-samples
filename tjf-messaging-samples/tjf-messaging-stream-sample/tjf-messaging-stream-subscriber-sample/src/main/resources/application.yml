@@ -3,24 +3,39 @@ server:
 
 spring:
   cloud:
-    #function:
-    #  definition: subscribeArrived
     stream:
+      defaultBinder: rabbit1
+
       binders:
         rabbit1:
           type: rabbit
+          environment:
+            spring:
+              rabbit:
+                host: localhost
+      
       bindings:
         starship-input:
-          binder: rabbit1
           destination: starship-input
-          group: reader
-           
+          group: readers
+          binder: rabbit1
+        starship-output:
+          destination: starship-output
+          group: readers
+          binder: rabbit1
+
       rabbit:
         default:
           exchangeType: headers
         bindings:
           starship-input:
-            consumer:
-              exchangeType: headers
             producer:
               exchangeType: headers
+          starship-output:
+            consumer:
+              exchangeType: headers
+
+#      function:
+#        routing:
+#          enabled: true
+#        routing-expression: "headers.contentType.toString().equals('StarShipArrivedEvent') ? 'subscribearrived' : 'subscribeleft'"      

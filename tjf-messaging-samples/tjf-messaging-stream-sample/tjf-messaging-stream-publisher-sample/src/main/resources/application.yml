@@ -1,21 +1,9 @@
 ######## RABBIT
-rabbitmq:
-  auto-config:
-    default-exchange:
-      type: headers
-      
 spring:
   cloud:
     stream:
       defaultBinder: rabbit1
-      
-      bindings:
-        starship-input:
-          destination: starship-input
-          group: writers
-        starship-output:
-          destination: starship-input
-          group: writers
+
       binders:
         rabbit1:
           type: rabbit
@@ -23,6 +11,16 @@ spring:
             spring:
               rabbit:
                 host: localhost
+      
+      bindings:
+        starship-input:
+          destination: starship-input
+          group: writers
+          binder: rabbit1
+        starship-output:
+          destination: starship-output
+          group: writers
+          binder: rabbit1
 
       rabbit:
         default:
@@ -31,10 +29,11 @@ spring:
           starship-input:
             consumer:
               exchangeType: headers
+          starship-output:
             producer:
               exchangeType: headers
-
-######## KAFKA
+        
+####### KAFKA
                
 #spring:
 #  cloud:

@@ -7,7 +7,7 @@ import org.springframework.messaging.SubscribableChannel;
 
 public interface StarShipExchange {
 
-	String INPUT = "starship-input";
+	String INPUT = "starship-output";
 
 	@Input(StarShipExchange.INPUT)
 	SubscribableChannel input();
