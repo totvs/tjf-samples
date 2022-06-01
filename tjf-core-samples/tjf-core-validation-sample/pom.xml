@@ -8,7 +8,7 @@
 	<parent>
 		<groupId>com.totvs.tjf</groupId>
 		<artifactId>tjf-boot-starter</artifactId>
-		<version>5.0.0-SNAPSHOT</version>
+		<version>3.1.0-SNAPSHOT</version>
 		<relativePath />
 	</parent>
 
@@ -26,14 +26,13 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
-		<!-- ISSUE TJF-1735 - tjf-core-validation-sample ocorrendo erro com o Swagger
 			<dependency>
 				<groupId>io.springfox</groupId>
 				<artifactId>springfox-swagger2</artifactId>
 				<version>3.0.0</version>
 			</dependency>
-		-->
-
+		
+	
 		<!-- Lombok -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
