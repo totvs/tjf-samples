@@ -31,4 +31,6 @@ public class AccountModel {
 	@Max(value = 1000, message = "Valor maximo é 1000!")
 	private Double balance;
 
+	
+
 }

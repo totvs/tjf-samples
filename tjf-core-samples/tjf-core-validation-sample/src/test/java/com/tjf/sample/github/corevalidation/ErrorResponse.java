@@ -14,5 +14,5 @@ public class ErrorResponse {
 	private final String error;
 	private final String message;
 	private final String path;
-
+	
 }

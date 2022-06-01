@@ -1,7 +1,7 @@
 package com.tjf.sample.github.corevalidation;
 
-/* ISSUE TJF-1735 - tjf-core-validation-sample ocorrendo erro com o Swagger
-import org.springframework.context.annotation.Bean;/
+/* ISSUE TJF-1735 - tjf-core-validation-sample ocorrendo erro com o Swagger */
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import springfox.documentation.builders.PathSelectors;
@@ -21,6 +21,7 @@ public class SwaggerConfiguration {
 	}
 
 }
-*/
 
+/*
 public class SwaggerConfiguration {}
+*/
