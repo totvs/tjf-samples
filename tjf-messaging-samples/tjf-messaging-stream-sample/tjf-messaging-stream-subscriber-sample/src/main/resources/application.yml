@@ -1,41 +1,152 @@
-server:
-  port: 8180
+######## RABBIT FUNCTION
 
 spring:
   cloud:
+    function:
+      routing:
+        enabled: true
+      routing-expression: "headers['type']=='StarShipArrivedEvent' ? 'subscribeArrived' : 'subscribeLeft'"
+#      definition: subscribeArrived;subscribeLeft
     stream:
-      defaultBinder: rabbit1
+      pollable-source: tjf-messaging-error
+      
+      default-binder: rabbit1
+      bindings:
+      
+        functionRouter-in-0:
+          binder: rabbit1
+          destination: starship-input
+          group: request
+        subscribeArrived-in-0:
+          binder: rabbit1
+          destination: starship-input
+          group: request
+        subscribeArrived-out-0:
+          binder: rabbit1
+          destination: starship-input
+          group: request 
+        subscribeLeft-in-0:
+          binder: rabbit1
+          destination: starship-input
+          group: request 
+        subscribeLeft-in-1:
+          binder: rabbit1
+          destination: starship-input-externo
+          group: request 
+        subscribeLeft-out-0:
+          binder: rabbit1
+          destination: starship-input
+          group: request
+          
+    # Filas de Erros
+        tjf-messaging-error-in-0:
+          destination: bbunit-errors
+          group: errors
 
+        tjf-messaging-error-out-0:
+          destination: bbunit-errors
+          group: errors
+          producer:
+            requiredGroups: errors
+                       
       binders:
         rabbit1:
           type: rabbit
-          environment:
-            spring:
-              rabbit:
-                host: localhost
-      
-      bindings:
-        starship-input:
-          destination: starship-input
-          group: readers
-          binder: rabbit1
-        starship-output:
-          destination: starship-output
-          group: readers
-          binder: rabbit1
-
       rabbit:
-        default:
-          exchangeType: headers
         bindings:
-          starship-input:
-            producer:
-              exchangeType: headers
-          starship-output:
+          functionRouter-in-0:
             consumer:
               exchangeType: headers
+          subscribeArrived-in-0:
+            consumer:
+              exchangeType: headers
+          subscribeArrived-out-0:
+            producer:
+              exchangeType: headers
+          subscribeLeft-in-0:
+            consumer:
+              exchangeType: headers
+          subscribeLeft-in-1:
+            consumer:
+              exchangeType: headers
+          subscribeLeft-out-0:
+            producer:
+              exchangeType: headers
+                
 
-#      function:
-#        routing:
-#          enabled: true
-#        routing-expression: "headers.contentType.toString().equals('StarShipArrivedEvent') ? 'subscribearrived' : 'subscribeleft'"      
+######## RABBIT
+
+#spring:
+#  cloud:
+#    stream:
+#      defaultBinder: rabbit1
+#      bindings:
+#        starship-input:
+#          destination: starship-input
+#          group: requests
+#        starship-output:
+#          destination: starship-input
+#      binders:
+#        rabbit1:
+#          type: rabbit
+#          environment:
+#            spring:
+#              rabbit:
+#                host: localhost
+ 
+######## KAFKA
+               
+#spring:
+#  cloud:
+#    stream:
+#      defaultBinder: kafka1
+#      bindings:
+#        starship-input:
+#          destination: starship-input
+#          group: requests
+#        starship-output:
+#          destination: starship-input
+#      binders:                
+#        kafka1:
+#          type: kafka
+#                         
+#      kafka:
+#        binder:
+#          brokers: localhost:9092
+#          configuration:
+#            auto:
+#              offset:
+#                reset: earliest  
+
+
+######## JMS
+
+#spring:
+#  cloud:
+#    stream:
+#      defaultBinder: local1
+#      bindings:
+#        starship-input:
+#         destination: starship-input
+#        starship-output:
+#         destination: starship-input
+#      binders:
+#        local1:
+#          type: jms
+#          environment:
+#            spring:
+#              activemq:
+#                protocol: tcp
+#                host: localhost
+#                port: 61616
+#                username: user-amq
+#                password: password-amq
+                
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info,health,messaging                
+                
+server:
+  port: 8180

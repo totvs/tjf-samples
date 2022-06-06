@@ -5,14 +5,14 @@
 	<parent>
 		<groupId>com.totvs.tjf</groupId>
 		<artifactId>tjf-boot-starter</artifactId>
-		<version>3.0.0-RELEASE</version>
+		<version>3.1.1-RELEASE</version>
 	</parent>
 
 	<groupId>br.com.star.wars</groupId>
-	<artifactId>messaging-stream-publisher</artifactId>
+	<artifactId>messaging-function-publisher</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>tjf-messaging-stream-publisher</name>
-	<description>TJF Messaging Stream Publisher Sample</description>
+	<name>tjf-messaging-function-publisher</name>
+	<description>TJF Messaging Function Publisher Sample</description>
 	<packaging>jar</packaging>
 
 	<dependencies>
@@ -23,20 +23,23 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.totvs.tjf</groupId>
-			<artifactId>tjf-messaging-binder-jms</artifactId>
-		</dependency>
-
-		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-stream-binder-rabbit</artifactId>
 		</dependency>
 
-		<!-- Kafka 
+		<!-- JMS 
+		<dependency>
+			<groupId>com.totvs.tjf</groupId>
+			<artifactId>tjf-messaging-binder-jms</artifactId>
+		</dependency>
+		-->
+
+		<!-- Kafka
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-stream-binder-kafka</artifactId>
-		</dependency> -->
+		</dependency> 
+		-->
 
 		<!-- Lombok -->
 		<dependency>
@@ -144,14 +147,14 @@
 
 	<repositories>
 		<repository>
-			<id>central-release</id>
-			<name>TOTVS Java Framework: Release</name>
-			<url>http://maven.engpro.totvs.com.br/artifactory/libs-release</url>
-		</repository>
-		<repository>
-			<id>central-snapshot</id>
-			<name>TOTVS Java Framework: Snapshots</name>
-			<url>http://maven.engpro.totvs.com.br/artifactory/libs-snapshot</url>
+			<id>tjf</id>
+			<url>https://totvstfs.pkgs.visualstudio.com/TJF/_packaging/tjf/maven/v1</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
 		</repository>
 	</repositories>
 </project>

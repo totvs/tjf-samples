@@ -19,10 +19,10 @@ spring:
           group: requests
         starship-output:
           destination: starship-test-input
-        tjf-messaging-error-input:
+        tjf-messaging-error-in-0:
           destination: starship-errors
           group: errors
-        tjf-messaging-error-output:
+        tjf-messaging-error-out-0:
           destination: starship-errors
           group: errors
       binders:

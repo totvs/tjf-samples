@@ -17,19 +17,12 @@ spring:
           destination: starship-input
           group: writers
           binder: rabbit1
-        starship-output:
-          destination: starship-output
-          group: writers
-          binder: rabbit1
 
       rabbit:
         default:
           exchangeType: headers
         bindings:
           starship-input:
-            consumer:
-              exchangeType: headers
-          starship-output:
             producer:
               exchangeType: headers
         
@@ -85,7 +78,17 @@ management:
   endpoints:
     web:
       exposure:
-        include: info,health,messaging                
-                
+        include: info,health,messaging,sending                
+  endpoint:
+    health:
+      enabled: true
+    sending:                
+      enabled: true
+  health:
+    rabbit:
+      enabled: false
+    sending:
+      enable: true
+
 server:
   port: 8080

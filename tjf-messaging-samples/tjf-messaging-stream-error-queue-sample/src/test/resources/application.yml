@@ -3,6 +3,7 @@ spring:
   cloud:
     stream:
       defaultBinder: rabbit1
+      pollable-source: tjf-messaging-error
       
       bindings:
         # Filas de Execução
@@ -15,10 +16,10 @@ spring:
           destination: bbunit-input
         
         # Filas de Erros
-        tjf-messaging-error-input:
+        tjf-messaging-error-in-0:
           destination: bbunit-errors
           group: errors
-        tjf-messaging-error-output:
+        tjf-messaging-error-out-0:
           destination: bbunit-errors
           group: errors
           producer:

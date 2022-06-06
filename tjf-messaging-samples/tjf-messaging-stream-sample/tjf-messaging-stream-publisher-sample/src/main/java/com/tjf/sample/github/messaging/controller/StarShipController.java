@@ -116,7 +116,8 @@ public class StarShipController {
 		transactions.put(taskId, Status.SENDED);
 		CloudEventsInfo cloudEventsInfo = new CloudEventsInfo(taskId, name, tenant, "", "application/cloudevents+json");
 		
-		samplePublisher.publish(starShipEvent, "StarShipArrivedEventCloudEvent", transaction, cloudEventsInfo);
+		// TODO - samplePublisher.publish(starShipEvent, "StarShipArrivedEventCloudEvent", transaction, cloudEventsInfo);
+		samplePublisher.publish(starShipEvent, "StarShipArrivedEvent", transaction, cloudEventsInfo);
 
 		return "The identification of the arrived starship " + name + " of tenant " + tenant + " was sent!";
 	}
