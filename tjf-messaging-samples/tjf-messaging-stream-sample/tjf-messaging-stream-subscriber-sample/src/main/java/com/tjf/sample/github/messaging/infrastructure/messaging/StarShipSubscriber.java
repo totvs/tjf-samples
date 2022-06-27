@@ -34,6 +34,19 @@ public class StarShipSubscriber {
 		return this::subscribeArrived;
 	}
 
+	
+	@Bean
+	public Consumer<TOTVSMessage<StarShipLeftEvent>> subscribeLeft() {
+
+		return  message -> {
+			
+			System.out.println("StarShipLeftEvent recebido");
+			
+			StarShipLeftEvent starShipLeftEvent = message.getContent();
+			starShipService.left(new StarShip(starShipLeftEvent.getName()));
+		};
+	}
+
 	//@StreamListener(target = StarShipExchange.INPUT, condition = StarShipArrivedEvent.CONDITIONAL_EXPRESSION)
 	public void subscribeArrived(TOTVSMessage<StarShipArrivedEvent> message) {
 
@@ -52,18 +65,6 @@ public class StarShipSubscriber {
 			System.out.println("TransactionInfo GeneratedBy: "
 					+ transactionContext.getTransactionInfo().getGeneratedBy());
 		}
-	}
-	
-	@Bean
-	public Consumer<TOTVSMessage<StarShipLeftEvent>> subscribeLeft() {
-
-		return  message -> {
-			
-			System.out.println("StarShipLeftEvent recebido");
-			
-			StarShipLeftEvent starShipLeftEvent = message.getContent();
-			starShipService.left(new StarShip(starShipLeftEvent.getName()));
-		};
 	}
 
 	/* public void subscribeArrivedCloudEvent(TOTVSMessage<StarShipArrivedEvent> message) {

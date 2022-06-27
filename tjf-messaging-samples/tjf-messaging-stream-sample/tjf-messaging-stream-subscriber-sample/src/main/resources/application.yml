@@ -6,7 +6,6 @@ spring:
       routing:
         enabled: true
       routing-expression: "headers['type']=='StarShipArrivedEvent' ? 'subscribeArrived' : 'subscribeLeft'"
-#      definition: subscribeArrived;subscribeLeft
     stream:
       pollable-source: tjf-messaging-error
       
@@ -149,4 +148,4 @@ management:
         include: info,health,messaging                
                 
 server:
-  port: 8180
+  port: 8380
