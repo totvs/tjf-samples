@@ -1,9 +1,15 @@
 ######## RABBIT
+
 spring:
   cloud:
     stream:
       defaultBinder: rabbit1
-
+      bindings:
+        starship-input:
+         destination: starship-input
+         group: requests
+        starship-output:
+          destination: starship-input
       binders:
         rabbit1:
           type: rabbit
@@ -11,22 +17,8 @@ spring:
             spring:
               rabbit:
                 host: localhost
-      
-      bindings:
-        starship-input:
-          destination: starship-input
-          group: writers
-          binder: rabbit1
-
-      rabbit:
-        default:
-          exchangeType: headers
-        bindings:
-          starship-input:
-            producer:
-              exchangeType: headers
-        
-####### KAFKA
+ 
+######## KAFKA
                
 #spring:
 #  cloud:
@@ -78,17 +70,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: info,health,messaging,sending                
-  endpoint:
-    health:
-      enabled: true
-    sending:                
-      enabled: true
-  health:
-    rabbit:
-      enabled: false
-    sending:
-      enable: true
-
+        include: info,health,messaging                
+                
 server:
-  port: 8280
+  port: 8080

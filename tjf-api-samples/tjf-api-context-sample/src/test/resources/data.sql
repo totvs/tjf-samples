@@ -1,4 +1,4 @@
-INSERT INTO jedi (id, name, gender) VALUES (1, 'Luke Skywalker', 'male');
-INSERT INTO jedi (id, name, gender) VALUES (2, 'Obi-Wan Kenobi', 'male');
-INSERT INTO jedi (id, name, gender) VALUES (3, 'Yoda', 'male');
-INSERT INTO jedi (id, name, gender) VALUES (4, 'Anakin Skywalker', 'male');
+INSERT INTO jedi (name, gender) VALUES ('Luke Skywalker', 'male');
+INSERT INTO jedi (name, gender) VALUES ('Obi-Wan Kenobi', 'male');
+INSERT INTO jedi (name, gender) VALUES ('Yoda', 'male');
+INSERT INTO jedi (name, gender) VALUES ('Anakin Skywalker', 'male');

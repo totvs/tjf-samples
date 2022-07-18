@@ -19,10 +19,10 @@ spring:
           group: requests
         starship-output:
           destination: starship-test-input
-        tjf-messaging-error-in-0:
+        tjf-messaging-error-input:
           destination: starship-errors
           group: errors
-        tjf-messaging-error-out-0:
+        tjf-messaging-error-output:
           destination: starship-errors
           group: errors
       binders:
@@ -31,7 +31,7 @@ spring:
           environment:
             spring:
               rabbitmq:
-                host: localhost
+                host: rabbit
 
 ---                
 spring:

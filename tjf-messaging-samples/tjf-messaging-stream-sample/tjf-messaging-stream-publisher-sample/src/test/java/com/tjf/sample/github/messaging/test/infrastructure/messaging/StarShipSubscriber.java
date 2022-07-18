@@ -15,7 +15,7 @@ import com.totvs.tjf.messaging.context.TOTVSMessage;
 import com.totvs.tjf.core.validation.ValidatorService;
 import com.totvs.tjf.messaging.WithoutTenant;
 
-//@EnableBinding(StarShipExchangeTest.class)
+@EnableBinding(StarShipExchangeTest.class)
 public class StarShipSubscriber {
 
 	@Autowired

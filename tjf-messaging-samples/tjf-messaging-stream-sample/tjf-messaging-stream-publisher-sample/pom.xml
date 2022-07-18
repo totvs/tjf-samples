@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
 		<groupId>com.totvs.tjf</groupId>
 		<artifactId>tjf-boot-starter</artifactId>
-		<version>3.2.0-RELEASE</version>
+		<version>3.5.0-RELEASE</version>
 	</parent>
 
 	<groupId>br.com.star.wars</groupId>
-	<artifactId>messaging-function-publisher</artifactId>
+	<artifactId>messaging-stream-publisher</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>tjf-messaging-function-publisher</name>
-	<description>TJF Messaging Function Publisher Sample</description>
+	<name>tjf-messaging-stream-publisher</name>
+	<description>TJF Messaging Stream Publisher Sample</description>
 	<packaging>jar</packaging>
 
 	<dependencies>
@@ -23,23 +25,15 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-stream-binder-rabbit</artifactId>
-		</dependency>
-
-		<!-- JMS 
-		<dependency>
 			<groupId>com.totvs.tjf</groupId>
 			<artifactId>tjf-messaging-binder-jms</artifactId>
 		</dependency>
-		-->
 
-		<!-- Kafka
+		<!-- Kafka -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-stream-binder-kafka</artifactId>
-		</dependency> 
-		-->
+		</dependency>
 
 		<!-- Lombok -->
 		<dependency>
@@ -147,14 +141,14 @@
 
 	<repositories>
 		<repository>
-			<id>tjf</id>
-			<url>https://totvstfs.pkgs.visualstudio.com/TJF/_packaging/tjf/maven/v1</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
+			<id>central-release</id>
+			<name>TOTVS Java Framework: Release</name>
+			<url>http://maven.engpro.totvs.com.br/artifactory/libs-release</url>
+		</repository>
+		<repository>
+			<id>central-snapshot</id>
+			<name>TOTVS Java Framework: Snapshots</name>
+			<url>http://maven.engpro.totvs.com.br/artifactory/libs-snapshot</url>
 		</repository>
 	</repositories>
 </project>

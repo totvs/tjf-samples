@@ -18,7 +18,7 @@ Para utilização do componente será necessário alterar o _parent_ e inserir a
 <parent>
   <groupId>com.totvs.tjf</groupId>
   <artifactId>tjf-boot-starter</artifactId>
-  <version>3.0.0-RELEASE</version>
+  <version>3.5.0-RELEASE</version>
 </parent>
 ```
 
@@ -36,7 +36,7 @@ Como iremos criar uma API REST, para facilitar a criação do modelo, vamos util
   <groupId>org.projectlombok</groupId>
   <artifactId>lombok</artifactId>
 </dependency>
-```
+```xml
 
 > Saiba mais sobre o o [Lombok](https://projectlombok.org/).
 
@@ -57,6 +57,16 @@ Também adicionaremos o Spring Fox Swagger como dependência para a demonstraç�
 ```
 
 > Saiba mais sobre o [Spring Fox Swagger](https://www.baeldung.com/swagger-2-documentation-for-spring-rest-api).
+
+O Spring Fox Swagger assume a correspondencia de caminho Ant-based e não por PathPattern que é padrão do Spring Boot a partir da versão 2.6. 
+
+Para contornar a situação vamos modificar as propriedades do Spring Boot para esse exemplo. Para isso criaremos uma pasta resources em src/main e um arquivo application.properties com a seguinte configuração:
+
+```xml
+
+	spring.mvc.pathmatch.matching-strategy = ant-path-matcher;
+
+```
 
 ## Criando o código fonte
 

@@ -20,9 +20,9 @@ import com.tjf.sample.github.messaging.events.StarShipLeftEvent;
 import com.tjf.sample.github.messaging.infrastructure.messaging.StarShipPublisher;
 import com.totvs.tjf.core.security.context.SecurityDetails;
 import com.totvs.tjf.core.security.context.SecurityPrincipal;
-import com.totvs.tjf.messaging.TransactionContext;
 import com.totvs.tjf.messaging.context.CloudEventsInfo;
 import com.totvs.tjf.messaging.context.TransactionInfo;
+import com.totvs.tjf.messaging.TransactionContext;
 
 @RestController
 @RequestMapping(path = "/starship")
@@ -116,8 +116,7 @@ public class StarShipController {
 		transactions.put(taskId, Status.SENDED);
 		CloudEventsInfo cloudEventsInfo = new CloudEventsInfo(taskId, name, tenant, "", "application/cloudevents+json");
 		
-		// TODO - samplePublisher.publish(starShipEvent, "StarShipArrivedEventCloudEvent", transaction, cloudEventsInfo);
-		samplePublisher.publish(starShipEvent, "StarShipArrivedEvent", transaction, cloudEventsInfo);
+		samplePublisher.publish(starShipEvent, "StarShipArrivedEventCloudEvent", transaction, cloudEventsInfo);
 
 		return "The identification of the arrived starship " + name + " of tenant " + tenant + " was sent!";
 	}

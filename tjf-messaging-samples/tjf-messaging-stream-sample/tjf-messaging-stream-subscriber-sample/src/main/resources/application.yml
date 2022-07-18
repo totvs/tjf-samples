@@ -1,98 +1,33 @@
-######## RABBIT FUNCTION
-
-spring:
-  cloud:
-    function:
-      routing:
-        enabled: true
-      routing-expression: "headers['type']=='StarShipArrivedEvent' ? 'subscribeArrived' : 'subscribeLeft'"
-    stream:
-      pollable-source: tjf-messaging-error
-      
-      default-binder: rabbit1
-      bindings:
-      
-        functionRouter-in-0:
-          binder: rabbit1
-          destination: starship-input
-          group: request
-        subscribeArrived-in-0:
-          binder: rabbit1
-          destination: starship-input
-          group: request
-        subscribeArrived-out-0:
-          binder: rabbit1
-          destination: starship-input
-          group: request 
-        subscribeLeft-in-0:
-          binder: rabbit1
-          destination: starship-input
-          group: request 
-        subscribeLeft-in-1:
-          binder: rabbit1
-          destination: starship-input-externo
-          group: request 
-        subscribeLeft-out-0:
-          binder: rabbit1
-          destination: starship-input
-          group: request
-          
-    # Filas de Erros
-        tjf-messaging-error-in-0:
-          destination: bbunit-errors
-          group: errors
-
-        tjf-messaging-error-out-0:
-          destination: bbunit-errors
-          group: errors
-          producer:
-            requiredGroups: errors
-                       
-      binders:
-        rabbit1:
-          type: rabbit
-      rabbit:
-        bindings:
-          functionRouter-in-0:
-            consumer:
-              exchangeType: headers
-          subscribeArrived-in-0:
-            consumer:
-              exchangeType: headers
-          subscribeArrived-out-0:
-            producer:
-              exchangeType: headers
-          subscribeLeft-in-0:
-            consumer:
-              exchangeType: headers
-          subscribeLeft-in-1:
-            consumer:
-              exchangeType: headers
-          subscribeLeft-out-0:
-            producer:
-              exchangeType: headers
-                
+logging:
+  level:
+    com:
+      totvs:
+        tjf:
+          messaging: DEBUG
 
 ######## RABBIT
 
-#spring:
-#  cloud:
-#    stream:
-#      defaultBinder: rabbit1
-#      bindings:
-#        starship-input:
-#          destination: starship-input
-#          group: requests
-#        starship-output:
-#          destination: starship-input
-#      binders:
-#        rabbit1:
-#          type: rabbit
-#          environment:
-#            spring:
-#              rabbit:
-#                host: localhost
- 
+spring:
+  cloud:
+    stream:
+      defaultBinder: rabbit1
+      bindings:
+        starship-input:
+          destination: starship-input
+          group: requests
+          consumer:
+            max-attempts: 1
+        starship-output:
+          destination: starship-input
+      binders:
+        rabbit1:
+          type: rabbit
+          environment:
+            spring:
+              rabbit:
+                host: localhost
+
+
 ######## KAFKA
                
 #spring:
@@ -111,6 +46,7 @@ spring:
 #                         
 #      kafka:
 #        binder:
+#          replication-factor: 1
 #          brokers: localhost:9092
 #          configuration:
 #            auto:
@@ -148,4 +84,4 @@ management:
         include: info,health,messaging                
                 
 server:
-  port: 8380
+  port: 8180
