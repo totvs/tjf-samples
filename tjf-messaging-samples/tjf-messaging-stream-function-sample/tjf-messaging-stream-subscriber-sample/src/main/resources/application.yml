@@ -5,7 +5,7 @@ spring:
     function:
       routing:
         enabled: true
-      routing-expression: "headers['type']=='StarShipArrivedEvent' ? 'subscribeArrived' : 'subscribeLeft'"
+      routing-expression: "headers['type']=='StarShipArrivedEvent' ? 'StarShipArrivedEvent' : 'StarShipLeftEvent'"
     stream:
       pollable-source: tjf-messaging-error
       
@@ -16,23 +16,23 @@ spring:
           binder: rabbit1
           destination: starship-input
           group: request
-        subscribeArrived-in-0:
+        StarShipArrivedEvent-in-0:
           binder: rabbit1
           destination: starship-input
           group: request
-        subscribeArrived-out-0:
+        StarShipArrivedEvent-out-0:
           binder: rabbit1
           destination: starship-input
           group: request 
-        subscribeLeft-in-0:
+        StarShipLeftEvent-in-0:
           binder: rabbit1
           destination: starship-input
           group: request 
-        subscribeLeft-in-1:
+        StarShipLeftEvent-in-1:
           binder: rabbit1
           destination: starship-input-externo
           group: request 
-        subscribeLeft-out-0:
+        StarShipLeftEvent-out-0:
           binder: rabbit1
           destination: starship-input
           group: request
@@ -51,6 +51,14 @@ spring:
       binders:
         rabbit1:
           type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                host: localhost
+                port: 5672
+                username: admin
+                password: totvs@123
+                virtual-host:
       rabbit:
         bindings:
           functionRouter-in-0:
