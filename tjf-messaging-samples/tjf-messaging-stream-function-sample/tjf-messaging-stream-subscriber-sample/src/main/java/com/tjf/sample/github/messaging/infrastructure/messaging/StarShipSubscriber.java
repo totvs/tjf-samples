@@ -1,24 +1,22 @@
 package com.tjf.sample.github.messaging.infrastructure.messaging;
 
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
-import org.springframework.cloud.stream.annotation.EnableBinding;
-import org.springframework.cloud.stream.annotation.StreamListener;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Service;
+import org.springframework.messaging.Message;
+import org.springframework.stereotype.Component;
 
 import com.tjf.sample.github.messaging.events.StarShipArrivedEvent;
 import com.tjf.sample.github.messaging.events.StarShipLeftEvent;
 import com.tjf.sample.github.messaging.model.StarShip;
 import com.tjf.sample.github.messaging.services.StarShipService;
-import com.totvs.tjf.core.security.context.SecurityDetails;
-import com.totvs.tjf.messaging.function.ConsumerWithoutTenant;
 import com.totvs.tjf.messaging.TransactionContext;
-import com.totvs.tjf.messaging.WithoutTenant;
 import com.totvs.tjf.messaging.context.TOTVSMessage;
 
-@Service
+@EnableAutoConfiguration
+@Component
 public class StarShipSubscriber {
 
 	private StarShipService starShipService;
@@ -30,53 +28,52 @@ public class StarShipSubscriber {
 	}
 
 	@Bean
-	public Consumer<TOTVSMessage<StarShipArrivedEvent>> subscribeArrived() {
-		return this::subscribeArrived;
-	}
+	public Consumer<Message<StarShipLeftEvent>> StarShipLeftEvent() {
+		return message -> {
 
-	
-	@Bean
-	public Consumer<TOTVSMessage<StarShipLeftEvent>> subscribeLeft() {
+			System.out.println("StarShipLeftEvent recebido!");
 
-		return  message -> {
-			
-			System.out.println("StarShipLeftEvent recebido");
-			
-			StarShipLeftEvent starShipLeftEvent = message.getContent();
+			StarShipLeftEvent starShipLeftEvent = message.getPayload();
 			starShipService.left(new StarShip(starShipLeftEvent.getName()));
 		};
 	}
 
-	//@StreamListener(target = StarShipExchange.INPUT, condition = StarShipArrivedEvent.CONDITIONAL_EXPRESSION)
-	public void subscribeArrived(TOTVSMessage<StarShipArrivedEvent> message) {
+	//exemplo com function
+	@Bean
+	public Function<Message<StarShipLeftEvent>, String> subscribeLeft() {
+		return message -> {
+			System.out.println("StarShipLeftEvent recebido!");
 
-		System.out.println("StarShipArrivedEvent recebido");
-
-		// # teste fila de erro 
-		//if(true)
-		//	throw new RuntimeException("testando");
-		
-		StarShipArrivedEvent starShipArrivedEvent = message.getContent();
-		starShipService.arrived(new StarShip(starShipArrivedEvent.getName()));
-
-		if(transactionContext.getTransactionInfo() != null) {
-			System.out.println("TransactionInfo TransactionId: "
-					+ transactionContext.getTransactionInfo().getTransactionId());
-			System.out.println("TransactionInfo GeneratedBy: "
-					+ transactionContext.getTransactionInfo().getGeneratedBy());
-		}
+			StarShipLeftEvent starShipLeftEvent = message.getPayload();
+			starShipService.left(new StarShip(starShipLeftEvent.getName()));
+			
+			return "StarShipLeftEvent recebido!";
+		};
 	}
 
-	/* public void subscribeArrivedCloudEvent(TOTVSMessage<StarShipArrivedEvent> message) {
-	if (transactionContext.getTransactionInfo() != null) {
-		System.out.println("TransactionInfo TaskId: " + transactionContext.getTransactionInfo().getTaskId());
+	@Bean
+	public Consumer<TOTVSMessage<StarShipArrivedEvent>> StarShipArrivedEvent() {
+		return message -> {
+			System.out.println("StarShipArrivedEvent recebido!");
+
+			StarShipArrivedEvent starShipArrivedEvent = message.getContent();
+			starShipService.arrived(new StarShip(starShipArrivedEvent.getName()));
+
+			if (transactionContext.getTransactionInfo() != null) {
+				System.out.println(
+						"TransactionInfo TransactionId: " + transactionContext.getTransactionInfo().getTransactionId());
+				System.out.println(
+						"TransactionInfo GeneratedBy: " + transactionContext.getTransactionInfo().getGeneratedBy());
+			}
+
+			if (message.getHeader().getCloudEventsInfo() != null) {
+				System.out.println("CloudEventInfo Id: " + message.getHeader().getCloudEventsInfo().getId());
+				System.out
+						.println("CloudEventInfo Schema: " + message.getHeader().getCloudEventsInfo().getDataSchema());
+				System.out.println("CloudEventInfo DataContentType: "
+						+ message.getHeader().getCloudEventsInfo().getDataContentType());
+			}
+
+		};
 	}
-	System.out.println("Current tenant: " + SecurityDetails.getTenant());
-	System.out.println("CloudEventInfo Id: " + message.getHeader().getCloudEventsInfo().getId());
-	System.out.println("CloudEventInfo Schema: " + message.getHeader().getCloudEventsInfo().getDataSchema());
-	System.out.println("CloudEventInfo DataContentType: " + message.getHeader().getCloudEventsInfo().getDataContentType());
-	StarShipArrivedEvent starShipArrivedEvent = message.getContent();
-	starShipService.arrived(new StarShip(starShipArrivedEvent.getName()));
-	} 
-	*/
 }
