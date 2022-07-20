@@ -28,12 +28,12 @@ public class StarShipSubscriber {
 	}
 
 	@Bean
-	public Consumer<Message<StarShipLeftEvent>> StarShipLeftEvent() {
+	public Consumer<TOTVSMessage<StarShipLeftEvent>> StarShipLeftEvent() {
 		return message -> {
 
 			System.out.println("StarShipLeftEvent recebido!");
 
-			StarShipLeftEvent starShipLeftEvent = message.getPayload();
+			StarShipLeftEvent starShipLeftEvent = message.getContent();
 			starShipService.left(new StarShip(starShipLeftEvent.getName()));
 		};
 	}
