@@ -10,29 +10,9 @@ spring:
       pollable-source: tjf-messaging-error
       
       default-binder: rabbit1
-      bindings:
       
+      bindings:   
         functionRouter-in-0:
-          binder: rabbit1
-          destination: starship-input
-          group: request
-        StarShipArrivedEvent-in-0:
-          binder: rabbit1
-          destination: starship-input
-          group: request
-        StarShipArrivedEvent-out-0:
-          binder: rabbit1
-          destination: starship-input
-          group: request 
-        StarShipLeftEvent-in-0:
-          binder: rabbit1
-          destination: starship-input
-          group: request 
-        StarShipLeftEvent-in-1:
-          binder: rabbit1
-          destination: starship-input-externo
-          group: request 
-        StarShipLeftEvent-out-0:
           binder: rabbit1
           destination: starship-input
           group: request
@@ -51,33 +31,11 @@ spring:
       binders:
         rabbit1:
           type: rabbit
-          environment:
-            spring:
-              rabbitmq:
-                host: localhost
-                port: 5672
-                username: admin
-                password: totvs@123
-                virtual-host:
+
       rabbit:
         bindings:
           functionRouter-in-0:
             consumer:
-              exchangeType: headers
-          subscribeArrived-in-0:
-            consumer:
-              exchangeType: headers
-          subscribeArrived-out-0:
-            producer:
-              exchangeType: headers
-          subscribeLeft-in-0:
-            consumer:
-              exchangeType: headers
-          subscribeLeft-in-1:
-            consumer:
-              exchangeType: headers
-          subscribeLeft-out-0:
-            producer:
               exchangeType: headers
                 
 
