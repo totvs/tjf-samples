@@ -1,7 +1,6 @@
 package com.tjf.sample.github.messaging.infrastructure.messaging;
 
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +13,7 @@ import com.tjf.sample.github.messaging.model.StarShip;
 import com.tjf.sample.github.messaging.services.StarShipService;
 import com.totvs.tjf.messaging.TransactionContext;
 import com.totvs.tjf.messaging.context.TOTVSMessage;
+import com.totvs.tjf.messaging.context.function.FunctionWithoutTenant;
 
 @EnableAutoConfiguration
 @Component
@@ -28,23 +28,9 @@ public class StarShipSubscriber {
 	}
 
 	@Bean
-	public Consumer<TOTVSMessage<StarShipLeftEvent>> StarShipLeftEvent() {
+	public FunctionWithoutTenant<Message<TOTVSMessage<StarShipLeftEvent>>, String> StarShipLeftEvent() {
 		return message -> {
-
-			System.out.println("StarShipLeftEvent recebido!");
-
-			StarShipLeftEvent starShipLeftEvent = message.getContent();
-			starShipService.left(new StarShip(starShipLeftEvent.getName()));
-		};
-	}
-
-	//exemplo com function
-	@Bean
-	public Function<Message<StarShipLeftEvent>, String> subscribeLeft() {
-		return message -> {
-			System.out.println("StarShipLeftEvent recebido!");
-
-			StarShipLeftEvent starShipLeftEvent = message.getPayload();
+			StarShipLeftEvent starShipLeftEvent = message.getPayload().getContent();
 			starShipService.left(new StarShip(starShipLeftEvent.getName()));
 			
 			return "StarShipLeftEvent recebido!";

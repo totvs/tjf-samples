@@ -1,36 +1,53 @@
 package com.tjf.sample.github.messaging.infrastructure.messaging;
 
-import org.springframework.cloud.stream.annotation.EnableBinding;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.totvs.tjf.messaging.context.CloudEventsInfo;
+import org.springframework.context.annotation.Bean;
+import org.springframework.integration.support.MessageBuilder;
+import org.springframework.messaging.Message;
+import org.springframework.stereotype.Component;
+
+import com.tjf.sample.github.messaging.events.StarShipArrivedEvent;
+import com.tjf.sample.github.messaging.events.StarShipLeftEvent;
 import com.totvs.tjf.messaging.context.TOTVSMessage;
-import com.totvs.tjf.messaging.context.TransactionInfo;
 
-@EnableBinding(StarShipExchange.class)
+@Component
 public class StarShipPublisher {
 
-	StarShipExchange exchange;
-	ObjectMapper mapper;
+	@Bean
+	public Function<StarShipArrivedEvent, TOTVSMessage<StarShipArrivedEvent>> publishArrivedsssss() {
+		return event -> {
+			System.out.println(event.getClass().getSimpleName() + " enviado!");
 
-	public StarShipPublisher(StarShipExchange exchange, ObjectMapper mapper) {
-		this.exchange = exchange;
-		this.mapper = mapper;
+			return new TOTVSMessage<>(StarShipArrivedEvent.NAME, event);
+		};
 	}
 
-	public <T> void publish(T event, String eventName) {
+	@Bean
+	public Function<StarShipLeftEvent, TOTVSMessage<StarShipLeftEvent>> publishLeftssssss() {
+		return event -> {
+			System.out.println(event.getClass().getSimpleName() + " enviado!");
 
-		new TOTVSMessage<T>(eventName, event).sendTo(exchange.output());
-	}
-	
-	public <T> void publish(T event, String eventName, TransactionInfo transactionInfo, CloudEventsInfo cloudEventsInfo) {
-
-		new TOTVSMessage<T>(eventName, event, transactionInfo, cloudEventsInfo).sendTo(exchange.output());
-	}
-
-	public <T> void publish(T event, String eventName, TransactionInfo transactionInfo) {
-
-		new TOTVSMessage<T>(eventName, event, transactionInfo).sendTo(exchange.output());
+			return new TOTVSMessage<>(StarShipArrivedEvent.NAME, event);
+		};
 	}
 
+	@Bean
+	public Supplier<Message<?>> publishLeft() {
+		return () -> {
+			StarShipLeftEvent event = new StarShipLeftEvent(StarShipLeftEvent.NAME);
+
+			System.out.println(StarShipLeftEvent.NAME + " enviado!");
+
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+
+			return MessageBuilder.withPayload(new TOTVSMessage<>(StarShipLeftEvent.NAME, "10", event))
+					.setHeader("type", "StarShipArrivedEvent").build();
+		};
+	}
 }
