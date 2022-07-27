@@ -1,40 +1,33 @@
 package com.tjf.sample.github.messaging.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.function.Function;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tjf.sample.github.messaging.events.StarShipArrivedEvent;
-import com.tjf.sample.github.messaging.events.StarShipArrivedWithoutTenantEvent;
 import com.tjf.sample.github.messaging.events.StarShipLeftEvent;
-import com.tjf.sample.github.messaging.infrastructure.messaging.StarShipPublisher;
 import com.totvs.tjf.core.security.context.SecurityDetails;
 import com.totvs.tjf.core.security.context.SecurityPrincipal;
 import com.totvs.tjf.messaging.TransactionContext;
-import com.totvs.tjf.messaging.context.CloudEventsInfo;
-import com.totvs.tjf.messaging.context.TransactionInfo;
+import com.totvs.tjf.messaging.context.TOTVSMessage;
 
 @RestController
 @RequestMapping(path = "/starship")
 public class StarShipController {
 
-	private StarShipPublisher samplePublisher;
-	private static Map<String, Status> transactions = new HashMap<String, Status>();
-	private TransactionContext transactionContext;
+	private Function<StarShipLeftEvent, TOTVSMessage<StarShipLeftEvent>> publisherLeft;
+	private Function<StarShipArrivedEvent, TOTVSMessage<StarShipArrivedEvent>> publisherArrived;
 
-	public StarShipController(StarShipPublisher samplePublisher, TransactionContext transactionContext) {
-		this.samplePublisher = samplePublisher;
-		this.transactionContext = transactionContext;
+	public StarShipController(Function<StarShipLeftEvent, TOTVSMessage<StarShipLeftEvent>> publishLeft,
+			Function<StarShipArrivedEvent, TOTVSMessage<StarShipArrivedEvent>> publisherArrived,
+			TransactionContext transactionContext) {
+		this.publisherLeft = publishLeft;
+		this.publisherArrived = publisherArrived;
 	}
 
 	@GetMapping("/arrived")
@@ -46,23 +39,9 @@ public class StarShipController {
 		System.out.println("Current tenant: " + SecurityDetails.getTenant() + "\n");
 
 		StarShipArrivedEvent starShipEvent = new StarShipArrivedEvent(name);
-		samplePublisher.publish(starShipEvent, StarShipArrivedEvent.NAME);
+		publisherArrived.apply(starShipEvent);
 
 		return "The identification of the arrived starship " + name + " of tenant " + tenant + " was sent!";
-	}
-	
-	@GetMapping("/arrivedWithoutTenant")
-	String starShipArrived(@RequestParam("name") String name) {
-
-		this.setTenant(null);
-
-		System.out.println("\nStarship arrived name: " + name);
-		System.out.println("Current tenant: " + SecurityDetails.getTenant() + "\n");
-
-		StarShipArrivedWithoutTenantEvent starShipEvent = new StarShipArrivedWithoutTenantEvent(name);
-		samplePublisher.publish(starShipEvent, StarShipArrivedWithoutTenantEvent.NAME);
-
-		return "The identification of the arrived starship " + name + " without tenant was sent!";
 	}
 
 	@GetMapping("/left")
@@ -74,65 +53,9 @@ public class StarShipController {
 		System.out.println("Current tenant: " + SecurityDetails.getTenant() + "\n");
 
 		StarShipLeftEvent starShipEvent = new StarShipLeftEvent(name);
-		samplePublisher.publish(starShipEvent, StarShipLeftEvent.NAME);
+		publisherLeft.apply(starShipEvent);
 
 		return "The identification of the left starship " + name + " of tenant " + tenant + " was sent!";
-	}
-
-	@GetMapping("/arrived/transacted")
-	String starShipArrivedTransacted(@RequestParam("name") String name, @RequestParam("tenant") String tenant) {
-
-		this.setTenant(tenant);
-
-		System.out.println("\nStarship arrived name: " + name);
-		System.out.println("Current tenant: " + SecurityDetails.getTenant() + "\n");
-
-		StarShipArrivedEvent starShipEvent = new StarShipArrivedEvent(name);
-
-		String id = UUID.randomUUID().toString();
-		TransactionInfo transaction = new TransactionInfo(id, starShipEvent.toString());
-		transactions.put(id, Status.SENDED);
-
-		samplePublisher.publish(starShipEvent, StarShipArrivedEvent.NAME, transaction);
-
-		return "The identification of the arrived starship " + name + " of tenant " + tenant + " was sent!\n"
-				+ "In transaction " + id + ", acess http://localhost:8080/starship/transaction/" + id
-				+ " to consult the status.";
-	}
-	
-	@GetMapping("/arrived/cloudevent")
-	String starShipArrivedCloudEvent(@RequestParam("name") String name, @RequestParam("tenant") String tenant) {
-
-		this.setTenant(tenant);
-
-		System.out.println("\nStarship arrived name: " + name);
-		System.out.println("Current tenant: " + SecurityDetails.getTenant() + "\n");
-
-		String taskId = UUID.randomUUID().toString();
-		String transactionId = UUID.randomUUID().toString();
-		StarShipArrivedEvent starShipEvent = new StarShipArrivedEvent(name);
-		TransactionInfo transaction = new TransactionInfo(transactionId, null, null, taskId, null, null);
-		
-		transactions.put(taskId, Status.SENDED);
-		CloudEventsInfo cloudEventsInfo = new CloudEventsInfo(taskId, name, tenant, "", "application/cloudevents+json");
-		
-		// TODO - samplePublisher.publish(starShipEvent, "StarShipArrivedEventCloudEvent", transaction, cloudEventsInfo);
-		samplePublisher.publish(starShipEvent, "StarShipArrivedEvent", transaction, cloudEventsInfo);
-
-		return "The identification of the arrived starship " + name + " of tenant " + tenant + " was sent!";
-	}
-
-	@GetMapping("/transaction/{id}")
-	String starShipArrivedTransacted(@PathVariable("id") String id) {
-
-		Status status = transactions.get(id);
-
-		return status != null ? "Status: " + status.toString() : "Transaction " + id + " not found!";
-	}
-
-	@PostMapping("/transaction")
-	void closeTransaction(@RequestBody TransactionInfo transaction) {
-		transactions.replace(transaction.getTransactionId(), Status.CONCLUDED);
 	}
 
 	private void setTenant(String tenant) {
@@ -141,12 +64,5 @@ public class StarShipController {
 				null);
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 	}
-	
-	private void setTransactionContext(TransactionInfo transactionInfo) {
-		transactionContext.setTransactionInfo(transactionInfo);
-	}
 
-	enum Status {
-		SENDED, CONCLUDED;
-	}
 }
