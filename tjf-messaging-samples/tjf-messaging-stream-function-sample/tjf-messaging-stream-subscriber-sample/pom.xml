@@ -9,9 +9,9 @@
 	</parent>
 
 	<groupId>br.com.star.wars</groupId>
-	<artifactId>messaging-stream-subscriber</artifactId>
+	<artifactId>messaging-function-subscriber</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>tjf-messaging-stream-subscriber</name>
+	<name>tjf-messaging-function-subscriber</name>
 	<description>TJF Messaging Stream Subscriber Sample</description>
 	<packaging>jar</packaging>
 

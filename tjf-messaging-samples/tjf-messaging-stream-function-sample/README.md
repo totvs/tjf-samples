@@ -4,7 +4,7 @@ _Sample_ de utilização de _functions_ com a biblioteca [__Messaging Stream__][
 
 ## Contexto
 
-Na implementação de _functions_ utilizando o tjf-messaging-stream, não é necessário alterar os códigos do *publishers*, somente as configurações da aplicação. Já para o *subscribers* teremos algumas mudanças, já que a anotação `@StreamListener` foi descontinuada nessa versão do Spring Cloud Stream. 
+Na implementação de _functions_ utilizando o tjf-messaging-stream, não é necessário alterar os códigos do *publishers*, somente as configurações da aplicação. Já para o *subscribers* teremos algumas mudanças, já que a anotação `@StreamListener` foi depreciada nessa versão do Spring Cloud Stream. 
 
 No exemplo publicado, tentaremos simplificar ao máximo a utilização após a migração.
 
@@ -43,7 +43,7 @@ spring:
 
 ### Alterações no *sample subscriber*
 
-Primeiramente incluímos as propriedades spring.cloud.function.routing.enabled=true e spring.cloud.function.routing-expression=headers['type']. Com isso, habilitamos o filtro e adicionamos o *header* `type` como filtro para os *beans*.
+Primeiramente incluímos as propriedades `spring.cloud.function.routing.enabled=true` e `spring.cloud.function.routing-expression=headers['type']`. Com isso, habilitamos o filtro e adicionamos o *header* `type` como filtro para os *beans*.
 
 ```yml
 spring:
@@ -62,6 +62,7 @@ functionRouter-in-0:
   destination: starship-input
   group: request
 ```
+> O nome _functionRouter_ é fixo, conforme documentação do String.
 
 > OBS: Além disso, poderá ser criado um *binding* de entrada (in) e de saída (out) para cada tipo de mensagem:
 
@@ -146,4 +147,48 @@ tjf-messaging-error-out-0:
     requiredGroups: errors
 ```
 
-...
+## Vamos testar
+
+No nosso exemplo você vai precisar estar com o `RabbitMQ` já configurado e em execução, por conversão como não especificamos as portas ele irá usar as portas padrões.
+
+Execute os nossos dois projetos.
+
+Agora acesse a URL pelo navegador [http://localhost:8080/starship/arrived?name=millenium%20falcon&tenant=Alderaan](http://localhost:8080/starship/arrived?name=millenium%20falcon&tenant=Alderaan), nossa API rest criada irá publicar para a mensageria uma mensagem de evento e nosso outro projeto deve receber a mensagem e mostrar no log, perceba que o tenant também foi carregado com sucesso:
+
+```
+StarShip arrived!
+
+Current tenant: Alderaan
+Starship name: millenium falcon
+Starship ranking: 1
+Counter by tenant: 1
+```
+
+Agora vamos enviar uma nave saindo do gate [http://localhost:8080/starship/left?name=at&tenant=Alderaan](http://localhost:8080/starship/left?name=at&tenant=Alderaan):
+
+```
+StarShip left!
+
+Current tenant: Alderaan
+Starship name: at
+Starship ranking: 4
+Counter by tenant: 0
+```
+
+Você também pode usar o _endpoint_ que criamos para envio de CloudEvents, pro exemplo http://localhost:8080/starship/arrived/cloudevent?name=nave1&tenant=2 você verá algo como abaixo no console do app `subscriber`:
+
+```console
+TransactionInfo TaskId: f2d4bb79-448f-425a-906d-060e227c9c21
+Current tenant: 2
+CloudEventInfo Id: acd12cac-73a7-4c85-88ed-971881e8c9c2
+CloudEventInfo Schema: 2
+
+StarShip arrived!
+Starship name: nave1
+```
+
+> Para mais informações sobre a definição dos campos, veja a documentação do padrão de CloudEvents no Modelo base de mensagem para comunicação entre serviços da TOTVS na [RFC000011].
+
+[tjf-messaging-stream]: https://tjf.totvs.com.br/wiki/v3/tjf-messaging-stream
+[tjf]: https://tjf.totvs.com.br
+[RFC000011]: https://arquitetura.totvs.io/architectural-records/RFCs/Corporativas/RFC000011/

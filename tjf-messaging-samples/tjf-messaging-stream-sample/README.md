@@ -545,3 +545,5 @@ Starship name: nave1
 [spring-initializr]: https://start.spring.io
 [tjf-boot-starter]: https://tjf.totvs.com.br/wiki/tjf-boot-starter
 [RFC000011]: https://arquitetura.totvs.io/architectural-records/RFCs/Corporativas/RFC000011/
+[tjf-messaging-stream]: https://tjf.totvs.com.br/wiki/v3/tjf-messaging-stream
+[tjf]: https://tjf.totvs.com.br
