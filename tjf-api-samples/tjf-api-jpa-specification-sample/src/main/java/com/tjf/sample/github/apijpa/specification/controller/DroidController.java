@@ -5,6 +5,8 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,35 +42,31 @@ public class DroidController {
 
 	@GetMapping(path = "/findByName/{name}")
 	@ResponseStatus(code = HttpStatus.OK)
-	public ApiCollectionResponse<Droid> findDroidByName(@PathVariable("name") String name) {
-		ApiPageRequest pageRequest = new ApiPageRequest();
+	public Slice<Droid> findDroidByName(Pageable pageable, @PathVariable("name") String name) {
 		Specification<Droid> specs = Specification.where(DroidSpecification.nameEq(name));
-		return ApiCollectionResponse.from(droidRepository.findAll(pageRequest, specs));
+		return droidRepository.findAll(specs, pageable);
 	}
 
 	@GetMapping(path = "/findLike/{function}")
 	@ResponseStatus(code = HttpStatus.OK)
-	public ApiCollectionResponse<Droid> findDroidLikeDescription(@PathVariable("function") String function) {
-		ApiPageRequest pageRequest = new ApiPageRequest();
+	public Slice<Droid> findDroidLikeDescription(Pageable pageable, @PathVariable("function") String function) {
 		Specification<Droid> specs = Specification.where(DroidSpecification.functionLike(function));
-		return ApiCollectionResponse.from(droidRepository.findAll(pageRequest, specs));
+		return droidRepository.findAll(specs, pageable);
 	}
 
 	@GetMapping(path = "/findBetween")
 	@ResponseStatus(code = HttpStatus.OK)
-	public ApiCollectionResponse<Droid> findDroidBetweenHeight(@RequestHeader(name = "from") double from,
+	public Slice<Droid> findDroidBetweenHeight(Pageable pageable, @RequestHeader(name = "from") double from,
 			@RequestHeader(name = "util") double util) {
-		ApiPageRequest pageRequest = new ApiPageRequest();
 		Specification<Droid> specs = Specification.where(DroidSpecification.heightBetween(from, util));
-		return ApiCollectionResponse.from(droidRepository.findAll(pageRequest, specs));
+		return droidRepository.findAll(specs, pageable);
 	}
 
 	@GetMapping(path = "/findExists/{height}")
 	@ResponseStatus(code = HttpStatus.OK)
-	public ApiCollectionResponse<Droid> findDroidExists(@PathVariable("height") double height) {
-		ApiPageRequest pageRequest = new ApiPageRequest();
+	public Slice<Droid> findDroidExists(Pageable pageable, @PathVariable("height") double height) {
 		Specification<Droid> specs = Specification.where(DroidSpecification.droidExists(height));
-		return ApiCollectionResponse.from(droidRepository.findAll(pageRequest, specs));
+		return droidRepository.findAll(specs, pageable);
 	}
 
 }
