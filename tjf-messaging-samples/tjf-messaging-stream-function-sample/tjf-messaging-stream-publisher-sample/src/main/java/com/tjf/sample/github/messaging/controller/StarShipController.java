@@ -1,6 +1,5 @@
 package com.tjf.sample.github.messaging.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,10 +18,11 @@ import com.totvs.tjf.messaging.TransactionContext;
 @RequestMapping(path = "/starship")
 public class StarShipController {
 
-	@Autowired
-	StarShipPublisher publisher;
+	private final StarShipPublisher publisher;
 
-	public StarShipController(TransactionContext transactionContext) {}
+	public StarShipController(StarShipPublisher publisher) {
+		this.publisher = publisher;
+	}
 
 	@GetMapping("/arrived")
 	String starShipArrived(@RequestParam("name") String name, @RequestParam("tenant") String tenant) {
