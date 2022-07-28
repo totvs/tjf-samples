@@ -1,36 +1,35 @@
 package com.tjf.sample.github.messaging.infrastructure.messaging;
 
-import org.springframework.cloud.stream.annotation.EnableBinding;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.stream.function.StreamBridge;
+import org.springframework.integration.support.MessageBuilder;
+import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.totvs.tjf.messaging.context.CloudEventsInfo;
+import com.tjf.sample.github.messaging.events.StarShipArrivedEvent;
+import com.tjf.sample.github.messaging.events.StarShipLeftEvent;
 import com.totvs.tjf.messaging.context.TOTVSMessage;
-import com.totvs.tjf.messaging.context.TransactionInfo;
 
-@EnableBinding(StarShipExchange.class)
+@Component
 public class StarShipPublisher {
 
-	StarShipExchange exchange;
-	ObjectMapper mapper;
+	@Autowired
+	private StreamBridge streamBridge;
 
-	public StarShipPublisher(StarShipExchange exchange, ObjectMapper mapper) {
-		this.exchange = exchange;
-		this.mapper = mapper;
+	public void publishArrivedEvent(StarShipArrivedEvent starShipEvent) {
+		System.out.println(starShipEvent.getClass().getSimpleName() + " enviado!");
+		
+		var message = MessageBuilder.withPayload(new TOTVSMessage<>(StarShipArrivedEvent.NAME, starShipEvent))
+				.setHeader("type", "StarShipArrivedEvent").build();
+
+		streamBridge.send("publishArrived-out-0", message);
 	}
 
-	public <T> void publish(T event, String eventName) {
+	public void publishLeftEvent(StarShipLeftEvent starShipEvent) {
+		System.out.println(starShipEvent.getClass().getSimpleName() + " enviado!");
 
-		new TOTVSMessage<T>(eventName, event).sendTo(exchange.output());
+		var message = MessageBuilder.withPayload(new TOTVSMessage<>(StarShipLeftEvent.NAME, starShipEvent))
+				.setHeader("type", "StarShipLeftEvent").build();
+
+		streamBridge.send("publishLeft-out-0", message);
 	}
-	
-	public <T> void publish(T event, String eventName, TransactionInfo transactionInfo, CloudEventsInfo cloudEventsInfo) {
-
-		new TOTVSMessage<T>(eventName, event, transactionInfo, cloudEventsInfo).sendTo(exchange.output());
-	}
-
-	public <T> void publish(T event, String eventName, TransactionInfo transactionInfo) {
-
-		new TOTVSMessage<T>(eventName, event, transactionInfo).sendTo(exchange.output());
-	}
-
 }

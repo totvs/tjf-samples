@@ -4,7 +4,7 @@ _Sample_ de utilização de _functions_ com a biblioteca [__Messaging Stream__][
 
 ## Contexto
 
-Na implementação de _functions_ utilizando o tjf-messaging-stream, não é necessário alterar os códigos do *publishers*, somente as configurações da aplicação. Já para o *subscribers* teremos algumas mudanças, já que a anotação `@StreamListener` foi depreciada nessa versão do Spring Cloud Stream. 
+Na implementação de _functions_ utilizando o tjf-messaging-stream, serão necessários alguns ajustes nos códigos do *publisher* para retirar a anotação `@EnableBinding` e a utilização das *exchanges* que serão descontinuadas. Para o *subscribers* também teremos algumas alterações já que a anotação `@StreamListener` foi depreciada nessa versão do Spring Cloud Stream. 
 
 No exemplo publicado, tentaremos simplificar ao máximo a utilização após a migração.
 
@@ -26,19 +26,55 @@ spring:
               rabbit:
                 host: localhost
       
-      bindings:
-        starship-input:
+      bindings:   
+        publishArrived-out-0:
+          binder: rabbit1
           destination: starship-input
           group: writers
+        publishLeft-out-0:
           binder: rabbit1
+          destination: starship-input
+          group: writers
 
       rabbit:
         default:
           exchangeType: headers
         bindings:
-          starship-input:
+          publishArrived-out-0:
             producer:
               exchangeType: headers
+          publishLeft-out-0:
+            producer:
+              exchangeType: headers
+```
+
+Novo *publisher* sem a utilização do `@EnableBinding` e utilizando o `StreamBridge` para publicação nos *bindings* definidos anteriormente:
+
+```java
+@Component
+public class StarShipPublisher {
+
+	@Autowired
+	private StreamBridge streamBridge;
+
+	public void publishArrivedEvent(StarShipArrivedEvent starShipEvent) {
+		System.out.println(starShipEvent.getClass().getSimpleName() + " enviado!");
+		
+		var message = MessageBuilder.withPayload(new TOTVSMessage<>(StarShipArrivedEvent.NAME, starShipEvent))
+				.setHeader("type", "StarShipArrivedEvent").build();
+
+		streamBridge.send("publishArrived-out-0", message);
+	}
+
+	public void publishLeftEvent(StarShipLeftEvent starShipEvent) {
+		System.out.println(starShipEvent.getClass().getSimpleName() + " enviado!");
+
+		var message = MessageBuilder.withPayload(new TOTVSMessage<>(StarShipLeftEvent.NAME, starShipEvent))
+				.setHeader("type", "StarShipLeftEvent").build();
+
+		streamBridge.send("publishLeft-out-0", message);
+	}
+}
 ```
 
 ### Alterações no *sample subscriber*
@@ -125,7 +161,7 @@ public Consumer<TOTVSMessage<StarShipArrivedEvent>> StarShipArrivedEvent() {
 }	
 ```
 
-> OBS: O *routing* é feito pelo nome do Bean, como por padrão os métodos iniciam com letras minúsculas, temos algumas opções: manter os tipos com a inicial minúscula, criar somente um @Bean que receba todas as mensagens e faça o redirecionamento ou filtrar no próprio *routing-expression*.
+> OBS: O *routing* é feito pelo nome do *Bean*. Como por padrão os métodos iniciam com letras minúsculas, temos algumas opções: manter os tipos com a inicial minúscula, criar somente um @Bean que receba todas as mensagens e faça o redirecionamento ou filtrar no próprio *routing-expression*.
 
 ```yml
 routing-expression: "headers['type']=='StarShipArrivedEvent' ? 'arrivedEvent' : 'leftEvent'"

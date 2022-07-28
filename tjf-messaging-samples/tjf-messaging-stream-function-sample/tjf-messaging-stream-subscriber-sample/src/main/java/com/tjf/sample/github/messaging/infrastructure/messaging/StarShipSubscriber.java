@@ -1,11 +1,9 @@
 package com.tjf.sample.github.messaging.infrastructure.messaging;
 
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.messaging.Message;
 import org.springframework.stereotype.Component;
 
 import com.tjf.sample.github.messaging.events.StarShipArrivedEvent;
@@ -30,24 +28,10 @@ public class StarShipSubscriber {
 	@Bean
 	public Consumer<TOTVSMessage<StarShipLeftEvent>> StarShipLeftEvent() {
 		return message -> {
-
 			System.out.println("StarShipLeftEvent recebido!");
-
+			
 			StarShipLeftEvent starShipLeftEvent = message.getContent();
 			starShipService.left(new StarShip(starShipLeftEvent.getName()));
-		};
-	}
-
-	//exemplo com function
-	@Bean
-	public Function<Message<StarShipLeftEvent>, String> subscribeLeft() {
-		return message -> {
-			System.out.println("StarShipLeftEvent recebido!");
-
-			StarShipLeftEvent starShipLeftEvent = message.getPayload();
-			starShipService.left(new StarShip(starShipLeftEvent.getName()));
-			
-			return "StarShipLeftEvent recebido!";
 		};
 	}
 
