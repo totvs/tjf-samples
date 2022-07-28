@@ -1,0 +1,117 @@
+######## RABBIT FUNCTION
+
+spring:
+  cloud:
+    function:
+      routing:
+        enabled: true
+      routing-expression: headers['type']
+    stream:
+      pollable-source: tjf-messaging-error
+      
+      default-binder: rabbit1
+      
+      bindings:   
+        functionRouter-in-0:
+          binder: rabbit1
+          destination: starship-input
+          group: request
+          
+    # Filas de Erros
+        tjf-messaging-error-in-0:
+          destination: bbunit-errors
+          group: errors
+
+        tjf-messaging-error-out-0:
+          destination: bbunit-errors
+          group: errors
+          producer:
+            requiredGroups: errors
+                       
+      binders:
+        rabbit1:
+          type: rabbit
+
+      rabbit:
+        bindings:
+          functionRouter-in-0:
+            consumer:
+              exchangeType: headers
+                
+
+######## RABBIT
+
+#spring:
+#  cloud:
+#    stream:
+#      defaultBinder: rabbit1
+#      bindings:
+#        starship-input:
+#          destination: starship-input
+#          group: requests
+#        starship-output:
+#          destination: starship-input
+#      binders:
+#        rabbit1:
+#          type: rabbit
+#          environment:
+#            spring:
+#              rabbit:
+#                host: localhost
+ 
+######## KAFKA
+               
+#spring:
+#  cloud:
+#    stream:
+#      defaultBinder: kafka1
+#      bindings:
+#        starship-input:
+#          destination: starship-input
+#          group: requests
+#        starship-output:
+#          destination: starship-input
+#      binders:                
+#        kafka1:
+#          type: kafka
+#                         
+#      kafka:
+#        binder:
+#          brokers: localhost:9092
+#          configuration:
+#            auto:
+#              offset:
+#                reset: earliest  
+
+
+######## JMS
+
+#spring:
+#  cloud:
+#    stream:
+#      defaultBinder: local1
+#      bindings:
+#        starship-input:
+#         destination: starship-input
+#        starship-output:
+#         destination: starship-input
+#      binders:
+#        local1:
+#          type: jms
+#          environment:
+#            spring:
+#              activemq:
+#                protocol: tcp
+#                host: localhost
+#                port: 61616
+#                username: user-amq
+#                password: password-amq
+                
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info,health,messaging                
+                
+server:
+  port: 8380

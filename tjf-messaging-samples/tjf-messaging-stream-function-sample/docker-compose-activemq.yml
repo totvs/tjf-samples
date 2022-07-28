@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+
+  amq:
+    image: vromero/activemq-artemis:latest-alpine
+    container_name: tjf-activemq
+    environment:
+      ARTEMIS_USERNAME: user-amq
+      ARTEMIS_PASSWORD: password-amq
+    ports:
+      - 8161:8161
+      - 61616:61616
+

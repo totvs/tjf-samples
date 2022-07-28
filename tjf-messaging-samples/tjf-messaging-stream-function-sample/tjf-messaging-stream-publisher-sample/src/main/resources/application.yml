@@ -1,0 +1,53 @@
+######## RABBIT
+spring:
+  cloud:
+    stream:
+      defaultBinder: rabbit1
+
+      binders:
+        rabbit1:
+          type: rabbit
+          environment:
+            spring:
+              rabbit:
+                host: localhost
+      
+      bindings:   
+        publishArrived-out-0:
+          binder: rabbit1
+          destination: starship-input
+          group: writers
+        publishLeft-out-0:
+          binder: rabbit1
+          destination: starship-input
+          group: writers
+
+      rabbit:
+        default:
+          exchangeType: headers
+        bindings:
+          publishArrived-out-0:
+            producer:
+              exchangeType: headers
+          publishLeft-out-0:
+            producer:
+              exchangeType: headers
+                
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info,health,messaging,sending                
+  endpoint:
+    health:
+      enabled: true
+    sending:                
+      enabled: true
+  health:
+    rabbit:
+      enabled: false
+    sending:
+      enable: true
+
+server:
+  port: 8280
