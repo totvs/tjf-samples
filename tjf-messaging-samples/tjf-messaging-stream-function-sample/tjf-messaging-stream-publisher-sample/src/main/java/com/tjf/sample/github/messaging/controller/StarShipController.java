@@ -33,7 +33,7 @@ public class StarShipController {
 		System.out.println("Current tenant: " + SecurityDetails.getTenant() + "\n");
 
 		StarShipArrivedEvent starShipEvent = new StarShipArrivedEvent(name);
-		publisher.publishArrivedEvent(starShipEvent);
+		publisher.publishEvent(starShipEvent);
 
 		return "The identification of the arrived starship " + name + " of tenant " + tenant + " was sent!";
 	}
@@ -47,7 +47,7 @@ public class StarShipController {
 		System.out.println("Current tenant: " + SecurityDetails.getTenant() + "\n");
 
 		StarShipLeftEvent starShipEvent = new StarShipLeftEvent(name);
-		publisher.publishLeftEvent(starShipEvent);
+		publisher.publishEvent(starShipEvent);
 
 		return "The identification of the left starship " + name + " of tenant " + tenant + " was sent!";
 	}
