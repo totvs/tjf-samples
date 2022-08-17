@@ -29,7 +29,9 @@
 		<module>tjf-i18n-samples/tjf-i18n-core-sample</module>
 		<module>tjf-messaging-samples/tjf-messaging-stream-sample/tjf-messaging-stream-publisher-sample</module>
 		<module>tjf-messaging-samples/tjf-messaging-stream-sample/tjf-messaging-stream-subscriber-sample</module>
-		<!--module>tjf-messaging-samples/tjf-messaging-stream-error-queue-sample</module-->
+		<module>tjf-messaging-samples/tjf-messaging-stream-function-sample/tjf-messaging-stream-publisher-sample</module>
+		<module>tjf-messaging-samples/tjf-messaging-stream-function-sample/tjf-messaging-stream-subscriber-sample</module>
+		<module>tjf-messaging-samples/tjf-messaging-stream-error-queue-sample</module>
 		<module>tjf-migration-samples/tjf-migration-schema-sample</module>
 		<module>tjf-repository-samples/tjf-repository-aggregate-sample</module>
 		<module>tjf-security-samples/tjf-security-web-sample</module>
