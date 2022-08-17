@@ -5,7 +5,9 @@ import org.springframework.integration.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 
 import com.tjf.sample.github.messaging.events.StarShipArrivedEvent;
+import com.tjf.sample.github.messaging.events.StarShipArrivedEventWT;
 import com.tjf.sample.github.messaging.events.StarShipLeftEvent;
+import com.tjf.sample.github.messaging.events.StarShipLeftEventWT;
 import com.totvs.tjf.messaging.context.TOTVSMessage;
 
 @Component
@@ -26,6 +28,15 @@ public class StarShipPublisher {
 		streamBridge.send("publishArrived-out-0", message);
 	}
 
+	public void publishArrivedEvent(StarShipArrivedEventWT starShipEvent) {
+		System.out.println(starShipEvent.getClass().getSimpleName() + " enviado!");
+		
+		var message = MessageBuilder.withPayload(new TOTVSMessage<>(StarShipArrivedEventWT.NAME, starShipEvent))
+				.setHeader("type", "StarShipArrivedEventWT").build();
+
+		streamBridge.send("publishArrived-out-0", message);
+	}
+	
 	public void publishLeftEvent(StarShipLeftEvent starShipEvent) {
 		System.out.println(starShipEvent.getClass().getSimpleName() + " enviado!");
 
@@ -34,4 +45,15 @@ public class StarShipPublisher {
 
 		streamBridge.send("publishLeft-out-0", message);
 	}
+
+
+	public void publishLeftEvent(StarShipLeftEventWT starShipEvent) {
+		System.out.println(starShipEvent.getClass().getSimpleName() + " enviado!");
+
+		var message = MessageBuilder.withPayload(new TOTVSMessage<>(StarShipLeftEventWT.NAME, starShipEvent))
+				.setHeader("type", "StarShipLeftEventWT").build();
+
+		streamBridge.send("publishLeft-out-0", message);
+	}
+
 }

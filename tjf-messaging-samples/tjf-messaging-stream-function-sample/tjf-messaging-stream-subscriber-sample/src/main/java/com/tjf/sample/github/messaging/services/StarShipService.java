@@ -15,8 +15,9 @@ import com.totvs.tjf.core.security.context.SecurityDetails;
 import com.totvs.tjf.messaging.context.TransactionInfo;
 
 @Component
+
 public class StarShipService {
-	
+
 	RestTemplate rest = new RestTemplate();
 
 	private final HashMap<String, String> starShips = new HashMap<>();
@@ -56,9 +57,9 @@ public class StarShipService {
 		System.out.println("Starship ranking: " + rank);
 		System.out.println("Counter by tenant: " + leftCount());
 	}
-	
+
 	public void transactionClose(TransactionInfo transaction) {
-		
+
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 

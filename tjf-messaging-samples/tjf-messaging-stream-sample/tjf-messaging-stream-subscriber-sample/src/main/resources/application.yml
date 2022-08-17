@@ -7,25 +7,25 @@ logging:
 
 ######## RABBIT
 
-spring:
-  cloud:
-    stream:
-      defaultBinder: rabbit1
-      bindings:
-        starship-input:
-          destination: starship-input
-          group: requests
-          consumer:
-            max-attempts: 1
-        starship-output:
-          destination: starship-input
-      binders:
-        rabbit1:
-          type: rabbit
-          environment:
-            spring:
-              rabbit:
-                host: localhost
+#spring:
+#  cloud:
+#    stream:
+#      defaultBinder: rabbit1
+#      bindings:
+#        starship-input:
+#          destination: starship-input
+#          group: requests
+#          consumer:
+#            max-attempts: 1
+#        starship-output:
+#          destination: starship-input
+#      binders:
+#        rabbit1:
+#          type: rabbit
+#          environment:
+#            spring:
+#              rabbit:
+#                host: localhost
 
 
 ######## KAFKA
@@ -56,26 +56,26 @@ spring:
 
 ######## JMS
 
-#spring:
-#  cloud:
-#    stream:
-#      defaultBinder: local1
-#      bindings:
-#        starship-input:
-#         destination: starship-input
-#        starship-output:
-#         destination: starship-input
-#      binders:
-#        local1:
-#          type: jms
-#          environment:
-#            spring:
-#              activemq:
-#                protocol: tcp
-#                host: localhost
-#                port: 61616
-#                username: user-amq
-#                password: password-amq
+spring:
+  cloud:
+    stream:
+      defaultBinder: local1
+      bindings:
+        starship-input:
+         destination: starship-input
+        starship-output:
+         destination: starship-input
+      binders:
+        local1:
+          type: jms
+          environment:
+            spring:
+              activemq:
+                protocol: tcp
+                host: localhost
+                port: 61616
+                username: user-amq
+                password: password-amq
                 
 management:
   endpoints:

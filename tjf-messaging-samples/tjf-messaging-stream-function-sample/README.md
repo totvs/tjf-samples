@@ -74,6 +74,15 @@ public class StarShipPublisher {
 
 		streamBridge.send("publishLeft-out-0", message);
 	}
+	
+	public void publishLeftEvent(StarShipLeftEventWT starShipEvent) {
+		System.out.println(starShipEvent.getClass().getSimpleName() + " enviado!");
+
+		var message = MessageBuilder.withPayload(new TOTVSMessage<>(StarShipLeftEventWT.NAME, starShipEvent))
+				.setHeader("type", "StarShipLeftEventWT").build();
+
+		streamBridge.send("publishLeft-out-0", message);
+	}
 }
 ```
 
@@ -133,6 +142,19 @@ public Consumer<TOTVSMessage<StarShipLeftEvent>> StarShipLeftEvent() {
 		starShipService.left(new StarShip(starShipLeftEvent.getName()));
 	};
 }
+/**
+ * Bean para receber evento de uma espaçonave saindo sem um tenant
+ */
+@Bean
+	public FunctionWithoutTenant<TOTVSMessage<StarShipLeftEventWT>, String> StarShipLeftEventWT() {
+		return message -> {
+			System.out.println("StarShipLeftEventWT recebido!");
+
+			StarShipLeftEventWT starShipLeftEventWT = message.getContent();
+			starShipService.left(new StarShip(starShipLeftEventWT.getName()));
+			return "StarShipLeftEventWT recebido!";
+		};
+	}
 
 @Bean
 public Consumer<TOTVSMessage<StarShipArrivedEvent>> StarShipArrivedEvent() {
@@ -159,6 +181,34 @@ public Consumer<TOTVSMessage<StarShipArrivedEvent>> StarShipArrivedEvent() {
 
 	};
 }	
+@Bean
+public FunctionWithoutTenant<TOTVSMessage<StarShipArrivedEventWT>, String> StarShipArrivedEventWT() {
+		return message -> {
+			System.out.println("StarShipArrivedEvent recebido!");
+
+			StarShipArrivedEventWT starShipArrivedEvent = message.getContent();
+			starShipService.arrived(new StarShip(starShipArrivedEvent.getName()));
+
+			if (transactionContext.getTransactionInfo() != null) {
+				System.out.println(
+						"TransactionInfo TransactionId: " + transactionContext.getTransactionInfo().getTransactionId());
+				System.out.println(
+						"TransactionInfo GeneratedBy: " + transactionContext.getTransactionInfo().getGeneratedBy());
+			}
+
+			if (message.getHeader().getCloudEventsInfo() != null) {
+				System.out.println("CloudEventInfo Id: " + message.getHeader().getCloudEventsInfo().getId());
+				System.out
+						.println("CloudEventInfo Schema: " + message.getHeader().getCloudEventsInfo().getDataSchema());
+				System.out.println("CloudEventInfo DataContentType: "
+						+ message.getHeader().getCloudEventsInfo().getDataContentType());
+			}
+			return null;
+
+		};
+	}
+
+
 ```
 
 > OBS: O *routing* é feito pelo nome do *Bean*. Como por padrão os métodos iniciam com letras minúsculas, temos algumas opções: manter os tipos com a inicial minúscula, criar somente um @Bean que receba todas as mensagens e faça o redirecionamento ou filtrar no próprio *routing-expression*.
