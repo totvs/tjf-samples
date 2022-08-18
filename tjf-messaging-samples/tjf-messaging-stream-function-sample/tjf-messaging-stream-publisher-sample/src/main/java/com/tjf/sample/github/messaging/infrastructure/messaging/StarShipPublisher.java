@@ -19,11 +19,11 @@ public class StarShipPublisher {
 		this.streamBridge = streamBridge;
 	}
 
-	public void publishArrivedEvent(StarShipArrivedEvent starShipEvent) {
+	public <T> void publishEvent(T starShipEvent) {
 		System.out.println(starShipEvent.getClass().getSimpleName() + " enviado!");
 		
-		var message = MessageBuilder.withPayload(new TOTVSMessage<>(StarShipArrivedEvent.NAME, starShipEvent))
-				.setHeader("type", "StarShipArrivedEvent").build();
+		var message = MessageBuilder.withPayload(new TOTVSMessage<>(starShipEvent.getClass().getSimpleName(), starShipEvent))
+				.setHeader("type", starShipEvent.getClass().getSimpleName()).build();
 
 		streamBridge.send("publishArrived-out-0", message);
 	}
@@ -55,5 +55,4 @@ public class StarShipPublisher {
 
 		streamBridge.send("publishLeft-out-0", message);
 	}
-
 }

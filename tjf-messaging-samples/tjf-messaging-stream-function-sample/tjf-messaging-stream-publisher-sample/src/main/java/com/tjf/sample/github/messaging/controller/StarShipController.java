@@ -43,6 +43,7 @@ public class StarShipController {
 			publisher.publishArrivedEvent(starShipEvent);
 		}
 
+
 		return "The identification of the arrived starship " + name + " of tenant " + tenant + " was sent!";
 	}
 

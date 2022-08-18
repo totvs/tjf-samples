@@ -37,10 +37,6 @@ spring:
       binders:
         rabbit1:
           type: rabbit
-          environment:
-            spring:
-              rabbitmq:
-                host: localhost
                 
 management:
   endpoints:
