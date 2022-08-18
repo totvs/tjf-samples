@@ -1,6 +1,6 @@
 package com.tjf.sample.github.messaging.controller;
 
-import org.eclipse.sisu.Nullable;
+import org.springframework.lang.Nullable;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
