@@ -1,5 +1,6 @@
 package com.tjf.sample.github.messaging.controller;
 
+import org.springframework.lang.Nullable;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,11 +9,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tjf.sample.github.messaging.events.StarShipArrivedEvent;
+import com.tjf.sample.github.messaging.events.StarShipArrivedEventWT;
 import com.tjf.sample.github.messaging.events.StarShipLeftEvent;
+import com.tjf.sample.github.messaging.events.StarShipLeftEventWT;
 import com.tjf.sample.github.messaging.infrastructure.messaging.StarShipPublisher;
 import com.totvs.tjf.core.security.context.SecurityDetails;
 import com.totvs.tjf.core.security.context.SecurityPrincipal;
-import com.totvs.tjf.messaging.TransactionContext;
 
 @RestController
 @RequestMapping(path = "/starship")
@@ -25,29 +27,38 @@ public class StarShipController {
 	}
 
 	@GetMapping("/arrived")
-	String starShipArrived(@RequestParam("name") String name, @RequestParam("tenant") String tenant) {
+	String starShipArrived(@RequestParam("name") String name, @Nullable @RequestParam("tenant") String tenant) {
 
 		this.setTenant(tenant);
 
 		System.out.println("\nStarship arrived name: " + name);
 		System.out.println("Current tenant: " + SecurityDetails.getTenant() + "\n");
 
-		StarShipArrivedEvent starShipEvent = new StarShipArrivedEvent(name);
-		publisher.publishEvent(starShipEvent);
+		if (SecurityDetails.getTenant() == null) {
+			StarShipArrivedEventWT starShipEvent = new StarShipArrivedEventWT(name);
+			publisher.publishEvent(starShipEvent);
+		} else {
+			StarShipArrivedEvent starShipEvent = new StarShipArrivedEvent(name);
+			publisher.publishEvent(starShipEvent);
+		}
 
 		return "The identification of the arrived starship " + name + " of tenant " + tenant + " was sent!";
 	}
 
 	@GetMapping("/left")
-	String starShipLeft(@RequestParam("name") String name, @RequestParam("tenant") String tenant) {
+	String starShipLeft(@RequestParam("name") String name, @Nullable @RequestParam("tenant") String tenant) {
 
 		this.setTenant(tenant);
 
 		System.out.println("\nStarship left name: " + name);
 		System.out.println("Current tenant: " + SecurityDetails.getTenant() + "\n");
-
-		StarShipLeftEvent starShipEvent = new StarShipLeftEvent(name);
-		publisher.publishEvent(starShipEvent);
+		if (SecurityDetails.getTenant() == null) {
+			StarShipLeftEventWT starShipEvent = new StarShipLeftEventWT(name);
+			publisher.publishEvent(starShipEvent);
+		} else {
+			StarShipLeftEvent starShipEvent = new StarShipLeftEvent(name);
+			publisher.publishEvent(starShipEvent);
+		}
 
 		return "The identification of the left starship " + name + " of tenant " + tenant + " was sent!";
 	}
