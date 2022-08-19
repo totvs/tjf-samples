@@ -34,7 +34,7 @@
 		<!--module>tjf-messaging-samples/tjf-messaging-stream-error-queue-sample</module-->
 		<module>tjf-migration-samples/tjf-migration-schema-sample</module>
 		<module>tjf-repository-samples/tjf-repository-aggregate-sample</module>
-		<module>tjf-security-samples/tjf-security-web-sample</module>
+		<!--module>tjf-security-samples/tjf-security-web-sample</module-->
 		<module>tjf-tenant-samples/tjf-tenant-discriminator-sample</module>
 		<module>tjf-tenant-samples/tjf-tenant-schema-sample</module>
 		<module>tjf-sgdp-samples/tjf-sgdp-app-sample</module>
