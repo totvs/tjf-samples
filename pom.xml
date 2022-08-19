@@ -40,7 +40,7 @@
 		<module>tjf-sgdp-samples/tjf-sgdp-app-sample</module>
 		<module>tjf-sgdp-samples/tjf-sgdp-service-sample</module>
 		<module>tjf-osgi-samples/tjf-osgi-sample</module>
-		<module>tjf-maven-plugin-samples/tjf-plugin-openapi</module>
+		<!--module>tjf-maven-plugin-samples/tjf-plugin-openapi</module-->
 		<module>tjf-developers/tjf-messaging</module>
 		<module>tjf-lscloud-samples/tjf-lscloud-sample</module>
 	</modules>
