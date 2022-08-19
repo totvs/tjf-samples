@@ -67,8 +67,8 @@
 		<plugins>
 			<plugin>
 				<groupId>com.totvs.tjf</groupId>
-				<artifactId>tjf-maven-plugin</artifactId>
-				<version>2.38.3-RELEASE</version>
+				<artifactId>tjf-rac-maven-plugin</artifactId>
+				<version>2.39.3-RELEASE</version>
 				<dependencies>
 					<!-- Deverá ser adicionado o próprio pacote como dependencia -->
 					<dependency>
@@ -94,8 +94,8 @@
 				<plugins>
 					<plugin>
 						<groupId>com.totvs.tjf</groupId>
-						<artifactId>tjf-maven-plugin</artifactId>
-						<version>2.38.3-RELEASE</version>
+						<artifactId>tjf-rac-maven-plugin</artifactId>
+						<version>2.39.3-RELEASE</version>
 						<executions>
 							<execution>
 								<phase>pre-integration-test</phase>
