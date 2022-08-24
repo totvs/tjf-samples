@@ -7,7 +7,6 @@ import java.util.Map;
 
 import javax.annotation.security.RolesAllowed;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,8 +20,11 @@ import com.tjf.sample.github.securityweb.component.MachineManager;
 @RequestMapping(path = "/api/v1/machine", produces = { APPLICATION_JSON_VALUE })
 public class MachineController {
 
-	@Autowired
-	private MachineManager machineManager;
+	private final MachineManager machineManager;
+	
+	public MachineController(MachineManager machineManager) {
+		this.machineManager = machineManager;
+	}
 
 	@GetMapping
 	public List<Map<String, Object>> machineList() {
