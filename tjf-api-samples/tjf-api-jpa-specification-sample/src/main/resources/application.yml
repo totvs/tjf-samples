@@ -1,3 +1,10 @@
+springdoc:
+  api-docs:
+    path: /swagger
+  swagger-ui:
+    path: '/swagger/swagger-ui.html'
+    disable-swagger-default-url: true
+
 spring:
 
   datasource:
