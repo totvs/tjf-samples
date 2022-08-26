@@ -5,8 +5,14 @@ tjf:
   security:
     protected:
       include:
-      - "/api/**"
-#      - "/open/**"
+        '[/api/**]': 
+        '[/open/**]': 
+        - POST
+      exclude:
+        '[/api/v1/machine/]':
+        - GET
+        '[/open/v1/machine/]':
+        - POST
     csrf:
       enable: false
     config:

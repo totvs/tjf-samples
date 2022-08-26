@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,7 +29,12 @@ public class OpenController {
 	}
 
 	@PostMapping()
-	public List<Map<String, Object>> machineList() {
+	public List<Map<String, Object>> postMachineList() {
+		return machineManager.getMachines();
+	}
+
+	@PutMapping()
+	public List<Map<String, Object>> putMachineList() {
 		return machineManager.getMachines();
 	}
 }

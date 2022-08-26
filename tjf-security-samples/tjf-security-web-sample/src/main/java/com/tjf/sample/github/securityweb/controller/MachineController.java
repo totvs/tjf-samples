@@ -31,6 +31,11 @@ public class MachineController {
 		return machineManager.getMachines();
 	}
 
+	@PostMapping
+	public List<Map<String, Object>> machineListPost() {
+		return machineManager.getMachines();
+	}
+
 	@PostMapping("stop")
 	@RolesAllowed("SUPERVISOR")
 	public List<Map<String, Object>> stopAll() {
