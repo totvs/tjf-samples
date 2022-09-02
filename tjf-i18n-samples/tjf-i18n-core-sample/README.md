@@ -18,7 +18,7 @@ Para utilização do componente de tradução é necessário inserir a seguinte 
 <dependency>
   <groupId>com.totvs.tjf</groupId>
   <artifactId>tjf-i18n-core</artifactId>
-  <version>3.8.0-RELEASE</version>
+  <version>3.8.1-RELEASE</version>
 </dependency>
 ```
 
