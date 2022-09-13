@@ -53,7 +53,7 @@ Em nosso exemplo iremos utilizar um serviço web para disponibilizar os endpoint
     <artifactId>spring-boot-starter-web</artifactId>
 </dependency>
 ```
-
+ 
 ### Configurando integração com o _Authorization Service_
 
 No arquivo `application.yml` precisamos informar nas propriedades na nossa aplicação quais as URI que serão usadas para que nossa aplicação integre com o _Authorization Service_.
