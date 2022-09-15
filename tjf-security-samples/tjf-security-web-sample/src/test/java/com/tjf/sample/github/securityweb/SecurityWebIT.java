@@ -24,7 +24,7 @@ public class SecurityWebIT {
 	private static final String URL_RAC = "http://rac:8080/totvs.rac/";
 	private static final String CLIENT_ID = "js_oidc_sampleapp";
 	private static final String CLIENT_SECRET = "totvs@123";
-	private static final String SUPERVISOR = "1";
+	private static final String SUPERVISOR_ROLE = "1";
 	private static final String NO_ROLE = "0";
 
 	private void updateRoles(String roles) {
@@ -43,7 +43,7 @@ public class SecurityWebIT {
 
 	@Test
 	public void testAccessWithTokenAndRole() throws Exception {
-		updateRoles(SUPERVISOR);
+		updateRoles(SUPERVISOR_ROLE);
 		mockMvc.perform(get("/api/v1/machine").header(HttpHeaders.AUTHORIZATION, "Bearer " + accessApplicationToken))
 				.andExpect(status().isOk());
 	}
@@ -69,7 +69,7 @@ public class SecurityWebIT {
 
 	@Test
 	public void testValidRole() throws Exception {
-		updateRoles(SUPERVISOR);
+		updateRoles(SUPERVISOR_ROLE);
 		mockMvc.perform(
 				post("/api/v1/machine/stop").header(HttpHeaders.AUTHORIZATION, "Bearer " + accessApplicationToken))
 				.andExpect(status().isOk());
