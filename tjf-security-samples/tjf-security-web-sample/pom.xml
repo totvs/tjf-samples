@@ -98,14 +98,6 @@
 						<groupId>com.totvs.tjf</groupId>
 						<artifactId>tjf-rac-maven-plugin</artifactId>
 						<version>${tjf-rac-maven-plugin.version}</version>
-						<dependencies>
-							<!-- Deverá ser adicionado o próprio pacote como dependencia -->
-							<dependency>
-								<groupId>com.tjf.sample.github</groupId>
-								<artifactId>security-web</artifactId>
-								<version>0.0.1-SNAPSHOT</version>
-							</dependency>
-						</dependencies>
 						<executions>
 							<execution>
 								<phase>pre-integration-test</phase>
