@@ -60,8 +60,10 @@ public class StarShipPublisher {
 	public void <T> publishEvent(T starShipEvent) {
 		System.out.println(starShipEvent.getClass().getSimpleName() + " enviado!");
 
-		var message = MessageBuilder.withPayload(new TOTVSMessage<>(starShipEvent.getClass().getSimpleName(), starShipEvent))
-				.setHeader("type", starShipEvent.getClass().getSimpleName()).build();
+		var message = TOTVSMessageBuilder
+				.withType(starShipEvent.getClass().getSimpleName())
+				.setContent(starShipEvent)
+				.build();
 
 		streamBridge.send("publishArrived-out-0", message);
 	}
@@ -116,7 +118,7 @@ Agora, basta criar um @Bean para cada *type* que será recebido, conforme exempl
       
 ```java
 @Bean
-public Consumer<TOTVSMessage<StarShipLeftEvent>> StarShipLeftEvent() {
+public ConsumerWithTenant<TOTVSMessage<StarShipLeftEvent>> StarShipLeftEvent() {
 	return message -> {
 		System.out.println("StarShipLeftEvent recebido!");
 
@@ -126,7 +128,7 @@ public Consumer<TOTVSMessage<StarShipLeftEvent>> StarShipLeftEvent() {
 }
 
 @Bean
-public Consumer<TOTVSMessage<StarShipArrivedEvent>> StarShipArrivedEvent() {
+public ConsumerWithTenant<TOTVSMessage<StarShipArrivedEvent>> StarShipArrivedEvent() {
 	return message -> {
 		System.out.println("StarShipArrivedEvent recebido!");
 

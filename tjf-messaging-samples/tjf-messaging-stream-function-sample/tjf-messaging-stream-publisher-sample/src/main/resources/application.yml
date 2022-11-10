@@ -51,3 +51,9 @@ management:
 
 server:
   port: 8280
+
+tjf:
+  core:
+    message:
+      default-content-type: application/cloudevents+json
+      convert-cloud-events: true
