@@ -22,7 +22,7 @@ Após gerado os dois projetos, precisamos substituir no arquivo `pom.xml` de amb
 <parent>
   <groupId>com.totvs.tjf</groupId>
   <artifactId>tjf-boot-starter</artifactId>
-  <version>3.14.5-RELEASE</version>
+  <version>3.15.0-RELEASE</version>
 </parent>
 ```
 
