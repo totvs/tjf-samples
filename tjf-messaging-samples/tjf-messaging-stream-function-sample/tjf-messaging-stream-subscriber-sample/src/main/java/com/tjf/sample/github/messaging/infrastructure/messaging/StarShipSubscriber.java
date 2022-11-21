@@ -1,7 +1,6 @@
 package com.tjf.sample.github.messaging.infrastructure.messaging;
 
-import java.util.function.Consumer;
-
+import com.totvs.tjf.messaging.context.function.ConsumerWithTenant;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
@@ -29,13 +28,12 @@ public class StarShipSubscriber {
 	}
 
 	@Bean
-	public Consumer<TOTVSMessage<StarShipLeftEvent>> StarShipLeftEvent() {
+	public ConsumerWithTenant<TOTVSMessage<StarShipLeftEvent>> StarShipLeftEvent() {
 		return message -> {
 			System.out.println("StarShipLeftEvent recebido!");
 
 			StarShipLeftEvent starShipLeftEvent = message.getContent();
 			starShipService.left(new StarShip(starShipLeftEvent.getName()));
-			// return null;
 		};
 	}
 
@@ -78,7 +76,7 @@ public class StarShipSubscriber {
 	}
 
 	@Bean
-	public Consumer<TOTVSMessage<StarShipArrivedEvent>> StarShipArrivedEvent() {
+	public ConsumerWithTenant<TOTVSMessage<StarShipArrivedEvent>> StarShipArrivedEvent() {
 		return message -> {
 			System.out.println("StarShipArrivedEvent recebido!");
 
