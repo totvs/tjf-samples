@@ -18,7 +18,7 @@ Após gerado, precisamos substituir no arquivo `pom.xml` o _parent_ do projeto p
 <parent>
   <groupId>com.totvs.tjf</groupId>
   <artifactId>tjf-boot-starter</artifactId>
-  <version>3.16.0-RELEASE</version>
+  <version>3.16.1-RELEASE</version>
 </parent>
 ```
 
