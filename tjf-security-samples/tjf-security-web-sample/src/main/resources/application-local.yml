@@ -3,6 +3,9 @@ server:
 
 tjf:
   security:
+#    fluig:
+#      token-path: customize-token-path
+#      refresh-token-path: customize-refresh-token-path
     protected:
       include:
         '[/api/**]': 

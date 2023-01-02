@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.totvs.tjf</groupId>
 		<artifactId>tjf-boot-starter</artifactId>
-		<version>3.18.0-RELEASE</version>
+		<version>3.19.0-RELEASE</version>
 	</parent>
 
 	<groupId>com.tjf.sample.github</groupId>
@@ -37,6 +37,11 @@
 		<dependency>
 			<groupId>com.totvs.tjf</groupId>
 			<artifactId>tjf-security-webmvc</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.totvs.tjf</groupId>
+			<artifactId>tjf-security-fluig</artifactId>
 		</dependency>
 
 		<!-- Test -->
