@@ -1,5 +1,6 @@
 package com.tjf.sample.github.messaging.controller;
 
+import com.tjf.sample.github.messaging.events.*;
 import org.springframework.lang.Nullable;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -8,10 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tjf.sample.github.messaging.events.StarShipArrivedEvent;
-import com.tjf.sample.github.messaging.events.StarShipArrivedEventWT;
-import com.tjf.sample.github.messaging.events.StarShipLeftEvent;
-import com.tjf.sample.github.messaging.events.StarShipLeftEventWT;
 import com.tjf.sample.github.messaging.infrastructure.messaging.StarShipPublisher;
 import com.totvs.tjf.core.security.context.SecurityDetails;
 import com.totvs.tjf.core.security.context.SecurityPrincipal;
@@ -24,6 +21,17 @@ public class StarShipController {
 
 	public StarShipController(StarShipPublisher publisher) {
 		this.publisher = publisher;
+	}
+
+	@GetMapping("/arrived-it")
+	String starShipArrivedIt(@RequestParam("name") String name) {
+
+		System.out.println("\nStarship arrived name: " + name);
+
+		StarShipArrivedItEvent starShipArrivedItEvent = new StarShipArrivedItEvent(name);
+		publisher.publishEvent(starShipArrivedItEvent);
+
+		return "The identification of the arrived starship " + name + " was sent!";
 	}
 
 	@GetMapping("/arrived")
