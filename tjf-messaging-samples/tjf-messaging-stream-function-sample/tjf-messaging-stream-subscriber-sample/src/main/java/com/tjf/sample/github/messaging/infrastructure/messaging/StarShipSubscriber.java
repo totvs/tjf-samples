@@ -1,14 +1,13 @@
 package com.tjf.sample.github.messaging.infrastructure.messaging;
 
+import com.tjf.sample.github.messaging.events.*;
+import com.totvs.tjf.messaging.context.function.ConsumerIgnoreTenant;
 import com.totvs.tjf.messaging.context.function.ConsumerWithTenant;
+import com.totvs.tjf.messaging.context.function.FunctionIgnoreTenant;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
-import com.tjf.sample.github.messaging.events.StarShipArrivedEvent;
-import com.tjf.sample.github.messaging.events.StarShipArrivedEventWT;
-import com.tjf.sample.github.messaging.events.StarShipLeftEvent;
-import com.tjf.sample.github.messaging.events.StarShipLeftEventWT;
 import com.tjf.sample.github.messaging.model.StarShip;
 import com.tjf.sample.github.messaging.services.StarShipService;
 import com.totvs.tjf.messaging.TransactionContext;
@@ -28,6 +27,16 @@ public class StarShipSubscriber {
 	}
 
 	@Bean
+	public ConsumerIgnoreTenant<TOTVSMessage<StarShipArrivedItEvent>> StarShipArrivedItEvent() {
+		return message -> {
+			System.out.println("StarShipLeftEvent recebido!");
+
+			StarShipArrivedItEvent starShipArrivedItEvent = message.getContent();
+			starShipService.left(new StarShip(starShipArrivedItEvent.getName()));
+		};
+	}
+
+	@Bean
 	public ConsumerWithTenant<TOTVSMessage<StarShipLeftEvent>> StarShipLeftEvent() {
 		return message -> {
 			System.out.println("StarShipLeftEvent recebido!");
@@ -44,6 +53,17 @@ public class StarShipSubscriber {
 
 			StarShipLeftEventWT starShipLeftEventWT = message.getContent();
 			starShipService.left(new StarShip(starShipLeftEventWT.getName()));
+			return "StarShipLeftEventWT recebido!";
+		};
+	}
+
+	@Bean
+	public FunctionIgnoreTenant<TOTVSMessage<StarShipArrivedFnItEvent>, String> StarShipArrivedFnItEvent() {
+		return message -> {
+			System.out.println("StarShipLeftEventWT recebido!");
+
+			StarShipArrivedFnItEvent starShipArrivedFnItEvent = message.getContent();
+			starShipService.left(new StarShip(starShipArrivedFnItEvent.getName()));
 			return "StarShipLeftEventWT recebido!";
 		};
 	}
