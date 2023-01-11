@@ -29,7 +29,7 @@ public class StarShipSubscriber {
 	@Bean
 	public ConsumerIgnoreTenant<TOTVSMessage<StarShipArrivedItEvent>> StarShipArrivedItEvent() {
 		return message -> {
-			System.out.println("StarShipLeftEvent recebido!");
+			System.out.println("StarShipArrivedItEvent recebido!");
 
 			StarShipArrivedItEvent starShipArrivedItEvent = message.getContent();
 			starShipService.left(new StarShip(starShipArrivedItEvent.getName()));
@@ -60,11 +60,11 @@ public class StarShipSubscriber {
 	@Bean
 	public FunctionIgnoreTenant<TOTVSMessage<StarShipArrivedFnItEvent>, String> StarShipArrivedFnItEvent() {
 		return message -> {
-			System.out.println("StarShipLeftEventWT recebido!");
+			System.out.println("StarShipArrivedFnItEvent recebido!");
 
 			StarShipArrivedFnItEvent starShipArrivedFnItEvent = message.getContent();
 			starShipService.left(new StarShip(starShipArrivedFnItEvent.getName()));
-			return "StarShipLeftEventWT recebido!";
+			return "StarShipArrivedFnItEvent recebido!";
 		};
 	}
 
