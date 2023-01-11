@@ -33,6 +33,17 @@ public class StarShipController {
 
 		return "The identification of the arrived starship " + name + " was sent!";
 	}
+	@GetMapping("/arrived-fn-it")
+	String starShipArrivedFnIt(@RequestParam("name") String name) {
+
+		System.out.println("\nStarship arrived name: " + name);
+
+		StarShipArrivedFnItEvent starShipArrivedFnItEvent = new StarShipArrivedFnItEvent(name);
+		publisher.publishEvent(starShipArrivedFnItEvent);
+
+		return "The identification of the arrived starship " + name + " was sent!";
+	}
+
 
 	@GetMapping("/arrived")
 	String starShipArrived(@RequestParam("name") String name, @Nullable @RequestParam("tenant") String tenant) {
