@@ -102,6 +102,16 @@
 
 	<repositories>
 		<repository>
+			<id>sgdp</id>
+			<url>https://totvstfs.pkgs.visualstudio.com/TOTVSApps-SupportElements/_packaging/sgdp/maven/v1</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		  	<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
 			<id>central-release</id>
 			<name>TOTVS Java Framework: Release</name>
 			<url>http://maven.engpro.totvs.com.br/artifactory/libs-release</url>
