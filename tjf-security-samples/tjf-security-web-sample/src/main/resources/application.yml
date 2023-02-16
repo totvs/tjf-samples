@@ -1,18 +1,19 @@
 server:
   port: 3000
 
-security:
-  access:
-    api:
+tjf:
+  security:
+    access:
+      api:
 # Usando multiplas JWK - Exemplo: RAC e Fluig
-#      jwk-uris:
-#      - <O URI do Authorization Service para obter chaves de verificação para validação do token JWT.> 
-#      - <O URI do Authorization Service para obter chaves de verificação para validação do token JWT.> 
-#      permissions-uri: <O URI do Authorization Service para validação da permission.>
-      permissions-uri: http://rac:8080/totvs.rac/api/permissions
-  oauth2:    
-    resource:
-      id: 'authorization_api'
-      jwk:
-#        key-set-uri: <O URI do Authorization Service para obter chaves de verificação para validação do token JWT.> 
-        key-set-uri: http://rac:8080/totvs.rac/.well-known/openid-configuration/jwks
+#        jwk-uris:
+#        - <O URI do Authorization Service para obter chaves de verificação para validação do token JWT.> 
+#        - <O URI do Authorization Service para obter chaves de verificação para validação do token JWT.> 
+#        permissions-uri: <O URI do Authorization Service para validação da permission.>
+        permissions-uri: http://rac:8080/totvs.rac/api/permissions
+    oauth2:    
+      resource:
+        id: 'authorization_api'
+        jwk:
+#          key-set-uri: <O URI do Authorization Service para obter chaves de verificação para validação do token JWT. Ex.: https://rac.dev.totvs.app/totvs.rac/.well-known/openid-configuration/jwks> 
+          key-set-uri: http://rac:8080/totvs.rac/.well-known/openid-configuration/jwks

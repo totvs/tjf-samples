@@ -1,10 +1,16 @@
 version: '3'
 
+networks:
+  docker-network:
+    driver: host
+    
 services:
 
     zoo1:
         image: zookeeper:3.4.9
         hostname: zoo1
+        networks:
+          - docker-network
         ports:
           - "2181:2181"
         environment:
@@ -15,6 +21,8 @@ services:
     kafka1:
         image: confluentinc/cp-kafka:5.3.1
         hostname: kafka1
+        networks:
+          - docker-network
         ports:
           - "9092:9092"
         environment:
