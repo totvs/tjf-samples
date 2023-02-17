@@ -16,7 +16,7 @@
 	<description>TJF Security Web Sample</description>
 
 	<properties>
-		<tjf-rac-maven-plugin.version>3.0.0-RELEASE</tjf-rac-maven-plugin.version>
+		<tjf-rac-maven-plugin.version>3.1.2-RELEASE</tjf-rac-maven-plugin.version>
 	</properties>		
 
 	<dependencies>
