@@ -1,0 +1,10 @@
+server:
+  port: 8080
+
+tjf:
+  security:
+    access:
+      api:
+        permissions-uri: https://admin.rac.dev.totvs.app/totvs.rac/api/permissions
+        jwk-uris:
+          - https://admin.rac.dev.totvs.app/totvs.rac/.well-known/openid-configuration/jwks
