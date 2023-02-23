@@ -1,0 +1,17 @@
+package com.tjf.sample.github.securityweb.requestvalidation.util;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Objects;
+
+public class RequestHeader extends Parameter {
+
+	public RequestHeader(Parameter next) {
+		super(next);
+	}
+
+	@Override
+	public String get(HttpServletRequest request) {
+		var value = request.getHeader("organization");
+		return Objects.nonNull(value) ? value : next.get(request);
+	}
+}

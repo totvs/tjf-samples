@@ -1,0 +1,16 @@
+tjf:
+  security:
+    access:
+      provider: rac
+      api:
+        permissions-uri: http://admin.rac.totvs.com.br/totvs.rac/api/permissions
+    api:
+      request-validation:
+        enable: true
+
+security:
+  oauth2:
+    resource:
+      id: 'authorization_api'
+      jwk:
+        key-set-uri: http://rac:8080/totvs.rac/.well-known/openid-configuration/jwks
