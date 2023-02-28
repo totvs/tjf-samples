@@ -215,7 +215,11 @@ public class BBUnitPublisher {
   }
 
   public <T> void publish(T event, String eventName) {
-    new TOTVSMessage<T>(eventName, event).sendTo(exchange.output());
+    TOTVSMessage<T> message = TOTVSMessageBuilder.<T>withType(eventName)
+      .setContent(event)
+      .build();
+
+    message.sendTo(exchange.output());
   }
 }
 ```

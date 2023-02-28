@@ -1,8 +1,8 @@
 package com.tjf.sample.github.messagingstream.infrastructure.messaging;
 
-import org.springframework.cloud.stream.annotation.EnableBinding;
-
 import com.totvs.tjf.messaging.context.TOTVSMessage;
+import com.totvs.tjf.messaging.context.TOTVSMessageBuilder;
+import org.springframework.cloud.stream.annotation.EnableBinding;
 
 @EnableBinding(BBUnitExchange.class)
 public class BBUnitPublisher {
@@ -13,6 +13,10 @@ public class BBUnitPublisher {
 	}
 
 	public <T> void publish(T event, String eventName) {
-		new TOTVSMessage<T>(eventName, event).sendTo(exchange.output());
+		TOTVSMessage<T> message = TOTVSMessageBuilder.<T>withType(eventName)
+			.setContent(event)
+			.build();
+
+		message.sendTo(exchange.output());
 	}
 }

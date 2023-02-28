@@ -1,5 +1,8 @@
 spring:
 
+  rabbitmq:
+    host: ${RABBIT_HOST}
+
   cloud:
     stream:
       defaultBinder: rabbit1
@@ -11,7 +14,7 @@ spring:
           destination: bbunit-input
           group: requests
           consumer:
-            max-attempts: 1          
+            max-attempts: 1
         bbunit-output:
           destination: bbunit-input
         
@@ -28,10 +31,6 @@ spring:
       binders:
         rabbit1:
           type: rabbit
-          environment:
-            spring:
-              rabbitmq:
-                host: ${RABBIT_HOST}
                 
 management:
   endpoints:
