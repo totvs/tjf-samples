@@ -130,6 +130,7 @@ Acesse o arquivo `i18n.exception.messages_pt_BR.properties` e crie as seguintes 
 ```properties
 StarshipCreateConstraintException.message = \u00c9 uma armadilha
 StarshipCreateConstraintException.detail = A for\u00e7a n\u00e3o est\u00e1 com voc\u00ea
+StarshipCreateConstraintException.detailTitle = Starship Create Constraint Exception
 ```
 
 Para finalizar criaremos as mensagens de validação, para isso acesse o arquivo `i18n.validation.messages_pt_BR.properties` e crie as seguintes mensagens (que também precisam ser traduzidas):
