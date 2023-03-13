@@ -2,7 +2,7 @@ package com.tjf.sample.github.securityweb.requestvalidation.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.Objects;
 import java.util.stream.Collectors;
 

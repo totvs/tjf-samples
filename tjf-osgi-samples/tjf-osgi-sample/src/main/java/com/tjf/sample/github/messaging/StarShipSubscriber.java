@@ -1,23 +1,20 @@
 package com.tjf.sample.github.messaging;
 
-import static com.tjf.sample.github.messaging.StarShipExchange.INPUT;
+import java.util.function.Consumer;
 
-import org.springframework.cloud.stream.annotation.EnableBinding;
-import org.springframework.cloud.stream.annotation.StreamListener;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Service;
 
 import com.totvs.tjf.messaging.context.TOTVSMessage;
-import com.totvs.tjf.messaging.WithoutTenant;
 
-@EnableBinding(StarShipExchange.class)
+@Service
 public class StarShipSubscriber {
 
-	@WithoutTenant
-	@StreamListener(target = INPUT, condition = StarShipArrivedEvent.CONDITIONAL_EXPRESSION)
-	public void subscribeArrived(TOTVSMessage<StarShipArrivedEvent> message) {
-		
-		StarShipArrivedEvent starShipArrivedEvent = message.getContent();
-		System.out.println("Starship " + starShipArrivedEvent.getName() + " has arrived !!");
-		
+	@Bean
+	public Consumer<TOTVSMessage<StarShipArrivedEvent>> subscribeArrived() {
+		return message -> {
+			StarShipArrivedEvent starShipArrivedEvent = message.getContent();
+			System.out.println("Starship " + starShipArrivedEvent.getName() + " has arrived !!");
+		};
 	}
-	
 }

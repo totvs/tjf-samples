@@ -1,6 +1,6 @@
 package com.tjf.sample.github.repositoryaggregate.repository;
 
-import javax.persistence.EntityManager;
+import jakarta.persistence.EntityManager;
 
 import org.springframework.stereotype.Repository;
 

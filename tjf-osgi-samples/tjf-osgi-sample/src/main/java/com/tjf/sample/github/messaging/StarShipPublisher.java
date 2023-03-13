@@ -1,20 +1,23 @@
 package com.tjf.sample.github.messaging;
 
-import org.springframework.cloud.stream.annotation.EnableBinding;
+import org.springframework.cloud.stream.function.StreamBridge;
+import org.springframework.stereotype.Service;
 
-import com.totvs.tjf.messaging.context.TOTVSMessage;
+import com.totvs.tjf.messaging.context.TOTVSMessageBuilder;
 
-@EnableBinding(StarShipExchange.class)
+@Service
 public class StarShipPublisher {
 
-	StarShipExchange exchange;
+	StreamBridge streamBridge;
 
-	public StarShipPublisher(StarShipExchange exchange) {
-		this.exchange = exchange;
+	public StarShipPublisher(StreamBridge streamBridge) {
+		this.streamBridge = streamBridge;
 	}
 
 	public <T> void publish(T event, String eventName) {
-
-		new TOTVSMessage<T>(eventName, event).sendTo(exchange.output());
+		TOTVSMessageBuilder.<T>withType(eventName)
+			.setContent(event)
+	        .build()
+	        .sendTo(streamBridge, "starship-out-0");
 	}
 }

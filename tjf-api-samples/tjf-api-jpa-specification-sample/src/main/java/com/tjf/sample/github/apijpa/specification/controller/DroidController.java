@@ -21,8 +21,6 @@ import com.tjf.sample.github.apijpa.specification.model.DroidSpecification;
 import com.tjf.sample.github.apijpa.specification.repository.DroidRepository;
 import com.totvs.tjf.api.context.stereotype.ApiGuideline;
 import com.totvs.tjf.api.context.stereotype.ApiGuideline.ApiGuidelineVersion;
-import com.totvs.tjf.api.context.v2.request.ApiPageRequest;
-import com.totvs.tjf.api.context.v2.response.ApiCollectionResponse;
 
 @RestController
 @RequestMapping(path = DroidController.PATH, produces = APPLICATION_JSON_VALUE)

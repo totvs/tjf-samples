@@ -18,15 +18,29 @@ spring:
     password:
 
   cloud:
+    function:
+      routing:
+        enabled: true
+      routing-expression: subscribeArrived
     stream:
-      defaultBinder: rabbit1
-      
+      default-binder: rabbit1
       bindings:
-        starship-input:
-          destination: starship-input
-          group: requests
-        starship-output:
-          destination: starship-input
+        functionRouter-in-0:
+          binder: rabbit1
+          destination: sample-input
+          group: request
+        starship-out-0:
+          binder: rabbit1
+          destination: sample-input        
+      
+      rabbit:
+        bindings:
+          functionRouter-in-0:
+            consumer:
+              exchangeType: headers
+          starship-out-0:
+            producer:
+              exchangeType: headers
       
       binders:
         rabbit1:

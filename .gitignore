@@ -3,6 +3,7 @@
 .metadata/
 .classpath
 .project
+.factorypath
 
 # intelliJ
 .idea

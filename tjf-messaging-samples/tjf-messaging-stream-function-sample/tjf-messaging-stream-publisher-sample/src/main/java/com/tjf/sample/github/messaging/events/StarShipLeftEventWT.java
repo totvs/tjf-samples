@@ -1,6 +1,6 @@
 package com.tjf.sample.github.messaging.events;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

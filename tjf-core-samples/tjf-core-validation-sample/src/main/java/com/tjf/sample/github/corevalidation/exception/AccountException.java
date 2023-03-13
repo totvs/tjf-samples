@@ -2,8 +2,8 @@ package com.tjf.sample.github.corevalidation.exception;
 
 import java.util.Set;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 
 public class AccountException extends ConstraintViolationException {
 

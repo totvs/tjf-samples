@@ -2,8 +2,8 @@ package com.tjf.sample.github.apicore.exception.exception;
 
 import java.util.Set;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
 
 import com.totvs.tjf.api.context.stereotype.error.ApiBadRequest;
 

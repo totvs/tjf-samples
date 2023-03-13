@@ -10,20 +10,23 @@ spring:
       enabled: false
 
   cloud:
+    function:
+      routing:
+        enabled: true
+      routing-expression: subscribeMessageMission
     stream:
-      defaultBinder: rabbit1
-      pollable-source: tjf-messaging-error
-      
+      default-binder: rabbit1
       bindings:
-        # Filas de Execução
-        bbunit-input:
+        functionRouter-in-0:
+          binder: rabbit1
           destination: bbunit-input
-          group: requests
+          group: request
           consumer:
-            max-attempts: 1          
-        bbunit-output:
+            max-attempts: 1
+        bbunit-input-out-0:
+          binder: rabbit1
           destination: bbunit-input
-        
+            
         # Filas de Erros
         tjf-messaging-error-in-0:
           destination: bbunit-errors
@@ -33,10 +36,18 @@ spring:
           group: errors
           producer:
             requiredGroups: errors
-                      
+                        
       binders:
         rabbit1:
           type: rabbit
+      rabbit:
+        bindings:
+          functionRouter-in-0:
+            consumer:
+              exchangeType: headers
+          bbunit-input-out-0:
+            producer:
+              exchangeType: headers            
                 
 management:
   endpoints:

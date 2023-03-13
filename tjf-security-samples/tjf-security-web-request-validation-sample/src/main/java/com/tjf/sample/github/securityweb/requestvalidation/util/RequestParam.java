@@ -1,6 +1,6 @@
 package com.tjf.sample.github.securityweb.requestvalidation.util;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.Objects;
 
 public class RequestParam extends Parameter {

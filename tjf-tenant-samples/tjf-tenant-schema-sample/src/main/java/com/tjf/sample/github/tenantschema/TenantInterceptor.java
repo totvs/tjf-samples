@@ -1,11 +1,17 @@
 package com.tjf.sample.github.tenantschema;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import org.springframework.web.context.request.WebRequestInterceptor;
+import org.springframework.web.servlet.handler.WebRequestHandlerInterceptorAdapter;
 
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
-public class TenantInterceptor extends HandlerInterceptorAdapter {
+public class TenantInterceptor extends WebRequestHandlerInterceptorAdapter {
+
+	public TenantInterceptor(WebRequestInterceptor requestInterceptor) {
+		super(requestInterceptor);
+	}
+
 	@Override
 	public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler) {
 		String tenant = req.getHeader("X-Planet");

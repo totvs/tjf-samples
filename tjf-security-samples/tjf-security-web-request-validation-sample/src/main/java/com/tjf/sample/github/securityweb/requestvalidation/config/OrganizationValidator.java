@@ -5,7 +5,7 @@ import com.totvs.tjf.security.requestvalidation.ValidationResult;
 import com.totvs.tjf.security.requestvalidation.Validator;
 import com.totvs.tjf.security.requestvalidation.organization.OrganizationsAllowed;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Objects;
 

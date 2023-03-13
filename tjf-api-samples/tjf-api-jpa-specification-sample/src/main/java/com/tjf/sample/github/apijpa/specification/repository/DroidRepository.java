@@ -1,6 +1,6 @@
 package com.tjf.sample.github.apijpa.specification.repository;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;

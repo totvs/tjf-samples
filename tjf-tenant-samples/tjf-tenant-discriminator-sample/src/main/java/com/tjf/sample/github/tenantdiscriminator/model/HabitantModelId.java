@@ -1,7 +1,7 @@
 package com.tjf.sample.github.tenantdiscriminator.model;
 
-import javax.persistence.Embeddable;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.Embeddable;
+import jakarta.validation.constraints.NotNull;
 
 import com.totvs.tjf.tenant.discriminator.TenantId;
 

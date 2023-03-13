@@ -2,14 +2,13 @@ package com.tjf.sample.github.messagingstream.infrastructure.messaging;
 
 import com.totvs.tjf.messaging.context.TOTVSMessage;
 import com.totvs.tjf.messaging.context.TOTVSMessageBuilder;
-import org.springframework.cloud.stream.annotation.EnableBinding;
+import org.springframework.cloud.stream.function.StreamBridge;
 
-@EnableBinding(BBUnitExchange.class)
 public class BBUnitPublisher {
-	private BBUnitExchange exchange;
+	private StreamBridge streamBridge;
 
-	public BBUnitPublisher(BBUnitExchange exchange) {
-		this.exchange = exchange;
+	public BBUnitPublisher(StreamBridge streamBridge) {
+		this.streamBridge = streamBridge;
 	}
 
 	public <T> void publish(T event, String eventName) {
@@ -17,6 +16,6 @@ public class BBUnitPublisher {
 			.setContent(event)
 			.build();
 
-		message.sendTo(exchange.output());
+		message.sendTo(streamBridge, "bbunit-input-out-0");
 	}
 }
