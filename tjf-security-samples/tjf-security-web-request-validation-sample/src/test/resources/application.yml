@@ -7,10 +7,8 @@ tjf:
     api:
       request-validation:
         enable: true
-
-security:
-  oauth2:
-    resource:
-      id: 'authorization_api'
-      jwk:
-        key-set-uri: http://rac:8080/totvs.rac/.well-known/openid-configuration/jwks
+    oauth2:
+      resource:
+        id: 'authorization_api'
+        jwk:
+          key-set-uri: http://rac:8080/totvs.rac/.well-known/openid-configuration/jwks
