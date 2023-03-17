@@ -1,8 +1,8 @@
-spring:
-
+tjf:
   flyway:
     enabled: true
 
+spring:
   # Configurações H2
   h2:
     console:
