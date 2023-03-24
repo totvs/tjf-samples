@@ -2,7 +2,7 @@ package com.tjf.sample.github.apijpa.filter.adapter;
 
 import java.time.ZonedDateTime;
 
-import javax.xml.bind.annotation.adapters.XmlAdapter;
+import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 
 public class ZonedDateTimeXmlAdapter extends XmlAdapter<String, ZonedDateTime> {
 

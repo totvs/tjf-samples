@@ -58,10 +58,10 @@
 			<artifactId>tjf-api-jpa</artifactId>
 		</dependency>
 
-		<!-- ODATA -->
+		<!-- Jakarta -->
 		<dependency>
-			<groupId>org.apache.olingo</groupId>
-			<artifactId>olingo-odata2-jpa-processor-core</artifactId>
+			<groupId>jakarta.xml.bind</groupId>
+			<artifactId>jakarta.xml.bind-api</artifactId>
 		</dependency>
 
 		<!-- Test -->

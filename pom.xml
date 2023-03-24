@@ -8,7 +8,7 @@
 	<parent>
 		<groupId>com.totvs.tjf</groupId>
 		<artifactId>tjf-boot-starter</artifactId>
-		<version>4.0.1-RELEASE</version>
+		<version>4.0.2-RELEASE</version>
 		<relativePath />
 	</parent>
 
@@ -22,7 +22,7 @@
 		<module>tjf-api-samples/tjf-api-core-fields-sample</module>
 		<module>tjf-api-samples/tjf-api-core-exception-sample</module>
 		<module>tjf-api-samples/tjf-api-context-sample</module>
-		<!-- TJF-1951 - module>tjf-api-samples/tjf-api-jpa-filters-sample</module -->
+		<module>tjf-api-samples/tjf-api-jpa-filters-sample</module>
 		<module>tjf-api-samples/tjf-api-jpa-specification-sample</module>
 		<module>tjf-api-samples/tjf-api-jpa-querybyexample-sample</module>
 		<module>tjf-core-samples/tjf-core-validation-sample</module>
