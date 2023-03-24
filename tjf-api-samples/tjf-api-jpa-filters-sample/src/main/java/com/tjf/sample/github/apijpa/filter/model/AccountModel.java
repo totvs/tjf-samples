@@ -1,7 +1,6 @@
 package com.tjf.sample.github.apijpa.filter.model;
 
 import java.math.BigDecimal;
-import java.time.ZonedDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,9 +9,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
-import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
-import com.tjf.sample.github.apijpa.filter.adapter.ZonedDateTimeXmlAdapter;
 import com.totvs.tjf.api.jpa.simplefilter.SimpleFilterSupport;
 import com.totvs.tjf.api.jpa.simplefilter.SimpleFilterSupportAllow;
 import com.totvs.tjf.api.jpa.simplefilter.SimpleFilterSupportDeny;
@@ -54,14 +50,5 @@ public class AccountModel implements SimpleFilterSupport<AccountModel> {
 	@ManyToOne
 	@JoinColumn(name = "id")
 	private EmployeeModel employee;
-
-	@NotNull
-	@Column(name = "created")
-	private ZonedDateTime created = ZonedDateTime.now();
-
-	@XmlJavaTypeAdapter(value = ZonedDateTimeXmlAdapter.class)
-	public ZonedDateTime getCreated() {
-		return created;
-	}
 
 }
