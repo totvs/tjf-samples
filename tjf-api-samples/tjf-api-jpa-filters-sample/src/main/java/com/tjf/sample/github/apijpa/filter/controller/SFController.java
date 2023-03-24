@@ -11,13 +11,13 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.totvs.tjf.api.context.stereotype.ApiGuideline;
-import com.totvs.tjf.api.context.stereotype.ApiGuideline.ApiGuidelineVersion;
+//
+//import com.totvs.tjf.api.context.stereotype.ApiGuideline;
+//import com.totvs.tjf.api.context.stereotype.ApiGuideline.ApiGuidelineVersion;
 
 @RestController
 @RequestMapping(path = "/api/v1", produces = MediaType.APPLICATION_JSON_VALUE)
-@ApiGuideline(ApiGuidelineVersion.V2)
+//@ApiGuideline(ApiGuidelineVersion.V2)
 public class SFController {
 
 	@Autowired
