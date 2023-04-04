@@ -7,6 +7,7 @@ import com.totvs.tjf.messaging.context.TOTVSHeader;
 import com.totvs.tjf.messaging.context.TransactionInfo;
 import com.totvs.tjf.mock.test.Semaphore;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Timeout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -63,7 +64,7 @@ class StarShipControllerTest {
 	}
 
 	@Test
-//	@Timeout(value = 60)
+	@Timeout(value = 60)
 	void starShipArrivedTest() throws Exception {
 		mockMvc.perform(get("/starship/arrived?name=teste"))
 				.andExpect(status().isOk());
@@ -72,7 +73,7 @@ class StarShipControllerTest {
 	}
 
 	@Test
-//	@Timeout(value = 60)
+	@Timeout(value = 60)
 	void starShipArrivedTmTest() throws Exception {
 		mockMvc.perform(get("/starship/arrived-tm?name=teste"))
 				.andExpect(status().isOk());
@@ -84,7 +85,7 @@ class StarShipControllerTest {
 	}
 
 	@Test
-//	@Timeout(value = 60)
+	@Timeout(value = 60)
 	void starShipArrivedTmCeTest() throws Exception {
 		mockMvc.perform(get("/starship/arrived-tm-ce?name=teste"))
 				.andExpect(status().isOk());
