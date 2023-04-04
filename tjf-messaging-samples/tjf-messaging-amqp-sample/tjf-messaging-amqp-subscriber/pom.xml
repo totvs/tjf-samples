@@ -10,10 +10,10 @@
 	</parent>
 
 	<groupId>br.com.star.wars</groupId>
-	<artifactId>messaging-amqp-publisher</artifactId>
+	<artifactId>messaging-amqp-subscriber</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>tjf-messaging-amqp-publisher</name>
-	<description>TJF Messaging AMQP Publisher Sample</description>
+	<name>tjf-messaging-amqp-subscriber</name>
+	<description>TJF Messaging AMQP Subscriber Sample</description>
 	<packaging>jar</packaging>
 
 	<properties>

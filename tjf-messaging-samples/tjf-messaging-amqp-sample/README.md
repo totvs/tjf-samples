@@ -108,8 +108,6 @@ public class StarShipSubscriber {
 }
 ```
 
-
-
 ## Vamos testar
 
 No nosso exemplo você vai precisar estar com o `RabbitMQ` já configurado e em execução, por conversão como não especificamos as portas ele irá usar as portas padrões.
@@ -125,11 +123,9 @@ E os bindings devem ser feitos utilizando routings key. Sendo eles:
 Execute os nossos dois projetos.
 
 Agora acesse a URL pelo navegador 
- - [http://localhost:8082/starship/arrived?name=millenium
- - [http://localhost:8082/starship/arrived-tm?name=millenium
- - [http://localhost:8082/starship/arrived-tm-ce?name=millenium
-
-```
+ - http://localhost:8082/starship/arrived?name=millenium
+ - http://localhost:8082/starship/arrived-tm?name=millenium
+ - http://localhost:8082/starship/arrived-tm-ce?name=millenium
 
 > Para mais informações sobre a definição dos campos, veja a documentação do padrão de CloudEvents no Modelo base de mensagem para comunicação entre serviços da TOTVS na [RFC000011].
 
