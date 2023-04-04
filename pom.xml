@@ -36,6 +36,8 @@
 		<module>tjf-security-samples/tjf-security-web-sample</module>
 		<module>tjf-tenant-samples/tjf-tenant-discriminator-sample</module>
 		<module>tjf-tenant-samples/tjf-tenant-schema-sample</module>
+		<module>tjf-messaging-samples/tjf-messaging-amqp-sample/tjf-messaging-amqp-publisher</module>
+		<module>tjf-messaging-samples/tjf-messaging-amqp-sample/tjf-messaging-amqp-subscriber</module>
 		<!-- TJF-2267 - module>tjf-sgdp-samples/tjf-sgdp-app-sample</module -->
 		<!-- TJF-2267 - module>tjf-sgdp-samples/tjf-sgdp-service-sample</module -->
 		<module>tjf-osgi-samples/tjf-osgi-sample</module>
