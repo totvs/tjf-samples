@@ -9,6 +9,6 @@ tjf:
   messaging:
     amqp:
       hostname: localhost
-      username: admin
-      password: totvs@123
+      username: guest
+      password: guest
       port: 5672
