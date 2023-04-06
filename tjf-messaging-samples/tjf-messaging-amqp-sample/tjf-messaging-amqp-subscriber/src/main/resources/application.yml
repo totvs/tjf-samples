@@ -1,0 +1,14 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: tjf-messaging-amqp-subscriber
+
+tjf:
+  messaging:
+    amqp:
+      hostname: localhost
+      username: guest
+      password: guest
+      port: 5672

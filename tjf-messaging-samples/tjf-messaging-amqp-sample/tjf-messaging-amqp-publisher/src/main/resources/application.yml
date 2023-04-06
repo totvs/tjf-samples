@@ -1,0 +1,14 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: tjf-messaging-amqp-publisher
+
+tjf:
+  messaging:
+    amqp:
+      hostname: localhost
+      username: guest
+      password: guest
+      port: 5672
