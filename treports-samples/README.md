@@ -31,7 +31,7 @@ Crie um novo _maven project_ e no pom.xml do projeto acrescente o _parent_ tjf-b
   </snapshots>
 </repository>
 ```
-⚠️ É preciso configurar o token de acesso da Azure, mais detalhes no [Portal TJF] (https://tjf.totvs.com.br/docs/getting-started) .
+⚠️ É preciso configurar o token de acesso da Azure, mais detalhes no [Portal TJF](https://tjf.totvs.com.br/docs/getting-started) .
 
 Ainda no pom.xml acrescente as dependências que iremos precisar:
 * **spring-boot-starter-web:** Para fazermos requisições _rest_ para a nossa aplicação.

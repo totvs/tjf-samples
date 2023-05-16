@@ -26,7 +26,7 @@ Primeiramente configure o repositório do TJF em seu `pom.xml`:
   </snapshots>
 </repository>
 ```
-⚠️ É preciso configurar o token de acesso da Azure, mais detalhes no [Portal TJF] (https://tjf.totvs.com.br/docs/getting-started) .
+⚠️ É preciso configurar o token de acesso da Azure, mais detalhes no [Portal TJF](https://tjf.totvs.com.br/docs/getting-started) .
 
 Adicione o _parent_ do TJF:
 

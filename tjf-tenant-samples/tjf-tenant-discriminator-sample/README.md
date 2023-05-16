@@ -53,7 +53,7 @@ Incluiremos também a dependência para utilização da biblioteca **Tenant Disc
   </snapshots>
 </repository>
 ```
-⚠️ É preciso configurar o token de acesso da Azure, mais detalhes no [Portal TJF] (https://tjf.totvs.com.br/docs/getting-started) .
+⚠️ É preciso configurar o token de acesso da Azure, mais detalhes no [Portal TJF](https://tjf.totvs.com.br/docs/getting-started) .
 
 Por fim, precisamos renomear o arquivo `application.properties`, da pasta `src/main/resources`, para `application.yml`.
 
