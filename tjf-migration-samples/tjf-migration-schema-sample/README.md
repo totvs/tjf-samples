@@ -41,7 +41,7 @@ Após gerado o projeto, vamos adicionar a dependência do **Migration Schema** e
   </snapshots>
 </repository>
 ```
-⚠️ É preciso configurar o token de acesso da Azure, mais detalhes no [Portal TJF] (https://tjf.totvs.com.br/docs/getting-started) .
+⚠️ É preciso configurar o token de acesso da Azure, mais detalhes no [Portal TJF](https://tjf.totvs.com.br/docs/getting-started) .
 
 ### Banco de dados
 

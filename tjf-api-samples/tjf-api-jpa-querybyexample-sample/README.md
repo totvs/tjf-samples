@@ -47,7 +47,7 @@ Vamos adicionar também o repositório Maven de _release_ do TJF:
   </snapshots>
 </repository>
 ```
-⚠️ É preciso configurar o token de acesso da Azure, mais detalhes no [Portal TJF] (https://tjf.totvs.com.br/docs/getting-started) .
+⚠️ É preciso configurar o token de acesso da Azure, mais detalhes no [Portal TJF](https://tjf.totvs.com.br/docs/getting-started) .
 
 Antes de iniciarmos a codificação, vamos configurar a conexão com o banco de dados H2, para isso no seu arquivo `application.yml` insira as propriedades
 
