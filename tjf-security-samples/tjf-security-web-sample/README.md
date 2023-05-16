@@ -15,16 +15,18 @@ Vamos iniciar a explicação a partir de um projeto Spring já criado, caso voc�
 Primeiramente configure o repositório do TJF em seu `pom.xml`:
 
 ```xml
-<repositories>
-
-  <repository>
-    <id>central-snapshot</id>
-    <name>TOTVS Java Framework: Snapshots</name>
-    <url>http://maven.engpro.totvs.com.br/artifactory/libs-release</url>
-  </repository>
-
-</repositories>
+<repository>
+  <id>tjf</id>
+  <url>https://totvstfs.pkgs.visualstudio.com/TJF/_packaging/tjf/maven/v1</url>
+  <releases>
+    <enabled>true</enabled>
+  </releases>
+  <snapshots>
+    <enabled>true</enabled>
+  </snapshots>
+</repository>
 ```
+⚠️ É preciso configurar o token de acesso da Azure, mais detalhe em: https://tjf.totvs.com.br/docs/getting-started .
 
 Adicione o _parent_ do TJF:
 

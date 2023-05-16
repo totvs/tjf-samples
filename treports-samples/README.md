@@ -20,14 +20,18 @@ Crie um novo _maven project_ e no pom.xml do projeto acrescente o _parent_ tjf-b
   <version>4.4.0-RELEASE</version>
 </parent>
 
-<repositories>
-  <repository>
-    <id>central-release</id>
-    <name>TOTVS Java Framework: Release</name>
-    <url>http://maven.engpro.totvs.com.br/artifactory/libs-release</url>
-  </repository>
-</repositories>
+<repository>
+  <id>tjf</id>
+  <url>https://totvstfs.pkgs.visualstudio.com/TJF/_packaging/tjf/maven/v1</url>
+  <releases>
+    <enabled>true</enabled>
+  </releases>
+  <snapshots>
+    <enabled>true</enabled>
+  </snapshots>
+</repository>
 ```
+⚠️ É preciso configurar o token de acesso da Azure, mais detalhe em: https://tjf.totvs.com.br/docs/getting-started .
 
 Ainda no pom.xml acrescente as dependências que iremos precisar:
 * **spring-boot-starter-web:** Para fazermos requisições _rest_ para a nossa aplicação.
