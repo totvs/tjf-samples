@@ -63,7 +63,7 @@ Vamos adicionar também o repositório Maven de release do TJF:
   </snapshots>
 </repository>
 ```
-⚠️ É preciso configurar o token de acesso da Azure, mais detalhe em: https://tjf.totvs.com.br/docs/getting-started .
+⚠️ É preciso configurar o token de acesso da Azure, mais detalhes no [Portal TJF] (https://tjf.totvs.com.br/docs/getting-started) .
 
 ## Filtro simples
 
