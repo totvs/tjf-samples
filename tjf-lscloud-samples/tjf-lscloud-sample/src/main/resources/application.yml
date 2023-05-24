@@ -11,26 +11,17 @@ spring:
         enabled: true
       routing-expression: headers['type']
     stream:
-      pollable-source: tjf-messaging-error
-      
       default-binder: rabbit1
  
       bindings:   
         lscloud-out-0:
           binder: rabbit1
-          destination:  LogLicense
-          group: input
-          error-handler-definition: ErrorMessage
-          producer:
-            requiredGroups: input
+          destination:  LogLicense.input
             
         functionRouter-in-0:
           binder: rabbit1
-          destination: LogLicense.input
-          group: dlq
-          error-handler-definition: ErrorMessage
+          destination: LogLicense.input.dlq
 
-    
       binders:
         rabbit1:
           type: rabbit
