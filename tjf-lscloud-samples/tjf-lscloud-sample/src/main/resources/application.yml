@@ -6,23 +6,38 @@ tjf:
 
 spring:
   cloud:
+    function:
+      routing:
+        enabled: true
+      routing-expression: headers['type']
     stream:
-
-      bindings:
-        lscloud-consumer:
-          destination: LogLicense.input.dlq
-
-        lscloud-producer:
+      pollable-source: tjf-messaging-error
+      
+      default-binder: rabbit1
+ 
+      bindings:   
+        lscloud-out-0:
+          binder: rabbit1
+          destination:  LogLicense
+          group: input
+          error-handler-definition: ErrorMessage
+          producer:
+            requiredGroups: input
+            
+        functionRouter-in-0:
+          binder: rabbit1
           destination: LogLicense.input
+          group: dlq
+          error-handler-definition: ErrorMessage
 
+    
+      binders:
+        rabbit1:
+          type: rabbit
       rabbit:
-        bindings:
-          lscloud-consumer:
-            consumer:
-              exchangeType: headers
-          lscloud-producer:
-            producer:
-              exchangeType: headers
+        default:
+          exchangeType: headers
+   
 
 server:
   port: 8080
