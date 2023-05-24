@@ -14,11 +14,6 @@ public class ErrorSubscriber {
 
 	private static final Logger LOG = LoggerFactory.getLogger(ErrorSubscriber.class);
 
-	/**
-	 * Default error handle.
-	 * Sends error messages to the queue.
-	 * 
-	 */
 	@Bean(name = "com.totvs.tjf.lscloud.message.LogLicense")
 	public Consumer<TOTVSMessage<?>> ErrorMessage() {
 		return message -> {
