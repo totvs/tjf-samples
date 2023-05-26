@@ -159,6 +159,16 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
+		<repository>
+			<id>tjf-plugins</id>
+			<url>https://totvstfs.pkgs.visualstudio.com/TJF/_packaging/tjf-plugins/maven/v1</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
 	</repositories>
 	<pluginRepositories>
 		<pluginRepository>
