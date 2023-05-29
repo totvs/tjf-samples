@@ -14,7 +14,10 @@ public class MessagePublisher {
 	}
 
 	public <T> void publish(T event, String eventName) {
-		new TOTVSMessage<T>(eventName, event).sendTo(exchange.output());
+		TOTVSMessage<T> totvsMessage = TOTVSMessageBuilder.withType(eventName)
+		          .setContent(event)
+		          .setTransactionInfo(transactionInfo)
+		       .build();
+		  totvsMessage.sendTo(exchange.output());
 	}
-
 }

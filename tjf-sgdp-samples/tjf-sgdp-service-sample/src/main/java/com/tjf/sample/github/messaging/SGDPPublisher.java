@@ -17,12 +17,12 @@ public class SGDPPublisher {
 	}
 
 	public void publish(SGDPDataCommand command) {
-		TOTVSMessage<SGDPDataCommand> message = new TOTVSMessage<SGDPDataCommand>("SGDPDataCommand", command);
-		message.sendTo(exchange.outputChannel());
+		TOTVSMessage<SGDPDataCommand> totvsMessage = TOTVSMessageBuilder.whithType("SGDPDataCommand").setContent(command).build();
+		totvsMessage.sendTo(exchange.outputChannel());
 	}
 
 	public void publish(SGDPMaskCommand command) {
-		TOTVSMessage<SGDPMaskCommand> message = new TOTVSMessage<SGDPMaskCommand>("SGDPMaskCommand", command);
+		TOTVSMessage<SGDPMaskCommand> message = TOTVSMessageBuilder.whithType("SGDPMaskCommand").setContent(command).build();
 		message.sendTo(exchange.outputChannel());
 	}
 
