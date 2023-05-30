@@ -38,7 +38,7 @@ Como iremos criar uma API REST, para facilitar a criação do modelo, vamos util
 </dependency>
 ```
 
-> Saiba mais sobre o o [Lombok](https://projectlombok.org/).
+> Saiba mais sobre o [Lombok](https://projectlombok.org/).
 
 Também adicionaremos o Spring Fox Swagger como dependência para a demonstração:
 
