@@ -36,7 +36,7 @@ Como iremos criar uma API REST, para facilitar a criação do modelo, vamos util
   <groupId>org.projectlombok</groupId>
   <artifactId>lombok</artifactId>
 </dependency>
-```xml
+```
 
 > Saiba mais sobre o o [Lombok](https://projectlombok.org/).
 
