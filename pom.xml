@@ -43,7 +43,7 @@
 		<module>tjf-osgi-samples/tjf-osgi-sample</module>
 		<!--module>tjf-maven-plugin-samples/tjf-plugin-openapi</module-->
 		<!-- module>tjf-developers/tjf-messaging</module -->
-		<!-- TJF-2168 - module>tjf-lscloud-samples/tjf-lscloud-sample</module -->
+		<module>tjf-lscloud-samples/tjf-lscloud-sample</module>
 	</modules>
 	<repositories>
 		<repository>
