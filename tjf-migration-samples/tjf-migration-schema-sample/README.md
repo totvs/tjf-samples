@@ -94,7 +94,7 @@ CREATE TABLE habitant
 
 ## Execução dos testes
 
-Para comprovar que os _schemas_ foram criados, criamos uma classe com alguns alguns testes simples:
+Para comprovar que os _schemas_ foram criados, criamos uma classe com alguns testes simples:
 
 ```java
 @Test
