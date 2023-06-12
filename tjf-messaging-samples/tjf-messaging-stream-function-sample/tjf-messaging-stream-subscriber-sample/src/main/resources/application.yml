@@ -2,11 +2,11 @@
 
 spring:
   cloud:
-    function:
-      routing:
-        enabled: true
       routing-expression: headers['type']
     stream:
+      function:
+        routing:
+          enabled: true
       pollable-source: tjf-messaging-error
       
       default-binder: rabbit1
