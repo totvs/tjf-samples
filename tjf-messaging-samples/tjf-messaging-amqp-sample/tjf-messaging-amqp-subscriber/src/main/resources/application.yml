@@ -9,6 +9,61 @@ tjf:
   messaging:
     amqp:
       hostname: localhost
-      username: guest
-      password: guest
+      username: admin
+      password: totvs@123
       port: 5672
+
+      exchanges:
+        directExchanges:
+          -
+            name: starship-exchange-1
+            durable: true
+            autoDelete: false
+          -
+            name: starship-exchange-2
+            durable: true
+            autoDelete: false
+          -
+            name: starship-exchange-3
+            durable: true
+            autoDelete: false
+
+      queues:
+        queuesList:
+          -
+            name: starship-queue-1
+            durable: true
+            autoDelete: false
+            exclusive: false
+            arguments:
+              x-dead-letter-routing-key: starship-queue-1.wait
+              x-dead-letter-exchange:
+          -
+            name: starship-queue-2
+            durable: true
+            autoDelete: false
+            exclusive: false
+          -
+            name: starship-queue-3
+            durable: true
+            autoDelete: false
+            exclusive: false
+
+      bindings:
+        bindingsList:
+          -
+            destination: starship-queue-1
+            exchange: starship-exchange-1
+            routingKey: starship-routing-key-1
+            destinationType: queue
+          -
+            destination: starship-queue-2
+            exchange: starship-exchange-2
+            routingKey: starship-routing-key-2
+            destinationType: queue
+          -
+            destination: starship-queue-3
+            exchange: starship-exchange-3
+            routingKey: starship-routing-key-3
+            destinationType: queue
+
