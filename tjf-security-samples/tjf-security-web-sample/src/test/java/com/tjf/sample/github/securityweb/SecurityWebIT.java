@@ -8,6 +8,7 @@ import org.apache.http.HttpHeaders;
 import org.apache.http.client.ClientProtocolException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
@@ -20,10 +21,13 @@ public class SecurityWebIT {
 	private MockMvc mockMvc;
 
 	private static String accessApplicationToken;
-	private static final String URL_CONNECT = "http://rac:8080/totvs.rac/connect/token";
-	private static final String URL_RAC = "http://rac:8080/totvs.rac/";
-	private static final String CLIENT_ID = "js_oidc_sampleapp";
-	private static final String CLIENT_SECRET = "totvs@123";
+	private static final String URL_CONNECT = "https://rac.dev.totvs.app/totvs.rac/connect/token";
+	private static final String URL_RAC = "https://rac.dev.totvs.app/totvs.rac/";
+	@Value(value = "tjf.security.clientid")
+	private static String CLIENT_ID;
+	@Value(value = "tjf.security.clientsecret")
+	private static String CLIENT_SECRET;
+	
 	private static final String SUPERVISOR_ROLE = "1";
 	private static final String NO_ROLE = "0";
 
