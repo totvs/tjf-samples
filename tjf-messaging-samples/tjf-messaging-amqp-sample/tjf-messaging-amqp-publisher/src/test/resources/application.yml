@@ -1,0 +1,66 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: tjf-messaging-amqp-publisher
+
+tjf:
+  messaging:
+     amqp:
+      hostname: localhost
+      username: guest
+      password: guest
+      port: 5672
+
+      exchanges:
+        directExchanges:
+          -
+            name: starship-exchange-1
+            
+            durable: true
+            autoDelete: false
+          -
+            name: starship-exchange-2
+            
+            durable: true
+            autoDelete: false
+          -
+            name: starship-exchange-3
+            
+            durable: true
+            autoDelete: false
+      
+      queues:
+        queuesList:
+          -
+            name: starship-queue-1
+            durable: true
+            autoDelete: false
+          -
+            name: starship-queue-2
+            durable: true
+            autoDelete: false
+          -
+            name: starship-queue-3 
+            durable: true
+            autoDelete: false
+      bindings:
+        bindingsList:
+          -
+            destination: starship-queue-1
+            exchange: starship-exchange-1
+            routingKey: starship-routing-key-1
+            destinationType: queue
+
+          -
+            destination: starship-queue-2
+            exchange: starship-exchange-2
+            routingKey: starship-routing-key-2
+            destinationType: queue
+          -
+            destination: starship-queue-3
+            exchange: starship-exchange-3
+            routingKey: starship-routing-key-3
+            destinationType: queue
+      
