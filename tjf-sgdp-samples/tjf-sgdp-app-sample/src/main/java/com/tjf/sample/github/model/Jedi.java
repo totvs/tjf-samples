@@ -1,9 +1,9 @@
 package com.tjf.sample.github.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotNull;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 import com.totvs.sgdp.sdk.annotations.SGDPClassification;
 import com.totvs.sgdp.sdk.annotations.SGDPCode;
