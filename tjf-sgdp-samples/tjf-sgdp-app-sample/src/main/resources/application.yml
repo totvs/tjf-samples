@@ -9,9 +9,13 @@ sgdp:
     url: http://sgdp.local:8080
   product:
     id: SGDP Sample APP
- 
-spring:
-    
+
+  spring:
+
+    mvc:
+      pathmatch:
+        matching-strategy: ant_path_matcher
+
   application:
     name: sgdp-test-sample
   
@@ -26,9 +30,9 @@ spring:
     password:
   
   jpa:
-    generate-ddl: true 
+    defer-datasource-initialization: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     database-platform: org.hibernate.dialect.H2Dialect
     show-sql: true
     properties:      
