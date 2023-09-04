@@ -13,7 +13,7 @@ import org.json.JSONObject;
 
 public class GenerateToken {
 
-	public String generateToken(String url, String clientId, String clientSecret, String username, String password) throws ClientProtocolException {
+	public String generateToken(String url, String clientId, String clientSecret, String username, String password) {
 		String token = "";
 		
 		try (CloseableHttpClient client = HttpClients.createDefault()) {

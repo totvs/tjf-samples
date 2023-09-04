@@ -25,44 +25,38 @@ public class SecurityWebIT {
 	@Autowired
 	private MockMvc mockMvc;
 
-	private static String accessApplicationToken = null;
+	static GenerateToken racAuthorization = new GenerateToken();
 	private static final String URL_CONNECT = "https://tenant-c56bab97-8ea6-4b6c-8568-1cde9c6a9477.rac.dev.totvs.app/totvs.rac/connect/token";
 
 	@Value("${tjf.security.clientid}")
-	private String CLIENT_ID;
+	private static String CLIENT_ID;
 
 	@Value("${tjf.security.clientsecret}")
-	private String CLIENT_SECRET;
+	private static String CLIENT_SECRET;
 
 	@Value("${tjf.security.login}")
-	private String LOGIN;
+	private static String LOGIN;
 
 	@Value("${tjf.security.password}")
-	private String PASSWORD;
+	private static String PASSWORD;
 
 	@Value("${tjf.security.login-superv}")
-	private String LOGIN_SUPERV;
+	private static String LOGIN_SUPERV;
 
 	@Value("${tjf.security.password-superv}")
-	private String PASSWORD_SUPERV;
+	private static String PASSWORD_SUPERV;
 
-	public void generateToken() throws ClientProtocolException {
-		GenerateToken racAuthorization = new GenerateToken();
-		accessApplicationToken = racAuthorization.generateToken(URL_CONNECT, CLIENT_ID, CLIENT_SECRET, LOGIN, PASSWORD);
-	}
-
-	public void generateTokenSuperv() throws ClientProtocolException {
-		GenerateToken racAuthorization = new GenerateToken();
-		accessApplicationToken = racAuthorization.generateToken(URL_CONNECT, CLIENT_ID, CLIENT_SECRET, LOGIN_SUPERV,
-				PASSWORD_SUPERV);
-	}
+	
+	private static String accessApplicationToken = racAuthorization.generateToken(URL_CONNECT, CLIENT_ID, CLIENT_SECRET, LOGIN, PASSWORD);
+ 
+	private static String accessApplicationTokenSuperv = racAuthorization.generateToken(URL_CONNECT, CLIENT_ID, CLIENT_SECRET, LOGIN_SUPERV,
+			PASSWORD_SUPERV);
 
 	@Test
 	@Order(1)
 	@DirtiesContext
 	public void testAccessWithTokenAndRole() throws Exception {
-		generateTokenSuperv();
-		mockMvc.perform(get("/api/v1/machine").header(HttpHeaders.AUTHORIZATION, "Bearer " + accessApplicationToken))
+		mockMvc.perform(get("/api/v1/machine").header(HttpHeaders.AUTHORIZATION, "Bearer " + accessApplicationTokenSuperv))
 				.andExpect(status().isOk());
 	}
 
@@ -70,9 +64,8 @@ public class SecurityWebIT {
 	@Order(2)
 	@DirtiesContext
 	public void testValidRole() throws Exception {
-		generateTokenSuperv();
 		mockMvc.perform(
-				post("/api/v1/machine/stop").header(HttpHeaders.AUTHORIZATION, "Bearer " + accessApplicationToken))
+				post("/api/v1/machine/stop").header(HttpHeaders.AUTHORIZATION, "Bearer " + accessApplicationTokenSuperv))
 				.andExpect(status().isOk());
 	}
 
@@ -91,7 +84,6 @@ public class SecurityWebIT {
 		// TJF-1737 - Comportamento precisa ser avaliado
 		// mockMvc.perform(post("/api/v1/machine/stop")).andExpect(status().isUnauthorized());
 
-		generateToken();
 		mockMvc.perform(post("/api/v1/machine/stop")).andExpect(status().isForbidden());
 	}
 
@@ -99,9 +91,6 @@ public class SecurityWebIT {
 	@Order(5)
 	@DirtiesContext
 	public void testAccessWithTokenNoRole() throws Exception {
-		
-		
-		generateToken();
 		mockMvc.perform(get("/api/v1/machine").header(HttpHeaders.AUTHORIZATION, "Bearer " + accessApplicationToken))
 				.andExpect(status().isOk());
 	}
@@ -111,7 +100,6 @@ public class SecurityWebIT {
 	@Order(6)
 	@DirtiesContext
 	public void testInvalidRole() throws Exception {
-		generateToken();
 		mockMvc.perform(
 				post("/api/v1/machine/stop").header(HttpHeaders.AUTHORIZATION, "Bearer " + accessApplicationToken))
 				.andExpect(status().isForbidden());
