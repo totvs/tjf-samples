@@ -6,15 +6,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.ClientProtocolException;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@DirtiesContext
 public class SecurityWebIT {
 
 	@Autowired
@@ -53,6 +56,7 @@ public class SecurityWebIT {
 	}
 
 	@Test
+	@Order(1)
 	public void testAccessWithTokenAndRole() throws Exception {
 		generateTokenSuperv();
 		mockMvc.perform(get("/api/v1/machine").header(HttpHeaders.AUTHORIZATION, "Bearer " + accessApplicationToken))
@@ -60,6 +64,7 @@ public class SecurityWebIT {
 	}
 
 	@Test
+	@Order(2)
 	public void testAccessWithTokenNoRole() throws Exception {
 		generateToken();
 		mockMvc.perform(get("/api/v1/machine").header(HttpHeaders.AUTHORIZATION, "Bearer " + accessApplicationToken))
@@ -67,11 +72,13 @@ public class SecurityWebIT {
 	}
 
 	@Test
+	@Order(3)
 	public void testAcessWithoutToken() throws Exception {
 		mockMvc.perform(get("/api/v1/machine")).andExpect(status().isUnauthorized());
 	}
 
 	@Test
+	@Order(4)
 	public void testUnauthorizedAccess() throws Exception {
 		// TJF-1737 - Comportamento precisa ser avaliado
 		// mockMvc.perform(post("/api/v1/machine/stop")).andExpect(status().isUnauthorized());
@@ -81,6 +88,7 @@ public class SecurityWebIT {
 	}
 
 	@Test
+	@Order(5)
 	public void testValidRole() throws Exception {
 		generateTokenSuperv();
 
@@ -90,6 +98,7 @@ public class SecurityWebIT {
 	}
 
 	@Test
+	@Order(6)
 	public void testInvalidRole() throws Exception {
 		generateToken();
 		mockMvc.perform(
