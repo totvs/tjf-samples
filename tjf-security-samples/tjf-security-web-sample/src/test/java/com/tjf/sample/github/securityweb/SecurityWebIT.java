@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@DirtiesContext
 public class SecurityWebIT {
 
 	@Autowired
@@ -65,6 +66,7 @@ public class SecurityWebIT {
 	@Test
 	@Order(2)
 	public void testValidRole() throws Exception {
+		generateTokenSuperv();
 		mockMvc.perform(
 				post("/api/v1/machine/stop").header(HttpHeaders.AUTHORIZATION, "Bearer " + accessApplicationToken))
 				.andExpect(status().isOk());
@@ -90,6 +92,7 @@ public class SecurityWebIT {
 	@Test
 	@Order(5)
 	public void testAccessWithTokenNoRole() throws Exception {
+		generateToken();
 		mockMvc.perform(get("/api/v1/machine").header(HttpHeaders.AUTHORIZATION, "Bearer " + accessApplicationToken))
 				.andExpect(status().isOk());
 	}
@@ -98,6 +101,7 @@ public class SecurityWebIT {
 	@Test
 	@Order(6)
 	public void testInvalidRole() throws Exception {
+		generateToken();
 		mockMvc.perform(
 				post("/api/v1/machine/stop").header(HttpHeaders.AUTHORIZATION, "Bearer " + accessApplicationToken))
 				.andExpect(status().isForbidden());
