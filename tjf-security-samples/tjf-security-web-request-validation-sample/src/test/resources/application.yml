@@ -11,4 +11,9 @@ tjf:
       resource:
         id: 'authorization_api'
         jwk:
-          key-set-uri: http://rac:8080/totvs.rac/.well-known/openid-configuration/jwks
+          key-set-uri: http://rac:8080/totvs.rac/.well-known/openid-configuration/jwks      
+    clientid: ${CLIENT_ID}
+    clientsecret: ${CLIENT_SECRET}
+    login-superv: ${LOGIN_SUPERV}
+    password-superv: ${PASSWORD_SUPERV}
+    
