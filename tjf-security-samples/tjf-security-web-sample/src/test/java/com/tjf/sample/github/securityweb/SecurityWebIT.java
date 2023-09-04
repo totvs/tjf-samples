@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.ClientProtocolException;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -29,29 +30,35 @@ public class SecurityWebIT {
 	private static final String URL_CONNECT = "https://tenant-c56bab97-8ea6-4b6c-8568-1cde9c6a9477.rac.dev.totvs.app/totvs.rac/connect/token";
 
 	@Value("${tjf.security.clientid}")
-	private static String CLIENT_ID;
+	private String CLIENT_ID;
 
 	@Value("${tjf.security.clientsecret}")
-	private static String CLIENT_SECRET;
+	private String CLIENT_SECRET;
 
 	@Value("${tjf.security.login}")
-	private static String LOGIN;
+	private String LOGIN;
 
 	@Value("${tjf.security.password}")
-	private static String PASSWORD;
+	private String PASSWORD;
 
 	@Value("${tjf.security.login-superv}")
-	private static String LOGIN_SUPERV;
+	private String LOGIN_SUPERV;
 
 	@Value("${tjf.security.password-superv}")
-	private static String PASSWORD_SUPERV;
+	private String PASSWORD_SUPERV;
 
 	
-	private static String accessApplicationToken = racAuthorization.generateToken(URL_CONNECT, CLIENT_ID, CLIENT_SECRET, LOGIN, PASSWORD);
+	private String accessApplicationToken;
  
-	private static String accessApplicationTokenSuperv = racAuthorization.generateToken(URL_CONNECT, CLIENT_ID, CLIENT_SECRET, LOGIN_SUPERV,
-			PASSWORD_SUPERV);
-
+	private String accessApplicationTokenSuperv;
+	
+	@BeforeAll
+	public void GenerateToken(){
+		accessApplicationToken = racAuthorization.generateToken(URL_CONNECT, CLIENT_ID, CLIENT_SECRET, LOGIN, PASSWORD);
+		accessApplicationTokenSuperv  = racAuthorization.generateToken(URL_CONNECT, CLIENT_ID, CLIENT_SECRET, LOGIN_SUPERV,
+				PASSWORD_SUPERV);
+	}
+	
 	@Test
 	@Order(1)
 	@DirtiesContext
