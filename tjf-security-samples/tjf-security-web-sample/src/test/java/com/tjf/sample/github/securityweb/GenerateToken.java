@@ -15,11 +15,33 @@ import org.springframework.http.MediaType;
 
 public class GenerateToken {
 	
+	
+	/*	RestTemplate restTemplate = new RestTemplate();
+
+		HttpHeaders headers = new HttpHeaders();
+
+		MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+		map.add("grant_type", "client_credentials");
+
+		headers.add(AUTHORIZATION,
+				getBasicAuthenticationHeader(application.getClientId(), application.getClientSecret()));
+		headers.add("Content-Type", "application/x-www-form-urlencoded");
+		headers.add(RESPONSE_TYPE, RESPONSE_TYPE_TOKEN);
+		headers.add(CLIENT_ID, application.getClientId());
+		headers.add(CLIENT_SECRET, application.getClientSecret());
+		HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(map, headers);
+
+		var endpoint = fluigUrl + "/accounts/oauth/token";
+
+		log.debug("Get token from {}", endpoint);
+		return restTemplate.exchange(endpoint, HttpMethod.POST, request, FluigTokenResponse.class).getBody();
+*/
+	
 	public String generateToken(String url, String clientId, String clientSecret, String username, String password) throws ClientProtocolException {
 		String token = "";
 		
 		try (CloseableHttpClient client = HttpClients.createDefault()) {
-			StringEntity text = new StringEntity("client_id=" + clientId + "&client_secret=" + clientSecret + "&grant_type=password&username=" + username + "&password=" + password + "&scope=authorization_api&acr_values=tenant:empresa1");
+			StringEntity text = new StringEntity("client_id=" + clientId + "&client_secret=" + clientSecret + "&grant_type=password&username=" + username + "&password=" + password + "&scope=authorization_api");
 			
 			HttpPost post = new HttpPost(url);
 			post.setHeader(HttpHeaders.CONTENT_TYPE, "application/x-www-form-urlencoded");
@@ -39,40 +61,6 @@ public class GenerateToken {
 		}
 		
 		return token;
-	}
-
-	/*
-	 * Updates the profile in rac, including the second role (2), which was imported by the plugin. 
-	 */
-	public void updateRolesUser(String url, String accessApplicationToken, String productRoles) {
-		try (CloseableHttpClient client = HttpClients.createDefault()) {
-			StringEntity params = new StringEntity("{\n" + 
-					"    \"id\": 2,\n" + 
-					"    \"userName\": \"admin\",\n" + 
-					"    \"emailAddress\": \"admin@seudominio.com.br\",\n" + 
-					"    \"fullName\": \"Administrador do Tenant\",\n" + 
-					"    \"name\": \"Administrador\",\n" + 
-					"    \"surname\": \"do Tenant\",\n" + 
-					"    \"phoneNumber\": null,\n" + 
-					"    \"isUndefinedPassword\": false,\n" + 
-					"    \"sentEmailSuccessfully\": null,\n" + 
-					"    \"isActive\": true,\n" + 
-					"    \"externalId\": null,\n" + 
-					"    \"organizations\": [],\n" + 
-					"    \"roles\": [2],\n" + 
-					"    \"productRoles\": [" + productRoles + "],\n" + 
-					"    \"_expandables\": []\n" + 
-					"}");
-			
-			HttpPut put = new HttpPut(url + "/api/user/2");
-			put.setHeader(HttpHeaders.AUTHORIZATION, "Bearer " + accessApplicationToken);
-			put.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-			put.setEntity(params);
-
-			client.execute(put);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
 	}
 
 }

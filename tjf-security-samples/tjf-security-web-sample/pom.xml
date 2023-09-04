@@ -16,7 +16,7 @@
 	<description>TJF Security Web Sample</description>
 
 	<properties>
-		<tjf-rac-maven-plugin.version>3.1.5-RELEASE</tjf-rac-maven-plugin.version>
+		<tjf-rac-maven-plugin.version>4.0.0-RELEASE</tjf-rac-maven-plugin.version>
 	</properties>		
 
 	<dependencies>
@@ -81,9 +81,9 @@
 				</dependencies>
 				<configuration>
 					<packageName>com.tjf.sample.github.securityweb</packageName>
-					<racUrl>http://rac:8080/totvs.rac</racUrl>
-					<clientId>js_oidc_sampleapp</clientId>
-					<clientSecret>totvs@123</clientSecret>
+					<racUrl>https://smarttalkmauricio.rac.dev.totvs.app/totvs.rac</racUrl>
+					<clientId>${CLIENT_ID}</clientId>
+					<clientSecret>${CLIENT_SECRET}</clientSecret>
 				</configuration>
 			</plugin>
 		</plugins>
