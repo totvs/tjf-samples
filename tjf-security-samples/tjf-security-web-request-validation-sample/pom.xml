@@ -18,7 +18,7 @@
 	<description>TJF Security Web Request Validation Sample</description>
 
 	<properties>
-		<tjf-rac-maven-plugin.version>3.1.5-RELEASE</tjf-rac-maven-plugin.version>
+		<tjf-rac-maven-plugin.version>4.0.0-RELEASE</tjf-rac-maven-plugin.version>
 	</properties>
 
 	<dependencies>
@@ -72,9 +72,9 @@
 				</dependencies>
 				<configuration>
 					<packageName>com.tjf.sample.github.securityweb.requestvalidation</packageName>
-					<racUrl>http://rac:8080/totvs.rac</racUrl>
-					<clientId>js_oidc_sampleapp</clientId>
-					<clientSecret>totvs@123</clientSecret>
+					<racUrl>tenant-c56bab97-8ea6-4b6c-8568-1cde9c6a9477.rac.dev.totvs.app/totvs.rac</racUrl>
+						<clientId>${CLIENT_ID}</clientId>
+					<clientSecret>${CLIENT_SECRET}</clientSecret>
 				</configuration>
 			</plugin>
 		</plugins>

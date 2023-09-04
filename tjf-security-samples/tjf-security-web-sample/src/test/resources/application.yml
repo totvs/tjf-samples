@@ -19,7 +19,7 @@ tjf:
           
     clientid: ${CLIENT_ID}
     clientsecret: ${CLIENT_SECRET}
-    login:  ${LOGIN}
+    login: ${LOGIN}
     password: ${PASSWORD}
     login-superv: ${LOGIN_SUPERV}
     password-superv: ${PASSWORD_SUPERV}

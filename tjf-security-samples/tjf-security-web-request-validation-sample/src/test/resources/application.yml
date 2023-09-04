@@ -1,9 +1,15 @@
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: https://tenant-c56bab97-8ea6-4b6c-8568-1cde9c6a9477.rac.dev.totvs.app/totvs.rac/.well-known/openid-configuration/jwks
 tjf:
   security:
     access:
       provider: rac
       api:
-        permissions-uri: http://admin.rac.totvs.com.br/totvs.rac/api/permissions
+        permissions-uri: https://tenant-c56bab97-8ea6-4b6c-8568-1cde9c6a9477.rac.dev.totvs.app/totvs.rac/api/permissions
     api:
       request-validation:
         enable: true
@@ -11,9 +17,10 @@ tjf:
       resource:
         id: 'authorization_api'
         jwk:
-          key-set-uri: http://rac:8080/totvs.rac/.well-known/openid-configuration/jwks      
+          key-set-uri: https://tenant-c56bab97-8ea6-4b6c-8568-1cde9c6a9477.rac.dev.totvs.app/totvs.rac/.well-known/openid-configuration/jwks      
     clientid: ${CLIENT_ID}
     clientsecret: ${CLIENT_SECRET}
     login-superv: ${LOGIN_SUPERV}
     password-superv: ${PASSWORD_SUPERV}
+    
     

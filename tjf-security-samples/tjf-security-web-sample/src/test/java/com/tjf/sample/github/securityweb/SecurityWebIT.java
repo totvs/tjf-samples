@@ -91,7 +91,7 @@ public class SecurityWebIT {
 
 	@Test
 	public void testInvalidRole() throws Exception {
-
+		generateToken();
 		mockMvc.perform(
 				post("/api/v1/machine/stop").header(HttpHeaders.AUTHORIZATION, "Bearer " + accessApplicationToken))
 				.andExpect(status().isForbidden());

@@ -81,7 +81,7 @@
 				</dependencies>
 				<configuration>
 					<packageName>com.tjf.sample.github.securityweb</packageName>
-					<racUrl>https://smarttalkmauricio.rac.dev.totvs.app/totvs.rac</racUrl>
+					<racUrl>tenant-c56bab97-8ea6-4b6c-8568-1cde9c6a9477.rac.dev.totvs.app/totvs.rac</racUrl>
 					<clientId>${CLIENT_ID}</clientId>
 					<clientSecret>${CLIENT_SECRET}</clientSecret>
 				</configuration>
