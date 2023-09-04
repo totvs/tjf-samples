@@ -22,30 +22,28 @@ public class SecurityWebIT {
 
 	private static String accessApplicationToken;
 	private static final String URL_CONNECT = "https://tenant-c56bab97-8ea6-4b6c-8568-1cde9c6a9477.rac.dev.totvs.app/totvs.rac/connect/token";
-	
+
 	@Value("${tjf.security.clientid}")
 	private String CLIENT_ID;
-	
+
 	@Value("${tjf.security.clientsecret}")
 	private String CLIENT_SECRET;
-	
+
 	@Value("${tjf.security.login}")
 	private String LOGIN;
-	
+
 	@Value("${tjf.security.password}")
 	private String PASSWORD;
-	
+
 	@Value("${tjf.security.login-superv}")
 	private String LOGIN_SUPERV;
-	
+
 	@Value("${tjf.security.password-superv}")
 	private String PASSWORD_SUPERV;
-	
 
 	public void generateToken() throws ClientProtocolException {
-	GenerateToken racAuthorization = new GenerateToken();
-	accessApplicationToken = racAuthorization.generateToken(URL_CONNECT, CLIENT_ID, CLIENT_SECRET, LOGIN,
-			PASSWORD);
+		GenerateToken racAuthorization = new GenerateToken();
+		accessApplicationToken = racAuthorization.generateToken(URL_CONNECT, CLIENT_ID, CLIENT_SECRET, LOGIN, PASSWORD);
 	}
 
 	public void generateTokenSuperv() throws ClientProtocolException {
@@ -77,7 +75,7 @@ public class SecurityWebIT {
 	public void testUnauthorizedAccess() throws Exception {
 		// TJF-1737 - Comportamento precisa ser avaliado
 		// mockMvc.perform(post("/api/v1/machine/stop")).andExpect(status().isUnauthorized());
-		
+
 		generateToken();
 		mockMvc.perform(post("/api/v1/machine/stop")).andExpect(status().isForbidden());
 	}
@@ -85,7 +83,7 @@ public class SecurityWebIT {
 	@Test
 	public void testValidRole() throws Exception {
 		generateTokenSuperv();
-		
+
 		mockMvc.perform(
 				post("/api/v1/machine/stop").header(HttpHeaders.AUTHORIZATION, "Bearer " + accessApplicationToken))
 				.andExpect(status().isOk());
