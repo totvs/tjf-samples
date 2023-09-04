@@ -19,14 +19,13 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@DirtiesContext
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class SecurityWebIT {
 
 	@Autowired
 	private MockMvc mockMvc;
 
-	private static String accessApplicationToken;
+	private static String accessApplicationToken = null;
 	private static final String URL_CONNECT = "https://tenant-c56bab97-8ea6-4b6c-8568-1cde9c6a9477.rac.dev.totvs.app/totvs.rac/connect/token";
 
 	@Value("${tjf.security.clientid}")
@@ -60,6 +59,7 @@ public class SecurityWebIT {
 
 	@Test
 	@Order(1)
+	@DirtiesContext
 	public void testAccessWithTokenAndRole() throws Exception {
 		generateTokenSuperv();
 		mockMvc.perform(get("/api/v1/machine").header(HttpHeaders.AUTHORIZATION, "Bearer " + accessApplicationToken))
@@ -68,6 +68,7 @@ public class SecurityWebIT {
 
 	@Test
 	@Order(2)
+	@DirtiesContext
 	public void testValidRole() throws Exception {
 		generateTokenSuperv();
 		mockMvc.perform(
@@ -77,6 +78,7 @@ public class SecurityWebIT {
 
 	@Test
 	@Order(3)
+	@DirtiesContext
 	public void testAcessWithoutToken() throws Exception {
 		mockMvc.perform(get("/api/v1/machine")).andExpect(status().isUnauthorized());
 	}
@@ -84,6 +86,7 @@ public class SecurityWebIT {
 
 	@Test
 	@Order(4)
+	@DirtiesContext
 	public void testUnauthorizedAccess() throws Exception {
 		// TJF-1737 - Comportamento precisa ser avaliado
 		// mockMvc.perform(post("/api/v1/machine/stop")).andExpect(status().isUnauthorized());
@@ -94,7 +97,10 @@ public class SecurityWebIT {
 
 	@Test
 	@Order(5)
+	@DirtiesContext
 	public void testAccessWithTokenNoRole() throws Exception {
+		
+		
 		generateToken();
 		mockMvc.perform(get("/api/v1/machine").header(HttpHeaders.AUTHORIZATION, "Bearer " + accessApplicationToken))
 				.andExpect(status().isOk());
@@ -103,6 +109,7 @@ public class SecurityWebIT {
 
 	@Test
 	@Order(6)
+	@DirtiesContext
 	public void testInvalidRole() throws Exception {
 		generateToken();
 		mockMvc.perform(
