@@ -5,29 +5,27 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.apache.http.HttpHeaders;
-import org.junit.jupiter.api.BeforeAll;
+import org.apache.http.client.ClientProtocolException;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@TestInstance(Lifecycle.PER_CLASS)
 public class SecurityWebIT {
 
 	@Autowired
 	private MockMvc mockMvc;
 
-	private GenerateToken racAuthorization = new GenerateToken();
+	private static String accessApplicationToken = null;
 	private static final String URL_CONNECT = "https://tenant-c56bab97-8ea6-4b6c-8568-1cde9c6a9477.rac.dev.totvs.app/totvs.rac/connect/token";
 
 	@Value("${tjf.security.clientid}")
@@ -48,36 +46,39 @@ public class SecurityWebIT {
 	@Value("${tjf.security.password-superv}")
 	private String PASSWORD_SUPERV;
 
-	
-	private static String accessApplicationToken;
- 
-	private static String accessApplicationTokenSuperv;
-	
-	
-	@BeforeAll
-	public void Generate(){
+	public void generateToken() throws ClientProtocolException {
+		GenerateToken racAuthorization = new GenerateToken();
 		accessApplicationToken = racAuthorization.generateToken(URL_CONNECT, CLIENT_ID, CLIENT_SECRET, LOGIN, PASSWORD);
-		accessApplicationTokenSuperv = racAuthorization.generateToken(URL_CONNECT, CLIENT_ID, CLIENT_SECRET, LOGIN_SUPERV,
+	}
+
+	public void generateTokenSuperv() throws ClientProtocolException {
+		GenerateToken racAuthorization = new GenerateToken();
+		accessApplicationToken = racAuthorization.generateToken(URL_CONNECT, CLIENT_ID, CLIENT_SECRET, LOGIN_SUPERV,
 				PASSWORD_SUPERV);
 	}
-	
+
 	@Test
 	@Order(1)
+	@DirtiesContext
 	public void testAccessWithTokenAndRole() throws Exception {
-		mockMvc.perform(get("/api/v1/machine").header(HttpHeaders.AUTHORIZATION, "Bearer " + accessApplicationTokenSuperv))
+		generateTokenSuperv();
+		mockMvc.perform(get("/api/v1/machine").header(HttpHeaders.AUTHORIZATION, "Bearer " + accessApplicationToken))
 				.andExpect(status().isOk());
 	}
 
 	@Test
 	@Order(2)
+	@DirtiesContext
 	public void testValidRole() throws Exception {
+		generateTokenSuperv();
 		mockMvc.perform(
-				post("/api/v1/machine/stop").header(HttpHeaders.AUTHORIZATION, "Bearer " + accessApplicationTokenSuperv))
+				post("/api/v1/machine/stop").header(HttpHeaders.AUTHORIZATION, "Bearer " + accessApplicationToken))
 				.andExpect(status().isOk());
 	}
 
 	@Test
 	@Order(3)
+	@DirtiesContext
 	public void testAcessWithoutToken() throws Exception {
 		mockMvc.perform(get("/api/v1/machine")).andExpect(status().isUnauthorized());
 	}
@@ -85,16 +86,22 @@ public class SecurityWebIT {
 
 	@Test
 	@Order(4)
+	@DirtiesContext
 	public void testUnauthorizedAccess() throws Exception {
 		// TJF-1737 - Comportamento precisa ser avaliado
 		// mockMvc.perform(post("/api/v1/machine/stop")).andExpect(status().isUnauthorized());
 
+		generateToken();
 		mockMvc.perform(post("/api/v1/machine/stop")).andExpect(status().isForbidden());
 	}
 
 	@Test
 	@Order(5)
+	@DirtiesContext
 	public void testAccessWithTokenNoRole() throws Exception {
+		
+		
+		generateToken();
 		mockMvc.perform(get("/api/v1/machine").header(HttpHeaders.AUTHORIZATION, "Bearer " + accessApplicationToken))
 				.andExpect(status().isOk());
 	}
@@ -102,7 +109,9 @@ public class SecurityWebIT {
 
 	@Test
 	@Order(6)
+	@DirtiesContext
 	public void testInvalidRole() throws Exception {
+		generateToken();
 		mockMvc.perform(
 				post("/api/v1/machine/stop").header(HttpHeaders.AUTHORIZATION, "Bearer " + accessApplicationToken))
 				.andExpect(status().isForbidden());
