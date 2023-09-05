@@ -65,30 +65,6 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>com.totvs.tjf</groupId>
-				<artifactId>tjf-rac-maven-plugin</artifactId>
-				<version>${tjf-rac-maven-plugin.version}</version>
-				<dependencies>
-					<!-- Deverá ser adicionado o próprio pacote como dependencia -->
-					<dependency>
-						<groupId>com.tjf.sample.github</groupId>
-						<artifactId>security-web</artifactId>
-						<version>0.0.1-SNAPSHOT</version>
-					</dependency>
-				</dependencies>
-				<configuration>
-					<packageName>com.tjf.sample.github.securityweb</packageName>
-					<racUrl>tenant-c56bab97-8ea6-4b6c-8568-1cde9c6a9477.rac.dev.totvs.app/totvs.rac</racUrl>
-					<clientId>${CLIENT_ID}</clientId>
-					<clientSecret>${CLIENT_SECRET}</clientSecret>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 	
 	<profiles>
 		<profile>
