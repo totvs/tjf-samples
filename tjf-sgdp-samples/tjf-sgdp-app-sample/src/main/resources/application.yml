@@ -10,11 +10,11 @@ sgdp:
   product:
     id: SGDP Sample APP
 
-  spring:
+spring:
 
-    mvc:
-      pathmatch:
-        matching-strategy: ant_path_matcher
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 
   application:
     name: sgdp-test-sample

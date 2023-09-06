@@ -57,17 +57,10 @@
 			<artifactId>h2</artifactId>
 		</dependency>
 
-		<!-- Swagger -->
+		<!-- OpenApi -->
 		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger2</artifactId>
-			<version>2.9.2</version>
-		</dependency>
-
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger-ui</artifactId>
-			<version>2.0.2</version>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-common</artifactId>
 		</dependency>
 
 		<!-- Kafka -->

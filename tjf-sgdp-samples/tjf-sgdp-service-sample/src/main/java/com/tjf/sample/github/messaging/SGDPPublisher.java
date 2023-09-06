@@ -6,6 +6,7 @@ import com.totvs.sgdp.sdk.services.SGDPRabbitExchange;
 import com.totvs.sgdp.sdk.services.data.SGDPDataCommand;
 import com.totvs.sgdp.sdk.services.mask.SGDPMaskCommand;
 import com.totvs.tjf.messaging.context.TOTVSMessage;
+import com.totvs.tjf.messaging.context.TOTVSMessageBuilder;
 
 @EnableBinding(SGDPRabbitExchange.class)
 public class SGDPPublisher {
@@ -17,12 +18,13 @@ public class SGDPPublisher {
 	}
 
 	public void publish(SGDPDataCommand command) {
-		TOTVSMessage<SGDPDataCommand> totvsMessage = TOTVSMessageBuilder.whithType("SGDPDataCommand").setContent(command).build();
+		var totvsMessage = TOTVSMessageBuilder.withType("SGDPDataCommand").setContent(command).build();
 		totvsMessage.sendTo(exchange.outputChannel());
 	}
 
+
 	public void publish(SGDPMaskCommand command) {
-		TOTVSMessage<SGDPMaskCommand> message = TOTVSMessageBuilder.whithType("SGDPMaskCommand").setContent(command).build();
+		var message = TOTVSMessageBuilder.withType("SGDPMaskCommand").setContent(command).build();
 		message.sendTo(exchange.outputChannel());
 	}
 

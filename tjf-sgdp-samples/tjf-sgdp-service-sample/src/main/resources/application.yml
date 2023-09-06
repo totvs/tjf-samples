@@ -28,7 +28,7 @@ spring:
 
   cloud:
     stream:
-
+      defaultBinder: rabbit1
       kafka:
         binder:
           brokers: localhost:9092
@@ -48,7 +48,6 @@ spring:
                 host: localhost:5672  
                   
       bindings:
-
         sgdp-kafka-reader:
           destination: sgdp-audit
           binder: kafka1
