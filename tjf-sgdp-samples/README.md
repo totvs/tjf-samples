@@ -1,5 +1,7 @@
 # SGDP - Sistema de Gestão de Dados Pessoais
 
+:warning: **Biblioteca depreciada, em breve não estará disponível. Caso prefira um exemplo mais atualizado utilizar o [sgdp-service-sample-test](https://totvstfs.visualstudio.com/TOTVSApps-SupportElements/_git/sgdp-service-sample-test).**
+
 ## Contexto
 
 Este _sample_ tem o objetivo demonstrar o componente **SGDP Core** do **TOTVS Java Framework**.
