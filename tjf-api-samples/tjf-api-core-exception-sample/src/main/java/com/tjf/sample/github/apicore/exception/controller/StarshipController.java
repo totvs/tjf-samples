@@ -29,10 +29,13 @@ public class StarshipController {
 	@PostMapping(path = "/create")
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public String createStarship(@RequestBody Starship dto) {
-		validator.validate(dto).ifPresent(violations -> {
+		
+		throw new RuntimeException();
+		
+		/*validator.validate(dto).ifPresent(violations -> {
 			throw new StarshipCreateConstraintException(violations);
 		});
-		return "{\"starship\":\"created\"}";
+		return "{\"starship\":\"created\"}";*/
 	}
 
 }
