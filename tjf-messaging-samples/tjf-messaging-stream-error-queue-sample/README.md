@@ -20,7 +20,7 @@ Primeiro, altere _parent_ do projeto para utilizar o **Boot Starter do TJF**:
 <parent>
   <groupId>com.totvs.tjf</groupId>
   <artifactId>tjf-boot-starter</artifactId>
-  <version>4.10.0-RELEASE</version>
+  <version>4.11.0-RELEASE</version>
   <relativePath />
 </parent>
 ```
