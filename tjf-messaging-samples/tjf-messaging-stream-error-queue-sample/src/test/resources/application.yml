@@ -1,7 +1,7 @@
 spring:
 
   rabbitmq:
-    host: ${RABBIT_HOST}
+    host: ${RABBIT_HOST:localhost}
 
   cloud:
     stream:
@@ -37,6 +37,10 @@ management:
     web:
       exposure:
         include: info,health,messaging
+
+tjf:
+  messaging:
+    events-without-tenant: BBUnitSendMission
                 
 server:
   port: 8080

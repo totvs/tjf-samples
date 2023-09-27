@@ -3,9 +3,9 @@ spring:
   # Configurações banco de dados
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: ${DATABASE_URL}/tjf-aggregate
-    username: ${DATABASE_USER}
-    password: ${DATABASE_PASSWORD} 
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432}/swfamilytree
+    username: ${DATABASE_USER:postgres}
+    password: ${DATABASE_PASSWORD:postgres}
     
   # Configurações JPA
   jpa:

@@ -3,7 +3,9 @@ package com.tjf.sample.github.messagingstream.infrastructure.messaging;
 import com.totvs.tjf.messaging.context.TOTVSMessage;
 import com.totvs.tjf.messaging.context.TOTVSMessageBuilder;
 import org.springframework.cloud.stream.function.StreamBridge;
+import org.springframework.stereotype.Component;
 
+@Component
 public class BBUnitPublisher {
 	private StreamBridge streamBridge;
 
