@@ -36,9 +36,9 @@ public class MessagingStreamErrorQueueIT {
 
 		Thread.sleep(2_000);
 
-		//mockMvc.perform(get("/actuator/messaging"))
-		//		.andExpect(status().isOk());
-				//.andExpect(content().json(expectedResult));
+		mockMvc.perform(get("/actuator/messaging"))
+				.andExpect(status().isOk())
+				.andExpect(content().json(expectedResult));
 	}
 
 }

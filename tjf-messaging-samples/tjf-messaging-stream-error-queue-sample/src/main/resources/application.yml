@@ -16,6 +16,7 @@ spring:
       routing-expression: subscribeMessageMission
     stream:
       default-binder: rabbit1
+      pollable-source: tjf-messaging-error
       bindings:
         functionRouter-in-0:
           binder: rabbit1
