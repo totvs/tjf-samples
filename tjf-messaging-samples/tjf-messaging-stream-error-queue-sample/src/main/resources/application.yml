@@ -16,6 +16,7 @@ spring:
       routing-expression: subscribeMessageMission
     stream:
       default-binder: rabbit1
+      pollable-source: tjf-messaging-error
       bindings:
         functionRouter-in-0:
           binder: rabbit1
@@ -54,6 +55,10 @@ management:
     web:
       exposure:
         include: info,health,messaging
+
+tjf:
+  messaging:
+    events-without-tenant: BBUnitSendMission
                 
 server:
   port: 8080

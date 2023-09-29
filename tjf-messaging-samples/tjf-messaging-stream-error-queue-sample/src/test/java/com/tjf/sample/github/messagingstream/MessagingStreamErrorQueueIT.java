@@ -23,13 +23,21 @@ public class MessagingStreamErrorQueueIT {
 	public void testsendMessage() throws Exception {
 		String expectedResult = "{\"messages\":1}";
 
-		mockMvc.perform(post("/mission/send").contentType(MediaType.APPLICATION_JSON)
-				.content("{\"name\":\"BB-8\",\"mission\":\"Get and Protected Luke location\"}"))
-				.andExpect(status().isCreated());
+		String jsonData = "{\n" +
+				"  \"name\": \"BB-8\",\n" +
+				"  \"partner\": \"Poe Dameron\",\n" +
+				"  \"mission\": \"Get the location of Luke Skywalker\"\n" +
+				"}";
+
+		mockMvc.perform(post("/mission/send")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(jsonData))
+						.andExpect(status().isCreated());
 
 		Thread.sleep(2_000);
 
-		mockMvc.perform(get("/actuator/messaging")).andExpect(status().isOk())
+		mockMvc.perform(get("/actuator/messaging"))
+				.andExpect(status().isOk())
 				.andExpect(content().json(expectedResult));
 	}
 
