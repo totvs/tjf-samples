@@ -16,10 +16,4 @@ spring:
           lob:
             non_contextual_creation: true
         ddl-auto: update
-  flyway:
-    enabled: false
-    migrate: true
-    locations: classpath:migration
-    baseline-on-migrate: true
-    dynamic: true
-    dynamic-migrate-public: false
+

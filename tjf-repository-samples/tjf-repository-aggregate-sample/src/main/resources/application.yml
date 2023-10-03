@@ -9,9 +9,10 @@ spring:
 
   # Configurações JPA
   jpa:
-    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     properties:
       hibernate:
         jdbc:
           lob:
             non_contextual_creation: true
+
