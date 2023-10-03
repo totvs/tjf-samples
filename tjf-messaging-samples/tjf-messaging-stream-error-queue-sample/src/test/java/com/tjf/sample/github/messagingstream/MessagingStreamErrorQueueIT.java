@@ -34,7 +34,7 @@ public class MessagingStreamErrorQueueIT {
 						.content(jsonData))
 						.andExpect(status().isCreated());
 
-		Thread.sleep(2_000);
+		Thread.sleep(5_000);
 
 		mockMvc.perform(get("/actuator/messaging"))
 				.andExpect(status().isOk())

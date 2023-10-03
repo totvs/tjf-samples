@@ -17,6 +17,8 @@ spring:
     stream:
       default-binder: rabbit1
       pollable-source: tjf-messaging-error
+      default:
+        error-handler-definition: TJFDefaultErrorHandler
       bindings:
         functionRouter-in-0:
           binder: rabbit1
