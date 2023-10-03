@@ -3,7 +3,7 @@ spring:
   # Configurações banco de dados
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432}/swfamilytree
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432}/tjf-aggregate
     username: ${DATABASE_USER:postgres}
     password: ${DATABASE_PASSWORD:postgres}
     
@@ -15,4 +15,4 @@ spring:
         jdbc:
           lob:
             non_contextual_creation: true
-
+        ddl-auto: update
