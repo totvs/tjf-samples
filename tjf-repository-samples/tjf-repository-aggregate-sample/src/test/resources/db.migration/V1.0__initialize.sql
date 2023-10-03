@@ -1,3 +1,5 @@
+CREATE DATABASE swfamilytree;
+
 CREATE TABLE person
 (
    id VARCHAR (36) NOT NULL,
