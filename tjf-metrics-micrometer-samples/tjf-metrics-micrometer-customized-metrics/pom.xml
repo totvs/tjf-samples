@@ -6,8 +6,8 @@
 
     <parent>
         <groupId>com.totvs.tjf</groupId>
-        <artifactId>tjf-parent</artifactId>
-        <version>4.12.0-RELEASE</version>
+        <artifactId>tjf-boot-starter</artifactId>
+        <version>4.12.1-RELEASE</version>
     </parent>
 
     <groupId>com.tjf.sample.github</groupId>
@@ -27,7 +27,6 @@
         <dependency>
             <groupId>com.totvs.tjf</groupId>
             <artifactId>tjf-metrics-micrometer</artifactId>
-            <version>4.11.0-RELEASE</version>
         </dependency>
     </dependencies>
 </project>
