@@ -1,18 +1,23 @@
 package com.tjf.sample.github.messaging.infrastructure.messaging;
 
-import com.tjf.sample.github.messaging.events.*;
-import com.totvs.tjf.messaging.context.function.ConsumerIgnoreTenant;
-import com.totvs.tjf.messaging.context.function.ConsumerWithTenant;
-import com.totvs.tjf.messaging.context.function.FunctionIgnoreTenant;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
+import com.tjf.sample.github.messaging.events.StarShipArrivedEvent;
+import com.tjf.sample.github.messaging.events.StarShipArrivedEventWT;
+import com.tjf.sample.github.messaging.events.StarShipArrivedFnItEvent;
+import com.tjf.sample.github.messaging.events.StarShipArrivedItEvent;
+import com.tjf.sample.github.messaging.events.StarShipLeftEvent;
+import com.tjf.sample.github.messaging.events.StarShipLeftEventWT;
 import com.tjf.sample.github.messaging.model.StarShip;
 import com.tjf.sample.github.messaging.services.StarShipService;
-import com.totvs.tjf.messaging.TransactionContext;
 import com.totvs.tjf.messaging.context.TOTVSMessage;
+import com.totvs.tjf.messaging.context.function.ConsumerIgnoreTenant;
+import com.totvs.tjf.messaging.context.function.ConsumerWithTenant;
+import com.totvs.tjf.messaging.context.function.FunctionIgnoreTenant;
 import com.totvs.tjf.messaging.context.function.FunctionWithoutTenant;
+import com.totvs.tjf.messaging.core.transaction.TransactionContext;
 
 @EnableAutoConfiguration
 @Component

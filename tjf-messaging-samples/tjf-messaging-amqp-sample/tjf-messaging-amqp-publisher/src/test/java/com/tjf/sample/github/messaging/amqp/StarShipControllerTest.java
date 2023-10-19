@@ -1,16 +1,21 @@
 package com.tjf.sample.github.messaging.amqp;
 
-import com.tjf.sample.github.messaging.amqp.events.StarShipArrivedEvent;
-import com.totvs.tjf.messaging.context.AmqpTOTVSMessage;
-import com.totvs.tjf.messaging.context.CloudEventsInfo;
-import com.totvs.tjf.messaging.context.TOTVSHeader;
-import com.totvs.tjf.messaging.context.TransactionInfo;
-import com.totvs.tjf.mock.test.Semaphore;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.function.Supplier;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
@@ -19,15 +24,17 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.shaded.com.google.common.collect.ImmutableSet;
 
-import java.util.Collections;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import com.tjf.sample.github.messaging.amqp.events.StarShipArrivedEvent;
+import com.totvs.tjf.messaging.context.AmqpTOTVSMessage;
+import com.totvs.tjf.messaging.context.CloudEventsInfo;
+import com.totvs.tjf.messaging.context.TOTVSHeader;
+import com.totvs.tjf.messaging.context.TransactionInfo;
+import com.totvs.tjf.mock.test.Semaphore;
 
 @Testcontainers
-@SpringBootTest(classes = Application.class)
+@SpringBootTest(classes = AmqpPublisherApplication.class)
 @AutoConfigureMockMvc
+@ActiveProfiles(profiles = { "testprofile" })
 class StarShipControllerTest {
 
 	@Container
@@ -57,10 +64,10 @@ class StarShipControllerTest {
 
 	@DynamicPropertySource
 	static void configureContainer(DynamicPropertyRegistry registry) {
-		registry.add("tjf.messaging.amqp.hostname", container::getHost);
-		registry.add("tjf.messaging.amqp.port", container::getAmqpPort);
-		registry.add("tjf.messaging.amqp.username", container::getAdminUsername);
-		registry.add("tjf.messaging.amqp.password", container::getAdminPassword);
+		registry.add("spring.rabbitmq.host", container::getHost);
+		registry.add("spring.rabbitmq.port", container::getAmqpPort);
+		registry.add("spring.rabbitmq.username", container::getAdminUsername);
+		registry.add("spring.rabbitmq.password", container::getAdminPassword);
 	}
 
 	@Test
@@ -80,7 +87,7 @@ class StarShipControllerTest {
 		semaphore.waitForSignal();
 		TOTVSHeader header = amqpTOTVSMessage.getHeader();
 		StarShipArrivedEvent starShipArrivedEvent1 = amqpTOTVSMessage.getContent();
-		assertEquals("starShipArrivedEvent", header.getType());
+		assertEquals("starShipArrivedEventWT", header.getType());
 		assertEquals("teste", starShipArrivedEvent1.getName());
 	}
 

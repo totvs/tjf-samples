@@ -2,6 +2,7 @@ package com.tjf.sample.github.messaging.amqp.infrastructure.messaging;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tjf.sample.github.messaging.amqp.events.StarShipArrivedEvent;
+import com.totvs.tjf.core.security.context.SecurityDetails;
 import com.totvs.tjf.messaging.context.AmqpTOTVSMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -30,13 +31,13 @@ public class StarShipSubscriber {
     @SneakyThrows
     @RabbitListener(queues = QUEUE_2)
     public void receiveTotvsMessage(@Payload AmqpTOTVSMessage<StarShipArrivedEvent> message) {
-        log.info("Received message from queue {}, message: {}", QUEUE_2, objectMapper.writeValueAsString(message));
+        log.info("Received message from queue {}, message: {} and tenant: {}", QUEUE_2, objectMapper.writeValueAsString(message), SecurityDetails.getTenant());
         log.info(objectMapper.writeValueAsString(message));
     }
 
     @SneakyThrows
     @RabbitListener(queues = QUEUE_3)
     public void receiveTotvsMessageAsCloudEvent(@Payload AmqpTOTVSMessage<StarShipArrivedEvent> message) {
-        log.info("Received message from queue {}, message: {}", QUEUE_3, objectMapper.writeValueAsString(message));
+        log.info("Received message from queue {}, message: {} and tenant: {}", QUEUE_3, objectMapper.writeValueAsString(message),SecurityDetails.getTenant());
     }
 }

@@ -28,7 +28,7 @@ public class StarShipPublisher {
     }
 
     public <T> void publishEvent(T event, String eventName) {
-        TOTVSMessageBuilder.withType(eventName).setContent(event).buildAmqp()
+        TOTVSMessageBuilder.withType(eventName).setContent(event).setTenantId("testTenant1").buildAmqp()
                 .sendTo(rabbitTemplate, EXCHANGE_2, ROUTING_KEY_2);
     }
 
@@ -36,6 +36,7 @@ public class StarShipPublisher {
         TOTVSMessageBuilder.withType(eventName).setContent(event)
                 .setTransactionInfo(transactionInfo)
                 .setCloudEventsInfo(cloudEventsInfo)
+                .setTenantId("testTenant2")
                 .buildAmqp()
                 .sendTo(rabbitTemplate, EXCHANGE_3, ROUTING_KEY_3);
     }
