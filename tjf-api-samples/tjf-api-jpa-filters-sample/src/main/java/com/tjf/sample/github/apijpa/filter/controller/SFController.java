@@ -33,6 +33,8 @@ public class SFController {
 
 	@GetMapping(path = "/employees")
 	public Page<EmployeeModel> getAllEmployess(Pageable pageable, EmployeeModel simpleFilter) {
+		System.out.println("TESTEEE NAME: " + simpleFilter.getName());
+		System.out.println("TESTEEE ID: " + simpleFilter.getEmployeeId());
 		return employeeRepos.findAll(simpleFilter, pageable);
 	}
 
