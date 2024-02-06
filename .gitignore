@@ -22,3 +22,5 @@ target/
 .attach*
 
 **/.pmd*
+
+**/.factorypath
