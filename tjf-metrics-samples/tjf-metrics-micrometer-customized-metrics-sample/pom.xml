@@ -7,13 +7,13 @@
     <parent>
         <groupId>com.totvs.tjf</groupId>
         <artifactId>tjf-boot-starter</artifactId>
-        <version>4.19.0-RELEASE</version>
+        <version>5.0.0-SNAPSHOT</version>
     </parent>
 
     <groupId>com.tjf.sample.github</groupId>
-    <artifactId>customized-metrics</artifactId>
+    <artifactId>customized-metrics-sample</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>TJF Sample de utilização do módulo metrics micrometer</name>
+    <name>tjf-metrics-micrometer-sample</name>
     <description>Exemplo de utilização do módulo metrics micrometer com Prometheus</description>
 
     <dependencies>

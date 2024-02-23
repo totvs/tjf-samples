@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.totvs.tjf</groupId>
+		<artifactId>tjf-boot-starter</artifactId>
+		<version>5.0.0-SNAPSHOT</version>
+		<relativePath />
+	</parent>
+
+	<groupId>com.tjf.sample.github</groupId>
+	<artifactId>core-money</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>tjf-core-money-sample</name>
+	<description>TJF Core Money Sample</description>
+
+	<dependencies>
+			<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+		</dependency>
+
+		<!-- Lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
+
+		<!-- TJF -->
+		<dependency>
+			<groupId>com.totvs.tjf</groupId>
+			<artifactId>tjf-core-money</artifactId>
+		</dependency>
+
+		<!-- Swagger -->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+		</dependency>
+		
+		<!-- TEST -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.junit.vintage</groupId>
+					<artifactId>junit-vintage-engine</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+	</dependencies>
+
+	<profiles>
+
+		<profile>
+			<id>integration-test-report</id>
+			<build>
+				<plugins>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-failsafe-plugin</artifactId>
+						<configuration>
+							<additionalClasspathElements>
+								<additionalClasspathElement>
+									${basedir}/target/classes</additionalClasspathElement>
+							</additionalClasspathElements>
+							<includes>
+								<include>**/*IT.java</include>
+							</includes>
+						</configuration>
+						<executions>
+							<execution>
+								<goals>
+									<goal>integration-test</goal>
+									<goal>verify</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+					<plugin>
+						<groupId>org.jacoco</groupId>
+						<artifactId>jacoco-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>report-aggregate</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>report-aggregate</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>
+										${basedir}/../../../tjf-core/tjf-core-money/target/site/jacoco-it</outputDirectory>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+	<repositories>
+		<repository>
+			<id>tjf</id>
+			<url>
+				https://totvstfs.pkgs.visualstudio.com/TJF/_packaging/tjf/maven/v1</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+</project>

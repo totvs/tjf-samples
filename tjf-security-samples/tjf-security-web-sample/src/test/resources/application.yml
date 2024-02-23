@@ -1,21 +1,12 @@
-spring:
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          jwk-set-uri: https://tenant-c56bab97-8ea6-4b6c-8568-1cde9c6a9477.rac.dev.totvs.app/totvs.rac/.well-known/openid-configuration/jwks
 tjf:
   security:
     access:
-      provider: rac
       api:
         permissions-uri: https://tenant-c56bab97-8ea6-4b6c-8568-1cde9c6a9477.rac.dev.totvs.app/totvs.rac/api/permissions
         rac-uri: https://tenant-c56bab97-8ea6-4b6c-8568-1cde9c6a9477.rac.dev.totvs.app/totvs.rac/
-    oauth2:
-      resource:
-        id: 'authorization_api'
-        jwk:
-          key-set-uri: https://tenant-c56bab97-8ea6-4b6c-8568-1cde9c6a9477.rac.dev.totvs.app/totvs.rac/.well-known/openid-configuration/jwks
+        jwk-uris:
+        - https://tenant-c56bab97-8ea6-4b6c-8568-1cde9c6a9477.rac.dev.totvs.app/totvs.rac/.well-known/openid-configuration/jwks
+        - https://app.fluigidentity.net/accounts/api/v1/jwks
           
     clientid: ${CLIENT_ID}
     clientsecret: ${CLIENT_SECRET}
@@ -24,4 +15,10 @@ tjf:
     login-superv: ${LOGIN_SUPERV}
     password-superv: ${PASSWORD_SUPERV}
     
+    clientid-fluig: ${CLIENT_ID_FLUIG}
+    clientsecret-fluig: ${CLIENT_SECRET_FLUIG}
+    login-fluig: ${LOGIN_FLUIG}
+    password-fluig: ${PASSWORD_FLUIG}
+    login-superv-fluig: ${LOGIN_SUPERV_FLUIG}
+    password-superv-fluig: ${PASSWORD_SUPERV_FLUIG}
     

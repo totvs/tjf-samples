@@ -1,0 +1,8 @@
+tjf:
+  storage:
+    google:
+      credentials: 
+      project: storage-google-samples
+      host: http://localhost:4443
+server:
+  port: 8080

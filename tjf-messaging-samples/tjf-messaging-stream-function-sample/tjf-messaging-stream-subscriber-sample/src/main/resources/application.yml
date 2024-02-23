@@ -1,13 +1,35 @@
-######## RABBIT FUNCTION
-
+                
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info,health,messaging                
+                
+server:
+  port: 8380
+  
 spring:
+  profiles:
+    # Rabbitmq por default
+    active: rabbit
+
   cloud:
+    function:
       routing-expression: headers['type']
+
     stream:
       function:
         routing:
           enabled: true
       pollable-source: tjf-messaging-error
+      
+---
+######## RABBIT FUNCTION
+spring:
+  config:
+    activate:
+      on-profile:
+      - rabbit
       
       default-binder: rabbit1
       
@@ -26,7 +48,7 @@ spring:
           destination: bbunit-errors
           group: errors
           producer:
-            requiredGroups: errors
+            required-groups: errors
                        
       binders:
         rabbit1:
@@ -36,82 +58,61 @@ spring:
         bindings:
           functionRouter-in-0:
             consumer:
-              exchangeType: headers
-                
-
-######## RABBIT
-
-#spring:
-#  cloud:
-#    stream:
-#      defaultBinder: rabbit1
-#      bindings:
-#        starship-input:
-#          destination: starship-input
-#          group: requests
-#        starship-output:
-#          destination: starship-input
-#      binders:
-#        rabbit1:
-#          type: rabbit
-#          environment:
-#            spring:
-#              rabbit:
-#                host: localhost
- 
+              exchange-type: headers
+               
+---
 ######## KAFKA
                
-#spring:
-#  cloud:
-#    stream:
-#      defaultBinder: kafka1
-#      bindings:
-#        starship-input:
-#          destination: starship-input
-#          group: requests
-#        starship-output:
-#          destination: starship-input
-#      binders:                
-#        kafka1:
-#          type: kafka
-#                         
-#      kafka:
-#        binder:
-#          brokers: localhost:9092
-#          configuration:
-#            auto:
-#              offset:
-#                reset: earliest  
+spring:
+  config:
+    activate:
+      on-profile:
+      - kafka
 
+  cloud:
+    stream:
+      defaultBinder: kafka1
+      bindings:
+        starship-input:
+          destination: starship-input
+          group: requests
+        starship-output:
+          destination: starship-input
+      binders:                
+        kafka1:
+          type: kafka
+                         
+      kafka:
+        binder:
+          brokers: localhost:9092
+          configuration:
+            auto:
+              offset:
+                reset: earliest  
 
+---
 ######## JMS
 
-#spring:
-#  cloud:
-#    stream:
-#      defaultBinder: local1
-#      bindings:
-#        starship-input:
-#         destination: starship-input
-#        starship-output:
-#         destination: starship-input
-#      binders:
-#        local1:
-#          type: jms
-#          environment:
-#            spring:
-#              activemq:
-#                protocol: tcp
-#                host: localhost
-#                port: 61616
-#                username: user-amq
-#                password: password-amq
-                
-management:
-  endpoints:
-    web:
-      exposure:
-        include: info,health,messaging                
-                
-server:
-  port: 8380
+spring:
+  config:
+    activate:
+      on-profile:
+      - jms
+
+  cloud:
+    stream:
+      defaultBinder: jms1
+      bindings:
+        functionRouter-in-0:
+          binder: jms1
+          destination: starship-input
+          group: request
+      binders:
+        jms1:
+          type: jms
+          environment:
+            spring:
+              activemq:
+                broker-url: tcp://localhost:61616
+                user: user-amq
+                password: password-amq
