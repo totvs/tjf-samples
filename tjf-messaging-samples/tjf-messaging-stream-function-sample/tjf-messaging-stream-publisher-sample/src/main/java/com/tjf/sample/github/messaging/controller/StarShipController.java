@@ -1,6 +1,5 @@
 package com.tjf.sample.github.messaging.controller;
 
-import com.tjf.sample.github.messaging.events.*;
 import org.springframework.lang.Nullable;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -9,6 +8,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tjf.sample.github.messaging.events.StarShipArrivedEvent;
+import com.tjf.sample.github.messaging.events.StarShipArrivedEventWT;
+import com.tjf.sample.github.messaging.events.StarShipArrivedFnItEvent;
+import com.tjf.sample.github.messaging.events.StarShipArrivedItEvent;
+import com.tjf.sample.github.messaging.events.StarShipLeftEvent;
+import com.tjf.sample.github.messaging.events.StarShipLeftEventWT;
 import com.tjf.sample.github.messaging.infrastructure.messaging.StarShipPublisher;
 import com.totvs.tjf.core.security.context.SecurityDetails;
 import com.totvs.tjf.core.security.context.SecurityPrincipal;
@@ -26,6 +31,7 @@ public class StarShipController {
 	@GetMapping("/arrived-it")
 	String starShipArrivedIt(@RequestParam("name") String name) {
 
+		this.setWithoutTenant();
 		System.out.println("\nStarship arrived name: " + name);
 
 		StarShipArrivedItEvent starShipArrivedItEvent = new StarShipArrivedItEvent(name);
@@ -33,9 +39,11 @@ public class StarShipController {
 
 		return "The identification of the arrived starship " + name + " was sent!";
 	}
+
 	@GetMapping("/arrived-fn-it")
 	String starShipArrivedFnIt(@RequestParam("name") String name) {
 
+		this.setWithoutTenant();
 		System.out.println("\nStarship arrived name: " + name);
 
 		StarShipArrivedFnItEvent starShipArrivedFnItEvent = new StarShipArrivedFnItEvent(name);
@@ -43,7 +51,6 @@ public class StarShipController {
 
 		return "The identification of the arrived starship " + name + " was sent!";
 	}
-
 
 	@GetMapping("/arrived")
 	String starShipArrived(@RequestParam("name") String name, @Nullable @RequestParam("tenant") String tenant) {
@@ -71,6 +78,7 @@ public class StarShipController {
 
 		System.out.println("\nStarship left name: " + name);
 		System.out.println("Current tenant: " + SecurityDetails.getTenant() + "\n");
+
 		if (SecurityDetails.getTenant() == null) {
 			StarShipLeftEventWT starShipEvent = new StarShipLeftEventWT(name);
 			publisher.publishEvent(starShipEvent);
@@ -84,9 +92,11 @@ public class StarShipController {
 
 	private void setTenant(String tenant) {
 		SecurityPrincipal principal = new SecurityPrincipal(null, "", tenant, tenant);
-		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(principal, "N/A",
-				null);
+		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(principal, "N/A", null);
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 	}
 
+	private void setWithoutTenant() {
+		setTenant(null);
+	}
 }

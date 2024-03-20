@@ -110,6 +110,11 @@
 						<artifactId>jacoco-maven-plugin</artifactId>
 						<executions>
 							<execution>
+								<goals>
+									<goal>prepare-agent</goal>
+								</goals>
+							</execution>
+							<execution>
 								<id>report-aggregate</id>
 								<phase>verify</phase>
 								<goals>
@@ -117,7 +122,7 @@
 								</goals>
 								<configuration>
 									<outputDirectory>
-										${basedir}/../../../../tjf-messaging/tjf-messaging-stream/target/site/jacoco-aggregate</outputDirectory>
+										${basedir}/../../../tjf-storage/tjf-storage-google/target/site/jacoco-it</outputDirectory>
 								</configuration>
 							</execution>
 							<execution>
@@ -128,7 +133,7 @@
 								</goals>
 								<configuration>
 									<outputDirectory>
-										${basedir}/../../../../tjf-messaging/tjf-messaging-binder-jms/target/site/jacoco-aggregate</outputDirectory>
+										${basedir}/../../../tjf-storage/tjf-storage-context/target/site/jacoco-it</outputDirectory>
 								</configuration>
 							</execution>
 						</executions>

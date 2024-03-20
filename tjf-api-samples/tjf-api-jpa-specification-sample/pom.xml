@@ -70,6 +70,15 @@
 
 	</dependencies>
 
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
 	<profiles>
 
 		<profile>
@@ -103,13 +112,18 @@
 						<artifactId>jacoco-maven-plugin</artifactId>
 						<executions>
 							<execution>
+								<goals>
+									<goal>prepare-agent</goal>
+								</goals>
+							</execution>
+							<execution>
 								<id>report-aggregate</id>
 								<phase>verify</phase>
 								<goals>
 									<goal>report-aggregate</goal>
 								</goals>
 								<configuration>
-									<outputDirectory>${basedir}/../../../tjf-api/tjf-api-jpa/target/site/jacoco-it</outputDirectory>
+									<outputDirectory>${basedir}/../../../tjf-api/tjf-api-jpa/target/site/jacoco-it3</outputDirectory>
 								</configuration>
 							</execution>
 						</executions>
@@ -119,6 +133,7 @@
 			</build>
 		</profile>
 	</profiles>
+
 	<repositories>
 		<repository>
 			<id>tjf</id>

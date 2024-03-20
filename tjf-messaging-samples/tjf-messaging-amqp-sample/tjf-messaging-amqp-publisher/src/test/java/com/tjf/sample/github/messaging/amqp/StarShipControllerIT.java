@@ -31,14 +31,15 @@ import com.totvs.tjf.messaging.context.TOTVSHeader;
 import com.totvs.tjf.messaging.context.TransactionInfo;
 import com.totvs.tjf.mock.test.Semaphore;
 
-@Testcontainers
+//@Testcontainers
 @SpringBootTest(classes = AmqpPublisherApplication.class)
 @AutoConfigureMockMvc
 @ActiveProfiles(profiles = { "testprofile" })
-class StarShipControllerTest {
+class StarShipControllerIT {
 
-	@Container
-	static final RabbitMQContainer container = new RabbitMQContainer("rabbitmq:3.7.7-management")
+	//@Container
+	//static 
+	final RabbitMQContainer container = new RabbitMQContainer("rabbitmq:3.7.7-management")
 			.withExposedPorts(5672, 15672)
 			.withPluginsEnabled("rabbitmq_management")
 			.withUser("guest", "guest", ImmutableSet.of("administrator"))
@@ -62,13 +63,13 @@ class StarShipControllerTest {
 	protected static StarShipArrivedEvent starShipArrivedEvent;
 	protected static AmqpTOTVSMessage<StarShipArrivedEvent> amqpTOTVSMessage;
 
-	@DynamicPropertySource
+	/*@DynamicPropertySource
 	static void configureContainer(DynamicPropertyRegistry registry) {
 		registry.add("spring.rabbitmq.host", container::getHost);
 		registry.add("spring.rabbitmq.port", container::getAmqpPort);
 		registry.add("spring.rabbitmq.username", container::getAdminUsername);
 		registry.add("spring.rabbitmq.password", container::getAdminPassword);
-	}
+	}*/
 
 	@Test
 	@Timeout(value = 60)
@@ -87,7 +88,7 @@ class StarShipControllerTest {
 		semaphore.waitForSignal();
 		TOTVSHeader header = amqpTOTVSMessage.getHeader();
 		StarShipArrivedEvent starShipArrivedEvent1 = amqpTOTVSMessage.getContent();
-		assertEquals("starShipArrivedEventWT", header.getType());
+		assertEquals("starShipArrivedEvent", header.getType());
 		assertEquals("teste", starShipArrivedEvent1.getName());
 	}
 

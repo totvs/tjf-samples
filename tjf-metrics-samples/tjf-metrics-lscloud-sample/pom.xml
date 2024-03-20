@@ -101,23 +101,18 @@
 						<artifactId>jacoco-maven-plugin</artifactId>
 						<executions>
 							<execution>
+								<goals>
+									<goal>prepare-agent</goal>
+								</goals>
+							</execution>
+							<execution>
 								<id>report-aggregate</id>
 								<phase>verify</phase>
 								<goals>
 									<goal>report-aggregate</goal>
 								</goals>
 								<configuration>
-									<outputDirectory>${basedir}/../../../../tjf-messaging/tjf-messaging-stream/target/site/jacoco-aggregate</outputDirectory>
-								</configuration>
-							</execution>
-							<execution>
-								<id>report-aggregate-jms</id>
-								<phase>verify</phase>
-								<goals>
-									<goal>report-aggregate</goal>
-								</goals>
-								<configuration>
-									<outputDirectory>${basedir}/../../../../tjf-messaging/tjf-messaging-binder-jms/target/site/jacoco-aggregate</outputDirectory>
+									<outputDirectory>${basedir}/../../../../tjf-metrics/tjf-metrics-lscloud/target/site/jacoco-it</outputDirectory>
 								</configuration>
 							</execution>
 						</executions>

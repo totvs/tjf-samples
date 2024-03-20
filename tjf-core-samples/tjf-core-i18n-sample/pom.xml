@@ -13,10 +13,10 @@
 	</parent>
 
 	<groupId>com.tjf.sample.github</groupId>
-	<artifactId>i18n-core</artifactId>
+	<artifactId>core-i18n</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>tjf-i18n-core-sample</name>
-	<description>TJF I18N Core Sample</description>
+	<name>tjf-core-i18n-sample</name>
+	<description>TJF Core I18N Sample</description>
 
 	<dependencies>
 
@@ -56,7 +56,6 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-
 	</dependencies>
 
 	<build>
@@ -101,6 +100,11 @@
 						<artifactId>jacoco-maven-plugin</artifactId>
 						<executions>
 							<execution>
+								<goals>
+									<goal>prepare-agent</goal>
+								</goals>
+							</execution>
+							<execution>
 								<id>report-aggregate</id>
 								<phase>verify</phase>
 								<goals>
@@ -110,6 +114,16 @@
 									<outputDirectory>${basedir}/../../../tjf-core/tjf-core-i18n/target/site/jacoco-it</outputDirectory>
 								</configuration>
 							</execution>
+							<execution>
+								<id>report-aggregate2</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>report-aggregate</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${basedir}/../../../tjf-core/tjf-core-common/target/site/jacoco-it</outputDirectory>
+								</configuration>
+							</execution>							
 						</executions>
 					</plugin>
 

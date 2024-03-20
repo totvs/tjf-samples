@@ -1,20 +1,21 @@
 management:
+  prometheus:
+    metrics:
+      export:
+        enabled: true
   endpoints:
     web:
       base-path: /_
       exposure:
-        include: prometheus
+        include: prometheus         
   metrics:
     enable:
       all: true
-    export:
-      prometheus:
-        enabled: true
   endpoint:
     metrics:
       enabled: true
     prometheus:
-      enabled: true
+      enabled: true        
 
 tjf:
   metrics:

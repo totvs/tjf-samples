@@ -53,6 +53,7 @@ public class MetricsLSCloudIT {
 		Optional<LogLicenseMessage> logs = Optional.empty();
 		while (logs.isEmpty()) {
 			logs = errorSubscriber.getLog();
+			Thread.sleep(200);
 		}
 
 		var log = logs.get().getLogs().get(0);
