@@ -1,8 +1,9 @@
 package com.tjf.sample.github.messaging.infrastructure.messaging;
 
-import com.totvs.tjf.messaging.context.TOTVSMessageBuilder;
 import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.stereotype.Component;
+
+import com.totvs.tjf.messaging.context.TOTVSMessageBuilder;
 
 @Component
 public class StarShipPublisher {
@@ -15,7 +16,7 @@ public class StarShipPublisher {
 
 	public <T> void publishEvent(T starShipEvent) {
 		System.out.println(starShipEvent.getClass().getSimpleName() + " enviado!");
-		var message = TOTVSMessageBuilder
+		var message = TOTVSMessageBuilder.stream()
 				.withType(starShipEvent.getClass().getSimpleName())
 				.setContent(starShipEvent)
 				.build();

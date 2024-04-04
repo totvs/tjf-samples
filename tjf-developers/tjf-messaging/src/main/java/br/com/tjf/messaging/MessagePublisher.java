@@ -14,7 +14,7 @@ public class MessagePublisher {
 	}
 
 	public <T> void publish(T event, String eventName) {
-		TOTVSMessage<T> totvsMessage = TOTVSMessageBuilder.withType(eventName)
+		TOTVSMessage<T> totvsMessage = TOTVSMessageBuilder.stream().withType(eventName)
 		          .setContent(event)
 		          .setTransactionInfo(transactionInfo)
 		       .build();
