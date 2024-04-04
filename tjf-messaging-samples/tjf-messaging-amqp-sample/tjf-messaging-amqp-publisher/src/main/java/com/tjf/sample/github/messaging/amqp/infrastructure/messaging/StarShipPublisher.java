@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 import com.tjf.sample.github.messaging.amqp.events.StarShipArrivedEvent;
 import com.totvs.tjf.messaging.context.CloudEventsInfo;
-import com.totvs.tjf.messaging.context.TOTVSMessageBuilderFactory;
+import com.totvs.tjf.messaging.context.TOTVSMessageBuilder;
 import com.totvs.tjf.messaging.context.TransactionInfo;
 
 import lombok.RequiredArgsConstructor;
@@ -30,12 +30,12 @@ public class StarShipPublisher {
     }
 
     public <T> void publishEvent(T event, String eventName) {
-        TOTVSMessageBuilderFactory.createAmqpTOTVSMessageBuilder().withType(eventName).setContent(event).setTenantId("testTenant1").build()
+        TOTVSMessageBuilder.amqp().withType(eventName).setContent(event).setTenantId("testTenant1").build()
                 .sendTo(rabbitTemplate, EXCHANGE_2, ROUTING_KEY_2);
     }
 
     public <T> void publishEvent(T event, String eventName, TransactionInfo transactionInfo, CloudEventsInfo cloudEventsInfo) {
-    	TOTVSMessageBuilderFactory.createAmqpTOTVSMessageBuilder().withType(eventName).setContent(event)
+    	TOTVSMessageBuilder.amqp().withType(eventName).setContent(event)
                 .setTransactionInfo(transactionInfo)
                 .setCloudEventsInfo(cloudEventsInfo)
                 .setTenantId("testTenant2")
