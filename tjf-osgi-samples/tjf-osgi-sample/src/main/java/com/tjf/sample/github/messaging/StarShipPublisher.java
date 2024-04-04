@@ -15,7 +15,7 @@ public class StarShipPublisher {
 	}
 
 	public <T> void publish(T event, String eventName) {
-		TOTVSMessageBuilder.<T>withType(eventName)
+		TOTVSMessageBuilder.stream().<T>withType(eventName)
 			.setContent(event)
 	        .build()
 	        .sendTo(streamBridge, "starship-out-0");
