@@ -16,7 +16,7 @@ public class StarShipPublisher {
 
 	public <T> void publishEvent(T starShipEvent) {
 		System.out.println(starShipEvent.getClass().getSimpleName() + " enviado!");
-		var message = TOTVSMessageBuilder.stream()
+		var message = TOTVSMessageBuilder.asStream()
 				.withType(starShipEvent.getClass().getSimpleName())
 				.setContent(starShipEvent)
 				.build();
