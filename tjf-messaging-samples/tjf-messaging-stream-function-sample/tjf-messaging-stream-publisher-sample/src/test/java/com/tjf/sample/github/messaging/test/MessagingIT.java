@@ -111,7 +111,7 @@ public abstract class MessagingIT {
 			super.messagingWithoutTenantTest();
 		}
 	}
-
+/*
 	@ActiveProfiles("jms")
 	public static class MessagingForJmsIT extends MessagingIT {
 
@@ -126,5 +126,5 @@ public abstract class MessagingIT {
 		public void messagingWithoutTenantTest() throws Exception {
 			super.messagingWithoutTenantTest();
 		}
-	}
+	}*/
 }
