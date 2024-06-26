@@ -81,6 +81,8 @@
 			<id>integration-test-report</id>
 			<build>
 				<plugins>
+				<!-- TODO
+
 					<plugin>
 						<groupId>com.totvs.tjf</groupId>
 						<artifactId>tjf-rac-maven-plugin</artifactId>
@@ -94,6 +96,7 @@
 							</execution>
 						</executions>
 					</plugin>
+					-->
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-failsafe-plugin</artifactId>
