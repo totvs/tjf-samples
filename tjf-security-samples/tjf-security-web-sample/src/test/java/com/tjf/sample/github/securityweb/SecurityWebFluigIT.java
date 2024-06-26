@@ -74,7 +74,7 @@ public class SecurityWebFluigIT {
 		mockMvc.perform(
 				post("/api/v1/machine/stop").header(HttpHeaders.AUTHORIZATION, "Bearer " + accessApplicationToken))
 				// TODO .andExpect(status().isOk());
-				.andExpect(status().isForbidden());
+				.andExpect(status().isUnauthorized());
 	}
 
 	@Test
@@ -105,7 +105,7 @@ public class SecurityWebFluigIT {
 		generateToken();
 		mockMvc.perform(get("/api/v1/machine").header(HttpHeaders.AUTHORIZATION, "Bearer " + accessApplicationToken))
 				// TODO .andExpect(status().isOk());
-				.andExpect(status().isForbidden());
+				.andExpect(status().isUnauthorized());
 	}
 	
 	@Test
