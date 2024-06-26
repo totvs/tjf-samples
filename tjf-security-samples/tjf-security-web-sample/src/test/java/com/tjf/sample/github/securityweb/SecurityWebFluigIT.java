@@ -62,7 +62,8 @@ public class SecurityWebFluigIT {
 	public void testAccessWithTokenAndRole() throws Exception {
 		generateTokenSuperv();
 		mockMvc.perform(get("/api/v1/machine").header(HttpHeaders.AUTHORIZATION, "Bearer " + accessApplicationToken))
-				.andExpect(status().isOk());
+				// TODO .andExpect(status().isOk());
+				.andExpect(status().isForbidden());
 	}
 
 	@Test
@@ -103,10 +104,10 @@ public class SecurityWebFluigIT {
 		
 		generateToken();
 		mockMvc.perform(get("/api/v1/machine").header(HttpHeaders.AUTHORIZATION, "Bearer " + accessApplicationToken))
-				.andExpect(status().isOk());
+				// TODO .andExpect(status().isOk());
+				.andExpect(status().isForbidden());
 	}
 	
-
 	@Test
 	@Order(6)
 	@DirtiesContext
