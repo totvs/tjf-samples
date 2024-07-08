@@ -8,7 +8,7 @@
 	<parent>
 		<groupId>com.totvs.tjf</groupId>
 		<artifactId>tjf-boot-starter</artifactId>
-		<version>4.28.1-RELEASE</version>
+		<version>4.28.0-RELEASE</version>
 		<relativePath />
 	</parent>
 
