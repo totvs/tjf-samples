@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.totvs.tjf</groupId>
+        <artifactId>tjf-boot-starter</artifactId>
+		<version>5.0.0-RELEASE</version>
+    </parent>
+
+    <groupId>com.tjf.sample.github</groupId>
+    <artifactId>customized-metrics</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>TJF Sample de utilização do módulo metrics micrometer</name>
+    <description>Exemplo de utilização do módulo metrics micrometer com Prometheus</description>
+
+    <dependencies>
+        <!-- Spring -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <!-- TJF -->
+        <dependency>
+            <groupId>com.totvs.tjf</groupId>
+            <artifactId>tjf-metrics-micrometer</artifactId>
+        </dependency>
+    </dependencies>
+         <repositories>
+		<repository>
+			<id>tjf</id>
+			<url>https://totvstfs.pkgs.visualstudio.com/TJF/_packaging/tjf/maven/v1</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+</project>
