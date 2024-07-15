@@ -47,10 +47,10 @@ spring:
         bindings:
           functionRouter-in-0:
             consumer:
-              exchangeType: headers
+              exchange-type: headers
           bbunit-input-out-0:
             producer:
-              exchangeType: headers            
+              exchange-type: headers            
                 
 management:
   endpoints:

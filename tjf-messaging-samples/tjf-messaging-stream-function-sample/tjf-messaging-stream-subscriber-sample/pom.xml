@@ -29,11 +29,11 @@
 			<artifactId>tjf-messaging-stream</artifactId>
 		</dependency>
 
-		<!-- JMS 
+		<!-- JMS  -->
 		<dependency>
 			<groupId>com.totvs.tjf</groupId>
 			<artifactId>tjf-messaging-binder-jms</artifactId>
-		</dependency> -->
+		</dependency>
 
 		<!-- Kafka 
 		<dependency>

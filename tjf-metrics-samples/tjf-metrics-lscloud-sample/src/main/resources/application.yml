@@ -1,0 +1,33 @@
+tjf:
+  lscloud:
+    module-id: "1234"
+    group-id: "4567"
+    slot-id: "7890"
+
+spring:
+  cloud:
+    function:
+      routing:
+        enabled: true
+      routing-expression: headers['type']
+    stream:
+      default-binder: rabbit1
+
+      bindings:   
+        lscloud-out-0:
+          binder: rabbit1
+          destination:  LogLicense.input
+
+        functionRouter-in-0:
+          binder: rabbit1
+          destination: LogLicense.input.dlq
+
+      binders:
+        rabbit1:
+          type: rabbit
+      rabbit:
+        default:
+          exchange-type: headers
+
+server:
+  port: 8080

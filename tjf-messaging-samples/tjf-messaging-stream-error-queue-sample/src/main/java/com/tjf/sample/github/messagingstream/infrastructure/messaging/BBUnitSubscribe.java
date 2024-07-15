@@ -4,12 +4,14 @@ import java.util.function.Consumer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 import com.tjf.sample.github.messagingstream.exceptions.BBUnitException;
 import com.tjf.sample.github.messagingstream.model.BBUnit;
 import com.totvs.tjf.core.validation.ValidatorService;
 import com.totvs.tjf.messaging.context.TOTVSMessage;
 
+@Configuration
 public class BBUnitSubscribe {
 
 	@Autowired

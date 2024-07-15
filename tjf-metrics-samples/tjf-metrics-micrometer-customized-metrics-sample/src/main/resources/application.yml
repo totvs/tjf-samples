@@ -1,0 +1,29 @@
+management:
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+  endpoints:
+    web:
+      base-path: /_
+      exposure:
+        include: prometheus         
+  metrics:
+    enable:
+      all: true
+  endpoint:
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true        
+
+tjf:
+  metrics:
+    app: app1
+    context: context1
+    element-type: business
+    platform: totvs.apps
+    service: backend
+    version: 1.0.0
+    custom-tags:
+      custom: sampleValue

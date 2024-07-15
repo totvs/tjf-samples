@@ -44,12 +44,12 @@ public class StarShipPublisher {
     }
 
     public <T> void publishEvent(T event, String eventName) {
-        TOTVSMessageBuilder.withType(eventName).setContent(event).buildAmqp()
+        TOTVSMessageBuilder.amqp().withType(eventName).setContent(event).buildAmqp()
                 .sendTo(rabbitTemplate, EXCHANGE_2, ROUTING_KEY_2);
     }
 
     public <T> void publishEvent(T event, String eventName, TransactionInfo transactionInfo, CloudEventsInfo cloudEventsInfo) {
-        TOTVSMessageBuilder.withType(eventName).setContent(event)
+        TOTVSMessageBuilder.amqp().withType(eventName).setContent(event)
                 .setTransactionInfo(transactionInfo)
                 .setCloudEventsInfo(cloudEventsInfo)
                 .buildAmqp()

@@ -39,6 +39,16 @@
 			<artifactId>tjf-security-webmvc</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>com.totvs.tjf</groupId>
+			<artifactId>tjf-security-fluig</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.totvs.tjf</groupId>
+			<artifactId>tjf-security-context</artifactId>
+		</dependency>
+
 		<!-- Test -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -71,6 +81,8 @@
 			<id>integration-test-report</id>
 			<build>
 				<plugins>
+				<!-- TODO
+
 					<plugin>
 						<groupId>com.totvs.tjf</groupId>
 						<artifactId>tjf-rac-maven-plugin</artifactId>
@@ -84,6 +96,7 @@
 							</execution>
 						</executions>
 					</plugin>
+					-->
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-failsafe-plugin</artifactId>
@@ -109,13 +122,38 @@
 						<artifactId>jacoco-maven-plugin</artifactId>
 						<executions>
 							<execution>
-								<id>report-aggregate</id>
+								<goals>
+									<goal>prepare-agent</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>report-aggregate-context</id>
 								<phase>verify</phase>
 								<goals>
 									<goal>report-aggregate</goal>
 								</goals>
 								<configuration>
-									<outputDirectory>${basedir}/../../../../tjf-security/tjf-security-web/target/site/jacoco-aggregate</outputDirectory>
+									<outputDirectory>${basedir}/../../../../tjf-security/tjf-security-context/target/site/jacoco-it</outputDirectory>
+								</configuration>
+							</execution>
+							<execution>
+								<id>report-aggregate-rac</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>report-aggregate</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${basedir}/../../../../tjf-security/tjf-security-webmvc/target/site/jacoco-it</outputDirectory>
+								</configuration>
+							</execution>
+							<execution>
+								<id>report-aggregate-fluig</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>report-aggregate</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${basedir}/../../../../tjf-security/tjf-security-fluig/target/site/jacoco-it</outputDirectory>
 								</configuration>
 							</execution>
 						</executions>

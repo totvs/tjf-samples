@@ -219,7 +219,7 @@ public class BBUnitPublisher {
   }
 
   public <T> void publish(T event, String eventName) {
-    TOTVSMessage<T> message = TOTVSMessageBuilder.<T>withType(eventName)
+    TOTVSMessage<T> message = TOTVSMessageBuilder.stream().<T>withType(eventName)
       .setContent(event)
       .build();
 

@@ -56,6 +56,11 @@
 
 		<dependency>
 			<groupId>com.totvs.tjf</groupId>
+			<artifactId>tjf-tenant-context</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.totvs.tjf</groupId>
 			<artifactId>tjf-migration-schema</artifactId>
 		</dependency>
 
@@ -134,13 +139,28 @@
 						<artifactId>jacoco-maven-plugin</artifactId>
 						<executions>
 							<execution>
+								<goals>
+									<goal>prepare-agent</goal>
+								</goals>
+							</execution>
+							<execution>
 								<id>report-aggregate</id>
 								<phase>verify</phase>
 								<goals>
 									<goal>report-aggregate</goal>
 								</goals>
 								<configuration>
-									<outputDirectory>${basedir}/../../../tjf-tenant/tjf-tenant-schema/target/site/jacoco-aggregate</outputDirectory>
+									<outputDirectory>${basedir}/../../../tjf-tenant/tjf-tenant-schema/target/site/jacoco-it</outputDirectory>
+								</configuration>
+							</execution>
+							<execution>
+								<id>report-aggregate2</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>report-aggregate</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${basedir}/../../../tjf-tenant/tjf-tenant-context/target/site/jacoco-it2</outputDirectory>
 								</configuration>
 							</execution>
 						</executions>

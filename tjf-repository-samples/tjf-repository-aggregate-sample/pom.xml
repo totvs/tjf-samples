@@ -54,6 +54,16 @@
 			<artifactId>tjf-repository-aggregate</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>com.totvs.tjf</groupId>
+			<artifactId>tjf-repository-context</artifactId>
+		</dependency>
+
+		<dependency>
+		    <groupId>org.flywaydb</groupId>
+		    <artifactId>flyway-database-postgresql</artifactId>
+		</dependency>
+		
 		<!-- Tests -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -132,13 +142,28 @@
 						<artifactId>jacoco-maven-plugin</artifactId>
 						<executions>
 							<execution>
+								<goals>
+									<goal>prepare-agent</goal>
+								</goals>
+							</execution>
+							<execution>
 								<id>report-aggregate</id>
 								<phase>verify</phase>
 								<goals>
 									<goal>report-aggregate</goal>
 								</goals>
 								<configuration>
-									<outputDirectory>${basedir}/../../../tjf-repository/tjf-repository-aggregate/target/site/jacoco-aggregate</outputDirectory>
+									<outputDirectory>${basedir}/../../../tjf-repository/tjf-repository-aggregate/target/site/jacoco-it</outputDirectory>
+								</configuration>
+							</execution>
+							<execution>
+								<id>report-aggregate2</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>report-aggregate</goal>
+								</goals>
+								<configuration>
+									<outputDirectory>${basedir}/../../../tjf-repository/tjf-repository-context/target/site/jacoco-it</outputDirectory>
 								</configuration>
 							</execution>
 						</executions>

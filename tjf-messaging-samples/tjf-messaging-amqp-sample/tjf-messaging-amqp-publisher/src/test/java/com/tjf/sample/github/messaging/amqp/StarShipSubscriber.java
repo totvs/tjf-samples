@@ -28,7 +28,7 @@ public class StarShipSubscriber {
     public void receive(@Payload StarShipArrivedEvent starShipArrivedEvent) {
         log.info("Received message from queue: {}", QUEUE_1);
         log.info("StarShipArrivedEvent with name {}", starShipArrivedEvent.getName());
-        StarShipControllerTest.starShipArrivedEvent = starShipArrivedEvent;
+        StarShipControllerIT.starShipArrivedEvent = starShipArrivedEvent;
         semaphore.sendSignal();
     }
 
@@ -37,7 +37,7 @@ public class StarShipSubscriber {
     public void receiveTotvsMessage(@Payload AmqpTOTVSMessage<StarShipArrivedEvent> message) {
         log.info("Received message from queue {}, message: {}", QUEUE_2, objectMapper.writeValueAsString(message));
         log.info(objectMapper.writeValueAsString(message));
-        StarShipControllerTest.amqpTOTVSMessage = message;
+        StarShipControllerIT.amqpTOTVSMessage = message;
         semaphore.sendSignal();
     }
 
@@ -45,7 +45,7 @@ public class StarShipSubscriber {
     @RabbitListener(queues = {QUEUE_3})
     public void receiveTotvsMessageAsCloudEvent(@Payload AmqpTOTVSMessage<StarShipArrivedEvent> message) {
         log.info("Received message from queue {}, message: {}", QUEUE_3, objectMapper.writeValueAsString(message));
-        StarShipControllerTest.amqpTOTVSMessage = message;
+        StarShipControllerIT.amqpTOTVSMessage = message;
         semaphore.sendSignal();
     }
 }
