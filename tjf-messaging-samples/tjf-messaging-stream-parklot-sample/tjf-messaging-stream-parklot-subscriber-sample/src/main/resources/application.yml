@@ -31,9 +31,16 @@ spring:
           binder: rabbit1
           destination: starship-input
           group: request
+          consumer:
+            maxAttempts: 1              
+            concurrency: 10
         functionRouter-in-1:
           destination: starship-input.request
-          group: dlq          
+          group: dlq    
+          consumer:
+            maxAttempts: 3
+            concurrency: 3
+      
     # Filas de Erros
         tjf-messaging-error-in-0:
           destination: bbunit-errors
