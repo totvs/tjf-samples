@@ -1,0 +1,184 @@
+server:
+  port: 8280
+
+tjf:
+  core:
+    message:
+      default-content-type: application/cloudevents+json
+      convert-cloud-events: true
+      
+  messaging:
+#     graceful-sincronization: true
+     events-ignore-tenant:
+     - StarShipArrivedItEvent
+        
+spring:
+  profiles:
+    # Rabbitmq por default
+    active: rabbit
+
+  cloud:
+    function:
+      routing-expression: headers['type']
+
+    stream:
+      function:
+        routing:
+          enabled: true
+      pollable-source: tjf-messaging-error
+      
+---
+######## RABBIT
+spring:
+  config:
+    activate:
+      on-profile:
+      - rabbit
+      
+  cloud:
+    stream:
+      defaultBinder: rabbit1
+
+      binders:
+        rabbit1:
+          type: rabbit
+          environment:
+            spring:
+              rabbit:
+                host: localhost
+      
+      bindings:   
+        publishArrived-out-0:
+          binder: rabbit1
+          destination: starship-input
+          group: writers
+        publishLeft-out-0:
+          binder: rabbit1
+          destination: starship-input
+          group: writers
+
+        functionRouter-in-0:
+          binder: rabbit1
+          destination: starship-input
+          group: request
+          
+        # Filas de Erros
+        tjf-messaging-error-in-0:
+          destination: bbunit-errors
+          group: errors
+
+        tjf-messaging-error-out-0:
+          destination: bbunit-errors
+          group: errors
+          producer:
+            required-groups: errors
+
+      rabbit:
+        default:
+          exchangeType: headers
+        bindings:
+          publishArrived-out-0:
+            producer:
+              exchange-type: headers
+          publishLeft-out-0:
+            producer:
+              exchange-type: headers
+          functionRouter-in-0:
+            consumer:
+              exchange-type: headers                
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info,health,messaging,sending                
+  endpoint:
+    health:
+      enabled: true
+    sending:                
+      enabled: true
+  health:
+    rabbit:
+      enabled: false
+    sending:
+      enable: true
+
+---
+######## KAFKA
+spring:
+  config:
+    activate:
+      on-profile:
+      - kafka
+                     
+  cloud:
+    stream:
+      defaultBinder: kafka1
+      bindings:
+        publishArrived-out-0:
+          binder: kafka1
+          destination: starship-input
+        publishLeft-out-0:
+          binder: kafka1
+          destination: starship-input
+        functionRouter-in-0:
+          binder: kafka1
+          destination: starship-input
+      binders:                
+        kafka1:
+          type: kafka
+                         
+      kafka:
+        binder:
+          replication-factor: 1
+          brokers: kafka:9092
+          configuration:
+            auto:
+              offset:
+                reset: earliest 
+
+---
+######## JMS
+
+spring:
+  config:
+    activate:
+      on-profile:
+      - jms
+   
+  cloud:
+    stream:
+
+      defaultBinder: jms1
+
+      bindings:   
+        publishArrived-out-0:
+          binder: jms1
+          destination: starship-input
+        publishLeft-out-0:
+          binder: jms1
+          destination: starship-input
+
+        functionRouter-in-0:
+          binder: jms1
+          destination: starship-input
+          
+        # Filas de Erros
+        tjf-messaging-error-in-0:
+          binder: jms1
+          destination: bbunit-errors
+
+        tjf-messaging-error-out-0:
+          binder: jms1
+          destination: bbunit-errors
+          producer:
+            required-groups: errors
+        
+      binders:
+        jms1:
+          type: jms
+          environment:
+            spring:
+              activemq:
+                broker-url: tcp://localhost:61616
+                user: user-amq
+                password: password-amq   

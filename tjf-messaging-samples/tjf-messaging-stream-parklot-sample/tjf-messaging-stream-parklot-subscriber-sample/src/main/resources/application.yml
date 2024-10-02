@@ -1,0 +1,64 @@
+                
+management:
+  endpoints:
+    web:
+      base-path: /_
+      exposure:
+        include: 'prometheus,health,messaging'
+                
+server:
+  port: 8380
+tjf:
+  messaging:
+    function-router:
+      multiple-inputs: true 
+spring:
+
+  cloud:
+    function:
+      routing-expression: headers['type']
+
+    stream:
+      function:
+        routing:
+          enabled: true
+      pollable-source: tjf-messaging-error
+           
+      default-binder: rabbit1
+      
+      bindings:   
+        functionRouter-in-0:
+          binder: rabbit1
+          destination: starship-input
+          group: request
+        functionRouter-in-1:
+          destination: starship-input.request
+          group: dlq          
+    # Filas de Erros
+        tjf-messaging-error-in-0:
+          destination: bbunit-errors
+          group: errors
+
+        tjf-messaging-error-out-0:
+          destination: bbunit-errors
+          group: errors
+          producer:
+            required-groups: errors
+                       
+      binders:
+        rabbit1:
+          type: rabbit
+
+      rabbit:
+        bindings:
+          functionRouter-in-0:
+            consumer:
+              exchange-type: headers
+              republish-to-dlq: true
+              auto-bind-dlq: true
+          functionRouter-in-1:
+            consumer:
+              exchange-type: headers
+              republish-to-dlq: false
+              auto-bind-dlq: false        
+
