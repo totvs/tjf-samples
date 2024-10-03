@@ -62,4 +62,9 @@ public class FileController {
 	                        .build().toString())
 	            .body(resource);
 	}
+	
+	@GetMapping("/url")
+	String url() throws Exception {
+		return storageService.createUploadSignedUrl("sample-storage", "teste.zip", "application/zip", "10 MINUTES", 10000000L);
+	}
 }
