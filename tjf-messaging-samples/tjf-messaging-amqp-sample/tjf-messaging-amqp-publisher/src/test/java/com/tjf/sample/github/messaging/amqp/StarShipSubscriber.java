@@ -25,10 +25,12 @@ public class StarShipSubscriber {
     public static final String QUEUE_3 = "starship-queue-3";
 
     @RabbitListener(queues = {QUEUE_1})
+    @SneakyThrows
     public void receive(@Payload StarShipArrivedEvent starShipArrivedEvent) {
         log.info("Received message from queue: {}", QUEUE_1);
         log.info("StarShipArrivedEvent with name {}", starShipArrivedEvent.getName());
         StarShipControllerIT.starShipArrivedEvent = starShipArrivedEvent;
+        Thread.sleep(100);
         semaphore.sendSignal();
     }
 
@@ -38,6 +40,7 @@ public class StarShipSubscriber {
         log.info("Received message from queue {}, message: {}", QUEUE_2, objectMapper.writeValueAsString(message));
         log.info(objectMapper.writeValueAsString(message));
         StarShipControllerIT.amqpTOTVSMessage = message;
+        Thread.sleep(100);
         semaphore.sendSignal();
     }
 
@@ -46,6 +49,7 @@ public class StarShipSubscriber {
     public void receiveTotvsMessageAsCloudEvent(@Payload AmqpTOTVSMessage<StarShipArrivedEvent> message) {
         log.info("Received message from queue {}, message: {}", QUEUE_3, objectMapper.writeValueAsString(message));
         StarShipControllerIT.amqpTOTVSMessage = message;
+        Thread.sleep(100);
         semaphore.sendSignal();
     }
 }

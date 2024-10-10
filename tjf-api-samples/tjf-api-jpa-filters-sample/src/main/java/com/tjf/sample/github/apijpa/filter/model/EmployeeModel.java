@@ -1,19 +1,23 @@
 package com.tjf.sample.github.apijpa.filter.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.totvs.tjf.api.jpa.simplefilter.SimpleFilterSupport;
+import com.totvs.tjf.api.jpa.simplefilter.SimpleFilterSupportAllow;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.totvs.tjf.api.jpa.simplefilter.SimpleFilterSupport;
-
 import lombok.Getter;
+import lombok.Setter;
+
 @Getter
+@Setter
 @Entity
 @Table(name = "cash_employee")
+@SimpleFilterSupportAllow
 public class EmployeeModel implements SimpleFilterSupport<EmployeeModel> {
 
 	private static final long serialVersionUID = -958964907040473218L;

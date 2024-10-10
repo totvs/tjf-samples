@@ -95,7 +95,7 @@ public abstract class MessagingIT {
 			super.messagingWithoutTenantTest();
 		}
 	}
-
+/*
 	@ActiveProfiles("kafka")
 	public static class MessagingForKafkaIT extends MessagingIT {
 

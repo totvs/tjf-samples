@@ -5,23 +5,19 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
-import java.util.function.Supplier;
 
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.Timeout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.containers.RabbitMQContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.shaded.com.google.common.collect.ImmutableSet;
 
 import com.tjf.sample.github.messaging.amqp.events.StarShipArrivedEvent;
@@ -34,7 +30,7 @@ import com.totvs.tjf.mock.test.Semaphore;
 //@Testcontainers
 @SpringBootTest(classes = AmqpPublisherApplication.class)
 @AutoConfigureMockMvc
-@ActiveProfiles(profiles = { "testprofile" })
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class StarShipControllerIT {
 
 	//@Container
@@ -73,6 +69,8 @@ class StarShipControllerIT {
 
 	@Test
 	@Timeout(value = 60)
+	@Order(1)
+	@DirtiesContext
 	void starShipArrivedTest() throws Exception {
 		mockMvc.perform(get("/starship/arrived?name=teste"))
 				.andExpect(status().isOk());
@@ -82,6 +80,8 @@ class StarShipControllerIT {
 
 	@Test
 	@Timeout(value = 60)
+	@DirtiesContext
+	@Order(2)
 	void starShipArrivedTmTest() throws Exception {
 		mockMvc.perform(get("/starship/arrived-tm?name=teste"))
 				.andExpect(status().isOk());
@@ -94,6 +94,8 @@ class StarShipControllerIT {
 
 	@Test
 	@Timeout(value = 60)
+	@DirtiesContext
+	@Order(3)
 	void starShipArrivedTmCeTest() throws Exception {
 		mockMvc.perform(get("/starship/arrived-tm-ce?name=teste"))
 				.andExpect(status().isOk());

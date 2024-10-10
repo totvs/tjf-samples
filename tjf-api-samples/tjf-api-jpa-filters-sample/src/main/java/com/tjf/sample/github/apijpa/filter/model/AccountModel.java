@@ -2,6 +2,9 @@ package com.tjf.sample.github.apijpa.filter.model;
 
 import java.math.BigDecimal;
 
+import com.totvs.tjf.api.jpa.simplefilter.SimpleFilterSupport;
+import com.totvs.tjf.api.jpa.simplefilter.SimpleFilterSupportDeny;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -9,10 +12,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
-import com.totvs.tjf.api.jpa.simplefilter.SimpleFilterSupport;
-import com.totvs.tjf.api.jpa.simplefilter.SimpleFilterSupportAllow;
-import com.totvs.tjf.api.jpa.simplefilter.SimpleFilterSupportDeny;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -43,7 +42,6 @@ public class AccountModel implements SimpleFilterSupport<AccountModel> {
 
 	@NotNull
 	@Column(name = "cod_limit_currency")
-	@SimpleFilterSupportAllow
 	private String limitCurrencyCode;
 
 	@NotNull

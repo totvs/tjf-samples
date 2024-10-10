@@ -10,12 +10,12 @@ spring:
     password: guest
     
   
+  
 tjf:
-  messaging:
-    amqp:
+  messaging: 
       security:
-         ignore-queue: 
-           - starship-queue-1
+        ignoreQueue:
+          - starship-queue-1
       exchanges:
         directExchanges:
           -

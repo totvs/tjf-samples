@@ -1,9 +1,12 @@
 package com.tjf.sample.github.messaging.amqp.infrastructure.messaging;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import com.tjf.sample.github.messaging.amqp.events.StarShipArrivedEvent;
+import com.totvs.tjf.core.security.context.SecurityPrincipal;
 import com.totvs.tjf.messaging.context.CloudEventsInfo;
 import com.totvs.tjf.messaging.context.TOTVSMessageBuilder;
 import com.totvs.tjf.messaging.context.TransactionInfo;
@@ -30,11 +33,14 @@ public class StarShipPublisher {
     }
 
     public <T> void publishEvent(T event, String eventName) {
+    	setTenant("testTenant1");
+
         TOTVSMessageBuilder.asAmqp().withType(eventName).setContent(event).setTenantId("testTenant1").build()
                 .sendTo(rabbitTemplate, EXCHANGE_2, ROUTING_KEY_2);
     }
 
     public <T> void publishEvent(T event, String eventName, TransactionInfo transactionInfo, CloudEventsInfo cloudEventsInfo) {
+    	setTenant("testTenant2");
     	TOTVSMessageBuilder.asAmqp().withType(eventName).setContent(event)
                 .setTransactionInfo(transactionInfo)
                 .setCloudEventsInfo(cloudEventsInfo)
@@ -42,4 +48,10 @@ public class StarShipPublisher {
                 .build()
                 .sendTo(rabbitTemplate, EXCHANGE_3, ROUTING_KEY_3);
     }
+    
+    private void setTenant(String tenant) {
+		SecurityPrincipal principal = new SecurityPrincipal(null, "", tenant, tenant);
+		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(principal, "N/A", null);
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+	}
 }

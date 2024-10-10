@@ -1,9 +1,5 @@
 package com.tjf.sample.github.apijpa.filter.controller;
 
-import com.tjf.sample.github.apijpa.filter.model.AccountModel;
-import com.tjf.sample.github.apijpa.filter.model.AccountModelRepository;
-import com.tjf.sample.github.apijpa.filter.model.EmployeeModel;
-import com.tjf.sample.github.apijpa.filter.model.EmployeeModelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tjf.sample.github.apijpa.filter.model.AccountModel;
+import com.tjf.sample.github.apijpa.filter.model.AccountModelRepository;
+import com.tjf.sample.github.apijpa.filter.model.EmployeeModel;
+import com.tjf.sample.github.apijpa.filter.model.EmployeeModelRepository;
 import com.totvs.tjf.api.context.stereotype.ApiGuideline;
 import com.totvs.tjf.api.context.stereotype.ApiGuideline.ApiGuidelineVersion;
 
