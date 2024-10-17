@@ -31,6 +31,8 @@ spring:
       on-profile:
       - rabbit
       
+  cloud:
+    stream:
       default-binder: rabbit1
       
       bindings:   
@@ -38,7 +40,7 @@ spring:
           binder: rabbit1
           destination: starship-input
           group: request
-          
+
     # Filas de Erros
         tjf-messaging-error-in-0:
           destination: bbunit-errors
