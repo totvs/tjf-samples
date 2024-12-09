@@ -28,18 +28,16 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>org.flywaydb</groupId>
-			<artifactId>flyway-core</artifactId>
-		</dependency>
-
 		<!-- Lombok -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 		</dependency>
 
-		<!-- TJF -->
+	<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+		</dependency>
 			<!-- TJF -->
 		<dependency>
 			<groupId>com.totvs.tjf</groupId>
@@ -56,7 +54,11 @@
 			<artifactId>tjf-tenant-context</artifactId>
 		</dependency>
 
-
+	<dependency>
+		    <groupId>org.flywaydb</groupId>
+		    <artifactId>flyway-database-postgresql</artifactId>
+		</dependency>
+		
 		<dependency>
 			<groupId>com.totvs.tjf</groupId>
 			<artifactId>tjf-repository-multidb</artifactId>
