@@ -1,0 +1,53 @@
+spring:
+
+  datasource:
+        url: jdbc:postgresql://localhost:5432/lightside
+        username: postgres
+        password: postgres
+        driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+        ddl-auto: none
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        
+  flyway:  
+    schemas:
+      - _EMPIRE
+      - _SITH
+      - _REPUBLIC
+      - _JEDI
+      
+    enabled: false
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+  
+tjf:
+  tenant:
+    
+    schema:
+      cache:
+        loadOnInitialization: true
+        validate-on-initialization: true     
+      validate-on-initialization: true        
+  flyway:  
+    migrate: true
+ 
+  datasource:
+     darkside:
+        tenantIds: 
+        - empire
+        - sith
+        url: jdbc:postgresql://localhost:5433/darkside
+        username: postgres
+        password: postgres
+        driver-class-name: org.postgresql.Driver
+        hikari:
+          minimum-idle: 5
+          maximum-pool-size: 20
+          idle-timeout: 100000
+          max-lifetime: 450000
+          

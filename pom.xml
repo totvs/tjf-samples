@@ -39,6 +39,7 @@
 		<module>tjf-metrics-samples/tjf-metrics-lscloud-sample</module>
 		<module>tjf-migration-samples/tjf-migration-schema-sample</module>
 		<module>tjf-repository-samples/tjf-repository-aggregate-sample</module>
+		<module>tjf-repository-samples/tjf-repository-multidb-sample</module>
 		<module>tjf-security-samples/tjf-security-web-request-validation-sample</module>
 		<module>tjf-security-samples/tjf-security-web-sample</module>
 		<module>tjf-storage-samples/tjf-storage-google-sample</module>	
