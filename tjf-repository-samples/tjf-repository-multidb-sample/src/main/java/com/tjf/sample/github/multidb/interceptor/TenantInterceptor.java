@@ -2,7 +2,6 @@ package com.tjf.sample.github.multidb.interceptor;
 
 import org.springframework.lang.Nullable;
 import org.springframework.web.context.request.WebRequestInterceptor;
-import org.springframework.web.servlet.handler.DispatcherServletWebRequest;
 import org.springframework.web.servlet.handler.WebRequestHandlerInterceptorAdapter;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,7 +16,6 @@ public class TenantInterceptor extends WebRequestHandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler) {
 		String tenant = req.getHeader("tenant");
-		System.out.println(tenant);
 		TenantAuthentication.setAuthenticationInfo(tenant);
 		return true;
 	}

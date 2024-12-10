@@ -26,16 +26,6 @@ spring:
     baseline-on-migrate: true
   
 tjf:
-  tenant:
-    
-    schema:
-      cache:
-        loadOnInitialization: true
-        validate-on-initialization: true     
-      validate-on-initialization: true        
-  flyway:  
-    migrate: true
- 
   datasource:
      darkside:
         tenantIds: 
@@ -51,3 +41,13 @@ tjf:
           idle-timeout: 100000
           max-lifetime: 450000
           
+  tenant:
+    
+    schema:
+      cache:
+        loadOnInitialization: true
+        validate-on-initialization: true     
+      validate-on-initialization: true        
+  flyway:  
+    migrate: true
+ 
