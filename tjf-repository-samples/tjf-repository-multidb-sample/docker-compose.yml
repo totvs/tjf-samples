@@ -1,0 +1,26 @@
+services:
+  postgres1:
+    image: postgres:15.7
+    environment:
+      POSTGRES_DB: lightside # Define o banco de dados inicial
+      POSTGRES_USER: postgres # Define o usuário do banco
+      POSTGRES_PASSWORD: postgres # Define a senha do banco
+    ports:
+      - 5432:5432 # Porta do Postgres 1
+    volumes:
+      - postgres1_data:/var/lib/postgresql/data # Volume dedicado para o Postgres 1
+
+  postgres2:
+    image: postgres:15.7
+    environment:
+      POSTGRES_DB: darkside # Define o banco de dados inicial
+      POSTGRES_USER: postgres # Define o usuário do banco
+      POSTGRES_PASSWORD: postgres # Define a senha do banco
+    ports:
+      - 5433:5432 
+    volumes:
+      - postgres2_data:/var/lib/postgresql/data 
+
+volumes: 
+  postgres1_data: 
+  postgres2_data: 
