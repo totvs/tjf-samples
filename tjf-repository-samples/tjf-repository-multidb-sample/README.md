@@ -301,10 +301,10 @@ que deseja conforme as informações abaixo:
 **Anakin Skywalker**
 
 ```http
-POST /api/v1/register' HTTP/1.1 
+POST /api/v1/register HTTP/1.1 
 Host: localhost:8080
-header 'tenant: jedi' 
-header 'Content-Type: application/json' 
+header tenant: jedi
+header Content-Type: application/json'
 
 {
 
@@ -319,7 +319,7 @@ header 'Content-Type: application/json'
 POST /api/v1/register HTTP/1.1
 Host: localhost:8080
 Content-Type: application/json
-header 'tenant: republic' 
+header 'tenant: republic
 
 {
   "name": "Leia Organa",
@@ -330,10 +330,10 @@ header 'tenant: republic'
 **Luke Skywalker**
 
 ```http
-POST /api/v1/register' HTTP/1.1 
+POST /api/v1/register HTTP/1.1 
 Host: localhost:8080
-header 'tenant: sith' 
-header 'Content-Type: application/json' 
+header tenant: sith 
+header Content-Type: application/json'
 
 {
 
@@ -345,15 +345,15 @@ header 'Content-Type: application/json'
 **Leia Organa**
 
 ```http
-POST /api/v1/register' HTTP/1.1 
+POST /api/v1/register HTTP/1.1 
 Host: localhost:8080
-header 'tenant: jedi' 
-header 'Content-Type: application/json' 
-data '{
+header tenant: jedi
+header Content-Type: application/json'
+{
 
    "name":"Anakin Skywalker",
    "gender": "male" 
-}'
+}
 ```
 
 
