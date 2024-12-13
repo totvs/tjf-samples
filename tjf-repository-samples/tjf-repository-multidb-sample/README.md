@@ -20,7 +20,7 @@ Após gerado, precisamos substituir no arquivo `pom.xml` o _parent_ do projeto p
 <parent>
   <groupId>com.totvs.tjf</groupId>
   <artifactId>tjf-boot-starter</artifactId>
-  <version>5.4.4-RELEASE</version>
+  <version>3.25.0-RELEASE</version>
   <relativePath />
 </parent>
 ```
@@ -304,7 +304,7 @@ que deseja conforme as informações abaixo:
 POST /api/v1/register HTTP/1.1 
 Host: localhost:8080
 header tenant: jedi
-header Content-Type: application/json'
+header Content-Type: application/json
 
 {
 
@@ -319,7 +319,7 @@ header Content-Type: application/json'
 POST /api/v1/register HTTP/1.1
 Host: localhost:8080
 Content-Type: application/json
-header 'tenant: republic
+header tenant: republic
 
 {
   "name": "Leia Organa",
@@ -333,7 +333,7 @@ header 'tenant: republic
 POST /api/v1/register HTTP/1.1 
 Host: localhost:8080
 header tenant: sith 
-header Content-Type: application/json'
+header Content-Type: application/json
 
 {
 
@@ -348,7 +348,8 @@ header Content-Type: application/json'
 POST /api/v1/register HTTP/1.1 
 Host: localhost:8080
 header tenant: jedi
-header Content-Type: application/json'
+header Content-Type: application/json
+
 {
 
    "name":"Anakin Skywalker",
