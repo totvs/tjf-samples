@@ -304,10 +304,8 @@ que deseja conforme as informações abaixo:
 POST /api/v1/register HTTP/1.1
 Host: localhost:8080
 Content-Type: application/json
-header tenant: jedi
-
+tenant: jedi
 {
-
    "name":"Obi Wan Kenobi",
    "gender": "male" 
 }
@@ -333,9 +331,7 @@ POST /api/v1/register HTTP/1.1
 Host: localhost:8080
 Content-Type: application/json
 tenant: sith
-
 {
-
    "name":"Darth Nihilus",
    "gender": "male" 
 }
@@ -350,7 +346,6 @@ Host: localhost:8080
 Content-Type: application/json
 tenant: empire
 {
-
    "name":"Sheev Palpatine",
    "gender": "male" 
 }
