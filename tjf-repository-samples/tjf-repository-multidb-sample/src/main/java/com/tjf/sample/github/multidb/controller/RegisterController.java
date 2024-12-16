@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tjf.sample.github.multidb.entity.Jedi;
+import com.tjf.sample.github.multidb.entity.Person;
 import com.tjf.sample.github.multidb.repository.JediRepository;
 import com.totvs.tjf.core.security.context.SecurityDetails;
 import com.totvs.tjf.core.security.context.SecurityPrincipal;
@@ -26,12 +26,12 @@ public class RegisterController {
 	private JediRepository repository;
 
 	@PostMapping
-	public Jedi saveJedi(@RequestBody Jedi dto, @RequestHeader String tenant) {	
+	public Person saveJedi(@RequestBody Person dto, @RequestHeader String tenant) {	
 		return repository.saveAndFlush(dto);
 	}
 
 	@GetMapping
-	public List<Jedi> getAll(@RequestHeader String tenant) {
+	public List<Person> getAll(@RequestHeader String tenant) {
 		return repository.findAll();
 	}
 	

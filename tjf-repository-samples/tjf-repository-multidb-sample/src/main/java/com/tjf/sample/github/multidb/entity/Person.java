@@ -1,6 +1,7 @@
 package com.tjf.sample.github.multidb.entity;
 
-import jakarta.annotation.Generated;
+import java.util.UUID;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,11 +17,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table
-public class Jedi {
+public class Person {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
-
 	private String id;
 
 	@NotNull

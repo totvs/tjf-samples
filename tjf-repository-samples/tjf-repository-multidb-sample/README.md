@@ -1,13 +1,10 @@
-# Exemplo de uso do componente Repository Aggregate
+# Exemplo de uso do componente Repository MultiDB
 
 ## Contexto
 
-Para exemplificar o uso da biblioteca **Repository Multidb**, criaremos APIs REST que possibilite a criação de uma 
-lista de dados com os personagens do **Star Wars**.
+Para exemplificar o uso da biblioteca Repository Multidb, criaremos APIs REST que possibilitam a criação de uma lista de dados com os personagens de Star Wars.
 
-Os registros de cada personagem serão armazenadas em banco de dados distintos para aqueles 
-que apoiam a o lado negro da força(os Sith e o empério) e os que pregam o equilibrio da força (os 
-jedi e a republica). 
+Os registros de cada personagem serão armazenados em bancos de dados distintos, separados entre aqueles que apoiam o lado negro da força (os Sith e o Império) e os que defendem o equilíbrio da força (os Jedi e a República).
 
 ## Começando
 
@@ -121,7 +118,7 @@ Precisamos também do _script_ de criação da tabela no banco de dados. Este _s
 **V1.0__initialize.sql**
 
 ```sql
-CREATE TABLE jedi (
+CREATE TABLE Person (
  id varchar(255),
  gender varchar(255),
  name varchar(255),
@@ -143,6 +140,7 @@ Para iniciar criaremos as classes de modelo de dados das tabelas `Jedi`:
 ```java
 @Getter
 @Setter
+@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table
@@ -162,7 +160,6 @@ public class Jedi {
 }
 ```
 
-
 #### Repositories
 
 Após criadas a classe da entidade, criaremos os repositórios responsáveis pela criação e leitura dos registros da tabela `jedu` no banco de dados:
@@ -175,7 +172,6 @@ public class JediRepositoryextends JpaRepository<Jedi, Integer> { {
 
 }
 ```
-
 
 ### APIs REST
 
@@ -192,12 +188,12 @@ public class RegisterController {
 	private JediRepository repository;
 
 	@PostMapping
-	public Jedi saveJedi(@RequestBody Jedi dto, @RequestHeader String tenant) {	
+	public Person saveJedi(@RequestBody Person dto, @RequestHeader String tenant) {	
 		return repository.saveAndFlush(dto);
 	}
 
 	@GetMapping
-	public List<Jedi> getAll(@RequestHeader String tenant) {
+	public List<Person> getAll(@RequestHeader String tenant) {
 		return repository.findAll();
 	}
 	
@@ -302,63 +298,62 @@ Após finalizado o desenvolvimento das APIs REST podemos executar nosso projeto,
 Vamos iniciar com a criação de um personagens. Para isto basta efetuar uma requisição _HTTP POST_ para cada presonagem 
 que deseja conforme as informações abaixo:
 
-**Anakin Skywalker**
-
-```http
-POST /api/v1/register' HTTP/1.1 
-Host: localhost:8080
---header 'tenant: jedi' 
---header 'Content-Type: application/json' 
---data '{
-
-   "name":"Anakin Skywalker",
-   "gender": "male" 
-}'
-```
-
-**Padmé Amidala**
+**Obi Wan Kenobi**
 
 ```http
 POST /api/v1/register HTTP/1.1
 Host: localhost:8080
 Content-Type: application/json
---header 'tenant: republic' 
+tenant: jedi
 {
-  "name": "Padmé Amidala",
-  "gender": "female"
-}
-```
-
-**Luke Skywalker**
-
-```http
-POST /api/v1/register' HTTP/1.1 
-Host: localhost:8080
---header 'tenant: jedi' 
---header 'Content-Type: application/json' 
---data '{
-
-   "name":"Anakin Skywalker",
+   "name":"Obi Wan Kenobi",
    "gender": "male" 
-}'
+}
 ```
 
 **Leia Organa**
 
 ```http
-POST /api/v1/register' HTTP/1.1 
+POST /api/v1/register HTTP/1.1
 Host: localhost:8080
---header 'tenant: jedi' 
---header 'Content-Type: application/json' 
---data '{
-
-   "name":"Anakin Skywalker",
-   "gender": "male" 
-}'
+Content-Type: application/json
+tenant: republic
+{
+  "name": "Leia Organa",
+  "gender": "female"
+}
 ```
 
-Após realizadas as inclusões acima, podemos verificar nos dois banco de dados as informações 
-divididas:
+**Darth Nihilus**
+
+```http
+POST /api/v1/register HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+tenant: sith
+{
+   "name":"Darth Nihilus",
+   "gender": "male" 
+}
+```
+
+**Sheev Palpatine**
+
+```http
+
+POST /api/v1/register HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+tenant: empire
+{
+   "name":"Sheev Palpatine",
+   "gender": "male" 
+}
+```
+
+
+
+Após realizar as inclusões acima, podemos verificar nos dois bancos de dados como as informações estão divididas:
 
 
 <p style="text-align: center">
@@ -369,8 +364,7 @@ divididas:
   <img src="multidbLightside.png" width="600" height="600">
 </p>
 
-Com isso podemos vender os dados do darkside para as forças do lightside e do lightside 
-para o darkside sem nenhum lado saber que temos as informações do outro.
+Com isso, é possível compartilhar os dados do lado sombrio com as forças do lado luminoso, e vice-versa, sem que nenhum dos lados saiba que possuímos as informações do outro.
 
 ## Que a força esteja com você!
 
