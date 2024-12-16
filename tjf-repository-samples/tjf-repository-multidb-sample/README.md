@@ -319,8 +319,7 @@ header tenant: jedi
 POST /api/v1/register HTTP/1.1
 Host: localhost:8080
 Content-Type: application/json
-header tenant: republic
-
+header tenant: erepublic
 {
   "name": "Leia Organa",
   "gender": "female"
@@ -333,7 +332,7 @@ header tenant: republic
 POST /api/v1/register HTTP/1.1
 Host: localhost:8080
 Content-Type: application/json
-header tenant: sith 
+header tenant: empire
 
 {
 
