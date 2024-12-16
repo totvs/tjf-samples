@@ -298,7 +298,7 @@ Após finalizado o desenvolvimento das APIs REST podemos executar nosso projeto,
 Vamos iniciar com a criação de um personagens. Para isto basta efetuar uma requisição _HTTP POST_ para cada presonagem 
 que deseja conforme as informações abaixo:
 
-**Anakin Skywalker**
+**Obi Wan Kenobi**
 
 ```http
 POST /api/v1/register HTTP/1.1
@@ -319,20 +319,20 @@ header tenant: jedi
 POST /api/v1/register HTTP/1.1
 Host: localhost:8080
 Content-Type: application/json
-header tenant: erepublic
+tenant: republic
 {
   "name": "Leia Organa",
   "gender": "female"
 }
 ```
 
-**Luke Skywalker**
+**Darth Nihilus**
 
 ```http
 POST /api/v1/register HTTP/1.1
 Host: localhost:8080
 Content-Type: application/json
-header tenant: empire
+tenant: sith
 
 {
 
@@ -341,17 +341,17 @@ header tenant: empire
 }
 ```
 
-**Leia Organa**
+**Sheev Palpatine**
 
 ```http
 
 POST /api/v1/register HTTP/1.1
 Host: localhost:8080
 Content-Type: application/json
-tenant: sith
+tenant: empire
 {
 
-   "name":"Anakin Skywalker",
+   "name":"Sheev Palpatine",
    "gender": "male" 
 }
 ```
