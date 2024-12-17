@@ -133,9 +133,9 @@ Agora precisamos criar as classes que representam cada uma das entidades do noss
 
 #### Entidades
 
-Para iniciar criaremos a classe de modelo de dados da tabela `Jedi`:
+Para iniciar criaremos a classe de modelo de dados da tabela `Person`:
 
-**Jedi.java**
+**Person.java**
 
 ```java
 @Getter
@@ -144,7 +144,7 @@ Para iniciar criaremos a classe de modelo de dados da tabela `Jedi`:
 @NoArgsConstructor
 @Entity
 @Table
-public class Jedi {
+public class Person {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
@@ -162,20 +162,20 @@ public class Jedi {
 
 #### Repositories
 
-Após criada a classe da entidade, criaremos os repositórios responsáveis pela criação e leitura dos registros da tabela `jedi` no banco de dados:
+Após criada a classe da entidade, criaremos os repositórios responsáveis pela criação e leitura dos registros da tabela `Person` no banco de dados:
 
 **PersonRepository.java**
 
 ```java
 @Repository
-public class JediRepositoryextends JpaRepository<Jedi, Integer> { {
+public class PersonRepositoryextends JpaRepository<Person, Integer> { {
 
 }
 ```
 
 ### APIs REST
 
-Vamos agora criar nossas APIs REST para manutenção da entidade `jedi` :
+Vamos agora criar nossas APIs REST para manutenção da entidade `Person` :
 
 **RegisterController.java**
 
@@ -185,10 +185,10 @@ Vamos agora criar nossas APIs REST para manutenção da entidade `jedi` :
 public class RegisterController {
 
 	@Autowired
-	private JediRepository repository;
+	private PersonRepository repository;
 
 	@PostMapping
-	public Person saveJedi(@RequestBody Person dto, @RequestHeader String tenant) {	
+	public Person savePerson(@RequestBody Person dto, @RequestHeader String tenant) {	
 		return repository.saveAndFlush(dto);
 	}
 
