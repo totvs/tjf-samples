@@ -2,7 +2,7 @@
 
 ## Contexto
 
-Para exemplificar o uso da biblioteca Repository Multidb, criaremos APIs REST que possibilitam a criação de uma lista de dados com os personagens de Star Wars.
+Para exemplificar o uso da biblioteca Repository Multidb, criaremos uma APIs REST que possibilita a criação de uma lista de dados com os personagens de Star Wars.
 
 Os registros de cada personagem serão armazenados em bancos de dados distintos, separados entre aqueles que apoiam o lado negro da força (os Sith e o Império) e os que defendem o equilíbrio da força (os Jedi e a República).
 
@@ -20,7 +20,7 @@ Após gerado, precisamos substituir no arquivo `pom.xml` o _parent_ do projeto p
 <parent>
   <groupId>com.totvs.tjf</groupId>
   <artifactId>tjf-boot-starter</artifactId>
-  <version>3.25.0-RELEASE</version>
+  <version>5.5.0-RELEASE</version>
   <relativePath />
 </parent>
 ```
@@ -133,9 +133,9 @@ Agora precisamos criar as classes que representam cada uma das entidades do noss
 
 #### Entidades
 
-Para iniciar criaremos as classes de modelo de dados das tabelas `Jedi`:
+Para iniciar criaremos a classe de modelo de dados da tabela `Person`:
 
-**Jedi.java**
+**Person.java**
 
 ```java
 @Getter
@@ -144,7 +144,7 @@ Para iniciar criaremos as classes de modelo de dados das tabelas `Jedi`:
 @NoArgsConstructor
 @Entity
 @Table
-public class Jedi {
+public class Person {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
@@ -162,20 +162,20 @@ public class Jedi {
 
 #### Repositories
 
-Após criadas a classe da entidade, criaremos os repositórios responsáveis pela criação e leitura dos registros da tabela `jedu` no banco de dados:
+Após criada a classe da entidade, criaremos os repositórios responsáveis pela criação e leitura dos registros da tabela `Person` no banco de dados:
 
 **PersonRepository.java**
 
 ```java
 @Repository
-public class JediRepositoryextends JpaRepository<Jedi, Integer> { {
+public class PersonRepositoryextends JpaRepository<Person, Integer> { {
 
 }
 ```
 
 ### APIs REST
 
-Vamos agora criar nossas APIs REST para manutenção da entidade `jedi` :
+Vamos agora criar nossas APIs REST para manutenção da entidade `Person` :
 
 **RegisterController.java**
 
@@ -185,10 +185,10 @@ Vamos agora criar nossas APIs REST para manutenção da entidade `jedi` :
 public class RegisterController {
 
 	@Autowired
-	private JediRepository repository;
+	private PersonRepository repository;
 
 	@PostMapping
-	public Person saveJedi(@RequestBody Person dto, @RequestHeader String tenant) {	
+	public Person savePerson(@RequestBody Person dto, @RequestHeader String tenant) {	
 		return repository.saveAndFlush(dto);
 	}
 
@@ -295,7 +295,7 @@ docker-compose up -d
 
 Após finalizado o desenvolvimento das APIs REST podemos executar nosso projeto, como um **Spring Boot App**.
 
-Vamos iniciar com a criação de um personagens. Para isto basta efetuar uma requisição _HTTP POST_ para cada presonagem 
+Vamos iniciar com a criação de alguns personagens. Para isto basta efetuar uma requisição _HTTP POST_ para cada personagem 
 que deseja conforme as informações abaixo:
 
 **Obi Wan Kenobi**
