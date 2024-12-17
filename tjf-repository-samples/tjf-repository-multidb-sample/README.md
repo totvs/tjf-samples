@@ -2,7 +2,7 @@
 
 ## Contexto
 
-Para exemplificar o uso da biblioteca Repository Multidb, criaremos APIs REST que possibilitam a criação de uma lista de dados com os personagens de Star Wars.
+Para exemplificar o uso da biblioteca Repository Multidb, criaremos uma APIs REST que possibilita a criação de uma lista de dados com os personagens de Star Wars.
 
 Os registros de cada personagem serão armazenados em bancos de dados distintos, separados entre aqueles que apoiam o lado negro da força (os Sith e o Império) e os que defendem o equilíbrio da força (os Jedi e a República).
 
@@ -133,7 +133,7 @@ Agora precisamos criar as classes que representam cada uma das entidades do noss
 
 #### Entidades
 
-Para iniciar criaremos as classes de modelo de dados das tabelas `Jedi`:
+Para iniciar criaremos a classe de modelo de dados da tabela `Jedi`:
 
 **Jedi.java**
 
@@ -162,7 +162,7 @@ public class Jedi {
 
 #### Repositories
 
-Após criadas a classe da entidade, criaremos os repositórios responsáveis pela criação e leitura dos registros da tabela `jedu` no banco de dados:
+Após criada a classe da entidade, criaremos os repositórios responsáveis pela criação e leitura dos registros da tabela `jedi` no banco de dados:
 
 **PersonRepository.java**
 
@@ -295,7 +295,7 @@ docker-compose up -d
 
 Após finalizado o desenvolvimento das APIs REST podemos executar nosso projeto, como um **Spring Boot App**.
 
-Vamos iniciar com a criação de um personagens. Para isto basta efetuar uma requisição _HTTP POST_ para cada presonagem 
+Vamos iniciar com a criação de alguns personagens. Para isto basta efetuar uma requisição _HTTP POST_ para cada personagem 
 que deseja conforme as informações abaixo:
 
 **Obi Wan Kenobi**
