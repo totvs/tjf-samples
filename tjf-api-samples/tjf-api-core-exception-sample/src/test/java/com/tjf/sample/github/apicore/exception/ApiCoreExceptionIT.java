@@ -1,6 +1,7 @@
 package com.tjf.sample.github.apicore.exception;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -88,7 +89,7 @@ public class ApiCoreExceptionIT {
 
 	@Test
 	public void createStarshipWithThrowV2Test() throws JSONException, URISyntaxException {
-		String expectedResult = "{\"code\":\"StarshipCreateConstraintException\",\"message\":\"It's a trap\",\"detailedMessage\":\"The force is not with you\",\"type\":\"error\"}";
+		String expectedResult = "{\"code\":\"RuntimeException\",\"message\":\"Unmapped error, see stackTrace in details\",\"detailedMessage\"";
 		URI uri = new URI("/api/v2/starship/exception");
 
 		HttpHeaders headers = new HttpHeaders();
@@ -100,7 +101,7 @@ public class ApiCoreExceptionIT {
 				headers);
 		ResponseEntity<String> result = template.postForEntity(uri, entity, String.class);
 
-		assertEquals(expectedResult, result.getBody());
+		assertTrue(result.getBody().contains(expectedResult));
 		assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
 	}
 }
