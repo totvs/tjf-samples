@@ -32,8 +32,8 @@ public class StarshipControllerV2 {
 
 	@PostMapping(path = "/create")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public Starship createStarship2(@RequestBody @ApiValid Starship dto) {
-		return dto;
+	public String createStarship2(@RequestBody @ApiValid Starship dto) {
+		return "{\"starship\":\"created\"}";
 	}
 
 	@PostMapping(path = "/exception")
