@@ -123,6 +123,31 @@ public class StarshipController {
 
 A mágica acontece dentro do método `createStarship` que possui a validação dos objetos que dispara nossa exceção criada anteriormente.
 
+Existe outra forma de realizar as validações com as anotações @ApiValidated e @ApiValid, para excemplificar criaremos a V2 do controller:
+
+```java
+@RestController
+@RequestMapping(path = StarshipControllerV2.PATH, produces = APPLICATION_JSON_VALUE)
+@ApiGuideline(ApiGuidelineVersion.V2)
+@ApiValidated(status = HttpStatus.BAD_GATEWAY, value = "StarshipCreateConstraintException")
+public class StarshipControllerV2 {
+
+	public static final String PATH = "api/v2/starship";
+
+	@PostMapping(path = "/create")
+	@ResponseStatus(code = HttpStatus.CREATED)
+	public String createStarship2(@RequestBody @ApiValid Starship dto) {
+		return "{\"starship\":\"created\"}";
+	}
+
+	@PostMapping(path = "/exception")
+	public Starship exceptionStarship2(@RequestBody @ApiValid Starship dto) {
+		throw new RuntimeException();
+	}
+}
+```
+A anotação @ApiValid lançará uma validação a espaçonave ao ser informada no controller, caso levante uma exceção será lançado a exceção StarshipCreateConstraintException indicada na anotação @ApiValidated.
+
 Agora antes de testarmos, precisamos criar as mensagens de validação e exceção das classes `Starship` e `StarshipCreateConstraintException`. Para isso crie a seguinte estrutura de mensagens.
 
 Lembre-se que conforme a documentação do módulo **i18n Core** as mensagens devem seguir o padrão de caracteres _unicode_.
@@ -170,6 +195,36 @@ Com essa requisição teremos o seguinte retorno:
 ```
 
 Mas queremos testar e ver um erro de validação e não um sucesso. Para isso faça a seguinte requisição:
+
+```http
+POST /api/v1/starship/create HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "name": "Millenium Falcon",
+  "description": "A sucata mais veloz da galáxia",
+  "crew": 5
+}
+```
+
+E teremos nosso retorno de erro:
+
+```Json
+{
+  "code": "StarshipCreateConstraintException",
+  "message": "É uma armadilha",
+  "detailedMessage": "A força não está com você",
+  "details": [
+    {
+      "code": "Starship.description.Size",
+      "message": "A descrição da nave não deve ser menor que 1 ou maior que 15",
+      "detailedMessage": "description: A sucata mais veloz da galáxia"
+    }
+  ]
+}
+```
+Também testaremos o controller V2
 
 ```http
 POST /api/v1/starship/create HTTP/1.1
