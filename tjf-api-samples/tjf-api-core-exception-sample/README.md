@@ -123,7 +123,7 @@ public class StarshipController {
 
 A mágica acontece dentro do método `createStarship` que possui a validação dos objetos que dispara nossa exceção criada anteriormente.
 
-Existe outra forma de realizar as validações com as anotações @ApiValidated e @ApiValid, para excemplificar criaremos a V2 do controller:
+Existe outra forma de realizar as validações com as anotações @ApiValidated e @ApiValid, para exemplificar criaremos a V2 do controller:
 
 ```java
 @RestController
@@ -146,7 +146,7 @@ public class StarshipControllerV2 {
 	}
 }
 ```
-A anotação @ApiValid lançará uma validação a espaçonave ao ser informada no controller, caso levante uma exceção será lançado a exceção StarshipCreateConstraintException indicada na anotação @ApiValidated.
+A anotação `@ApiValid` realiza a validação dos dados da espaçonave quando aplicada no controller. Caso ocorra uma violação nas regras de validação, será lançada a exceção `StarshipCreateConstraintException`, conforme especificado pela anotação `@ApiValidated`.
 
 Agora antes de testarmos, precisamos criar as mensagens de validação e exceção das classes `Starship` e `StarshipCreateConstraintException`. Para isso crie a seguinte estrutura de mensagens.
 
