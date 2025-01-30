@@ -18,7 +18,7 @@ Para utilização do recurso será necessário alterar o _parent_ e inserir a se
 <parent>
   <groupId>com.totvs.tjf</groupId>
   <artifactId>tjf-boot-starter</artifactId>
-  <version>3.23.5-RELEASE</version>
+  <version>3.25.2-RELEASE</version>
 </parent>
 ```
 
