@@ -17,6 +17,8 @@ spring:
           group: requests
           consumer:
             max-attempts: 1
+        starship-temp:
+          destination: starship-input
         starship-output:
           destination: starship-input
       binders:
@@ -76,12 +78,43 @@ spring:
 #                port: 61616
 #                username: user-amq
 #                password: password-amq
-                
+
+#### Prova de Vida(Liveness) e de Prontidão(Readiness)
+# https://totvs.app/doc/private/conventions/computing/health-check/
 management:
   endpoints:
     web:
       exposure:
-        include: info,health,messaging                
-                
+        include: info,health,messaging
+      path-mapping:
+        prometheus: /metrics
+      base-path: /_
+
+  endpoint:
+    health:
+      show-details: always
+                      
+  health:
+    amqpsent:
+      enabled: true
+# Depreciado
+#   sending:
+#     enabled: true
+    amqpqueues:
+      enabled: true
+    amqpconsumers:
+      enabled: true
+
+    binders:
+      enabled: false
+    diskspace:
+      enabled: false
+    jms:
+      enabled: false
+    ping:
+      enabled: false
+    rabbit:
+      enabled: false
+
 server:
   port: 8180

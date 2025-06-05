@@ -8,7 +8,11 @@ import org.springframework.messaging.SubscribableChannel;
 public interface StarShipExchange {
 
 	String INPUT = "starship-input";
+	String INPUT_TEMP = "starship-temp";
 
 	@Input(StarShipExchange.INPUT)
 	SubscribableChannel input();
+
+	@Input(StarShipExchange.INPUT_TEMP)
+	SubscribableChannel inputTemp();
 }
