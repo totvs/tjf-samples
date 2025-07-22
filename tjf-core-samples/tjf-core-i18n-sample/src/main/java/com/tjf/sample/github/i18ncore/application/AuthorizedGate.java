@@ -1,6 +1,7 @@
 package com.tjf.sample.github.i18ncore.application;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class AuthorizedGate {
 
 	private Random random = new Random();
 
-	public String authorizedShipLanding(String shipCard) throws IOException {
+	public String authorizedShipLanding(String shipCard) throws IOException, URISyntaxException {
 
 		Starship starship = starshipService.getStarshipInfo(shipCard);
 
