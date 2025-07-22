@@ -2,7 +2,6 @@ package com.tjf.sample.github.i18ncore;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.io.IOException;
 import java.util.Locale;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -26,25 +25,25 @@ public class I18nCoreIT {
 	private String name;
 
 	@BeforeEach
-	public void prepare() throws IOException {
+	public void prepare() throws Exception {
 		Starship starship = starshipService.getStarshipInfo("Falcon.json");
 		name = starship.getName();
 	}
 
 	@Test
-	public void testPtBR() throws IOException {
+	public void testPtBR() throws Exception {
 		Locale.setDefault(new Locale("pt", "br"));
 		assertEquals("Nave Millennium Falcon, pouso autorizado", starshipMessage.starshipConfirmLanding(name));
 	}
 
 	@Test
-	public void testEnUS() throws IOException {
+	public void testEnUS() throws Exception {
 		Locale.setDefault(new Locale("en", "us"));
 		assertEquals("Starship Millennium Falcon, authorized landing", starshipMessage.starshipConfirmLanding(name));
 	}
 
 	@Test
-	public void testEsES() throws IOException {
+	public void testEsES() throws Exception {
 		Locale.setDefault(new Locale("es", "es"));
 		assertEquals("Nave Millennium Falcon, aterrizaje autorizado", starshipMessage.starshipConfirmLanding(name));
 	}
