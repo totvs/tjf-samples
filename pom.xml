@@ -50,6 +50,7 @@
 		<!--<module>tjf-osgi-samples/tjf-osgi-sample</module>-->
 		<!--module>tjf-maven-plugin-samples/tjf-plugin-openapi</module-->
 		<!-- module>tjf-developers/tjf-messaging</module -->
+		<module>tjf-redis-samples/tjf-redis-sample</module>
 	</modules>
 	<repositories>
 		<repository>
