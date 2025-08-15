@@ -17,7 +17,7 @@ Crie um novo _maven project_ e no pom.xml do projeto acrescente o _parent_ tjf-b
 <parent>
   <groupId>com.totvs.tjf</groupId>
   <artifactId>tjf-boot-starter</artifactId>
-  <version>5.9.1-RELEASE</version>
+  <version>5.9.2-RELEASE</version>
 </parent>
 
 <repository>
