@@ -29,7 +29,7 @@ services:
       - 5672:5672
 
   samples:
-    image: docker.totvs.io/tjf/compile:latest
+    image: us-central1-docker.pkg.dev/totvsapps-services/devops-foundation/tjf:compile-5-latest
     container_name: tjf-samples
     command: mvn -f tjf-samples verify
     networks:
