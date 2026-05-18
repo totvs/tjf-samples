@@ -1,4 +1,4 @@
-package br.com.star.wars.controller;
+package com.tjf.sample.github.swquery.controller;
 
 import java.util.List;
 
@@ -20,10 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.star.wars.model.Droid;
-import br.com.star.wars.model.DroidSpecification;
-import br.com.star.wars.model.ResponseData;
-import br.com.star.wars.repository.DroidRepository;
+import com.tjf.sample.github.swquery.model.Droid;
+import com.tjf.sample.github.swquery.model.DroidSpecification;
+import com.tjf.sample.github.swquery.model.ResponseData;
+import com.tjf.sample.github.swquery.repository.DroidRepository;
 
 @RestController
 @RequestMapping("/api/v1/droid")

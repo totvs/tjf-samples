@@ -1,4 +1,4 @@
-package br.com.star.wars;
+package com.tjf.sample.github.swquery;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package br.com.star.wars.model;
+package com.tjf.sample.github.swquery.model;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package br.com.star.wars.repository;
+package com.tjf.sample.github.swquery.repository;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import br.com.star.wars.model.Droid;
+import com.tjf.sample.github.swquery.model.Droid;
 
 @Repository
 @Transactional
